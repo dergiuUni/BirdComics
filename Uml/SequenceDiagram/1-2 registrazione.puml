@@ -1,0 +1,26 @@
+@startuml 
+    Actor Ospite
+    Boundary PageGenerica
+    Control Redirect
+    Boundary Registrazione
+    Control Credenziali
+    
+    Activate Ospite
+    Ospite -> PageGenerica : buttonPressed(registrazione)
+    activate PageGenerica
+    PageGenerica -> Redirect : changePage(registrazione)
+    deactivate PageGenerica
+    activate Redirect
+    Redirect -> Registrazione : display()
+    activate Registrazione
+    deactivate Redirect
+
+    Ospite -> Registrazione : insertData(email, password)
+    Registrazione -> Credenziali : control(email, password)
+    activate Credenziali
+    Credenziali --> Registrazione : errorEmailAziendale
+    deactivate Credenziali
+
+
+
+@enduml 

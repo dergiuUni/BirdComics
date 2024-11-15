@@ -1,0 +1,26 @@
+@startuml
+
+    actor DirettoreMagazzino
+    boundary HomePage
+    control Redirect
+    boundary Scaffale
+    entity DirettoreMagazzino as DirettoreMagazzinoE
+
+
+    activate DirettoreMagazzino 
+    activate DirettoreMagazzinoE
+    activate HomePage
+    DirettoreMagazzino -> HomePage : deleteScaffale()
+    HomePage -> Redirect : changePage(deleteScaffale)
+    deactivate HomePage
+    activate Redirect
+    Redirect -> Scaffale : display()
+    deactivate Redirect
+    activate Scaffale 
+    DirettoreMagazzino -> Scaffale : insertData(nome)
+    DirettoreMagazzino -> Scaffale : buttonPressed(salva)
+    Scaffale -> DirettoreMagazzinoE : deleteScaffale(data)
+    DirettoreMagazzinoE --> Scaffale : true
+
+
+@enduml

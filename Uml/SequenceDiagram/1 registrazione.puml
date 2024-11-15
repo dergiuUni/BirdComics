@@ -1,0 +1,42 @@
+@startuml 
+    Actor Ospite
+    Boundary PageGenerica
+    Control Redirect
+    Boundary Registrazione
+    Control Credenziali
+    Entity Attore
+    boundary HomePage
+
+    Activate Ospite
+    Ospite -> PageGenerica : buttonPressed(registrazione)
+    activate PageGenerica
+    PageGenerica -> Redirect : changePage(registrazione)
+    deactivate PageGenerica
+    activate Redirect
+    Redirect -> Registrazione : display()
+    activate Registrazione
+    deactivate Redirect
+
+    Ospite -> Registrazione : insertData(email, password)
+    Registrazione -> Credenziali : control(email, password)
+    activate Credenziali
+    Credenziali --> Registrazione : true
+    deactivate Credenziali
+    Ospite -> Registrazione : insertData(Nome, Cognome, Data di nascita, Indirizzo, Telefono, Codice postale)
+    Ospite -> Registrazione : buttonPressed(registrati)
+
+    Registrazione -> Credenziali : registrazione(data)
+    activate Credenziali
+    
+    Credenziali -> Attore ** : <<create>> 
+    Credenziali -> Attore : setData(data)
+    activate Attore
+    Attore --> Credenziali : true
+    Credenziali -> HomePage : display(attore)
+    deactivate Registrazione
+    activate HomePage
+    deactivate Credenziali
+
+
+
+@enduml 

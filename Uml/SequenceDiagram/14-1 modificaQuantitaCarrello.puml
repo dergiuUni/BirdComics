@@ -1,0 +1,19 @@
+@startuml
+
+    actor Attore
+    boundary Carrello
+    entity Attore as AttoreE
+
+    activate Attore
+    activate AttoreE
+    activate Carrello
+    Attore -> Carrello : pushButton(modificaQuantitaProdotto)
+    Carrello -> Carrello 
+    activate Carrello
+    Attore -> Carrello : insertData(quantita)
+    Attore -> Carrello : pressButton(conferma)
+    Carrello -> AttoreE : modificaQuantitaCarrello(prodotto, quantita)
+    AttoreE --> Carrello : true
+    Carrello -> Carrello
+    deactivate Carrello
+@enduml

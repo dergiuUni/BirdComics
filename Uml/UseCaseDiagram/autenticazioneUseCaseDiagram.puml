@@ -1,0 +1,17 @@
+@startuml Basic Sample
+    Actor Cliente as clienteActor
+    Actor Gestore as gestoreActor
+
+    package Autenticazione{
+        "AUTENTICAZIONE" as (autenticazioneCase)
+        "Autenticazione con account non esistente" as (exceptionAutenticazioneCase)
+        "Autenticazione con password errata" as (exceptionAutenticazione1Case)
+
+        autenticazioneCase .up.> exceptionAutenticazioneCase : <<exstend>>
+        autenticazioneCase .up.> exceptionAutenticazione1Case : <<exstend>>
+
+        clienteActor -down[#red]-> autenticazioneCase
+        gestoreActor -down[#red]-> autenticazioneCase
+    }
+
+@enduml

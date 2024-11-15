@@ -1,0 +1,23 @@
+@startuml 
+    Actor Attore
+    Boundary PageGenerica
+    Control Credenziali
+    Entity Attore as AttoreE
+    boundary HomePage
+
+    activate AttoreE
+    activate Attore
+    Attore -> PageGenerica : buttonPressed(disconnessione)
+    activate PageGenerica
+    PageGenerica -> Credenziali : disconnessione()
+    activate Credenziali
+    Credenziali -> AttoreE : disconnesione()
+    AttoreE --> Credenziali : true 
+    deactivate PageGenerica
+    deactivate AttoreE
+    deactivate Attore 
+    Credenziali -> HomePage : display(ospite)
+    deactivate  Credenziali
+    activate HomePage
+     
+@enduml 

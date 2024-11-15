@@ -1,0 +1,35 @@
+@startuml Basic Sample
+    Actor Ospite as ospiteActor
+    Actor Cliente as clienteActor
+    Actor GestoreCatalogo as catalogoActor
+
+    package Ricerca{
+        
+        "BARRA DI RICERCA" as (ricercaCase)
+        "RICERCA PER NOME" as (ricercaNomeBarraCase)
+        "RICERCA PER CATEGORIA" as (ricercaCategoriaBarraCase)
+        "RICERCA PER ID FUMETTO" as (ricercaIdBarraCase)
+        "non trova fumetti con l'input ricevuto" as (exceptionRicercaCase)
+        "MENU CATEGORIA" as (categoriaCase)
+
+        ricercaNomeBarraCase .up.> ricercaCase : <<include>>
+        ricercaCategoriaBarraCase .up.> ricercaCase : <<include>>
+        ricercaIdBarraCase .up.> ricercaCase : <<include>>
+        
+        exceptionRicercaCase .up.> ricercaNomeBarraCase : <<extends>>
+        exceptionRicercaCase .up.> ricercaCategoriaBarraCase : <<extends>>
+        exceptionRicercaCase .up.> ricercaIdBarraCase : <<extends>>
+        
+        categoriaCase ..> ricercaCase : <<include>>
+
+        ospiteActor -up[#red]-> ricercaNomeBarraCase
+        clienteActor -down[#blue]-> ricercaNomeBarraCase
+        catalogoActor -right[#green]-> ricercaNomeBarraCase
+
+        ospiteActor -up[#red]-> ricercaCategoriaBarraCase
+        clienteActor -down[#blue]-> ricercaCategoriaBarraCase
+        catalogoActor -right[#green]-> ricercaCategoriaBarraCase
+
+        catalogoActor -right[#green]-> ricercaIdBarraCase
+    }
+@enduml

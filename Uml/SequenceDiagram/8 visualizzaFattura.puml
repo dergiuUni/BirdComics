@@ -1,0 +1,34 @@
+@startuml 
+    Actor Cliente
+    Boundary PageGenerica
+    Control Redirect
+    Boundary VisualizzaOrdini
+    control Fattura
+    Entity Cliente as ClienteE
+    boundary VisualizzaFattura
+
+    activate Cliente
+    activate ClienteE
+    Cliente -> PageGenerica : buttonPressed(visualizzaOrdini)
+    activate PageGenerica
+    PageGenerica -> Redirect : changePage(VisualizzaOrdini)
+    activate Redirect
+    Redirect -> VisualizzaOrdini : display()
+    deactivate Redirect
+    deactivate PageGenerica
+    activate VisualizzaOrdini
+    VisualizzaOrdini -> ClienteE : getInfo()
+    ClienteE -> VisualizzaOrdini : data
+
+    Cliente -> VisualizzaOrdini : pressedButton(visualizzaFattura(ordine))
+    VisualizzaOrdini -> Fattura : fattura(Ordine)
+    deactivate VisualizzaOrdini
+    activate Fattura
+    Fattura -> VisualizzaFattura : display()
+    activate VisualizzaFattura
+    deactivate Fattura
+    VisualizzaFattura -> ClienteE : getFattura()
+    ClienteE -> VisualizzaFattura : data
+
+
+@enduml 

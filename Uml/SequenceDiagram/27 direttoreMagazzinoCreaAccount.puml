@@ -1,0 +1,25 @@
+@startuml
+
+    actor DirettoreMagazzino
+    boundary HomePage
+    control Credenziali
+    entity DirettoreMagazzino as DirettoreMagazzinoE
+
+
+    activate DirettoreMagazzino 
+    activate DirettoreMagazzinoE
+    activate HomePage
+    DirettoreMagazzino -> HomePage : insertData(emailAziendale)
+    activate HomePage
+    HomePage -> Credenziali : checkEmailAziendale(emailAziendale)
+    activate Credenziali
+    Credenziali --> HomePage : true
+    deactivate Credenziali
+    DirettoreMagazzino -> HomePage : insertData(nome, cognome, dataNascita, RisorseUmane)
+    DirettoreMagazzino -> HomePage : buttonPressed(inserisci)
+    HomePage -> DirettoreMagazzinoE : insertAddetto(data)
+    DirettoreMagazzinoE --> HomePage : true
+    HomePage -> HomePage
+    deactivate HomePage
+
+@enduml

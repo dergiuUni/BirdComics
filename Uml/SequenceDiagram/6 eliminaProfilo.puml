@@ -1,0 +1,32 @@
+@startuml 
+    Actor Cliente
+    Boundary PageGenerica
+    Control Redirect
+    Boundary VisualizzaProfilo
+    control Credenziali
+    Entity Cliente as ClienteE
+    boundary HomePage
+
+    activate Cliente
+    activate ClienteE
+    Cliente -> PageGenerica : buttonPressed(visualizzaProfilo)
+    activate PageGenerica
+    PageGenerica -> Redirect : changePage(VisualizzaProfilo)
+    activate Redirect
+    Redirect -> VisualizzaProfilo : display()
+    deactivate Redirect
+    deactivate PageGenerica
+    activate VisualizzaProfilo
+    VisualizzaProfilo -> ClienteE : getInfo()
+    ClienteE -> VisualizzaProfilo : data
+
+    Cliente -> VisualizzaProfilo : buttonPressed(eliminaProfilo)
+    VisualizzaProfilo -> Credenziali : eliminaProfilo()
+    Credenziali -> ClienteE !! : <<destroy>>
+    activate Credenziali
+    deactivate VisualizzaProfilo
+    deactivate Cliente
+    Credenziali -> HomePage : display(ospite) 
+    deactivate Credenziali
+    activate HomePage
+@enduml 

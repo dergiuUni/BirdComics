@@ -1,0 +1,24 @@
+@startuml
+
+    actor Assistenza
+    boundary HomePage
+    control Redirect
+    boundary StatoOrdine
+    entity Assistenza as AssistenzaE
+
+
+    activate Assistenza 
+    activate AssistenzaE
+    Assistenza -> HomePage : insertData(codiceOrdine)
+    Assistenza -> HomePage : buttonPressed(cerca)
+    activate HomePage
+    HomePage -> Redirect : chandePage(ordine)
+    activate Redirect    
+    Redirect -> StatoOrdine : display()
+    deactivate HomePage
+    deactivate Redirect
+    activate StatoOrdine
+
+    StatoOrdine -> AssistenzaE : getordine()
+    AssistenzaE --> StatoOrdine : false
+@enduml

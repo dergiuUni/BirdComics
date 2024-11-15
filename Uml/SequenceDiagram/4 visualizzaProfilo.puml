@@ -1,0 +1,21 @@
+@startuml 
+    Actor Attore
+    Boundary PageGenerica
+    Control Redirect
+    Boundary VisualizzaProfilo
+    Entity Attore as AttoreE
+
+    activate Attore
+    activate AttoreE
+    Attore -> PageGenerica : buttonPressed(visualizzaProfilo)
+    activate PageGenerica
+    PageGenerica -> Redirect : changePage(VisualizzaProfilo)
+    activate Redirect
+    Redirect -> VisualizzaProfilo : display()
+    deactivate Redirect
+    deactivate PageGenerica
+    activate VisualizzaProfilo
+    VisualizzaProfilo -> AttoreE : getInfo()
+    AttoreE -> VisualizzaProfilo : data
+
+@enduml 

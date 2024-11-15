@@ -1,0 +1,46 @@
+@startuml Basic Sample
+Actor Cliente as clienteActor
+Actor Ospite as ospiteActor
+Actor Gestore as gestoreActor
+
+"DISCONNESSIONE" as (disconnessioneCase)
+"VISUALIZZARE PROFILO" as (visulizzaProfiloCase)
+"MODIFICA PROFILO" as (modificaProfiloCase)
+"Pulsante annulla modifica profilo" as (exceptionMKodificaProfiloCase)
+"ELIMINAZIONE PROFILO" as (eliminaProfiloCase)
+"VISUALIZZA ORDINI" as (visualizzaOrdiniCase)
+"VISUALIZZA FATTURA" as (visualizzaFatturaCase)
+"EFFETTUA ACQUISTO" as (effettuaAcquistoCase)
+"Annulla acquisto" as (exceptionAcquistoCase)
+"AGGIUNTA FUMETTO AL CARRELLO" as (aggiuntaCarrelloCase)
+"RIMOZIONE DAL CARRELLO" as (rimozioneCarrelloCase)
+"SVUOTA CARRELLO" as (svuotaCarrelloCase)
+"carrello vuoto" as (exceptionCarrelloCase)
+"MODIFICA QUANTITA PRODOTTO A CARRELLO" as (quantitaCarrelloCase)
+"quantita a carrello maggiore del catalogo" as (exceptionQuantitaCarrelloCase)
+
+exceptionMKodificaProfiloCase .[#blue].> modificaProfiloCase : <<extends>>
+exceptionAcquistoCase .[#blue].> effettuaAcquistoCase : <<exstend>>
+exceptionCarrelloCase .[#blue].> svuotaCarrelloCase : <<exstend>>
+exceptionQuantitaCarrelloCase .[#blue].> quantitaCarrelloCase : <<exstend>>
+
+clienteActor -up-> disconnessioneCase
+clienteActor -up-> visulizzaProfiloCase
+clienteActor -up-> modificaProfiloCase
+clienteActor -left-> eliminaProfiloCase
+clienteActor -up-> visualizzaOrdiniCase
+clienteActor -up-> visualizzaFatturaCase
+clienteActor -right-> effettuaAcquistoCase
+clienteActor -down-> aggiuntaCarrelloCase
+clienteActor -down-> rimozioneCarrelloCase
+clienteActor -down-> svuotaCarrelloCase
+clienteActor -down-> quantitaCarrelloCase
+
+ospiteActor -[#green]up-> aggiuntaCarrelloCase
+ospiteActor -[#green]up-> rimozioneCarrelloCase
+ospiteActor -[#green]up-> svuotaCarrelloCase
+ospiteActor -[#green]up-> quantitaCarrelloCase
+
+gestoreActor -[#red]down-> disconnessioneCase
+gestoreActor -[#red]down-> visulizzaProfiloCase
+@enduml

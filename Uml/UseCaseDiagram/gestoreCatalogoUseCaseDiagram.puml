@@ -1,0 +1,17 @@
+@startuml Basic Sample
+
+Actor GestoreCalogo as catalogoActor
+
+"AGGIUNTA FUMETTO AL CATALOGO" as (aggiuntaCatalogoCase)
+"RIMOZIONE FUMETTO DAL CATALOGO DALLA PAGINA RIMUOVI FUMETTO" as (rimozioneCatalogo1Case)
+"RIMOZIONE FUMETTO DAL CATALOGO DALLA PAGINA GESTIONE CATALOGO" as (rimozioneCatalogo2Case)
+"AGGIORNAMENTO DI UN FUMETTO DALLA PAGINA AGGIORNAMENTO FUMETTO" as (aggiornamentoCatalogo1Case)
+"AGGIORNAMENTO DI UN FUMETTO DALLA PAGINA GESTIONE CATALOGO" as (aggiornamentoCatalogo2Case)
+
+catalogoActor -up-> aggiuntaCatalogoCase
+catalogoActor -up-> rimozioneCatalogo1Case
+catalogoActor -up-> rimozioneCatalogo2Case
+catalogoActor -down-> aggiornamentoCatalogo1Case
+catalogoActor -down-> aggiornamentoCatalogo2Case
+
+@enduml

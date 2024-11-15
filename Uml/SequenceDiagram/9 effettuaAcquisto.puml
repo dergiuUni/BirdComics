@@ -1,0 +1,48 @@
+@startuml
+    actor Cliente
+    boundary Carrello
+    control Redirect
+    boundary RiepilogoOrdine
+    boundary Banca
+    entity Banca as BancaE
+    entity Cliente as ClienteE
+    boundary PagamentoEseguito
+
+    activate Cliente
+    activate ClienteE
+    Cliente -> Carrello : pushButton(effettuaAcquisto)
+    activate Carrello
+    Carrello -> Redirect : changePage(riepilogoOrdine)
+    activate Redirect
+    Redirect -> RiepilogoOrdine : display()
+    deactivate Carrello
+    activate RiepilogoOrdine
+    RiepilogoOrdine -> ClienteE : getProdottiCarrello()
+    deactivate Redirect
+    ClienteE -> RiepilogoOrdine : carrello
+    Cliente -> RiepilogoOrdine : pushButton(conferma)
+    RiepilogoOrdine -> ClienteE : getTotale()
+    ClienteE -> RiepilogoOrdine : totale
+    RiepilogoOrdine -> Redirect : changePage(banca, totale)
+    activate Redirect
+    Redirect -> Banca  : display(totale)
+    deactivate RiepilogoOrdine
+    deactivate Redirect
+    activate Banca
+    Cliente -> Banca : insertData(numeroCarta, cvc, dataScadenza)
+    Cliente -> Banca : buttonPressed(paga)
+    Banca -> BancaE : verify(cartaCredito)
+    activate BancaE
+    BancaE --> Banca : true
+    deactivate BancaE
+    Banca --> Redirect : true
+    deactivate Banca
+    activate Redirect
+    Redirect -> ClienteE : saveOrder()
+    ClienteE --> Redirect : true
+    Redirect -> PagamentoEseguito : display() 
+    deactivate Redirect
+    activate PagamentoEseguito
+
+
+@enduml

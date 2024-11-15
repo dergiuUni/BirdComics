@@ -1,0 +1,16 @@
+@startuml Basic Sample
+    Actor Ospite as ospiteActor
+
+    package Registrazione{
+        "REGISTRAZIONE" as (registrazioneCase)
+        "L’attore registra un account esistente" as (exceptionRegistrazioneCase)
+        "L’attore prova a registrarsi con l’email aziendale di BirdComics" as (exceptionRegistrazione1Case)
+
+        registrazioneCase .up.> exceptionRegistrazioneCase : <<exstend>>
+        registrazioneCase .up.> exceptionRegistrazione1Case : <<exstend>>
+
+        ospiteActor -down[#red]-> registrazioneCase
+    }
+
+
+@enduml

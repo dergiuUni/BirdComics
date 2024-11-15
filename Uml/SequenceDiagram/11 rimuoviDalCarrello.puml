@@ -1,0 +1,14 @@
+@startuml
+
+    actor Attore
+    boundary Carrello
+    entity Attore as AttoreE
+
+    activate Attore
+    activate AttoreE
+    activate Carrello
+    Attore -> Carrello : pushButton(eliminaDalCarrello)
+    Carrello -> AttoreE : eliminaDalCarrello(fumetto)
+    AttoreE --> Carrello : true
+
+@enduml

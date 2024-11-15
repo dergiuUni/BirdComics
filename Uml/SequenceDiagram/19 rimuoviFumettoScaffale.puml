@@ -1,0 +1,40 @@
+@startuml
+
+    actor Magazziniere
+    boundary HomePage
+    control Redirect
+    boundary LavoroDettagliato
+    entity Magazziniere as MagazziniereE
+
+
+    activate Magazziniere
+    activate MagazziniereE
+    Magazziniere-> HomePage : buttonPressed(lavoroInsertFumetto)
+    activate HomePage
+    HomePage -> Redirect : chandePage(lavoro)
+    activate Redirect    
+    Redirect -> LavoroDettagliato : display()
+    deactivate HomePage
+    deactivate Redirect
+    activate LavoroDettagliato
+
+    LavoroDettagliato -> MagazziniereE : getScaffaliLiberi()
+    MagazziniereE -> LavoroDettagliato : data
+
+    Magazziniere -> LavoroDettagliato : insertData(sceltaScaffale&Posizione)
+    Magazziniere -> LavoroDettagliato : buttonPressed(salva)
+    LavoroDettagliato -> MagazziniereE : insertFumetto(data)
+    MagazziniereE --> LavoroDettagliato : true
+
+    Magazziniere -> LavoroDettagliato : buttonPressed(eseguitoLavoro)
+    LavoroDettagliato -> MagazziniereE : insertLavoro(lavoro)
+    MagazziniereE --> LavoroDettagliato : true
+   
+    LavoroDettagliato -> Redirect : changePage(HomePage)
+    deactivate LavoroDettagliato
+    activate Redirect 
+    Redirect -> HomePage : display()
+    activate HomePage
+    deactivate LavoroDettagliato
+    deactivate Redirect
+@enduml

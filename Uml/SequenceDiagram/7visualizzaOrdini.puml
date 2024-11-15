@@ -1,0 +1,21 @@
+@startuml 
+    Actor Attore
+    Boundary PageGenerica
+    Control Redirect
+    Boundary VisualizzaOrdini
+    Entity Attore as AttoreE
+
+    activate Attore
+    activate AttoreE
+    Attore -> PageGenerica : buttonPressed(visualizzaOrdini)
+    activate PageGenerica
+    PageGenerica -> Redirect : changePage(VisualizzaOrdini)
+    activate Redirect
+    Redirect -> VisualizzaOrdini : display()
+    deactivate Redirect
+    deactivate PageGenerica
+    activate VisualizzaOrdini
+    VisualizzaOrdini -> AttoreE : getInfo()
+    AttoreE -> VisualizzaOrdini : data
+
+@enduml 

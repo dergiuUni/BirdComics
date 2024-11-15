@@ -1,0 +1,25 @@
+@startuml
+
+    actor RisorseUmane
+    boundary HomePage
+    control Credenziali
+    entity RisorseUmane as RisorseUmaneE
+
+
+    activate RisorseUmane 
+    activate RisorseUmaneE
+    activate HomePage
+    RisorseUmane -> HomePage : insertData(emailAziendale)
+    activate HomePage
+    HomePage -> Credenziali : checkEmailAziendale(emailAziendale)
+    activate Credenziali
+    Credenziali --> HomePage : true
+    deactivate Credenziali
+    RisorseUmane -> HomePage : insertData(nome, cognome, dataNascita, ruolo)
+    RisorseUmane -> HomePage : buttonPressed(inserisci)
+    HomePage -> RisorseUmaneE : insertAddetto(data)
+    RisorseUmaneE --> HomePage : true
+    HomePage -> HomePage
+    deactivate HomePage
+
+@enduml

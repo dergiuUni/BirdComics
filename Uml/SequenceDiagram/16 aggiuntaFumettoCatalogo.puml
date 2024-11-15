@@ -1,0 +1,29 @@
+@startuml
+
+    actor GestoreCatalogo
+    boundary PageGenerica
+    control Redirect
+    boundary PageCatalogo
+    entity GestoreCatalogo as GestoreCatalogoE
+
+    activate GestoreCatalogo
+    activate GestoreCatalogoE
+    GestoreCatalogo-> PageGenerica : buttonPressed(catalogo)
+    activate PageGenerica
+    PageGenerica -> Redirect : chandePage(catalogo)
+    activate Redirect    
+    Redirect -> PageCatalogo : display()
+    deactivate Redirect
+    activate PageCatalogo
+    GestoreCatalogo ->PageCatalogo : buttonPressed(inserisciFumetto)
+    PageCatalogo -> PageCatalogo
+    activate PageCatalogo
+
+    GestoreCatalogo -> PageCatalogo : insertData(titolo, descrizione, prezzo)
+    GestoreCatalogo -> PageCatalogo : buttonPressed(salva)
+    PageCatalogo -> GestoreCatalogoE : insertFumetto(data)
+    GestoreCatalogoE --> PageCatalogo : true
+    
+    PageCatalogo -> PageCatalogo
+    deactivate PageCatalogo
+@enduml

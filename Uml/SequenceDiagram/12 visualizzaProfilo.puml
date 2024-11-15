@@ -1,0 +1,21 @@
+@startuml 
+    Actor Attore
+    Boundary PageGenerica
+    Control Redirect
+    Boundary VisualizzaCarrello
+    Entity Attore as AttoreE
+
+    activate Attore
+    activate AttoreE
+    Attore -> PageGenerica : buttonPressed(VisualizzaCarrello)
+    activate PageGenerica
+    PageGenerica -> Redirect : changePage(VisualizzaCarrello)
+    activate Redirect
+    Redirect -> VisualizzaCarrello : display()
+    deactivate Redirect
+    deactivate PageGenerica
+    activate VisualizzaCarrello
+    VisualizzaCarrello -> AttoreE : getInfo()
+    AttoreE -> VisualizzaCarrello : data
+
+@enduml 

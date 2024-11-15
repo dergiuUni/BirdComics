@@ -1,0 +1,20 @@
+@startuml 
+    Actor Finanza
+    Boundary HomePage
+    entity Fattura
+    
+    activate Finanza
+    activate HomePage
+    activate Fattura
+    Finanza -> HomePage : insertData(giornata)
+    Finanza -> HomePage : buttonPressed(submit)
+
+    HomePage -> HomePage
+    activate HomePage 
+    HomePage -> Fattura : getFatture(giornata)
+    Fattura -> HomePage : data
+    
+    HomePage -> HomePage
+    deactivate HomePage
+
+@enduml 

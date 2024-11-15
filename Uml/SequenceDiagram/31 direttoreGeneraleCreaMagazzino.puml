@@ -1,0 +1,28 @@
+@startuml
+
+    actor DirettoreGenerale
+    boundary HomePage
+    control Redirect
+    boundary Magazzino
+    entity DirettoreGenerale as DirettoreGeneraleE
+
+
+    activate DirettoreGenerale 
+    activate DirettoreGeneraleE
+    activate HomePage
+    DirettoreGenerale -> HomePage : insertMagazzino()
+    HomePage -> Redirect : changePage(insertMagazzino)
+    deactivate HomePage
+    activate Redirect
+    Redirect -> Magazzino : display()
+    deactivate Redirect
+    activate Magazzino 
+    Magazzino -> DirettoreGeneraleE : getDirettoreMagazzinoNonAssegnati()
+    DirettoreGeneraleE -> Magazzino : data
+    DirettoreGenerale -> Magazzino : insertData(nome, luogo, emailDirettoreMagazzino)
+    DirettoreGenerale -> Magazzino : buttonPressed(salva)
+    Magazzino -> DirettoreGeneraleE : insertNuovoMagazzino(data)
+    DirettoreGeneraleE --> Magazzino : true
+
+
+@enduml

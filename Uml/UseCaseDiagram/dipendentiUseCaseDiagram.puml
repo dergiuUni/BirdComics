@@ -1,0 +1,53 @@
+@startuml Basic Sample
+left to right direction
+
+Actor DirettoreMagazzino as magazzinoActor
+Actor RisorseUmane as hrActor
+Actor Finanza as finanzaActor
+Actor Magazziniere as magazziniereActor
+Actor OperatoreLogistica as logisticaActor
+Actor AssistenzaClienti as assistenzaActor
+Actor DirettoreGenerale as generaleActor
+
+"VISUALIZZARE FATTURE DI UNA DATA GIORNATA" as (fatturaGiornalieraCase)
+"VISUALIZZA ENTRATE DI UN DATO MESE" as (entrateMensiliCase)
+"AGGIUNTA FUMETTO SULLO SCAFFALE" as (aggiuntaScaffaleCase)
+"Posto sullo scaffale gia occupato" as (exceptionCatalogoCase)
+"RIMUOVI FUMETTO DA SCAFFALE" as (rimuoviCatalogoCase)
+"MODIFICA POSIZIONE DEL FUMETTO SULLO SCAFFALE" as (modPodScaffaleCase)
+"AGGIUNTA CODICE TRACKING DELLA SPEDIZIONE" as (aggiuntaTrackingCase)
+"MODIFICA CODICE TRACKING DELLA SPEDIZIONE" as (modTrackingCase)
+"INSERIMENTO CODICE ORDINE" as (iserimentoCodiceOrdineCase)
+"codice ordine sbagliato" as (exceptionInserimentoCodOrdineCase)
+"VISUALIZZA FATTURA" as (visualizzaFatturaCase)
+"VISUALIZZA ORDINE" as (visualizaOrdineCase)
+"CREAZIONE ACCOUNT CON IL RUOLO DI UN ADDETTO" as (addAddettoCase)
+"CANCELLAZIONE ACCOUNT CON IL RUOLO DI UN ADDETTO" as (removeAddettoCase)
+"CREAZIONE ACCOUNT CON RUOLO RISORSE UMANE" as (addHrCase)
+"CANCELLAZIONE ACCOUNT CON RUOLO RISORSE UMANE" as (removeHrCase)
+"CREAZIONE ACCOUNT CON IL RUOLO DIRETTORE MAGAZZINO" as (addDirMagCase)
+"CANCELLAZIONE ACCOUNT CON IL RUOLO DIRETTORE MAGAZZINO" as (removeDirMagCase)
+
+exceptionInserimentoCodOrdineCase ..> iserimentoCodiceOrdineCase : <<exstend>>
+exceptionCatalogoCase ..> aggiuntaScaffaleCase : <<exstend>>
+
+finanzaActor --> fatturaGiornalieraCase
+finanzaActor --> entrateMensiliCase
+magazziniereActor --> aggiuntaScaffaleCase
+magazziniereActor --> rimuoviCatalogoCase
+magazziniereActor --> modPodScaffaleCase
+logisticaActor --> aggiuntaTrackingCase
+logisticaActor --> modTrackingCase
+assistenzaActor --> iserimentoCodiceOrdineCase
+assistenzaActor --> visualizzaFatturaCase
+assistenzaActor --> visualizaOrdineCase
+hrActor --> addAddettoCase
+hrActor --> removeAddettoCase
+magazzinoActor --> addHrCase
+magazzinoActor --> removeHrCase
+generaleActor --> addDirMagCase
+generaleActor --> removeDirMagCase
+
+
+
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+
+    actor OperatoreLogistico
+    boundary HomePage
+    control Redirect
+    boundary ModificaTracking
+    entity OperatoreLogistico as OperatoreLogisticoE
+
+
+    activate OperatoreLogistico 
+    activate OperatoreLogisticoE
+    OperatoreLogistico -> HomePage : buttonPressed(modificaTracciamento)
+    activate HomePage
+    HomePage -> Redirect : chandePage(tracking)
+    activate Redirect    
+    Redirect -> ModificaTracking : display()
+    deactivate HomePage
+    deactivate Redirect
+    activate ModificaTracking
+
+    ModificaTracking -> OperatoreLogisticoE : getordine&tracciamento()
+    OperatoreLogisticoE -> ModificaTracking : data
+
+    OperatoreLogistico  -> ModificaTracking : insertData(numeroTracciamento)
+    OperatoreLogistico  -> ModificaTracking : buttonPressed(salva)
+    ModificaTracking -> OperatoreLogisticoE : modifyTracciamento(data)
+    OperatoreLogisticoE --> ModificaTracking : true
+
+    OperatoreLogistico  -> ModificaTracking : buttonPressed(eseguitoLavoro)
+    ModificaTracking -> OperatoreLogisticoE : insertLavoro(lavoro)
+    OperatoreLogisticoE --> ModificaTracking : true
+   
+    ModificaTracking -> Redirect : changePage(HomePage)
+    deactivate ModificaTracking
+    activate Redirect 
+    Redirect -> HomePage : display()
+    activate HomePage
+    deactivate ModificaTracking
+    deactivate Redirect
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+
+    actor Attore
+    boundary PageProdotto
+    entity Attore as AttoreE
+
+    activate Attore
+    activate AttoreE
+    activate PageProdotto
+    Attore -> PageProdotto : pushButton(aggiungiAlCarrello)
+    PageProdotto -> AttoreE : aggiungiCarrello(fumetto)
+    AttoreE --> PageProdotto : true
+
+@enduml
