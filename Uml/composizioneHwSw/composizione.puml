@@ -1,0 +1,46 @@
+@startuml
+skinparam linetype ortho
+left to right direction
+<style>
+    node {
+        LineColor blue
+    }
+</style>
+
+
+node "<<device>> Client" {
+    component "Web Browser" as Browser
+}
+
+node "<<device>> Application Server" {
+    component "Tomcat" as Tomcat <<webserver>>{
+        component "BirdComics" as App <<application>> {
+            [View] as View
+            [Controller] as Controller
+            [Model] as Model
+        }
+    }
+}
+
+
+
+node "<<device>> PersistentServer" {
+    component "File System" as FileSystem
+    component "MySQL Database" as Database
+}
+
+
+Browser --> View : <<http>> 
+Model --> FileSystem
+Model --> Database
+View --> Controller : <<user action>>
+Model --> View : <<notify>>
+View --> Model : <<get changed state>>
+Controller --> Model : <<update>>
+
+Model --[hidden]-- Database
+
+
+
+
+@enduml

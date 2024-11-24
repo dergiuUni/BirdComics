@@ -1,0 +1,160 @@
+@startuml
+skinparam linetype ortho
+skinparam nodesep 5  # Riduce ulteriormente la distanza tra i nodi
+skinparam ranksep 10  # Riduce ulteriormente la distanza tra i livelli
+
+abstract Utente{
+      Nome
+      Cognome
+      DataDiNascita
+      Email
+      NumeroDiTelefono
+      Password
+   }
+   class Cliente extends Utente{
+      modifyProfilo()
+      rmProfilo()
+   }
+   class Ospite{
+
+   }
+   abstract Gestore extends Utente {
+   }
+
+   
+   class DirettoreGenerale extends Gestore{
+      addDirettoreMagazzino()
+      rmDirettoreMagazzino()
+      addMagazzino()
+      rmMagazzino()
+   }
+   class DirettoreMagazzino extends Gestore{
+      addRisorseUmane()
+      rmDirettoreMagazzino()
+   }
+   class RisorseUmane << si occupa dei soli ruoli di un dato magazzino>> extends Gestore{
+      nuovoAccount()
+      rimuoviAccount()
+   }
+   class  Finanza extends Gestore{
+      fattureEmesseDurantegg()
+      entrateMensili()
+   }
+   class  Magazziniere extends Gestore{
+      addFumettoScaffale()
+      modifyQuantitaFumetto()
+      rmFumettoScaffale()
+   }
+	class  OperatoreLogistico extends Gestore{
+      addTracking
+      updateTracking
+   }
+	class  GestoreCatalogo extends Gestore{
+      addFumetto()
+      rmFumettoCatalogo()
+   }
+	class  Assistenza extends Gestore{
+      visualizzaOrdineUtente()
+   }
+   class Ordine{
+      id
+      dataAcquisto
+      totaleSpeso
+      statoSpedizione
+   }
+
+   class Fattura{
+      tutti i titoli fumetti acquistati
+      quantita
+      prezzi unitari dell'epoca
+      totale complessivo
+   }
+   class Indirizzo{
+   via
+   numeroCivico
+   CAP
+   citta
+    provincia
+   }
+   class Carrello{
+      AggiungiFumetto()
+      RimuoviFumetto()
+      SvuotaCarrello()
+   }
+   class Fumetto{
+      Titolo
+      Genere
+      Prezzo
+      Descrizione
+
+      Fumetto()
+      modificaTitolo()
+      modificaGenere()
+      modificaPrezzo()
+      modificaDescrizione()
+      eliminaFumetto()
+   }
+   class Catalogo{
+      ricercaTitolo()
+      ricercaGenere()
+      modica()
+   }
+   class Magazzino{
+      Nome
+      
+   }
+   class Scaffale {
+      posizione
+   }
+
+   class Completa <<permesso solo al cliente>>{
+      validaCarta()
+   }
+
+class Contiene {
+    quantita
+}
+
+class PosizioneScaffale {
+    quantita
+}
+
+
+   DirettoreGenerale o-- DirettoreMagazzino
+   DirettoreMagazzino o-- RisorseUmane
+   RisorseUmane o-- Finanza
+   RisorseUmane o-- Magazziniere
+   RisorseUmane o-- OperatoreLogistico
+   RisorseUmane o-- GestoreCatalogo
+   RisorseUmane o-- Assistenza
+
+
+   Fumetto "0..*" -- "1..*" PosizioneScaffale
+   Scaffale "1..*" -- "1..*" PosizioneScaffale
+   PosizioneScaffale "1" -- "1" Fumetto
+   PosizioneScaffale "1" -- "1" Scaffale
+   Magazzino "1" o-- "0..*" Scaffale
+   Ospite "1" -- "1" Carrello
+   Cliente "1" *-- "1" Carrello
+   Carrello "1" -- "1" Completa
+   Completa "1" -- "1" Ordine
+   Fumetto "0..*" -- "1" Catalogo
+   Carrello "1" -- "0..*" Contiene
+   Ordine "1" -- "0..*" Contiene
+   Contiene "1" -- "1" Fumetto
+   Fumetto "0.." -- "0.." Ordine
+   Cliente "1" -- "0..*" Ordine 
+   GestoreCatalogo "1" -- "1" Catalogo
+   Assistenza "1" -- "*" Ordine
+   Indirizzo "1" -- "1" Ordine
+   Magazziniere "0..*" -- "0..*" Scaffale
+   Ordine "1" -- "1" Fattura
+   DirettoreMagazzino "1" -- "1" Magazzino
+   Finanza "*" -- "*" Ordine
+   OperatoreLogistico "*" -- "*" Ordine
+   Magazzino "1" -- "0..*" Indirizzo
+   
+  Completa --[hidden]-- Fattura
+
+  
+@enduml
