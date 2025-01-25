@@ -29,7 +29,7 @@
             <form action="./UpdateProductSrv" method="post" class="col-md-6 col-md-offset-3">
                 <div style="font-weight: bold;" class="text-center">
                     <div class="form-group">
-                        <img src="./ShowImage?pid=<%=product.getProdId()%>" alt="Product Image" height="100px" />
+                        <img src="./ShowImage?image=<%=product.getProdImage()%>" alt="Product Image" height="100px" />
                         <h2 style="color: green;">Product Update Form</h2>
                     </div>
 

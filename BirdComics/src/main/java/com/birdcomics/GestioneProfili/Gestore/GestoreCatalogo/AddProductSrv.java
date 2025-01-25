@@ -1,8 +1,9 @@
 package com.birdcomics.GestioneProfili.Gestore.GestoreCatalogo;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
@@ -22,42 +22,80 @@ import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
 @WebServlet("/AddProductSrv")
 @MultipartConfig(maxFileSize = 16177215)
 public class AddProductSrv extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-		String status = "Product Registration Failed!";
-		String prodName = request.getParameter("name");
-		String prodType = request.getParameter("type");
-		String prodInfo = request.getParameter("info");
-		double prodPrice = Double.parseDouble(request.getParameter("price"));
-		int prodQuantity = Integer.parseInt(request.getParameter("quantity"));
+        String status = "Product Registration Failed!";
+        String prodName = request.getParameter("name");
+        String prodType = request.getParameter("type");
+        String prodInfo = request.getParameter("info");
+        double prodPrice = Double.parseDouble(request.getParameter("price"));
+        int prodQuantity = Integer.parseInt(request.getParameter("quantity"));
 
-		Part part = request.getPart("image");
+        Part filePart = request.getPart("image"); // Get the file part with the name "image"
 
-		InputStream inputStream = part.getInputStream();
+        if (filePart != null && filePart.getSize() > 0) {
+            String fileName = filePart.getSubmittedFileName(); // Get the original file name
 
-		InputStream prodImage = inputStream;
+            // Check file extension to ensure it's an image
+            String fileExtension = getFileExtension(fileName);
+            if (!fileExtension.equals("jpg") && !fileExtension.equals("jpeg") && !fileExtension.equals("png")) {
+                status = "Invalid file type! Only JPG, JPEG, and PNG are allowed.";
+                request.setAttribute("message", status);
+                RequestDispatcher rd = request.getRequestDispatcher("addProduct.jsp");
+                rd.forward(request, response);
+                return;
+            }
 
-		ProductServiceDAO product = new ProductServiceDAO();
+            // Create a unique name for the image to avoid conflicts
+            String uniqueFileName = UUID.randomUUID().toString() + "." + fileExtension;
 
-		try {
-			status = product.addProduct(prodName, prodType, prodInfo, prodPrice, prodQuantity, prodImage);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            // Define the upload path
+            String uploadPath = request.getServletContext().getRealPath("uploads/");
 
-		RequestDispatcher rd = request.getRequestDispatcher("addProduct.jsp?message=" + status);
-		rd.forward(request, response);
+            // Ensure the directory exists
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs(); // Create the directory if it doesn't exist
+            }
 
-	}
+            // Write the file to the directory
+            String filePath = uploadPath + File.separator + uniqueFileName;
+            filePart.write(filePath); 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+            // Call the DAO to add the product
+            ProductServiceDAO productService = new ProductServiceDAO();
+            try {
+                status = productService.addProduct(prodName, prodType, prodInfo, prodPrice, prodQuantity, uniqueFileName);
+            } catch (SQLException e) {
+                status = "Database error occurred while adding the product.";
+                e.printStackTrace();
+            }
+        } else {
+            // If no image is provided, handle it accordingly (optional)
+            status = "Please provide an image for the product.";
+        }
 
-		doGet(request, response);
-	}
+        // Redirect back to the JSP page with the status message
+        request.setAttribute("message", status);
+        RequestDispatcher rd = request.getRequestDispatcher("addProduct.jsp");
+        rd.forward(request, response);
+    }
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
+    }
+
+    // Utility method to get the file extension
+    private String getFileExtension(String fileName) {
+        String extension = "";
+        int i = fileName.lastIndexOf('.');
+        if (i > 0) {
+            extension = fileName.substring(i + 1).toLowerCase();
+        }
+        return extension;
+    }
 }

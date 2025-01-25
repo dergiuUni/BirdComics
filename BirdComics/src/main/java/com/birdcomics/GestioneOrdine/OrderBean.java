@@ -16,7 +16,7 @@ public class OrderBean implements Serializable {
 	private String prodName;
 	private String qty;
 	private Timestamp time;
-	private InputStream prodImage;
+	private String prodImage;
 	
 
 	public OrderBean() {
@@ -113,12 +113,12 @@ public class OrderBean implements Serializable {
 		this.time = time;
 	}
 
-	public InputStream getProdImage() {
+	public String getProdImage() {
 		return prodImage;
 	}
 
-	public void setProdImage(InputStream prodImage) {
-		this.prodImage = prodImage;
+	public void setProdImage(String string) {
+		this.prodImage = string;
 	}
 
 }

@@ -14,7 +14,7 @@ import com.birdcomics.DatabaseImplementator.IDUtil;
 public class ProductServiceDAO {
 
     public String addProduct(String prodName, String prodType, String prodInfo, double prodPrice, int prodQuantity,
-            InputStream prodImage) throws SQLException {
+            String prodImage) throws SQLException {
         String status = null;
         String prodId = IDUtil.generateId();
 
@@ -43,7 +43,7 @@ public class ProductServiceDAO {
             ps.setString(4, product.getProdInfo());
             ps.setDouble(5, product.getProdPrice());
             ps.setInt(6, product.getProdQuantity());
-            ps.setBlob(7, product.getProdImage());
+            ps.setString(7, product.getProdImage());
 
             int k = ps.executeUpdate();
 
@@ -115,7 +115,7 @@ public class ProductServiceDAO {
             ps.setString(3, updatedProduct.getProdInfo());
             ps.setDouble(4, updatedProduct.getProdPrice());
             ps.setInt(5, updatedProduct.getProdQuantity());
-            ps.setBlob(6, updatedProduct.getProdImage());
+            ps.setString(6, updatedProduct.getProdImage());
             ps.setString(7, prevProduct.getProdId());
 
             int k = ps.executeUpdate();
@@ -178,6 +178,7 @@ public class ProductServiceDAO {
                 product.setProdInfo(rs.getString(4));
                 product.setProdPrice(rs.getDouble(5));
                 product.setProdQuantity(rs.getInt(6));
+                product.setProdImage(rs.getString(7));
                 // Assuming prodImage is stored as Blob or InputStream in the database
                 // product.setProdImage(rs.getAsciiStream(7)); // Uncomment and adjust if needed
 
@@ -216,6 +217,7 @@ public class ProductServiceDAO {
                 product.setProdInfo(rs.getString(4));
                 product.setProdPrice(rs.getDouble(5));
                 product.setProdQuantity(rs.getInt(6));
+                product.setProdImage(rs.getString(7));
                 // Assuming prodImage is stored as Blob or InputStream in the database
                 // product.setProdImage(rs.getAsciiStream(7)); // Uncomment and adjust if needed
 
@@ -262,6 +264,7 @@ public class ProductServiceDAO {
                 product.setProdInfo(rs.getString("pinfo"));
                 product.setProdPrice(rs.getDouble("pprice"));
                 product.setProdQuantity(rs.getInt("pquantity"));
+                product.setProdImage(rs.getString(7));
                 // Assuming prodImage is stored as Blob or InputStream in the database
                 // product.setProdImage(rs.getAsciiStream("image")); // Uncomment and adjust if needed
 
@@ -275,34 +278,6 @@ public class ProductServiceDAO {
         }
 
         return products;
-    }
-
-    public byte[] getImage(String prodId) throws SQLException {
-        byte[] image = null;
-
-        Connection con = DBUtil.getConnection();
-
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            ps = con.prepareStatement("select image from product where pid=?");
-
-            ps.setString(1, prodId);
-
-            rs = ps.executeQuery();
-
-            if (rs.next())
-                image = rs.getBytes("image");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        DBUtil.closeConnection(ps);
-        DBUtil.closeConnection(rs);
-
-        return image;
     }
 
     public ProductBean getProductDetails(String prodId) throws SQLException {
@@ -327,6 +302,7 @@ public class ProductServiceDAO {
                 product.setProdInfo(rs.getString(4));
                 product.setProdPrice(rs.getDouble(5));
                 product.setProdQuantity(rs.getInt(6));
+                product.setProdImage(rs.getString(7));
                 // Assuming prodImage is stored as Blob or InputStream in the database
                 // product.setProdImage(rs.getAsciiStream(7)); // Uncomment and adjust if needed
             }
@@ -488,6 +464,7 @@ public class ProductServiceDAO {
                 product.setProdInfo(rs.getString("pinfo"));
                 product.setProdPrice(rs.getDouble("pprice"));
                 product.setProdQuantity(rs.getInt("pquantity"));
+                product.setProdImage(rs.getString("image"));
                 // Assuming prodImage is stored as Blob or InputStream in the database
                 // product.setProdImage(rs.getAsciiStream("image")); // Uncomment and adjust if needed
 
@@ -523,6 +500,7 @@ public class ProductServiceDAO {
                 product.setProdInfo(rs.getString("pinfo"));
                 product.setProdPrice(rs.getDouble("pprice"));
                 product.setProdQuantity(rs.getInt("pquantity"));
+                product.setProdImage(rs.getString("image"));
                 // Assuming prodImage is stored as Blob or InputStream in the database
                 // product.setProdImage(rs.getAsciiStream("image")); // Uncomment and adjust if needed
             }

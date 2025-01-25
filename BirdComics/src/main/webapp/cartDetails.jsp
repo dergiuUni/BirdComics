@@ -69,7 +69,7 @@
                         index++;
                 %>
 				<tr>
-					<td><img src="./ShowImage?pid=<%=prodId%>"
+					<td><img src="./ShowImage?image=<%=product.getProdImage()%>"
 						style="width: 50px; height: 50px;"></td>
 					<td><%=product.getProdName()%></td>
 					<td><%=product.getProdPrice()%></td>

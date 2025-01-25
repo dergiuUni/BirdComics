@@ -13,7 +13,7 @@
                             productListHtml += '<div class="col-sm-4" style="height: 350px;">';
                             productListHtml += '<div class="thumbnail">';
                             productListHtml += '<a href="./SingleProductServlet?pid=' + product.prodId + '">';
-                            productListHtml += '<img src="./ShowImage?pid=' + product.prodId + '" alt="Product" style="height: 150px; max-width: 180px">';
+                            productListHtml += '<img src="./ShowImage?image=' + product.prodImage + '" alt="Product" style="height: 150px; max-width: 180px">';
                             productListHtml += '</a>';
                             productListHtml += '<p class="productname">' + product.prodName + '</p>';
                             productListHtml += '<p class="productinfo">' + product.prodInfo.substring(0, 100) + '...</p>';
@@ -56,7 +56,7 @@
                             productListHtml += '<div class="col-sm-4" style="height: 350px;">';
                             productListHtml += '<div class="thumbnail">';
                             productListHtml += '<a href="./SingleProductServlet?pid=' + product.prodId + '">';
-                            productListHtml += '<img src="./ShowImage?pid=' + product.prodId + '" alt="Product" style="height: 150px; max-width: 180px">';
+                            productListHtml += '<img src="./ShowImage?image=' + product.prodImage + '" alt="Product" style="height: 150px; max-width: 180px">';
                             productListHtml += '</a>';
                             productListHtml += '<p class="productname">' + product.prodName + '</p>';
                             productListHtml += '<p class="productinfo">' + product.prodInfo.substring(0, 100) + '...</p>';
@@ -109,7 +109,7 @@
                                 productListHtml += '<div class="col-sm-4" style="height: 350px;">';
                                 productListHtml += '<div class="thumbnail">';
                                 productListHtml += '<a href="./SingleProductServlet?pid=' + product.prodId + '">';
-                                productListHtml += '<img src="./ShowImage?pid=' + product.prodId + '" alt="Product" style="height: 150px; max-width: 180px">';
+                                productListHtml += '<img src="./ShowImage?image=' + product.prodImage + '" alt="Product" style="height: 150px; max-width: 180px">';
                                 productListHtml += '</a>';
                                 productListHtml += '<p class="productname">' + product.prodName + '</p>';
                                 productListHtml += '<p class="productinfo">' + product.prodInfo.substring(0, 100) + '...</p>';

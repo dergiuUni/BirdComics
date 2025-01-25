@@ -66,7 +66,7 @@
                        for (ProductBean product : products) { %>
        
                            <tr>
-                               <td><img src="./ShowImage?pid=<%= product.getProdId() %>"
+                               <td><img src="./ShowImage?image=<%= product.getProdImage() %>"
                                     style="width: 50px; height: 50px;"></td>
                                <td><a href="./updateProduct.jsp?prodid=<%= product.getProdId() %>"><%= product.getProdId() %></a></td>
                                <%-- Limit name to 25 characters --%>

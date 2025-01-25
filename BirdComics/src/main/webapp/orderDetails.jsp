@@ -37,7 +37,7 @@
 					style="background-color: white; font-size: 15px; font-weight: bold;">
 					<c:forEach var="order" items="${orders}">
 						<tr>
-							<td><img src="./ShowImage?pid=${order.productId}"
+							<td><img src="./ShowImage?image=${order.prodImage}"
 								style="width: 50px; height: 50px;"></td>
 							<td>${order.prodName}</td>
 							<td>${order.orderId}</td>

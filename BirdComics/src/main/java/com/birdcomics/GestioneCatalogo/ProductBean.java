@@ -15,11 +15,11 @@ public class ProductBean implements Serializable {
     private String prodInfo;
     private double prodPrice;
     private int prodQuantity;
-    private InputStream prodImage;
+    private String prodImage;
     private boolean active; // New field for active status
 
     public ProductBean(String prodId, String prodName, String prodType, String prodInfo, double prodPrice,
-                       int prodQuantity, InputStream prodImage) {
+                       int prodQuantity, String prodImage) {
         super();
         this.prodId = prodId;
         this.prodName = prodName;
@@ -78,11 +78,11 @@ public class ProductBean implements Serializable {
         this.prodQuantity = prodQuantity;
     }
 
-    public InputStream getProdImage() {
+    public String getProdImage() {
         return prodImage;
     }
 
-    public void setProdImage(InputStream prodImage) {
+    public void setProdImage(String prodImage) {
         this.prodImage = prodImage;
     }
 
