@@ -1,10 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app
-    version="4.0"
-    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-    xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee"
-    xmlns:xml="http://www.w3.org/XML/1998/namespace"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
-  <display-name>Archetype Created Web Application</display-name>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>shopping-cart</display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- AuthenticationFilter -->
+	<filter>
+		<filter-name>AuthenticationFilter</filter-name>
+		<filter-class>com.birdcomics.GestioneProfili.AuthenticationFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>AuthenticationFilter</filter-name>
+		<url-pattern>/cartDetails.jsp</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AuthenticationFilter</filter-name>
+		<url-pattern>/userProfile.jsp</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AuthenticationFilter</filter-name>
+		<url-pattern>/orderDetails.jsp</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AuthenticationFilter</filter-name>
+		<url-pattern>/payment.jsp</url-pattern>
+	</filter-mapping>
+
+	<!-- AdminFilter -->
+	<filter>
+		<filter-name>AdminFilter</filter-name>
+		<filter-class>com.birdcomics.GestioneProfili.Gestore.AdminFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/adminStock.jsp</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/adminStock</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/addProduct.jsp</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/AddProductSrv</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/RemoveProductSrv</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/UpdateProductSrv</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/removeProduct.jsp</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/updateProductById.jsp</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/updateProduct.jsp</url-pattern>
+	</filter-mapping>
+	
+		<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/shippedItems.jsp</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/ShipmentServlet</url-pattern>
+	</filter-mapping>
+	
+	<!-- EmptyCartRedirectFilter -->
+	<filter>
+		<filter-name>EmptyCartRedirectFilter</filter-name>
+		<filter-class>com.birdcomics.GestioneCarrello.EmptyCartRedirectFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>EmptyCartRedirectFilter</filter-name>
+		<url-pattern>/payment.jsp</url-pattern>
+	</filter-mapping>
+
 </web-app>
