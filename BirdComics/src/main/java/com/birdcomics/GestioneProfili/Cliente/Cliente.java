@@ -2,9 +2,11 @@ package com.birdcomics.GestioneProfili.Cliente;
 
 import java.util.Date;
 
-import com.birdcomics.GestioneProfili.Utente;
+import com.birdcomics.GestioneProfili.UserBean;
 
-public class Cliente extends Utente{
+public class Cliente extends UserBean{
+	private CartBean carrello; 
+	
 	protected void setPassword(String password) {
 		this.password = password;
 	}
@@ -21,8 +23,5 @@ public class Cliente extends Utente{
 		this.numeroTelefono = numeroTelefono;
 	}
 
-	protected void setDataNascita(Date dataNascita) {
-		this.dataNascita = dataNascita;
-	}	
 	
 }

@@ -15,17 +15,12 @@ public class UpdateProfileServlet extends HttpServlet {
 		String userName = (String) request.getSession().getAttribute("username");
 		String password = (String) request.getSession().getAttribute("password");
 
-		String fullName = request.getParameter("fullName");
-		long phone = Long.parseLong(request.getParameter("phone")); // Convert to long
-		String address = request.getParameter("address");
-		int pinCode = Integer.parseInt(request.getParameter("pinCode")); // Convert to int
-
 		// Retrieve user from session
 
 		if (userName != null) {
 			UserServiceDAO dao = new UserServiceDAO();
 			try {
-				dao.updateUserDetails(userName, password, fullName, phone, address, pinCode);		
+				dao.updateUserDetails(userName, password, request.getParameter("fullName"), request.getParameter("cognome"), request.getParameter("telefono"), request.getParameter("nomeCitta"), request.getParameter("via"), Integer.parseInt(request.getParameter("numeroCivico")), request.getParameter("cvc"));		
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

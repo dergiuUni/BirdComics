@@ -1,85 +1,72 @@
 package com.birdcomics.GestioneProfili;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
 
 @SuppressWarnings("serial")
 public class UserBean implements Serializable {
+	
+	protected String email, password, nome, cognome, numeroTelefono;
+    protected java.sql.Date dataNascita;
+	protected IndirizzoBean indirizzo;
+	protected RuoloBean ruolo;
+	
 
-    public UserBean() {
+
+	public UserBean() {
     }
 
-    public UserBean(String userName, Long mobileNo, String emailId, String address, int pinCode, String password, String userType) {
-        super();
-        this.name = userName;
-        this.mobile = mobileNo;
-        this.email = emailId;
-        this.address = address;
-        this.pinCode = pinCode;
-        this.password = password;
-        this.userType = userType;
-    }
+	public UserBean(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, IndirizzoBean indirizzo, RuoloBean ruolo) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.numeroTelefono = numeroTelefono;
+		this.dataNascita = dataNascita;
+		this.indirizzo = indirizzo;
+		this.ruolo = ruolo;
+	}
 
-    private String name;
-    private Long mobile;
-    private String email;
-    private String address;
-    private int pinCode;
-    private String password;
-    private String userType; // Nuovo campo usertype
+	public  String getEmail() {
+		return email;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public  String getPassword() {
+		return password;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public  String getNome() {
+		return nome;
+	}
 
-    public Long getMobile() {
-        return mobile;
-    }
+	public  String getCognome() {
+		return cognome;
+	}
+	
+	public  String getNumeroTelefono() {
+		return numeroTelefono;
+	}
 
-    public void setMobile(Long mobile) {
-        this.mobile = mobile;
-    }
+	public  Date getDataNascita() {
+		return dataNascita;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public IndirizzoBean getIndirizzo() {
+		return indirizzo;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setIndirizzo(IndirizzoBean indirizzo) {
+		this.indirizzo = indirizzo;
+	}
+	
+    protected RuoloBean getRuoloBean() {
+		return ruolo;
+	}
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public int getPinCode() {
-        return pinCode;
-    }
-
-    public void setPinCode(int pinCode) {
-        this.pinCode = pinCode;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
+	protected void setRuoloBean(RuoloBean ruoloBean) {
+		this.ruolo = ruoloBean;
+	}
 }

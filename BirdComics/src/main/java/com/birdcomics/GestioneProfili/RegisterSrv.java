@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
+
 
 /**
  * Servlet implementation class RegisterSrv
@@ -31,12 +33,11 @@ public class RegisterSrv extends HttpServlet {
 		String confirmPassword = request.getParameter("confirmPassword");
 		String status = "";
 		if (password != null && password.equals(confirmPassword)) {
-			UserBean user = new UserBean(userName, mobileNo, emailId, address, pinCode, password, "guest");
 
 			UserServiceDAO dao = new UserServiceDAO();
 
 			try {
-				status = dao.registerUser(user);
+				status = dao.registerUser(request.getParameter("email"), request.getParameter("password"), request.getParameter("username"), request.getParameter("cognome"), request.getParameter("mobile"), java.sql.Date.valueOf(request.getParameter("dataNascita")), request.getParameter("nomeCitta"), request.getParameter("via"), Integer.valueOf(request.getParameter("numeroCivico")), request.getParameter("cvc"));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

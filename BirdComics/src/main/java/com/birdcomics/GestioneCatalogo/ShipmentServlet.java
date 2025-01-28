@@ -76,7 +76,7 @@ public class ShipmentServlet extends HttpServlet {
             for (OrderBean order : orders) {
                 String transId = order.getTransactionId();
                 String userId = new TransServiceDAO().getUserId(transId);
-                String userAddr = new UserServiceDAO().getUserAddr(userId);
+                String userAddr = new UserServiceDAO().getUserAddr(userId).toString();
                 String dateTime =  new TransServiceDAO().getDateTime(transId);
 
                 ArrayUserId.add(userId);

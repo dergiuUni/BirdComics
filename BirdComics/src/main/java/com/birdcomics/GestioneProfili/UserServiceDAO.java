@@ -4,25 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.birdcomics.DatabaseImplementator.DBUtil;
+import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
+import com.birdcomics.GestioneIndirizzo.IndirizzoDao;
 
 
 public class UserServiceDAO {
 
 
-	public String registerUser(String userName, Long mobileNo, String emailId, String address, int pinCode,
-			String password, String usertype) throws SQLException {
-
-		UserBean user = new UserBean(userName, mobileNo, emailId, address, pinCode, password, usertype);
-
-		String status = registerUser(user);
-
-		return status;
-	}
-
-	
-	public String registerUser(UserBean user) throws SQLException {
+	public String registerUser(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, String nomeCitta, String via, int numeroCivico, String cvc) throws SQLException {
+		IndirizzoBean indirizzo = new IndirizzoBean(nomeCitta, via, numeroCivico, cvc);
+		UserBean user = new UserBean(email, password, nome, cognome, numeroTelefono, dataNascita, indirizzo, RuoloBean.Cliente);
 
 	    String status = "User Registration Failed!";
 
@@ -42,15 +37,27 @@ public class UserServiceDAO {
 
 	    try {
 	        // Modifica della query per includere il campo usertype
-	        ps = con.prepareStatement("INSERT INTO user (email, name, mobile, address, pincode, password, usertype) VALUES (?, ?, ?, ?, ?, ?, ?)");
+	    	IndirizzoDao in = new IndirizzoDao(con);
+	    	if(!in.ifExists(nomeCitta, via, numeroCivico, cvc)) {
+	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cvc) VALUES (?, ?, ?, ?)");
+	    		ps.setString(1, indirizzo.getNomeCitta());
+		        ps.setString(2, indirizzo.getVia());
+		        ps.setInt(3, indirizzo.getNumeroCivico());
+		        ps.setString(4, indirizzo.getCvc());
+		        ps.executeUpdate();
+	    	}
+	    	
+	        ps = con.prepareStatement("INSERT INTO Utente (email, pass, nome, cognome, telefono, nomeCitta, via, numeroCivico, cvc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 	        ps.setString(1, user.getEmail());
-	        ps.setString(2, user.getName());
-	        ps.setLong(3, user.getMobile());
-	        ps.setString(4, user.getAddress());
-	        ps.setInt(5, user.getPinCode());
-	        ps.setString(6, user.getPassword());
-	        ps.setString(7, user.getUserType()); // Assumendo che getUserType() ritorni "guest"
+	        ps.setString(2, user.getPassword());
+	        ps.setString(3, user.getNome());
+	        ps.setString(4, user.getCognome());
+	        ps.setString(5, user.getNumeroTelefono());
+	        ps.setString(6, indirizzo.getNomeCitta());
+	        ps.setString(7, indirizzo.getVia());
+	        ps.setInt(8, indirizzo.getNumeroCivico());
+	        ps.setString(9, indirizzo.getCvc());
 
 	        int k = ps.executeUpdate();
 
@@ -79,7 +86,7 @@ public class UserServiceDAO {
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement("select * from user where email=?");
+			ps = con.prepareStatement("select * from Utente where email=?");
 
 			ps.setString(1, emailId);
 
@@ -110,7 +117,7 @@ public class UserServiceDAO {
 
 		try {
 
-			ps = con.prepareStatement("select * from user where email=? and password=?");
+			ps = con.prepareStatement("select * from Utente where email=? and pass=?");
 
 			ps.setString(1, emailId);
 			ps.setString(2, password);
@@ -141,20 +148,15 @@ public class UserServiceDAO {
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement("select * from user where email=? and password=?");
+			ps = con.prepareStatement("select * from Utente where email=? and pass=?");
 			ps.setString(1, emailId);
 			ps.setString(2, password);
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
-				user = new UserBean();
-				user.setName(rs.getString("name"));
-				user.setMobile(rs.getLong("mobile"));
-				user.setEmail(rs.getString("email"));
-				user.setAddress(rs.getString("address"));
-				user.setPinCode(rs.getInt("pincode"));
-				user.setPassword(rs.getString("password"));
-
+				
+				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cvc"));
+				user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in, RuoloBean.Cliente);
 				return user;
 			}
 
@@ -168,7 +170,7 @@ public class UserServiceDAO {
 		return user;
 	}
 
-
+// arrivato qua
 	public String getFName(String emailId) throws SQLException {
 		String fname = "";
 
@@ -178,7 +180,7 @@ public class UserServiceDAO {
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement("select name from user where email=?");
+			ps = con.prepareStatement("select nome from Utente where email=?");
 			ps.setString(1, emailId);
 
 			rs = ps.executeQuery();
@@ -199,69 +201,84 @@ public class UserServiceDAO {
 	}
 
 	
-	public String getUserAddr(String userId) throws SQLException {
+	public IndirizzoBean getUserAddr(String userId) throws SQLException {
 		String userAddr = "";
 
 		Connection con = DBUtil.getConnection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		IndirizzoBean in = null;
 
 		try {
-			ps = con.prepareStatement("select address from user where email=?");
+			
+			ps = con.prepareStatement("select nomeCitta, via, numeroCivico, cvc from Utente where email=?");
 
 			ps.setString(1, userId);
-
 			rs = ps.executeQuery();
 
 			if (rs.next())
-				userAddr = rs.getString(1);
+				in = new IndirizzoBean(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
 
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
 
-		return userAddr;
+		return in;
 	}
 	
-	public String getUserType(String emailId) throws SQLException {
+	public List<RuoloBean> getUserType(String emailId) throws SQLException {
 	    String userType = "";
-
+	    List<RuoloBean> ruolo = new ArrayList<RuoloBean>();
+	    
 	    try (Connection con = DBUtil.getConnection();
-	         PreparedStatement ps = con.prepareStatement("select usertype from user where email=?")) {
+	         PreparedStatement ps = con.prepareStatement("select idRuolo from Utente_Ruolo where emailUtente=?")) {
 
 	        ps.setString(1, emailId);
 	        try (ResultSet rs = ps.executeQuery()) {
 	            if (rs.next()) {
-	                userType = rs.getString("usertype");
+            		ruolo.add(RuoloBean.fromString(rs.getString("usertype")));
+	                
 	            }
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 
-	    return userType;
+	    return ruolo;
 	}
 
 
-
-	public void updateUserDetails(String userName, String password, String fullName, long phone, String address,
-			int pinCode) throws SQLException {
+// vedere se mettere i limiti e modificarlo
+	public void updateUserDetails(String email, String password, String nome, String cognome, String telefono, String nomeCitta, String via, int numeroCivico, String cvc) throws SQLException {
+	
 	    Connection con = DBUtil.getConnection();
 	    PreparedStatement ps = null;
 	 
-
+	    	IndirizzoBean indirizzo = new IndirizzoBean(nomeCitta, via, numeroCivico, cvc);
+	    	IndirizzoDao in = new IndirizzoDao(con);
+	    	if(!in.ifExists(nomeCitta, via, numeroCivico, cvc)) {
+	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cvc) VALUES (?, ?, ?, ?)");
+	    		ps.setString(1, indirizzo.getNomeCitta());
+		        ps.setString(2, indirizzo.getVia());
+		        ps.setInt(3, indirizzo.getNumeroCivico());
+		        ps.setString(4, indirizzo.getCvc());
+		        ps.executeUpdate();
+	    	}
 	        // Prepare the SQL update statement
-	        String updateSQL = "UPDATE user SET name = ?, mobile = ?, address = ?, pincode = ? WHERE email = ? AND password = ?";
+	        String updateSQL = "UPDATE Utente SET nome = ?, cognome = ?, telefono = ?, nomeCitta = ?, via = ?, numeroCivico = ?, cvc = ? WHERE email = ? AND pass = ?";
 	        ps = con.prepareStatement(updateSQL);
 
 	        // Set the parameters for the update statement
-	        ps.setString(1, fullName);
-	        ps.setLong(2, phone);
-	        ps.setString(3, address);
-	        ps.setInt(4, pinCode);
-	        ps.setString(5, userName);
-	        ps.setString(6, password);
+	        ps.setString(1, nome);
+	        ps.setString(2, cognome);
+	        ps.setString(3, telefono);
+	        ps.setString(4, indirizzo.getNomeCitta());
+	        ps.setString(5, indirizzo.getVia());
+	        ps.setInt(6, indirizzo.getNumeroCivico());
+	        ps.setString(7, indirizzo.getCvc());
+	        ps.setString(8, email);
+	        ps.setString(9, password);
 
 	        // Execute the update statement
 	        ps.executeUpdate();
