@@ -67,6 +67,7 @@
 								<li><a href="./LogoutSrv">Logout</a></li>
 							</c:when>
 							<c:otherwise>
+								<li><a href="CartDetailsServlet">Carrello</a></li>
 								<li><a href="login.jsp">Login</a></li>
 								<li><a href="register.jsp">Registrati</a></li>
 							</c:otherwise>

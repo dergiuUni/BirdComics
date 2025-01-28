@@ -51,13 +51,15 @@ public class UpdateToCart extends HttpServlet {
 
 		ProductBean product = null;
 		try {
-			product = productDao.getProductDetails(prodId);
+			product = productDao.getProductsByID(prodId);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		int availableQty = product.getProdQuantity();
+		
+		//int availableQty = product.getProdQuantity();
+		int availableQty = 500;
 
 		PrintWriter pw = response.getWriter();
 
@@ -73,7 +75,7 @@ public class UpdateToCart extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			status = "Only " + availableQty + " no of " + product.getProdName()
+			status = "Only " + availableQty + " no of " + product.getName()
 					+ " are available in the shop! So we are adding only " + availableQty + " products into Your Cart"
 					+ "";
 

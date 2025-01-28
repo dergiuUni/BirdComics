@@ -271,39 +271,7 @@ public class ProductServiceDAO {
         return products;
     }
 
-    public ProductBean getProductDetails(String prodId) throws SQLException {
-        ProductBean product = null;
-
-        Connection con = DBUtil.getConnection();
-
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            ps = con.prepareStatement("select * from product where pid=? AND active = 1");
-
-            ps.setString(1, prodId);
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                product = new ProductBean();
-                product.setId(rs.getInt(1));
-                product.setName(rs.getString(2));
-                product.setDescription(rs.getString(3));
-                product.setPrice(rs.getFloat(4));
-                // Assuming prodImage is stored as Blob or InputStream in the database
-                // product.setProdImage(rs.getAsciiStream(7)); // Uncomment and adjust if needed
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBUtil.closeConnection(ps);
-            DBUtil.closeConnection(rs);
-        }
-
-        return product;
-    }
+   
 /*
     public String updateProductWithoutImage(String prevProductId, ProductBean updatedProduct) throws SQLException {
         String status = "Product Updation Failed!";
