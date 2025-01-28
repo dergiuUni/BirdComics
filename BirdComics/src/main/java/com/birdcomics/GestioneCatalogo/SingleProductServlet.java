@@ -18,12 +18,12 @@ public class SingleProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String pid = request.getParameter("pid");
+		String id = request.getParameter("pid");
 
-        if (pid != null) {
+        if (id != null) {
         	ProductServiceDAO dao = new ProductServiceDAO();
         	try {
-				ProductBean product = dao.getProductsByID(pid);
+				ProductBean product = dao.getProductsByID(id);
 				request.setAttribute("product", product);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

@@ -35,7 +35,7 @@ public class DBUtil {
     public static Connection createDBConnection() throws SQLException {
         String ip = "localhost";
         String port = "3306";
-        String db = "shopping-cart";
+        String db = "BirdComics";
         String username = "root";
         String password = "root";
 

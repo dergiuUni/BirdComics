@@ -67,9 +67,9 @@ public class CartDetailsServlet extends HttpServlet {
         for (CartBean item : cartItems) {
             String prodId = item.getProdId();
             int prodQuantity = item.getQuantity();
-            ProductBean product = new ProductServiceDAO().getProductDetails(prodId);
+            ProductBean product = new ProductServiceDAO().getProductsByID(prodId);
             products.add(product);
-            double currAmount = product.getProdPrice() * prodQuantity;
+            double currAmount = product.getPrice() * prodQuantity;
             totAmount += currAmount;
         }
         

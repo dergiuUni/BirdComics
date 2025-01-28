@@ -29,10 +29,10 @@ public class ProductListServlet extends HttpServlet {
             String message;
 
             if (type != null && !type.isEmpty()) {
-                products = prodDao.getAllProductsByType(type);
+                products = prodDao.getAllProducts();
                 message = "Products in " + type;
             } else if (search != null && !search.isEmpty()) {
-                products = prodDao.searchAllProducts(search);
+                products = prodDao.getAllProducts();
                 message = "Search results for '" + search + "'";
             } else {
                 products = prodDao.getAllProducts();

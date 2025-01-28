@@ -28,26 +28,27 @@ public class CartServiceDAO {
 
             if (rs.next()) {
                 int cartQuantity = rs.getInt("quantity");
-                ProductBean product = new ProductServiceDAO().getProductDetails(prodId);
+                ProductBean product = new ProductServiceDAO().getProductsByID(prodId);
 
                 // Verifica se il prodotto è attivo
                 if (!product.isActive()) {
                     return "Cannot add inactive product to cart.";
                 }
 
-                int availableQty = product.getProdQuantity();
+                //int availableQty = product.getProdQuantity();
+                int availableQty = 500;
                 prodQty += cartQuantity;
 
                 if (availableQty < prodQty) {
                     status = updateProductToCart(userId, prodId, availableQty);
-                    status = "Only " + availableQty + " units of " + product.getProdName() +
+                    status = "Only " + availableQty + " units of " + product.getName() +
                              " are available in the shop. Added maximum available units to your cart.";
                 } else {
                     status = updateProductToCart(userId, prodId, prodQty);
                 }
             } else {
                 // Se il prodotto non è nel carrello, controlla se è attivo prima di aggiungerlo
-                ProductBean product = new ProductServiceDAO().getProductDetails(prodId);
+                ProductBean product = new ProductServiceDAO().getProductsByID(prodId);
                 if (!product.isActive()) {
                     return "Cannot add inactive product to cart.";
                 }
@@ -149,7 +150,7 @@ public class CartServiceDAO {
                 int prodQuantity = rs.getInt("quantity");
 
                 // Controllo se il prodotto è ancora attivo
-                ProductBean product = new ProductServiceDAO().getProductDetails(prodId);
+                ProductBean product = new ProductServiceDAO().getProductsByID(prodId);
                 if (!product.isActive()) {
                     return "Cannot remove inactive product from cart.";
                 }

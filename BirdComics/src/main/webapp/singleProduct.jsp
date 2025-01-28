@@ -26,25 +26,25 @@
     <div class="prod-container">
         <!-- Left Column / Product Image -->
         <div class="left-column">
-            <img src="./ShowImage?image=<%= product.getProdImage() %>" alt="Product">
+            <img src="./ShowImage?image=<%= product.getImage() %>" alt="Product">
         </div>
         
         <!-- Right Column / Product Details -->
         <div class="right-column">
             <div class="product-description">
            <h4 style="display: inline;">Genere:</h4>
-                <span><%=product.getProdType() %></span>
-                <h4><%=product.getProdName()%></h4>
+                <span></span>
+                <h4><%=product.getName()%></h4>
             </div>
             
             <hr>
             
             <!-- Product Pricing and Add to Cart Button -->
             <div class="product-price">
-                <span><%=product.getProdPrice()%>&euro;</span>
+                <span><%=product.getPrice()%>&euro;</span>
                 <form method="post" action="AddToCart">
-                    <input type="hidden" name="pid" value="<%= product.getProdId() %>">
-                    <input type="number" name="pqty" value="1" min="1" max="<%= product.getProdQuantity() %>">
+                    <input type="hidden" name="pid" value="<%= product.getId() %>">
+                    <input type="number" name="pqty" value="1" min="1" max="">
                     <button type="submit" class="btn btn-success">Add to Cart</button>
                 </form>
             </div>
@@ -59,7 +59,7 @@
     <hr>
     <h4>Descrizione</h4>
     <hr>
-    <p><%=product.getProdInfo()%></p>
+    <p><%=product.getDescription()%></p>
 </div>
 
 </body>

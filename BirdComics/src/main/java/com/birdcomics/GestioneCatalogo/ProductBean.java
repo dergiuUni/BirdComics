@@ -1,89 +1,60 @@
 package com.birdcomics.GestioneCatalogo;
 
-import java.io.InputStream;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class ProductBean implements Serializable {
 
+    private int id; // corrisponde a id nella tabella Fumetto
+    private String name; // corrisponde a nome
+    private String description; // corrisponde a descrizione
+    private Float price; // corrisponde a prezzo
+    private String image;
+    private boolean active; // corrisponde a active
+
     public ProductBean() {
     }
 
-    private String prodId;
-    private String prodName;
-    private String prodType;
-    private String prodInfo;
-    private double prodPrice;
-    private int prodQuantity;
-    private String prodImage;
-    private boolean active; // New field for active status
-
-    public ProductBean(String prodId, String prodName, String prodType, String prodInfo, double prodPrice,
-                       int prodQuantity, String prodImage) {
-        super();
-        this.prodId = prodId;
-        this.prodName = prodName;
-        this.prodType = prodType;
-        this.prodInfo = prodInfo;
-        this.prodPrice = prodPrice;
-        this.prodQuantity = prodQuantity;
-        this.prodImage = prodImage;
+    public ProductBean(int id, String name, String description, float price, String image, boolean active) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.image = image;
+        this.active = active;
     }
 
-    public String getProdId() {
-        return prodId;
+    // Getter e Setter
+    public int getId() {
+        return id;
     }
 
-    public void setProdId(String prodId) {
-        this.prodId = prodId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getProdName() {
-        return prodName;
+    public String getName() {
+        return name;
     }
 
-    public void setProdName(String prodName) {
-        this.prodName = prodName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getProdType() {
-        return prodType;
+    public String getDescription() {
+        return description;
     }
 
-    public void setProdType(String prodType) {
-        this.prodType = prodType;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getProdInfo() {
-        return prodInfo;
+    public double getPrice() {
+        return price;
     }
 
-    public void setProdInfo(String prodInfo) {
-        this.prodInfo = prodInfo;
-    }
-
-    public double getProdPrice() {
-        return prodPrice;
-    }
-
-    public void setProdPrice(double prodPrice) {
-        this.prodPrice = prodPrice;
-    }
-
-    public int getProdQuantity() {
-        return prodQuantity;
-    }
-
-    public void setProdQuantity(int prodQuantity) {
-        this.prodQuantity = prodQuantity;
-    }
-
-    public String getProdImage() {
-        return prodImage;
-    }
-
-    public void setProdImage(String prodImage) {
-        this.prodImage = prodImage;
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public boolean isActive() {
@@ -93,4 +64,12 @@ public class ProductBean implements Serializable {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 }

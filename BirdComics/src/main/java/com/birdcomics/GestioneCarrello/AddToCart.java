@@ -42,12 +42,13 @@ public class AddToCart extends HttpServlet {
         ProductBean product = null;
 
         try {
-            product = productDao.getProductDetails(prodId);
+            product = productDao.getProductsByID(prodId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        int availableQty = product.getProdQuantity();
+        //int availableQty = product.getProdQuantity();
+        int availableQty = 500;
         int cartQty = 0;
 
         try {
@@ -70,7 +71,7 @@ public class AddToCart extends HttpServlet {
                 e.printStackTrace();
             }
 
-            String status = "La quantità richiesta di " + product.getProdName() + " non è disponibile al momento. "
+            String status = "La quantità richiesta di " + product.getName() + " non è disponibile al momento. "
                             + "Abbiamo aggiunto solo " + availableQty + " unità al tuo carrello. "
                             + "Ti avviseremo quando il prodotto sarà disponibile nuovamente.";
 
