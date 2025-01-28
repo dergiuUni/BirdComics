@@ -71,6 +71,7 @@ public class CartDetailsServlet extends HttpServlet {
             products.add(product);
             double currAmount = product.getPrice() * prodQuantity;
             totAmount += currAmount;
+            System.out.println("product:" + product);
         }
         
      
