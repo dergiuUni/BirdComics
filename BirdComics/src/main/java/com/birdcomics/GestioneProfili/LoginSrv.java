@@ -2,6 +2,9 @@ package com.birdcomics.GestioneProfili;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,7 +50,13 @@ public class LoginSrv extends HttpServlet {
             session.setAttribute("password", password);
 
             try {
-                String userType = udao.getUserType(userName);
+                List<String> userType = new ArrayList<String>();
+                List<RuoloBean> ruolo = udao.getUserType(userName);
+                for (RuoloBean ruoloBean : ruolo) {
+					userType.add(ruoloBean.toString());	
+				} 
+                
+                
                 session.setAttribute("usertype", userType);
 
                 if ("admin".equals(userType)) {

@@ -21,7 +21,4 @@ public class GestoreGenerale extends Gestore{
 		this.numeroTelefono = numeroTelefono;
 	}
 
-	protected void setDataNascita(Date dataNascita) {
-		this.dataNascita = dataNascita;
-	}	
 }
