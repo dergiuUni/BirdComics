@@ -134,6 +134,7 @@ public class UserServiceDAO {
 
 		DBUtil.closeConnection(ps);
 		DBUtil.closeConnection(rs);
+
 		return status;
 	}
 
@@ -156,7 +157,8 @@ public class UserServiceDAO {
 			if (rs.next()) {
 				
 				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cvc"));
-				user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in, RuoloBean.Cliente);
+				user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in,  RuoloBean.Cliente);
+				System.out.println("sono qua 2");
 				return user;
 			}
 
@@ -166,11 +168,10 @@ public class UserServiceDAO {
 
 		DBUtil.closeConnection(ps);
 		DBUtil.closeConnection(rs);
-
+		System.out.println(user.getEmail());
 		return user;
 	}
 
-// arrivato qua
 	public String getFName(String emailId) throws SQLException {
 		String fname = "";
 
@@ -237,7 +238,7 @@ public class UserServiceDAO {
 	        ps.setString(1, emailId);
 	        try (ResultSet rs = ps.executeQuery()) {
 	            if (rs.next()) {
-            		ruolo.add(RuoloBean.fromString(rs.getString("usertype")));
+            		ruolo.add(RuoloBean.fromString(rs.getString("idRuolo")));
 	                
 	            }
 	        }
