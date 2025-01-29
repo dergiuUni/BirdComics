@@ -65,14 +65,14 @@
                         int prodQuantity = item.getQuantity();
                         
                         ProductBean product = products.get(index);
-                        double currAmount = product.getProdPrice() * prodQuantity;
+                        double currAmount = product.getPrice() * prodQuantity;
                         index++;
                 %>
 				<tr>
-					<td><img src="./ShowImage?image=<%=product.getProdImage()%>"
+					<td><img src="./ShowImage?image=<%=product.getImage()%>"
 						style="width: 50px; height: 50px;"></td>
-					<td><%=product.getProdName()%></td>
-					<td><%=product.getProdPrice()%></td>
+					<td><%=product.getName()%></td>
+					<td><%=product.getPrice()%></td>
 					<td>
 						<form method="post" action="./UpdateToCart">
 							<input type="number" name="pqty" value="<%=prodQuantity%>"

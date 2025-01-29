@@ -21,7 +21,7 @@ public class CartServiceDAO {
         ResultSet rs = null;
 
         try {
-            ps = con.prepareStatement("SELECT * FROM usercart WHERE username=? AND prodid=?");
+            ps = con.prepareStatement("SELECT * FROM CarrelloCliente WHERE id=? AND idFumetto=?");
             ps.setString(1, userId);
             ps.setString(2, prodId);
             rs = ps.executeQuery();
@@ -53,7 +53,7 @@ public class CartServiceDAO {
                     return "Cannot add inactive product to cart.";
                 }
 
-                ps = con.prepareStatement("INSERT INTO usercart VALUES (?, ?, ?)");
+                ps = con.prepareStatement("INSERT INTO CarrelloCliente VALUES (?, ?, ?)");
                 ps.setString(1, userId);
                 ps.setString(2, prodId);
                 ps.setInt(3, prodQty);
@@ -82,18 +82,17 @@ public class CartServiceDAO {
         ResultSet rs = null;
 
         try {
-            ps = con.prepareStatement("SELECT uc.username, uc.prodid, uc.quantity, p.active " +
-                                       "FROM usercart uc " +
-                                       "JOIN product p ON uc.prodid = p.pid " +
-                                       "WHERE uc.username=? AND p.active = 1 and p.pquantity > 0");
+            ps = con.prepareStatement("SELECT uc.id, uc.idFumetto, uc.quantita, p.active FROM CarrelloCliente uc \r\n"
+            		+ "JOIN Fumetto p ON uc.idFumetto = p.id WHERE uc.id=? AND p.active = 1;");
+            //qui bisogna controllare quantita > 0  and p.quantita > 0
             ps.setString(1, userId);
             rs = ps.executeQuery();
 
             while (rs.next()) {
                 CartBean cart = new CartBean();
-                cart.setUserId(rs.getString("username"));
-                cart.setProdId(rs.getString("prodid"));
-                cart.setQuantity(rs.getInt("quantity"));
+                cart.setUserId(rs.getString("id"));
+                cart.setProdId(rs.getString("idFumetto"));
+                cart.setQuantity(rs.getInt("quantita"));
                 items.add(cart);
             }
         } catch (SQLException e) {
@@ -114,7 +113,7 @@ public class CartServiceDAO {
         ResultSet rs = null;
 
         try {
-            ps = con.prepareStatement("SELECT SUM(quantity) FROM usercart WHERE username=?");
+            ps = con.prepareStatement("SELECT SUM(quantita) FROM CarrelloCliente WHERE id=?");
             ps.setString(1, userId);
             rs = ps.executeQuery();
 
@@ -141,13 +140,13 @@ public class CartServiceDAO {
         ResultSet rs = null;
 
         try {
-            ps = con.prepareStatement("SELECT * FROM usercart WHERE username=? AND prodid=?");
+            ps = con.prepareStatement("SELECT * FROM CarrelloCliente WHERE id=? AND idFumetto=?");
             ps.setString(1, userId);
             ps.setString(2, prodId);
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                int prodQuantity = rs.getInt("quantity");
+                int prodQuantity = rs.getInt("quantita");
 
                 // Controllo se il prodotto è ancora attivo
                 ProductBean product = new ProductServiceDAO().getProductsByID(prodId);
@@ -158,7 +157,7 @@ public class CartServiceDAO {
                 prodQuantity -= 1;
 
                 if (prodQuantity > 0) {
-                    ps2 = con.prepareStatement("UPDATE usercart SET quantity=? WHERE username=? AND prodid=?");
+                    ps2 = con.prepareStatement("UPDATE CarrelloCliente SET quantita=? WHERE id=? AND idFumetto=?");
                     ps2.setInt(1, prodQuantity);
                     ps2.setString(2, userId);
                     ps2.setString(3, prodId);
@@ -168,7 +167,7 @@ public class CartServiceDAO {
                         status = "Product Successfully removed from the Cart!";
                     }
                 } else if (prodQuantity <= 0) {
-                    ps2 = con.prepareStatement("DELETE FROM usercart WHERE username=? AND prodid=?");
+                    ps2 = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=? AND idFumetto=?");
                     ps2.setString(1, userId);
                     ps2.setString(2, prodId);
 
@@ -199,7 +198,7 @@ public class CartServiceDAO {
         PreparedStatement ps = null;
 
         try {
-            ps = con.prepareStatement("DELETE FROM usercart WHERE username=? AND prodid=?");
+            ps = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=? AND idFumetto=?");
             ps.setString(1, userId);
             ps.setString(2, prodId);
 
@@ -226,14 +225,14 @@ public class CartServiceDAO {
         ResultSet rs = null;
 
         try {
-            ps = con.prepareStatement("SELECT * FROM usercart WHERE username=? AND prodid=?");
+            ps = con.prepareStatement("SELECT * FROM CarrelloCliente WHERE id=? AND idFumetto=?");
             ps.setString(1, userId);
             ps.setString(2, prodId);
             rs = ps.executeQuery();
 
             if (rs.next()) {
                 if (prodQty > 0) {
-                    ps2 = con.prepareStatement("UPDATE usercart SET quantity=? WHERE username=? AND prodid=?");
+                    ps2 = con.prepareStatement("UPDATE CarrelloCliente SET quantita=? WHERE id=? AND idFumetto=?");
                     ps2.setInt(1, prodQty);
                     ps2.setString(2, userId);
                     ps2.setString(3, prodId);
@@ -243,7 +242,7 @@ public class CartServiceDAO {
                         status = "Product Successfully Updated to Cart!";
                     }
                 } else if (prodQty == 0) {
-                    ps2 = con.prepareStatement("DELETE FROM usercart WHERE username=? AND prodid=?");
+                    ps2 = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=? AND idFumetto=?");
                     ps2.setString(1, userId);
                     ps2.setString(2, prodId);
 
@@ -253,7 +252,7 @@ public class CartServiceDAO {
                     }
                 }
             } else {
-                ps2 = con.prepareStatement("INSERT INTO usercart VALUES (?, ?, ?)");
+                ps2 = con.prepareStatement("INSERT INTO CarrelloCliente VALUES (?, ?, ?)");
                 ps2.setString(1, userId);
                 ps2.setString(2, prodId);
                 ps2.setInt(3, prodQty);
@@ -283,7 +282,7 @@ public class CartServiceDAO {
         ResultSet rs = null;
 
         try {
-            ps = con.prepareStatement("SELECT SUM(quantity) FROM usercart WHERE username=? AND prodid=?");
+            ps = con.prepareStatement("SELECT SUM(quantita) FROM CarrelloCliente WHERE id=? AND idFumetto=?");
             ps.setString(1, userId);
             ps.setString(2, prodId);
             rs = ps.executeQuery();
@@ -310,7 +309,7 @@ public class CartServiceDAO {
         ResultSet rs = null;
 
         try {
-            ps = con.prepareStatement("SELECT quantity FROM usercart WHERE username=? AND prodid=?");
+            ps = con.prepareStatement("SELECT quantita FROM CarrelloCliente WHERE id=? AND idFumetto=?");
             ps.setString(1, userId);
             ps.setString(2, itemId);
 
@@ -335,7 +334,7 @@ public class CartServiceDAO {
 	        PreparedStatement ps = null;
 
 	        try {
-	            ps = con.prepareStatement("DELETE FROM usercart WHERE username=?");
+	            ps = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=?");
 	            ps.setString(1, userName);
 
 	            ps.executeUpdate();
