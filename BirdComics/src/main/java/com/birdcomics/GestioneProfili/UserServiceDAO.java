@@ -155,19 +155,23 @@ public class UserServiceDAO {
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-
+		ArrayList<RuoloBean> ru = new ArrayList<RuoloBean>();
+		
 		try {
-			ps = con.prepareStatement("select * from Utente, Utente_Ruolo where Utente.email=? and Utente.pass=? and Utente.email = emailUtente");
+			ps = con.prepareStatement("select * from Utente, Utente_Ruolo where Utente.email=? and Utente.pass=? and Utente.email = Utente_Ruolo.emailUtente");
 			ps.setString(1, emailId);
 			ps.setString(2, password);
-			rs = ps.executeQuery();
-
-			IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cvc"));
-			user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in, null );
-			ArrayList<RuoloBean> ru = new ArrayList<RuoloBean>();
 			
+			rs = ps.executeQuery();
 			if (rs.next()) {
-				ru.add(RuoloBean.fromString(rs.getString("idRuolo")));
+				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cvc"));
+				user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in, null );
+				
+				
+				while (rs.next()) {
+					ru.add(RuoloBean.fromString(rs.getString("idRuolo")));
+				}
+				
 			}
 			
 			user.setRuoloBean(ru);
@@ -179,7 +183,6 @@ public class UserServiceDAO {
 
 		DBUtil.closeConnection(ps);
 		DBUtil.closeConnection(rs);
-		System.out.println(user.getEmail());
 		return user;
 	}
 
