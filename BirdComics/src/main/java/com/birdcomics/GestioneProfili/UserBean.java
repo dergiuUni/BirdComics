@@ -1,7 +1,9 @@
 package com.birdcomics.GestioneProfili;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
 
@@ -11,14 +13,14 @@ public class UserBean implements Serializable {
 	protected String email, password, nome, cognome, numeroTelefono;
     protected java.sql.Date dataNascita;
 	protected IndirizzoBean indirizzo;
-	protected RuoloBean ruolo;
+	protected ArrayList<RuoloBean> ruolo;
 	
 
 
 	public UserBean() {
     }
 
-	public UserBean(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, IndirizzoBean indirizzo, RuoloBean ruolo) {
+	public UserBean(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, IndirizzoBean indirizzo, ArrayList<RuoloBean> ruolo) {
 		super();
 		this.email = email;
 		this.password = password;
@@ -62,11 +64,24 @@ public class UserBean implements Serializable {
 		this.indirizzo = indirizzo;
 	}
 	
-    protected RuoloBean getRuoloBean() {
+    protected ArrayList<RuoloBean> getRuoloBean() {
 		return ruolo;
 	}
 
-	protected void setRuoloBean(RuoloBean ruoloBean) {
+	protected void setRuoloBean(ArrayList<RuoloBean> ruoloBean) {
 		this.ruolo = ruoloBean;
+	}
+	
+	protected void addRuolo(RuoloBean ruolo) {
+		this.ruolo.add(ruolo);
+	}
+	
+	protected boolean isRuolo(RuoloBean test) {
+		for (RuoloBean ruoloBean : ruolo) {
+			if(ruoloBean.toString() == test.toString()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

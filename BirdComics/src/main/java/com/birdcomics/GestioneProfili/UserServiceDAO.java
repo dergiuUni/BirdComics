@@ -15,9 +15,9 @@ import com.birdcomics.GestioneIndirizzo.IndirizzoDao;
 public class UserServiceDAO {
 
 
-	public String registerUser(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, String nomeCitta, String via, int numeroCivico, String cvc) throws SQLException {
+	public String registerUser(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, String nomeCitta, String via, int numeroCivico, String cvc, ArrayList<RuoloBean> ruolo) throws SQLException {
 		IndirizzoBean indirizzo = new IndirizzoBean(nomeCitta, via, numeroCivico, cvc);
-		UserBean user = new UserBean(email, password, nome, cognome, numeroTelefono, dataNascita, indirizzo, RuoloBean.Cliente);
+		UserBean user = new UserBean(email, password, nome, cognome, numeroTelefono, dataNascita, indirizzo, ruolo);
 
 	    String status = "User Registration Failed!";
 
@@ -62,7 +62,13 @@ public class UserServiceDAO {
 	        int k = ps.executeUpdate();
 
 	        if (k > 0) {
-	            status = "User Registered Successfully!";
+	            
+	        	for (RuoloBean ruoloBean : ruolo) {
+					ps = con.prepareStatement("INSERT INTO Utente_Ruolo (idRuolo, emailUtente) VALUES (?, ?)");
+					ps.setString(1, ruoloBean.toString());
+					ps.setString(2, user.getEmail());
+				}
+	        	status = "User Registered Successfully!";
 	        }
 
 	    } catch (SQLException e) {
@@ -151,18 +157,21 @@ public class UserServiceDAO {
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement("select * from Utente where email=? and pass=?");
+			ps = con.prepareStatement("select * from Utente, Utente_Ruolo where Utente.email=? and Utente.pass=? and Utente.email = emailUtente");
 			ps.setString(1, emailId);
 			ps.setString(2, password);
 			rs = ps.executeQuery();
 
+			IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cvc"));
+			user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in, null );
+			ArrayList<RuoloBean> ru = new ArrayList<RuoloBean>();
+			
 			if (rs.next()) {
-				
-				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cvc"));
-				user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in,  RuoloBean.Cliente);
-				System.out.println("sono qua 2");
-				return user;
+				ru.add(RuoloBean.fromString(rs.getString("idRuolo")));
 			}
+			
+			user.setRuoloBean(ru);
+			return user;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -289,6 +298,32 @@ public class UserServiceDAO {
 	     
 	    }
 		
+	public String updateRuolo(String email, String password, ArrayList<RuoloBean> ruolo) throws SQLException {
+	    String status = "User Registration Failed!";
+	    Connection con = DBUtil.getConnection();
+	    PreparedStatement ps = null;
+
+	    if (con != null) {
+	        System.out.println("Connected Successfully!");
+	    }
+
+	    try {
+        	for (RuoloBean ruoloBean : ruolo) {
+				ps = con.prepareStatement("INSERT INTO Utente_Ruolo (idRuolo, emailUtente) VALUES (?, ?)");
+				ps.setString(1, ruoloBean.toString());
+				ps.setString(2, email);
+			}
+        	status = "User Registered Successfully!";
+        }catch (SQLException e) {
+	        status = "Error: " + e.getMessage();
+	        e.printStackTrace();
+	    } finally {
+	        DBUtil.closeConnection(ps);
+	    }
+
+	    return status;
+	}
+	
 	
 
 
