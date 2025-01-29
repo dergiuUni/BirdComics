@@ -12,8 +12,6 @@ import java.util.List;
 
 import com.birdcomics.GestioneCatalogo.ProductBean;
 import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
-import com.birdcomics.GestioneProfili.Cliente.CartBean;
-import com.birdcomics.GestioneProfili.Cliente.CartServiceDAO;
 
 
 @WebServlet("/CartDetailsServlet")

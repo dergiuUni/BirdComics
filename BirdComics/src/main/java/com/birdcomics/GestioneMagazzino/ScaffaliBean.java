@@ -21,6 +21,14 @@ public class ScaffaliBean {
 		this.quantitaMassima = quantitaMassima;
 	}
 	
+	public ScaffaliBean(int id, ProductBean fumetto, int quantitaOccupata, int quantitaMassima) {
+		super();
+		this.id = id;
+		this.fumetto = fumetto;
+		this.quantitaOccupata = quantitaOccupata;
+		this.quantitaMassima = quantitaMassima;
+	}
+	
 	
 	
 	

@@ -1,5 +1,5 @@
 <%@page import="com.birdcomics.GestioneCatalogo.ProductBean"%>
-<%@page import="com.birdcomics.GestioneProfili.Cliente.CartBean"%>
+<%@page import="com.birdcomics.GestioneCarrello.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page

@@ -8,16 +8,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.birdcomics.DatabaseImplementator.DBUtil;
+import com.birdcomics.GestioneCatalogo.ProductBean;
 import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
 import com.birdcomics.GestioneIndirizzo.IndirizzoDao;
 import com.birdcomics.GestioneProfili.RuoloBean;
 import com.birdcomics.GestioneProfili.UserBean;
 
 public class ScaffaleDao {
-	public String registerScaffale(ScaffaliBean scaffale) throws SQLException {
+	public ScaffaliBean registerScaffale(int quantitaMassima) throws SQLException {
 	    String status = "User Registration Failed!";
 	    Connection con = DBUtil.getConnection();
 	    PreparedStatement ps = null;
+	    
 
 	    if (con != null) {
 	        System.out.println("Connected Successfully!");
@@ -25,10 +27,9 @@ public class ScaffaleDao {
 
 	    try {
 	    	
-	        ps = con.prepareStatement("INSERT INTO Scaffali (quantita, quantitaMassima) VALUES (?, ?)", java.sql.Statement.RETURN_GENERATED_KEYS);
+	        ps = con.prepareStatement("INSERT INTO Scaffali (quantitaMassima) VALUES (?)", java.sql.Statement.RETURN_GENERATED_KEYS);
 
-	        ps.setInt(1, scaffale.getQuantitaOccupata());
-	        ps.setInt(2, scaffale.getQuantitaMassima());
+	        ps.setInt(1, quantitaMassima);
 
 	        int k = ps.executeUpdate();
 
@@ -37,16 +38,11 @@ public class ScaffaleDao {
 	        	ResultSet rs = null;
 	        	rs = ps.getGeneratedKeys();
 	        	if (rs.next()) {
+	        		ScaffaliBean scaffale = new ScaffaliBean();
                     scaffale.setId(rs.getInt(1)); // O getInt(1) se l'ID è un int
+                    return scaffale;
                     
                 }
-	        	
-	        	ps = con.prepareStatement("INSERT INTO Scaffali (quantita, quantitaMassima) VALUES (?, ?)", java.sql.Statement.RETURN_GENERATED_KEYS);
-
-		        ps.setInt(1, scaffale.getQuantitaOccupata());
-		        ps.setInt(2, scaffale.getQuantitaMassima());
-
-	        	
 	        	status = "User Registered Successfully!";
 	        }
 
@@ -57,28 +53,32 @@ public class ScaffaleDao {
 	        DBUtil.closeConnection(ps);
 	    }
 
-	    return status;
+	    return null;
 	}
 
 
 	
-	public boolean isRegistered(String emailId) throws SQLException {
-		boolean flag = false;
-
+	public ArrayList<ScaffaliBean> getScaffaleMagazzino(String nomeMagazzino) throws SQLException {
 		Connection con = DBUtil.getConnection();
+		ArrayList<ScaffaliBean> scaffali = new ArrayList<ScaffaliBean>();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement("select * from Utente where email=?");
+			ps = con.prepareStatement("select idScaffale, quantita, quantitaMassima idFumetto  from MagazzinoScaffali, Scaffali where idMagazzino=? and idScaffale = id");
 
-			ps.setString(1, emailId);
+			ps.setString(1, nomeMagazzino);
 
 			rs = ps.executeQuery();
 
-			if (rs.next())
-				flag = true;
+			if (rs.next()) {
+				ProductBean pr = new ProductBean();
+				
+				ScaffaliBean scaffale = new ScaffaliBean(rs.getInt(""), rs.getInt(""), rs.getInt(""), rs.getInt(""));
+				sca
+			}
+				
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

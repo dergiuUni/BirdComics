@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import com.birdcomics.GestioneCatalogo.ProductBean;
 import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
-import com.birdcomics.GestioneProfili.Cliente.CartServiceDAO;
 
 /**
  * Servlet implementation class UpdateToCart
