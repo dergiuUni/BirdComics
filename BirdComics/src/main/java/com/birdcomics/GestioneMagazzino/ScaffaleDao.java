@@ -9,13 +9,14 @@ import java.util.ArrayList;
 
 import com.birdcomics.DatabaseImplementator.DBUtil;
 import com.birdcomics.GestioneCatalogo.ProductBean;
+import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
 import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
 import com.birdcomics.GestioneIndirizzo.IndirizzoDao;
 import com.birdcomics.GestioneProfili.RuoloBean;
 import com.birdcomics.GestioneProfili.UserBean;
 
 public class ScaffaleDao {
-	public ScaffaliBean registerScaffale(int quantitaMassima) throws SQLException {
+	public ScaffaliBean addScaffale(int quantitaMassima) throws SQLException {
 	    String status = "User Registration Failed!";
 	    Connection con = DBUtil.getConnection();
 	    PreparedStatement ps = null;
@@ -55,8 +56,161 @@ public class ScaffaleDao {
 
 	    return null;
 	}
+	
+	public void removeScaffale(ProductBean fumetto) throws SQLException {
+	    String status = "User Registration Failed!";
+	    Connection con = DBUtil.getConnection();
+	    PreparedStatement ps = null;
+	    
 
+	    if (con != null) {
+	        System.out.println("Connected Successfully!");
+	    }
 
+	    try {
+	    	
+	        ps = con.prepareStatement("DELETE FROM Scaffali where id = ?");
+
+	        ps.setInt(1, fumetto.getId());
+
+	        ps.executeUpdate();
+
+	    } catch (SQLException e) {
+	        status = "Error: " + e.getMessage();
+	        e.printStackTrace();
+	    } finally {
+	        DBUtil.closeConnection(ps);
+	    }
+
+	}
+	
+	public void addFumetto(ScaffaliBean scaffale) throws SQLException {
+	    String status = "User Registration Failed!";
+	    Connection con = DBUtil.getConnection();
+	    PreparedStatement ps = null;
+	    
+
+	    if (con != null) {
+	        System.out.println("Connected Successfully!");
+	    }
+
+	    try {
+	    	
+	        ps = con.prepareStatement("INSERT INTO Scaffali (quantita, idFumetto) VALUES (?, ?)");
+
+	        ps.setInt(1, scaffale.getQuantitaOccupata());
+	        ps.setInt(2, scaffale.getFumetto().getId());
+
+	        int k = ps.executeUpdate();
+
+	        if (k > 0) {
+	            
+	        	status = "User Registered Successfully!";
+	        }
+
+	    } catch (SQLException e) {
+	        status = "Error: " + e.getMessage();
+	        e.printStackTrace();
+	    } finally {
+	        DBUtil.closeConnection(ps);
+	    } 
+	}
+	
+	public void modifyQuantityFumetto(ScaffaliBean scaffale) throws SQLException {
+	    String status = "User Registration Failed!";
+	    Connection con = DBUtil.getConnection();
+	    PreparedStatement ps = null;
+	    
+
+	    if (con != null) {
+	        System.out.println("Connected Successfully!");
+	    }
+
+	    try {
+	    	
+	        ps = con.prepareStatement("UPDATE Scaffali SET quantita = ? where id = ?");
+
+	        ps.setInt(1, scaffale.getQuantitaOccupata());
+	        ps.setInt(2, scaffale.getId());
+
+	        int k = ps.executeUpdate();
+
+	        if (k > 0) {
+	            
+	        	status = "User Registered Successfully!";
+	        }
+
+	    } catch (SQLException e) {
+	        status = "Error: " + e.getMessage();
+	        e.printStackTrace();
+	    } finally {
+	        DBUtil.closeConnection(ps);
+	    } 
+	}
+	
+	public void modifyFumetto(ScaffaliBean scaffale) throws SQLException {
+	    String status = "User Registration Failed!";
+	    Connection con = DBUtil.getConnection();
+	    PreparedStatement ps = null;
+	    
+
+	    if (con != null) {
+	        System.out.println("Connected Successfully!");
+	    }
+
+	    try {
+	    	
+	        ps = con.prepareStatement("UPDATE Scaffali SET quantita = ?, idFumetto = ? where id = ?");
+
+	        ps.setInt(1, scaffale.getQuantitaOccupata());
+	        ps.setInt(2, scaffale.getFumetto().getId());
+	        ps.setInt(3, scaffale.getId());
+
+	        int k = ps.executeUpdate();
+
+	        if (k > 0) {
+	            
+	        	status = "User Registered Successfully!";
+	        }
+
+	    } catch (SQLException e) {
+	        status = "Error: " + e.getMessage();
+	        e.printStackTrace();
+	    } finally {
+	        DBUtil.closeConnection(ps);
+	    } 
+	}
+
+	public void deleteFumetto(ScaffaliBean scaffale) throws SQLException {
+	    String status = "User Registration Failed!";
+	    Connection con = DBUtil.getConnection();
+	    PreparedStatement ps = null;
+	    
+
+	    if (con != null) {
+	        System.out.println("Connected Successfully!");
+	    }
+
+	    try {
+	    	
+	        ps = con.prepareStatement("UPDATE Scaffali SET quantita = null, idFumetto = null idFumetto = ? where id = ?");
+
+	        ps.setInt(1, scaffale.getId());
+
+	        int k = ps.executeUpdate();
+
+	        if (k > 0) {
+	            
+	        	status = "User Registered Successfully!";
+	        }
+
+	    } catch (SQLException e) {
+	        status = "Error: " + e.getMessage();
+	        e.printStackTrace();
+	    } finally {
+	        DBUtil.closeConnection(ps);
+	    } 
+	}
 	
 	public ArrayList<ScaffaliBean> getScaffaleMagazzino(String nomeMagazzino) throws SQLException {
 		Connection con = DBUtil.getConnection();
@@ -74,9 +228,12 @@ public class ScaffaleDao {
 
 			if (rs.next()) {
 				ProductBean pr = new ProductBean();
+				ProductBean fumetto = new ProductBean();
+				ProductServiceDAO ser = new ProductServiceDAO();
+				fumetto = ser.getProductsByID(String.valueOf(rs.getInt("idFumetto")));
 				
-				ScaffaliBean scaffale = new ScaffaliBean(rs.getInt(""), rs.getInt(""), rs.getInt(""), rs.getInt(""));
-				sca
+				ScaffaliBean scaffale = new ScaffaliBean(rs.getInt("idScaffale"), fumetto, rs.getInt("quantita"), rs.getInt("quantitaMassima"));
+				scaffali.add(scaffale);
 			}
 				
 
@@ -88,6 +245,6 @@ public class ScaffaleDao {
 		DBUtil.closeConnection(ps);
 		DBUtil.closeConnection(rs);
 
-		return flag;
+		return scaffali;
 	}
 }
