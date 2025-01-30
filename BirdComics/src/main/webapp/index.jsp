@@ -34,9 +34,6 @@
     }
     
 
-    if (products.isEmpty()) {
-        return;
-    }
 %>
 
 <!-- Start of Product Items List -->

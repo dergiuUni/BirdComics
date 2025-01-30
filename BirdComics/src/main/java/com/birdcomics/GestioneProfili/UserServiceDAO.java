@@ -1,6 +1,7 @@
 package com.birdcomics.GestioneProfili;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +16,8 @@ import com.birdcomics.GestioneIndirizzo.IndirizzoDao;
 public class UserServiceDAO {
 
 
-	public String registerUser(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, String nomeCitta, String via, int numeroCivico, String cvc, ArrayList<RuoloBean> ruolo) throws SQLException {
-		IndirizzoBean indirizzo = new IndirizzoBean(nomeCitta, via, numeroCivico, cvc);
+	public String registerUser(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, String nomeCitta, String via, int numeroCivico, String cap, ArrayList<RuoloBean> ruolo) throws SQLException {
+		IndirizzoBean indirizzo = new IndirizzoBean(nomeCitta, via, numeroCivico, cap);
 		UserBean user = new UserBean(email, password, nome, cognome, numeroTelefono, dataNascita, indirizzo, ruolo);
 
 	    String status = "User Registration Failed!";
@@ -38,16 +39,16 @@ public class UserServiceDAO {
 	    try {
 	        // Modifica della query per includere il campo usertype
 	    	IndirizzoDao in = new IndirizzoDao(con);
-	    	if(!in.ifExists(nomeCitta, via, numeroCivico, cvc)) {
-	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cvc) VALUES (?, ?, ?, ?)");
+	    	if(!in.ifExists(nomeCitta, via, numeroCivico, cap)) {
+	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cap) VALUES (?, ?, ?, ?)");
 	    		ps.setString(1, indirizzo.getNomeCitta());
 		        ps.setString(2, indirizzo.getVia());
 		        ps.setInt(3, indirizzo.getNumeroCivico());
-		        ps.setString(4, indirizzo.getCvc());
+		        ps.setString(4, indirizzo.getCap());
 		        ps.executeUpdate();
 	    	}
 	    	
-	        ps = con.prepareStatement("INSERT INTO Utente (email, pass, nome, cognome, telefono, nomeCitta, via, numeroCivico, cvc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	        ps = con.prepareStatement("INSERT INTO Utente (email, pass, nome, cognome, telefono, nomeCitta, via, numeroCivico, cap, dataNascita) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 	        ps.setString(1, user.getEmail());
 	        ps.setString(2, user.getPassword());
@@ -57,8 +58,10 @@ public class UserServiceDAO {
 	        ps.setString(6, indirizzo.getNomeCitta());
 	        ps.setString(7, indirizzo.getVia());
 	        ps.setInt(8, indirizzo.getNumeroCivico());
-	        ps.setString(9, indirizzo.getCvc());
+	        ps.setString(9, indirizzo.getCap());
+	        ps.setDate(10, (Date) user.getDataNascita());
 
+	        System.out.println();
 	        int k = ps.executeUpdate();
 
 	        if (k > 0) {
@@ -67,6 +70,7 @@ public class UserServiceDAO {
 					ps = con.prepareStatement("INSERT INTO Utente_Ruolo (idRuolo, emailUtente) VALUES (?, ?)");
 					ps.setString(1, ruoloBean.toString());
 					ps.setString(2, user.getEmail());
+					ps.executeUpdate();
 				}
 	        	status = "User Registered Successfully!";
 	        }
@@ -164,7 +168,7 @@ public class UserServiceDAO {
 			
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cvc"));
+				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cap"));
 				user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in, null );
 				
 				
@@ -226,7 +230,7 @@ public class UserServiceDAO {
 
 		try {
 			
-			ps = con.prepareStatement("select nomeCitta, via, numeroCivico, cvc from Utente where email=?");
+			ps = con.prepareStatement("select nomeCitta, via, numeroCivico, cap from Utente where email=?");
 
 			ps.setString(1, userId);
 			rs = ps.executeQuery();
@@ -265,23 +269,23 @@ public class UserServiceDAO {
 
 
 // vedere se mettere i limiti e modificarlo
-	public void updateUserDetails(String email, String password, String nome, String cognome, String telefono, String nomeCitta, String via, int numeroCivico, String cvc) throws SQLException {
+	public void updateUserDetails(String email, String password, String nome, String cognome, String telefono, String nomeCitta, String via, int numeroCivico, String cap) throws SQLException {
 	
 	    Connection con = DBUtil.getConnection();
 	    PreparedStatement ps = null;
 	 
-	    	IndirizzoBean indirizzo = new IndirizzoBean(nomeCitta, via, numeroCivico, cvc);
+	    	IndirizzoBean indirizzo = new IndirizzoBean(nomeCitta, via, numeroCivico, cap);
 	    	IndirizzoDao in = new IndirizzoDao(con);
-	    	if(!in.ifExists(nomeCitta, via, numeroCivico, cvc)) {
-	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cvc) VALUES (?, ?, ?, ?)");
+	    	if(!in.ifExists(nomeCitta, via, numeroCivico, cap)) {
+	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cap) VALUES (?, ?, ?, ?)");
 	    		ps.setString(1, indirizzo.getNomeCitta());
 		        ps.setString(2, indirizzo.getVia());
 		        ps.setInt(3, indirizzo.getNumeroCivico());
-		        ps.setString(4, indirizzo.getCvc());
+		        ps.setString(4, indirizzo.getCap());
 		        ps.executeUpdate();
 	    	}
 	        // Prepare the SQL update statement
-	        String updateSQL = "UPDATE Utente SET nome = ?, cognome = ?, telefono = ?, nomeCitta = ?, via = ?, numeroCivico = ?, cvc = ? WHERE email = ? AND pass = ?";
+	        String updateSQL = "UPDATE Utente SET nome = ?, cognome = ?, telefono = ?, nomeCitta = ?, via = ?, numeroCivico = ?, cap = ? WHERE email = ? AND pass = ?";
 	        ps = con.prepareStatement(updateSQL);
 
 	        // Set the parameters for the update statement
@@ -291,7 +295,7 @@ public class UserServiceDAO {
 	        ps.setString(4, indirizzo.getNomeCitta());
 	        ps.setString(5, indirizzo.getVia());
 	        ps.setInt(6, indirizzo.getNumeroCivico());
-	        ps.setString(7, indirizzo.getCvc());
+	        ps.setString(7, indirizzo.getCap());
 	        ps.setString(8, email);
 	        ps.setString(9, password);
 
