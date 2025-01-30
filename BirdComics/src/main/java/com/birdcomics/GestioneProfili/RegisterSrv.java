@@ -2,6 +2,7 @@ package com.birdcomics.GestioneProfili;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,7 +38,9 @@ public class RegisterSrv extends HttpServlet {
 			UserServiceDAO dao = new UserServiceDAO();
 
 			try {
-				status = dao.registerUser(request.getParameter("email"), request.getParameter("password"), request.getParameter("username"), request.getParameter("cognome"), request.getParameter("mobile"), java.sql.Date.valueOf(request.getParameter("dataNascita")), request.getParameter("nomeCitta"), request.getParameter("via"), Integer.valueOf(request.getParameter("numeroCivico")), request.getParameter("cvc"));
+				ArrayList<RuoloBean> r = new ArrayList<RuoloBean>();
+				r.add(RuoloBean.Cliente);
+				status = dao.registerUser(request.getParameter("email"), request.getParameter("password"), request.getParameter("username"), request.getParameter("cognome"), request.getParameter("mobile"), java.sql.Date.valueOf(request.getParameter("dataNascita")), request.getParameter("nomeCitta"), request.getParameter("via"), Integer.valueOf(request.getParameter("numeroCivico")), request.getParameter("cvc"), r);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
