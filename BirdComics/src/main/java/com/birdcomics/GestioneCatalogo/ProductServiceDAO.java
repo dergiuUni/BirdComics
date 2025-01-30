@@ -186,11 +186,12 @@ public class ProductServiceDAO {
         } finally {
             DBUtil.closeConnection(ps);
             DBUtil.closeConnection(rs);
+            DBUtil.closeConnection(con);
         }
 
         return products;
     }
-/*
+
     public List<ProductBean> getAllProductsByType(String type) throws SQLException {
         List<ProductBean> products = new ArrayList<>();
 
@@ -200,8 +201,8 @@ public class ProductServiceDAO {
         ResultSet rs = null;
 
         try {
-            ps = con.prepareStatement("SELECT * FROM product WHERE lower(ptype) LIKE ? AND active = 1");
-            ps.setString(1, "%" + type.toLowerCase() + "%");
+        	ps = con.prepareStatement("select * from Fumetto, Genere_Fumetto where Fumetto.id = Genere_Fumetto.idFumetto and Genere_Fumetto.genere = ? and Fumetto.active = 1");
+            ps.setString(1, type);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -225,10 +226,11 @@ public class ProductServiceDAO {
 
         DBUtil.closeConnection(ps);
         DBUtil.closeConnection(rs);
+        DBUtil.closeConnection(con);
 
         return products;
     }
-
+  
     public List<ProductBean> searchAllProducts(String search) throws SQLException {
         List<ProductBean> products = new ArrayList<>();
 
@@ -238,15 +240,12 @@ public class ProductServiceDAO {
 
         try {
             ps = con.prepareStatement(
-                "SELECT p.pid, p.pname, p.ptype, p.pinfo, p.pprice, p.pquantity, p.image " +
-                "FROM product p " +
-                "WHERE (lower(p.ptype) LIKE ? OR lower(p.pname) LIKE ? OR lower(p.pinfo) LIKE ?) " +
-                "AND p.active = 1");
+                "SELECT * FROM Fumetto, Genere_Fumetto  WHERE Fumetto.id = Genere_Fumetto.idFumetto"
+                + " and (lower( Genere_Fumetto.genere) LIKE ? OR lower(Fumetto.nome) LIKE ?)  AND Fumetto.active = 1 GROUP BY Fumetto.id");
 
             search = "%" + search.toLowerCase() + "%";
             ps.setString(1, search);
             ps.setString(2, search);
-            ps.setString(3, search);
 
             rs = ps.executeQuery();
 
@@ -266,6 +265,7 @@ public class ProductServiceDAO {
         } finally {
             DBUtil.closeConnection(ps);
             DBUtil.closeConnection(rs);
+            DBUtil.closeConnection(con);
         }
 
         return products;
@@ -477,6 +477,7 @@ public class ProductServiceDAO {
         } finally {
             DBUtil.closeConnection(ps);
             DBUtil.closeConnection(rs);
+            DBUtil.closeConnection(con);
         }
 
         return product;

@@ -49,13 +49,13 @@
 								<span class="caret"></span>
 						</a>
 							<ul class="dropdown-menu">
-								<li><a href="#" class="genre-link" data-type="avventura">Avventura</a></li>
-								<li><a href="#" class="genre-link" data-type="azione">Azione</a></li>
-								<li><a href="#" class="genre-link" data-type="horror">Horror</a></li>
-								<li><a href="#" class="genre-link" data-type="thriller">Thriller</a></li>
-								<li><a href="#" class="genre-link" data-type="fantasy">Fantasy</a></li>
-								<li><a href="#" class="genre-link" data-type="drammatico">Drammatico</a></li>
-								<li><a href="#" class="genre-link" data-type="fantascienza">Fantascienza</a></li>
+								<li><a href="ProductListServlet?type=avventura" class="genre-link">Avventura</a></li>
+								<li><a href="ProductListServlet?type=azione" class="genre-link">Azione</a></li>
+								<li><a href="ProductListServlet?type=horror" class="genre-link">Horror</a></li>
+								<li><a href="ProductListServlet?type=thriller" class="genre-link">Thriller</a></li>
+								<li><a href="ProductListServlet?type=fantasy" class="genre-link">Fantasy</a></li>
+								<li><a href="ProductListServlet?type=drammatico" class="genre-link">Drammatico</a></li>
+								<li><a href="ProductListServlet?type=fantascienza" class="genre-link">Fantascienza</a></li>
 
 							</ul></li>
 							
