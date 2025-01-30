@@ -38,7 +38,7 @@
 							class="rounded-circle img-fluid" style="width: 150px;">
 						<h5 class="my-3">
 							Hello
-							<%=user.getName()%>
+							<%=user.getNome()%>
 
 						</h5>
 						<!-- <p class="text-muted mb-1">Full Stack Developer</p>
@@ -62,10 +62,19 @@
 					<div class="card-body">
 						<div class="row">
 							<div class="col-sm-3">
-								<p class="mb-0">Full Name</p>
+								<p class="mb-0">Nome</p>
 							</div>
 							<div class="col-sm-9">
-								<p class="text-muted mb-0"><%=user.getName()%></p>
+								<p class="text-muted mb-0"><%=user.getNome()%></p>
+							</div>
+						</div>
+						<hr>
+							<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">Cognome</p>
+							</div>
+							<div class="col-sm-9">
+								<p class="text-muted mb-0"><%=user.getCognome()%></p>
 							</div>
 						</div>
 						<hr>
@@ -84,27 +93,47 @@
 								<p class="mb-0">Phone</p>
 							</div>
 							<div class="col-sm-9">
-								<p class="text-muted mb-0"><%=user.getMobile()%>
+								<p class="text-muted mb-0"><%=user.getNumeroTelefono()%>
 								</p>
 							</div>
 						</div>
 						<hr>
 						<div class="row">
 							<div class="col-sm-3">
-								<p class="mb-0">Address</p>
+								<p class="mb-0">Città</p>
 							</div>
 							<div class="col-sm-9">
-								<p class="text-muted mb-0"><%=user.getAddress()%>
+								<p class="text-muted mb-0"><%=user.getIndirizzo().getNomeCitta()%>
+								</p>
+							</div>
+						</div>
+						<hr>
+							<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">Via</p>
+							</div>
+							<div class="col-sm-9">
+								<p class="text-muted mb-0"><%=user.getIndirizzo().getVia()%>
+								</p>
+							</div>
+						</div>
+						<hr>
+							<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">Numero Civico</p>
+							</div>
+							<div class="col-sm-9">
+								<p class="text-muted mb-0"><%=user.getIndirizzo().getNumeroCivico()%>
 								</p>
 							</div>
 						</div>
 						<hr>
 						<div class="row">
 							<div class="col-sm-3">
-								<p class="mb-0">PinCode</p>
+								<p class="mb-0">CAP</p>
 							</div>
 							<div class="col-sm-9">
-								<p class="text-muted mb-0"><%=user.getPinCode()%>
+								<p class="text-muted mb-0"><%=user.getIndirizzo().getCvc()%>
 								</p>
 							</div>
 						</div>
@@ -116,8 +145,7 @@
             <!-- Aggiungi il tasto "Update Profile" qui -->
             <br>
             <br>
-            <!-- Aggiungi il tasto "Update Profile" qui  <a href="updateProfile.jsp?fullName=<%=user.getName()%>&email=<%=user.getEmail()%>&phone=<%=user.getMobile()%>&address=<%=user.getAddress()%>&pinCode=<%=user.getPinCode()%>"
-       class="btn btn-primary">Update Profile</a> -->
+         
         </div>
 	</div>
 
