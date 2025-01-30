@@ -8,7 +8,7 @@ public class ProductBean implements Serializable {
     private int id; // corrisponde a id nella tabella Fumetto
     private String name; // corrisponde a nome
     private String description; // corrisponde a descrizione
-    private Float price; // corrisponde a prezzo
+    private float price; // corrisponde a prezzo
     private String image;
     private boolean active; // corrisponde a active
 
@@ -49,7 +49,7 @@ public class ProductBean implements Serializable {
         this.description = description;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 

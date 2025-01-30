@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.birdcomics.DatabaseImplementator.DBUtil;
-import com.birdcomics.DatabaseImplementator.IDUtil;
 
 public class ProductServiceDAO {
 	/*    public String addProduct(String prodName, String prodType, String prodInfo, double prodPrice, int prodQuantity,
