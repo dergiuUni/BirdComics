@@ -11,13 +11,13 @@ import java.util.List;
 
 import com.birdcomics.DatabaseImplementator.DBUtil;
 import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
-import com.birdcomics.GestioneProfili.Cliente.CartBean;
-import com.birdcomics.GestioneProfili.Cliente.CartServiceDAO;
+//import com.birdcomics.GestioneProfili.Cliente.CartBean;
+//import com.birdcomics.GestioneProfili.Cliente.CartServiceDAO;
 
 
 public class OrderServiceDAO {
 
-
+	/*
 	public String paymentSuccess(String userName, double paidAmount) throws SQLException {
 		String status = "Order Placement Failed!";
 
@@ -294,7 +294,7 @@ public class OrderServiceDAO {
 
 	
 
-
+	
 	public List<OrderBean> getOrdersByUserIdAndDate(String search, String startDate, String endDate) throws SQLException {
 		List<OrderBean> orderList = new ArrayList<OrderBean>();
 
@@ -349,7 +349,7 @@ public class OrderServiceDAO {
 
 		return orderList;
 	}
-	
+	*/
 
 
 	public List<OrderBean> getAllOrderDetails(String userEmailId) throws SQLException {
@@ -362,25 +362,22 @@ public class OrderServiceDAO {
 
 		try {
 
+					
+			
 			ps = con.prepareStatement(
-					"SELECT  p.pid as prodid, o.orderid as orderid, o.shipped as shipped,"
-					+ "p.image as image, p.pname as pname, o.quantity as qty, o.amount as amount, "
-					+ "t.time as time FROM orders o, product p, transactions t where o.orderid=t.transid and o.orderid = t.transid "
-					+ "and p.pid=o.prodid and t.username=?");
+					"SELECT * FROM Ordine WHERE emailUtente = ?");
 			ps.setString(1, userEmailId);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 
 				OrderBean order = new OrderBean();
-				order.setOrderId(rs.getString("orderid"));
-				order.setProdImage(rs.getString("image"));
-				order.setProdName(rs.getString("pname"));
-				order.setQty(rs.getString("qty"));
-				order.setAmount(Double.parseDouble(rs.getString("amount")));
-				order.setTime(rs.getTimestamp("time"));
-				order.setProductId(rs.getString("prodid"));
-				order.setShipped(rs.getInt("shipped"));
+				order.setEmailUtente(rs.getString("emailUtente"));
+				order.setId(rs.getInt("id"));
+				order.setIdFattura(rs.getInt("idFattura"));
+				order.setIdPaypal(rs.getString("idpaypal"));
+				order.setShipped(rs.getBoolean("shipped"));
+				order.setDataEffettuato(rs.getDate("dataEffettuato"));
 				orderList.add(order);
 
 			}
@@ -393,7 +390,7 @@ public class OrderServiceDAO {
 		return orderList;
 	}
 
-	
+	/*
 	public String shipNow(String orderId, String prodId) throws SQLException {
 		String status = "FAILURE";
 
@@ -423,6 +420,6 @@ public class OrderServiceDAO {
 		return status;
 	}
 
-	
+	*/
 
 }

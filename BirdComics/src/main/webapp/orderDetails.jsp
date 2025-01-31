@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -10,26 +10,21 @@
 <%@ include file="/fragments/header.jsp"%>
 <body>
 
-
-	<br>
-	<br>
+	<br><br>
 	<div class="text-center"
 		style="color: green; font-size: 24px; font-weight: bold;">Order
 		Details</div>
-	<br>
-	<br>
+	<br><br>
 	<div class="container">
 		<div class="table-responsive">
 			<table class="table table-hover table-sm">
 				<thead
 					style="background-color: black; color: white; font-size: 14px; font-weight: bold;">
 					<tr>
-						<th>Picture</th>
-						<th>ProductName</th>
-						<th>OrderId</th>
-						<th>Quantity</th>
-						<th>Price</th>
-						<th>Time</th>
+						<th>Order ID</th>
+						<th>Invoice ID</th>
+						<th>Paypal ID</th>
+						<th>Order Date</th>
 						<th>Status</th>
 					</tr>
 				</thead>
@@ -37,14 +32,13 @@
 					style="background-color: white; font-size: 15px; font-weight: bold;">
 					<c:forEach var="order" items="${orders}">
 						<tr>
-							<td><img src="./ShowImage?image=${order.prodImage}"
-								style="width: 50px; height: 50px;"></td>
-							<td>${order.prodName}</td>
-							<td>${order.orderId}</td>
-							<td>${order.qty}</td>
-							<td>${order.amount}</td>
-							<td>${order.time}</td>
-							<td class="text-success">${order.shipped == 0 ? "ORDER_PLACED" : "ORDER_SHIPPED"}</td>
+							<td>${order.id}</td>
+							<td>${order.idFattura}</td>
+							<td>${order.idPaypal}</td>
+							<td>${order.dataEffettuato}</td>
+							<td class="text-success">
+								${order.shipped ? "ORDER SHIPPED" : "ORDER PLACED"}
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -52,8 +46,7 @@
 		</div>
 	</div>
 
-	<br>
-	<br>
+	<br><br>
 <%@ include file="/fragments/footer.html"%>
 </body>
 </html>

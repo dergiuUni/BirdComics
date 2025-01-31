@@ -1,124 +1,80 @@
 package com.birdcomics.GestioneOrdine;
-
-import java.io.InputStream;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.sql.Date;
+
 
 @SuppressWarnings("serial")
 public class OrderBean implements Serializable {
 
-	private String transactionId;
-	private String productId;
-	private int quantity;
-	private Double amount;
-	private int shipped;
-	private String orderId;
-	private String prodName;
-	private String qty;
-	private Timestamp time;
-	private String prodImage;
+	String emailUtente;
+	int id;
+	String idPaypal;
+	boolean shipped;
+	Date dataEffettuato;
+	int idFattura;
 	
-
 	public OrderBean() {
 		super();
 	}
-
-	public OrderBean(String transactionId, String productId, int quantity, Double amount) {
+	
+	public OrderBean(String emailUtente, int id, String idPaypal, boolean shipped, Date dataEffettuato, int idFattura) {
 		super();
-		this.transactionId = transactionId;
-		this.productId = productId;
-		this.quantity = quantity;
-		this.amount = amount;
-		this.shipped = 0;
-	}
-
-	public OrderBean(String transactionId, String productId, int quantity, Double amount, int shipped) {
-		super();
-		this.transactionId = transactionId;
-		this.productId = productId;
-		this.quantity = quantity;
-		this.amount = amount;
+		this.emailUtente = emailUtente;
+		this.id = id;
+		this.idPaypal = idPaypal;
 		this.shipped = shipped;
+		this.dataEffettuato = dataEffettuato;
+		this.idFattura = idFattura;
 	}
 
-	public String getTransactionId() {
-		return transactionId;
+
+	public int getId() {
+		return id;
 	}
 
-	public void setTransactionId(String transactionId) {
-		this.transactionId = transactionId;
+
+	public String getEmailUtente() {
+		return emailUtente;
 	}
 
-	public String getProductId() {
-		return productId;
+	public void setEmailUtente(String emailUtente) {
+		this.emailUtente = emailUtente;
 	}
 
-	public void setProductId(String productId) {
-		this.productId = productId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public int getQuantity() {
-		return quantity;
+	public String getIdPaypal() {
+		return idPaypal;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setIdPaypal(String idPaypal) {
+		this.idPaypal = idPaypal;
 	}
 
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-	public int getShipped() {
+	public boolean isShipped() {
 		return shipped;
 	}
 
-	public void setShipped(int shipped) {
+	public void setShipped(boolean shipped) {
 		this.shipped = shipped;
 	}
 
-	public String getOrderId() {
-		return orderId;
+	public Date getDataEffettuato() {
+		return dataEffettuato;
 	}
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
+	public void setDataEffettuato(Date dataEffettuato) {
+		this.dataEffettuato = dataEffettuato;
 	}
 
-	public String getProdName() {
-		return prodName;
+	public int getIdFattura() {
+		return idFattura;
 	}
 
-	public void setProdName(String prodName) {
-		this.prodName = prodName;
-	}
-
-	public String getQty() {
-		return qty;
-	}
-
-	public void setQty(String qty) {
-		this.qty = qty;
-	}
-
-	public Timestamp getTime() {
-		return time;
-	}
-
-	public void setTime(Timestamp time) {
-		this.time = time;
-	}
-
-	public String getProdImage() {
-		return prodImage;
-	}
-
-	public void setProdImage(String string) {
-		this.prodImage = string;
+	public void setIdFattura(int idFattura) {
+		this.idFattura = idFattura;
 	}
 
 }
