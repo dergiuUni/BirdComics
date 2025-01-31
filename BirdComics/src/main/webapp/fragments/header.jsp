@@ -28,22 +28,7 @@
 		<div class="logo">BirdComics</div>
 		<div class="nav-items">
 			<ul class="nav navbar-nav">
-				<c:choose>
-					<c:when test="${'admin' eq sessionScope.usertype}">
-						<li class="dropdown"><a class="dropdown-toggle"
-							data-toggle="dropdown" href="#">Gestione libri <span
-								class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="adminStock">Elenco libri</a></li>
-								<li><a href="addProduct.jsp">Aggiungi libro</a></li>
-								<li><a href="removeProduct.jsp">Rimuovi libro</a></li>
-								<li><a href="updateProductById.jsp">Aggiorna libro</a></li>
-							</ul></li>
-						<li><a href="ShipmentServlet">Gestione Ordini</a></li>
-						<li><a href="./LogoutSrv">Logout</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a href="index.jsp">Home</a></li>
+				<li><a href="index.jsp">Home</a></li>
 						<li class="dropdown" id="generi-dropdown"><a
 							class="dropdown-toggle" data-toggle="dropdown" href="#">Generi
 								<span class="caret"></span>
@@ -57,21 +42,8 @@
 								<li><a href="ProductListServlet?type=drammatico" class="genre-link">Drammatico</a></li>
 								<li><a href="ProductListServlet?type=fantascienza" class="genre-link">Fantascienza</a></li>
 
-							</ul></li>
-							
-						<c:choose>
-							<c:when test="${not empty sessionScope.usertype}">
-								<li><a href="CartDetailsServlet">Carrello</a></li>
-								<li><a href="OrderDetailsServlet">Ordini</a></li>
-								<li><a href="UserProfileServlet">Profilo</a></li>
-								<li><a href="./LogoutSrv">Logout</a></li>
-							</c:when>
-							<c:otherwise>
-								<li><a href="CartDetailsServlet">Carrello</a></li>
-								<li><a href="login.jsp">Login</a></li>
-								<li><a href="register.jsp">Registrati</a></li>
-							</c:otherwise>
-						</c:choose>
+							</ul>
+						</li>
 						<div class="search-icon">
 							<span class="fas fa-search" aria-hidden="true"></span>
 						</div>
@@ -84,6 +56,128 @@
 								placeholder="Cerca libri..." required>
 							<button type="submit" class="fas fa-search" aria-label="search"></button>
 						</form>
+				<c:choose>
+					<c:when test="${usertype != null and usertype.contains('GestoreGenerale')}">
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Gestione Magazzini<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="">AggiungiMagazzino</a></li>
+								<li><a href="">listaMagazzino</a></li>
+								<li><a href="">AggiungiDirettoreMagazzino</a></li>
+								<li><a href="">ListaDirettoreMagazzino</a></li>
+							</ul>
+						</li>
+						<li><a href="./LogoutSrv">Logout</a></li>
+					</c:when>
+					
+					<c:when test="${usertype != null and usertype.contains('GestoreMagazzino')}">
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Gestione Magazzino<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="">AggiungiScaffale</a></li>
+								<li><a href="">ListaScaffale</a></li>
+								<li><a href="">AggiungiHr</a></li>
+								<li><a href="">ListaHr</a></li>
+							</ul>
+						</li>
+						<li><a href="./LogoutSrv">Logout</a></li>
+					</c:when>
+					
+					<c:when test="${usertype != null and usertype.contains('RisorseUmane')}">
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Gestione Dipendenti<span
+								class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="">Aggiungi Dipendente</a></li>
+								<li><a href="">Lista Dipendente</a></li>
+							</ul>
+						</li>
+						<li><a href="./LogoutSrv">Logout</a></li>
+					</c:when>
+					
+					<c:when test="${usertype != null and usertype.contains('GestoreCatalogo')}">
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Gestione Catalogo <span
+								class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="">Aggiungi Fumetto</a></li>
+								<li><a href="">lista catalogo</a></li>
+							</ul>
+						</li>
+						<li><a href="./LogoutSrv">Logout</a></li>
+					</c:when>
+					
+					<c:when test="${usertype != null and usertype.contains('Magazziniere')}">
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Magazziniere <span
+								class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="">ModificaPosizioneScaffale</a></li>
+								<li><a href="">Mansioni</a></li>
+								<li><a href="">LiberaScaffale</a></li>
+							</ul>
+						</li>
+						<li><a href="./LogoutSrv">Logout</a></li>
+					</c:when>
+					
+					<c:when test="${usertype != null and usertype.contains('Spedizioniere')}">
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Spedizioniere <span
+								class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="">AggiungiTracking</a></li>
+							</ul>
+						</li>
+						<li><a href="./LogoutSrv">Logout</a></li>
+					</c:when>
+					
+					<c:when test="${usertype != null and usertype.contains('Assistenza')}">
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Assistenza <span
+								class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="adminStock">Cerca per id ordine</a></li>
+							</ul>
+						</li>
+						<li><a href="./LogoutSrv">Logout</a></li>
+					</c:when>
+					
+					<c:when test="${usertype != null and usertype.contains('Finanza')}">
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Finanza <span
+								class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="adminStock">test</a></li>
+							</ul></li>
+							<li><a href="./LogoutSrv">Logout</a></li>
+					</c:when>
+					
+					<c:when test="${usertype != null and usertype.contains('Cliente')}">
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">Cliente <span
+								class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="CartDetailsServlet">Carrello</a></li>
+								<li><a href="OrderDetailsServlet">Ordini</a></li>
+								<li><a href="UserProfileServlet">Profilo</a></li>
+							</ul>
+						</li>
+						<li><a href="./LogoutSrv">Logout</a></li>
+					</c:when>
+					
+					
+					
+					
+					<c:otherwise>
+						
+							
+						<li><a href="CartDetailsServlet">Carrello</a></li>
+					    <li><a href="login.jsp">Login</a></li>
+					    <li><a href="register.jsp">Registrati</a></li>
+						
+						
+						
+						
 
 					</c:otherwise>
 				</c:choose>
