@@ -22,7 +22,6 @@
 					style="background-color: black; color: white; font-size: 14px; font-weight: bold;">
 					<tr>
 						<th>Order ID</th>
-						<th>User Email</th>
 						<th>Invoice ID</th>
 						<th>Paypal ID</th>
 						<th>Order Date</th>
@@ -34,7 +33,6 @@
 					<c:forEach var="order" items="${orders}">
 						<tr>
 							<td>${order.id}</td>
-							<td>${order.emailUtente}</td>
 							<td>${order.idFattura}</td>
 							<td>${order.idPaypal}</td>
 							<td>${order.dataEffettuato}</td>
