@@ -18,7 +18,6 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-
 </head>
 <body>
 	<nav>
@@ -28,33 +27,6 @@
 		<div class="logo">BirdComics</div>
 		<div class="nav-items">
 			<ul class="nav navbar-nav">
-				<li><a href="index.jsp">Home</a></li>
-						<li class="dropdown" id="generi-dropdown"><a
-							class="dropdown-toggle" data-toggle="dropdown" href="#">Generi
-								<span class="caret"></span>
-						</a>
-							<ul class="dropdown-menu">
-								<li><a href="ProductListServlet?type=avventura" class="genre-link">Avventura</a></li>
-								<li><a href="ProductListServlet?type=azione" class="genre-link">Azione</a></li>
-								<li><a href="ProductListServlet?type=horror" class="genre-link">Horror</a></li>
-								<li><a href="ProductListServlet?type=thriller" class="genre-link">Thriller</a></li>
-								<li><a href="ProductListServlet?type=fantasy" class="genre-link">Fantasy</a></li>
-								<li><a href="ProductListServlet?type=drammatico" class="genre-link">Drammatico</a></li>
-								<li><a href="ProductListServlet?type=fantascienza" class="genre-link">Fantascienza</a></li>
-
-							</ul>
-						</li>
-						<div class="search-icon">
-							<span class="fas fa-search" aria-hidden="true"></span>
-						</div>
-						<div class="cancel-icon">
-							<span class="fas fa-times" aria-hidden="true"></span>
-						</div>
-						<form class="form-inline">
-							<input type="text" class="search-data form-control" name="search"
-								placeholder="Cerca libri..." required>
-							<button type="submit" class="fas fa-search" aria-label="search"></button>
-						</form>
 				<c:choose>
 					<c:when test="${usertype != null and usertype.contains('GestoreGenerale')}">
 						<li class="dropdown"><a class="dropdown-toggle"
@@ -152,35 +124,44 @@
 					</c:when>
 					
 					<c:when test="${usertype != null and usertype.contains('Cliente')}">
-						<li class="dropdown"><a class="dropdown-toggle"
-							data-toggle="dropdown" href="#">Cliente <span
-								class="caret"></span></a>
+						<li><a href="index.jsp">Home</a></li>
+							<li><a href="CartDetailsServlet">Carrello</a></li>
+							<li><a href="OrderDetailsServlet">Ordini</a></li>
+							<li><a href="UserProfileServlet">Profilo</a></li>			
+							<li><a href="./LogoutSrv">Logout</a></li>
+				</c:when>
+					
+						<c:otherwise>
+						<li><a href="index.jsp">Home</a></li>
+						<li class="dropdown" id="generi-dropdown"><a
+							class="dropdown-toggle" data-toggle="dropdown" href="#">Generi
+								<span class="caret"></span>
+						</a>
 							<ul class="dropdown-menu">
-								<li><a href="CartDetailsServlet">Carrello</a></li>
-								<li><a href="OrderDetailsServlet">Ordini</a></li>
-								<li><a href="UserProfileServlet">Profilo</a></li>
-							</ul>
-						</li>
-						<li><a href="./LogoutSrv">Logout</a></li>
-					</c:when>
-					
-					
-					
-					
-					<c:otherwise>
-						
-							
-						<li><a href="CartDetailsServlet">Carrello</a></li>
-					    <li><a href="login.jsp">Login</a></li>
-					    <li><a href="register.jsp">Registrati</a></li>
-						
-						
-						
-						
+								<li><a href="ProductListServlet?type=avventura" class="genre-link">Avventura</a></li>
+								<li><a href="ProductListServlet?type=azione" class="genre-link">Azione</a></li>
+								<li><a href="ProductListServlet?type=horror" class="genre-link">Horror</a></li>
+								<li><a href="ProductListServlet?type=thriller" class="genre-link">Thriller</a></li>
+								<li><a href="ProductListServlet?type=fantasy" class="genre-link">Fantasy</a></li>
+								<li><a href="ProductListServlet?type=drammatico" class="genre-link">Drammatico</a></li>
+								<li><a href="ProductListServlet?type=fantascienza" class="genre-link">Fantascienza</a></li>
 
-					</c:otherwise>
-				</c:choose>
-			</ul>
+							</ul></li>
+							<li><a href="CartDetailsServlet">Carrello</a></li>
+								<li><a href="login.jsp">Login</a></li>
+								<li><a href="register.jsp">Registrati</a></li>
+								
+								<form class="form-inline" action="ProductListServlet" method="GET">
+   							 <input type="text" class="search-data form-control" name="search"
+       							 placeholder="Cerca fumetti..." required>
+    						<button type="submit" class="fas fa-search" aria-label="search"></button>
+							</form>
+								</ul>
+
+							
+							</c:otherwise>
+							
+							</c:choose>	
 		</div>
 	</nav>
 </body>
