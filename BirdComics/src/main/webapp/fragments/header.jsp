@@ -78,7 +78,8 @@
 						<div class="cancel-icon">
 							<span class="fas fa-times" aria-hidden="true"></span>
 						</div>
-						<form class="form-inline">
+						<!-- Modifica del form di ricerca -->
+						<form class="form-inline" action="ProductListServlet" method="GET">
 							<input type="text" class="search-data form-control" name="search"
 								placeholder="Cerca libri..." required>
 							<button type="submit" class="fas fa-search" aria-label="search"></button>
