@@ -42,7 +42,6 @@ public class PaymentServices {
 		requestPayment.setIntent("authorize");
 
 		APIContext apiContext = new APIContext(CLIENT_ID, CLIENT_SECRET, MODE);
-		/*
 		Payment approvedPayment = requestPayment.create(apiContext);
 
 		
@@ -50,32 +49,6 @@ public class PaymentServices {
 		System.out.println(approvedPayment);
 
 		return getApprovalLink(approvedPayment);
-		*/
-		
-		
-		
-		Payment payment = new Payment();
-		payment.setIntent("sale");
-		// Crea il pagamento
-		payment.setTransactions(product);
-		payment.setPayer(new Payer().setPaymentMethod("paypal"));
-
-		// Esegui il pagamento (completamento del pagamento immediato)
-		try {
-		    Payment createdPayment = payment.create(apiContext);
-		    
-		    if (createdPayment.getState().equals("approved")) {
-		    	return "1";
-		        // Il pagamento è stato completato con successo
-		        // Gestisci la logica post-pagamento (ad esempio, aggiornare il database, inviare una ricevuta, ecc.)
-		    }
-		} catch (PayPalRESTException ex) {
-		    ex.printStackTrace();
-		    return "0";
-		    // Gestisci l'errore (ad esempio, mostra un messaggio di errore all'utente)
-		}
-		
-		return "0";
 
 	}
 	
@@ -95,8 +68,8 @@ public class PaymentServices {
 	
 	private RedirectUrls getRedirectURLs() {
 		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl("http://localhost:8080/PaypalTest/cancel.jsp");
-		redirectUrls.setReturnUrl("http://localhost:8080/PaypalTest/review_payment");
+		redirectUrls.setCancelUrl("http://localhost:8080/BirdComics/cancel.jsp");
+		redirectUrls.setReturnUrl("http://localhost:8080/BirdComics/review_payment");
 		
 		return redirectUrls;
 	}
@@ -116,6 +89,7 @@ public class PaymentServices {
 		
 		return approvalLink;
 	}
+	
 
 	public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
 		PaymentExecution paymentExecution = new PaymentExecution();

@@ -37,6 +37,7 @@ public class AuthorizePaymentServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CartServiceDAO carts = new CartServiceDAO();
+		ProductBean p = new ProductBean();
 		ProductServiceDAO ps = new ProductServiceDAO();
 		List<CartBean> ca = new ArrayList<CartBean>();
 		List<Item> items = new ArrayList<>();
@@ -50,42 +51,47 @@ public class AuthorizePaymentServlet extends HttpServlet {
 		
 		
 		try {
+			
 			ca = carts.getAllCartItems(request.getSession().getAttribute("username").toString());
 			for (CartBean c : ca) {
-				 ProductBean p = new ProductBean();
 				 p = ps.getProductsByID(c.prodId);
+				 System.out.println(p.getName());
+				 
 				 Item item = new Item();
 			    item.setCurrency("EUR");
 			    item.setSku(String.valueOf(p.getId()));
 			    item.setName(p.getName());
 			    item.setDescription(p.getDescription());
-			    item.setPrice(String.valueOf(p.getPrice()));  // Prezzo senza tasse
-			    item.setTax(String.valueOf(p.getPrice()*0.22));  // Tassa per il prodotto
+			    item.setPrice(String.format("%.2f", p.getPrice()).replace(",", "."));  // Prezzo senza tasse
+			    item.setTax(String.format("%.2f", p.getPrice()*0.22).replace(",", "."));  // Tassa per il prodotto
 			    item.setQuantity(String.valueOf(c.getQuantity()));
-		    	totalSubtotal += p.getPrice();
-		    	totalTax += p.getPrice() * 0.22;
+		    	totalSubtotal += p.getPrice() * c.getQuantity();
+		    	totalTax += (p.getPrice() * c.getQuantity()) * 0.22;
 			    items.add(item);
+			    
 			}
+			
 			itemList.setItems(items);
 			Amount amount = new Amount();
 			Details details = new Details();
-			details.setShipping(String.valueOf(0));
-			details.setSubtotal(String.valueOf(totalSubtotal));
-			details.setTax(String.valueOf(totalTax));
+			details.setSubtotal(String.format("%.2f", totalSubtotal).replace(",", "."));
+			details.setTax(String.format("%.2f", totalTax).replace(",", "."));
 			amount.setCurrency("EUR");
-			amount.setTotal(String.valueOf(totalAmount));  // Somma totale dell'importo
+			totalAmount = totalSubtotal + totalTax;
+			amount.setTotal(String.format("%.2f", totalAmount).replace(",", "."));  // Somma totale dell'importo
 			amount.setDetails(details);  
 			transaction.setAmount(amount);
 			transaction.setDescription("Descrizione dell'ordine: ......");
 			transaction.setItemList(itemList);
-
+			
 			List<Transaction> listTransaction = new ArrayList<>();
 			listTransaction.add(transaction);	
 			
 			
 			String approvalLink = paymentServices.authorizePayment(listTransaction);
 			
-			System.out.println(approvalLink);
+			response.sendRedirect(approvalLink);
+			
 		}
 		catch (Exception e) {
 			// TODO: handle exception
