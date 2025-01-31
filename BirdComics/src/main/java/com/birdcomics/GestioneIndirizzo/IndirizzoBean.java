@@ -4,14 +4,14 @@ public class IndirizzoBean {
     private String nomeCitta;
     private String via;
     private int numeroCivico;
-    private String cvc;
+    private String cap;
 
     // Costruttore
-    public IndirizzoBean (String nomeCitta, String via, int numeroCivico, String cvc) {
+    public IndirizzoBean (String nomeCitta, String via, int numeroCivico, String cap) {
         this.nomeCitta = nomeCitta;
         this.via = via;
         this.numeroCivico = numeroCivico;
-        this.cvc = cvc;
+        this.cap = cap;
     }
     
     public IndirizzoBean() {
@@ -43,12 +43,12 @@ public class IndirizzoBean {
         this.numeroCivico = numeroCivico;
     }
 
-    public String getCvc() {
-        return cvc;
+    public String getCap() {
+        return cap;
     }
 
-    public void setCvc(String cvc) {
-        this.cvc = cvc;
+    public void setCap(String cap) {
+        this.cap = cap;
     }
 
  

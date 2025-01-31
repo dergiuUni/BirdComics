@@ -90,10 +90,20 @@
 						<hr>
 						<div class="row">
 							<div class="col-sm-3">
-								<p class="mb-0">Phone</p>
+								<p class="mb-0">Telefono</p>
 							</div>
 							<div class="col-sm-9">
 								<p class="text-muted mb-0"><%=user.getNumeroTelefono()%>
+								</p>
+							</div>
+						</div>
+						<hr>
+							<div class="row">
+							<div class="col-sm-3">
+								<p class="mb-0">Data di Nascita</p>
+							</div>
+							<div class="col-sm-9">
+								<p class="text-muted mb-0"><%=user.getDataNascita()%>
 								</p>
 							</div>
 						</div>
@@ -133,7 +143,7 @@
 								<p class="mb-0">CAP</p>
 							</div>
 							<div class="col-sm-9">
-								<p class="text-muted mb-0"><%=user.getIndirizzo().getCvc()%>
+								<p class="text-muted mb-0"><%=user.getIndirizzo().getCap()%>
 								</p>
 							</div>
 						</div>

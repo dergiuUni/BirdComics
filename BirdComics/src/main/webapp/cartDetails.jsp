@@ -55,7 +55,7 @@
                 //List<ProductBean> products = new ProductServiceDAO().getProductDetails(prodId);
                 List<ProductBean> products = (List<ProductBean>) request.getAttribute("productItems");
 
-                double totAmount = (double) request.getAttribute("totAmount");
+                float totAmount = (float) request.getAttribute("totAmount");
 
                 if (cartItems != null && !cartItems.isEmpty()) {
                 	int index = 0;
@@ -65,7 +65,7 @@
                         int prodQuantity = item.getQuantity();
                         
                         ProductBean product = products.get(index);
-                        double currAmount = product.getPrice() * prodQuantity;
+                        float currAmount = product.getPrice() * prodQuantity;
                         index++;
                 %>
 				<tr>

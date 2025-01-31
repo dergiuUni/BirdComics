@@ -25,22 +25,22 @@ public class MagazzinoDao {
 
 	    try {
 	    	IndirizzoDao in = new IndirizzoDao(con);
-	    	if(!in.ifExists(magazzino.getIndirizzo().getNomeCitta(), magazzino.getIndirizzo().getVia(), magazzino.getIndirizzo().getNumeroCivico(), magazzino.getIndirizzo().getCvc())) {
-	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cvc) VALUES (?, ?, ?, ?)");
+	    	if(!in.ifExists(magazzino.getIndirizzo().getNomeCitta(), magazzino.getIndirizzo().getVia(), magazzino.getIndirizzo().getNumeroCivico(), magazzino.getIndirizzo().getCap())) {
+	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cap) VALUES (?, ?, ?, ?)");
 	    		ps.setString(1, magazzino.getIndirizzo().getNomeCitta());
 		        ps.setString(2, magazzino.getIndirizzo().getVia());
 		        ps.setInt(3, magazzino.getIndirizzo().getNumeroCivico());
-		        ps.setString(4, magazzino.getIndirizzo().getCvc());
+		        ps.setString(4, magazzino.getIndirizzo().getCap());
 		        ps.executeUpdate();
 	    	}
 	    	
-	        ps = con.prepareStatement("INSERT INTO Magazzino (nome, nomeCitta, via, numeroCivico, cvc) VALUES (?, ?, ?, ?, ?)");
+	        ps = con.prepareStatement("INSERT INTO Magazzino (nome, nomeCitta, via, numeroCivico, cap) VALUES (?, ?, ?, ?, ?)");
 
 	        ps.setString(1, magazzino.getNome());
 	        ps.setString(2, magazzino.getIndirizzo().getNomeCitta());
 	        ps.setString(3, magazzino.getIndirizzo().getVia());
 	        ps.setInt(4, magazzino.getIndirizzo().getNumeroCivico());
-	        ps.setString(5, magazzino.getIndirizzo().getCvc());
+	        ps.setString(5, magazzino.getIndirizzo().getCap());
 	        
 	        int k = ps.executeUpdate();
 
@@ -100,7 +100,7 @@ public class MagazzinoDao {
 
 			if (rs.next()) {
 				ScaffaleDao sc = new ScaffaleDao();
-				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cvc"));
+				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cap"));
 				MagazzinoBean mag = new MagazzinoBean(rs.getString("nome"), in, sc.getScaffaleMagazzino(rs.getString("nome")));
 				magazzii.add(mag);
 			}

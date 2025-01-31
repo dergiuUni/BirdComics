@@ -174,6 +174,7 @@ public class ProductServiceDAO {
                 product.setName(rs.getString(2));
                 product.setDescription(rs.getString(3));
                 product.setPrice(rs.getFloat(4));
+                product.setImage(rs.getString(5));
                 //ps.setString(7, product.getImage());
                 // Assuming prodImage is stored as Blob or InputStream in the database
                 // product.setProdImage(rs.getAsciiStream(7)); // Uncomment and adjust if needed
@@ -212,6 +213,7 @@ public class ProductServiceDAO {
                 product.setName(rs.getString(2));
                 product.setDescription(rs.getString(3));
                 product.setPrice(rs.getFloat(4));
+                product.setImage(rs.getString(5));
                 // Assuming prodImage is stored as Blob or InputStream in the database
                 // product.setProdImage(rs.getAsciiStream(7)); // Uncomment and adjust if needed
 
@@ -254,6 +256,7 @@ public class ProductServiceDAO {
                 product.setName(rs.getString(2));
                 product.setDescription(rs.getString(3));
                 product.setPrice(rs.getFloat(4));
+                product.setImage(rs.getString(5));
                 // Assuming prodImage is stored as Blob or InputStream in the database
                 // product.setProdImage(rs.getAsciiStream("image")); // Uncomment and adjust if needed
 
@@ -467,6 +470,7 @@ public class ProductServiceDAO {
                 product.setName(rs.getString(2));
                 product.setDescription(rs.getString(3));
                 product.setPrice(rs.getFloat(4));
+                product.setImage(rs.getString(5));
                 // Assuming prodImage is stored as Blob or InputStream in the database
                 // product.setProdImage(rs.getAsciiStream("image")); // Uncomment and adjust if needed
             }

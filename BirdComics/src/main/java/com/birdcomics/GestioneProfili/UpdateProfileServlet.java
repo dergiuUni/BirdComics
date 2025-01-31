@@ -20,7 +20,7 @@ public class UpdateProfileServlet extends HttpServlet {
 		if (userName != null) {
 			UserServiceDAO dao = new UserServiceDAO();
 			try {
-				dao.updateUserDetails(userName, password, request.getParameter("fullName"), request.getParameter("cognome"), request.getParameter("telefono"), request.getParameter("nomeCitta"), request.getParameter("via"), Integer.parseInt(request.getParameter("numeroCivico")), request.getParameter("cvc"));		
+				dao.updateUserDetails(userName, password, request.getParameter("fullName"), request.getParameter("cognome"), request.getParameter("telefono"), request.getParameter("nomeCitta"), request.getParameter("via"), Integer.parseInt(request.getParameter("numeroCivico")), request.getParameter("cap"));		
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

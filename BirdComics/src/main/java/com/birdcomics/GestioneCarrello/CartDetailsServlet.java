@@ -61,13 +61,13 @@ public class CartDetailsServlet extends HttpServlet {
 
 
         // Calculate total amount
-        double totAmount = 0;
+        float totAmount = 0;
         for (CartBean item : cartItems) {
             String prodId = item.getProdId();
             int prodQuantity = item.getQuantity();
             ProductBean product = new ProductServiceDAO().getProductsByID(prodId);
             products.add(product);
-            double currAmount = product.getPrice() * prodQuantity;
+            float currAmount = product.getPrice() * prodQuantity;
             totAmount += currAmount;
             System.out.println("product:" + product);
         }

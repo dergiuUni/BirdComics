@@ -47,25 +47,10 @@ public class ProductListServlet extends HttpServlet {
             request.setAttribute("products", products);
             request.setAttribute("message", message);
 
-            // Check if it's an AJAX request
-            if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-                // Set content type and write JSON response
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                
-                // Create a JSON object or array to send back
-                // Here, assuming JSON response format
-                Gson gson = new Gson();
-                String jsonProducts = gson.toJson(products);
-                
-                // Write JSON response to the client
-                PrintWriter out = response.getWriter();
-                out.print(jsonProducts);
-                out.flush();
-            } else {
+          
                 // Forward to your index.jsp for non-AJAX requests
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
-            }
+            
         } catch (SQLException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
