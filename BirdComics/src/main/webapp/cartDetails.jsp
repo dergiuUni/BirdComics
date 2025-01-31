@@ -107,7 +107,7 @@
 						</form>
 					</td>
 					<td colspan="2" align="center">
-						<form method="post" action="payment.jsp">
+						<form method="post" action="riepilogoOrdine.jsp">
 							<button style="background-color: black; color: white;"
 								type="submit">Paga ora</button>
 							<input type="hidden" name="amount" value="${totAmount}">
