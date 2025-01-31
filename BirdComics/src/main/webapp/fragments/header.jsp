@@ -38,6 +38,7 @@
 								<li><a href="">ListaDirettoreMagazzino</a></li>
 							</ul>
 						</li>
+						<li><a href="UserProfileServlet">Profilo</a></li>		
 						<li><a href="./LogoutSrv">Logout</a></li>
 					</c:when>
 					
@@ -51,7 +52,9 @@
 								<li><a href="">ListaHr</a></li>
 							</ul>
 						</li>
+						<li><a href="UserProfileServlet">Profilo</a></li>		
 						<li><a href="./LogoutSrv">Logout</a></li>
+						
 					</c:when>
 					
 					<c:when test="${usertype != null and usertype.contains('RisorseUmane')}">
@@ -63,6 +66,7 @@
 								<li><a href="">Lista Dipendente</a></li>
 							</ul>
 						</li>
+						<li><a href="UserProfileServlet">Profilo</a></li>		
 						<li><a href="./LogoutSrv">Logout</a></li>
 					</c:when>
 					
@@ -75,6 +79,7 @@
 								<li><a href="">lista catalogo</a></li>
 							</ul>
 						</li>
+						<li><a href="UserProfileServlet">Profilo</a></li>		
 						<li><a href="./LogoutSrv">Logout</a></li>
 					</c:when>
 					
@@ -88,6 +93,7 @@
 								<li><a href="">LiberaScaffale</a></li>
 							</ul>
 						</li>
+						<li><a href="UserProfileServlet">Profilo</a></li>		
 						<li><a href="./LogoutSrv">Logout</a></li>
 					</c:when>
 					
@@ -99,6 +105,7 @@
 								<li><a href="">AggiungiTracking</a></li>
 							</ul>
 						</li>
+						<li><a href="UserProfileServlet">Profilo</a></li>		
 						<li><a href="./LogoutSrv">Logout</a></li>
 					</c:when>
 					
@@ -110,6 +117,7 @@
 								<li><a href="adminStock">Cerca per id ordine</a></li>
 							</ul>
 						</li>
+						<li><a href="UserProfileServlet">Profilo</a></li>		
 						<li><a href="./LogoutSrv">Logout</a></li>
 					</c:when>
 					
@@ -120,6 +128,7 @@
 							<ul class="dropdown-menu">
 								<li><a href="adminStock">test</a></li>
 							</ul></li>
+							<li><a href="UserProfileServlet">Profilo</a></li>		
 							<li><a href="./LogoutSrv">Logout</a></li>
 					</c:when>
 					
@@ -129,6 +138,10 @@
 							<li><a href="OrderDetailsServlet">Ordini</a></li>
 							<li><a href="UserProfileServlet">Profilo</a></li>			
 							<li><a href="./LogoutSrv">Logout</a></li>
+				</c:when>
+				
+							<c:when test="${usertype != null}">
+							<li><a href="testServlet">TEST</a></li>			
 				</c:when>
 					
 						<c:otherwise>
