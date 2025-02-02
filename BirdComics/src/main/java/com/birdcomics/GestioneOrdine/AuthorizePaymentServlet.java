@@ -18,12 +18,17 @@ import com.birdcomics.GestioneCarrello.CartBean;
 import com.birdcomics.GestioneCarrello.CartServiceDAO;
 import com.birdcomics.GestioneCatalogo.ProductBean;
 import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
+import com.birdcomics.GestioneProfili.UserBean;
+import com.birdcomics.GestioneProfili.UserServiceDAO;
+import com.paypal.api.payments.Address;
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Details;
 import com.paypal.api.payments.Item;
 import com.paypal.api.payments.ItemList;
+import com.paypal.api.payments.Payer;
 import com.paypal.api.payments.PayerInfo;
 import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.ShippingAddress;
 import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.PayPalRESTException;
 
@@ -45,17 +50,21 @@ public class AuthorizePaymentServlet extends HttpServlet {
 		ItemList itemList = new ItemList();
 		PaymentServices paymentServices = new PaymentServices();
 		double totalAmount = 0;
-		double totalShipping = 0;
 		double totalTax = 0;
 		double totalSubtotal = 0;
 		
 		
+		UserBean usb = new UserBean();
+		UserServiceDAO usd = new UserServiceDAO();
+		
+		
+		
 		try {
-			
+			usb = usd.getUserDetails(request.getSession().getAttribute("username").toString(), request.getSession().getAttribute("password").toString());
+				
 			ca = carts.getAllCartItems(request.getSession().getAttribute("username").toString());
 			for (CartBean c : ca) {
 				 p = ps.getProductsByID(c.prodId);
-				 System.out.println(p.getName());
 				 
 				 Item item = new Item();
 			    item.setCurrency("EUR");
@@ -72,6 +81,21 @@ public class AuthorizePaymentServlet extends HttpServlet {
 			}
 			
 			itemList.setItems(items);
+			
+			
+			ShippingAddress shippingAddress = new ShippingAddress();
+			shippingAddress.setRecipientName(usb.getNome().concat(usb.getCognome()));
+			shippingAddress.setCity(usb.getIndirizzo().getNomeCitta());
+			shippingAddress.setCountryCode("IT");
+			shippingAddress.setLine1(usb.getIndirizzo().getVia().concat(" " + usb.getIndirizzo().getNumeroCivico()));
+			shippingAddress.setPostalCode(usb.getIndirizzo().getCap());
+			shippingAddress.setPhone(usb.getNumeroTelefono());
+
+			// Assegna l'indirizzo di spedizione all'ItemList
+			itemList.setShippingAddress(shippingAddress);
+			
+			
+			
 			Amount amount = new Amount();
 			Details details = new Details();
 			details.setSubtotal(String.format("%.2f", totalSubtotal).replace(",", "."));
@@ -88,9 +112,26 @@ public class AuthorizePaymentServlet extends HttpServlet {
 			listTransaction.add(transaction);	
 			
 			
-			String approvalLink = paymentServices.authorizePayment(listTransaction);
 			
-			response.sendRedirect(approvalLink);
+			
+			Payer payer = new Payer();
+			payer.setPaymentMethod("paypal");
+			Address a = new Address();
+			a.setCity(usb.getIndirizzo().getNomeCitta());
+			a.setCountryCode("IT");
+			a.setLine1(usb.getIndirizzo().getVia().concat(String.valueOf(usb.getIndirizzo().getNumeroCivico())));
+			a.setPostalCode(usb.getIndirizzo().getCap());
+			a.setPhone(usb.getNumeroTelefono());
+			
+			PayerInfo payerInfo = new PayerInfo();
+			payerInfo.setFirstName(usb.getNome())
+					 .setLastName(usb.getCognome())
+					 .setEmail(usb.getEmail())
+					 .setBillingAddress(a);
+			
+			payer.setPayerInfo(payerInfo);
+				
+			response.sendRedirect(paymentServices.authorizePayment(listTransaction, payer));
 			
 		}
 		catch (Exception e) {

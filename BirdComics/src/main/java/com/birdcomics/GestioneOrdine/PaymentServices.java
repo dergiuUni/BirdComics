@@ -28,10 +28,10 @@ public class PaymentServices {
 	private static final String CLIENT_SECRET = "EJcpDuXi8-B4JvdJc5gTv9p8sioOWWrwpXmFpuSs_ufS293eT6BqHnIEg4HJPPLpMBlulOXCW-01J32S";
 	private static final String MODE = "sandbox";
 
-	public String authorizePayment(List<Transaction> product)			
+	public String authorizePayment(List<Transaction> product, Payer paye)			
 			throws PayPalRESTException {		
 
-		Payer payer = getPayerInformation();
+		Payer payer = paye;
 		RedirectUrls redirectUrls = getRedirectURLs();
 		List<Transaction> listTransaction = product;
 		
@@ -45,26 +45,14 @@ public class PaymentServices {
 		Payment approvedPayment = requestPayment.create(apiContext);
 
 		
-		System.out.println("=== CREATED PAYMENT: ====");
-		System.out.println(approvedPayment);
+		//System.out.println("=== CREATED PAYMENT: ====");
+		//System.out.println(approvedPayment);
 
 		return getApprovalLink(approvedPayment);
 
 	}
 	
-	private Payer getPayerInformation() {
-		Payer payer = new Payer();
-		payer.setPaymentMethod("paypal");
-		
-		PayerInfo payerInfo = new PayerInfo();
-		payerInfo.setFirstName("William")
-				 .setLastName("Peterson")
-				 .setEmail("william.peterson@company.com");
-		
-		payer.setPayerInfo(payerInfo);
-		
-		return payer;
-	}
+
 	
 	private RedirectUrls getRedirectURLs() {
 		RedirectUrls redirectUrls = new RedirectUrls();

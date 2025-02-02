@@ -35,6 +35,10 @@ public class UserBean implements Serializable {
 	public  String getEmail() {
 		return email;
 	}
+	
+	public  void setEmail(String email) {
+		this.email = email ;
+	}
 
 	public  String getPassword() {
 		return password;
@@ -64,19 +68,19 @@ public class UserBean implements Serializable {
 		this.indirizzo = indirizzo;
 	}
 	
-    protected ArrayList<RuoloBean> getRuoloBean() {
+	public ArrayList<RuoloBean> getRuoloBean() {
 		return ruolo;
 	}
 
-	protected void setRuoloBean(ArrayList<RuoloBean> ruoloBean) {
+	public void setRuoloBean(ArrayList<RuoloBean> ruoloBean) {
 		this.ruolo = ruoloBean;
 	}
 	
-	protected void addRuolo(RuoloBean ruolo) {
+	public void addRuolo(RuoloBean ruolo) {
 		this.ruolo.add(ruolo);
 	}
 	
-	protected boolean isRuolo(RuoloBean test) {
+	public boolean isRuolo(RuoloBean test) {
 		for (RuoloBean ruoloBean : ruolo) {
 			if(ruoloBean.toString() == test.toString()) {
 				return true;

@@ -1,23 +1,28 @@
 package com.birdcomics.GestioneOrdine;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import com.birdcomics.GestioneCatalogo.ProductBean;
 
 
 @SuppressWarnings("serial")
 public class OrderBean implements Serializable {
 
-	String emailUtente;
-	int id;
-	String idPaypal;
-	boolean shipped;
-	Date dataEffettuato;
-	int idFattura;
+	private String emailUtente;
+	private int id;
+	private String idPaypal;
+	private 	boolean shipped;
+	private Date dataEffettuato;
+	private FatturaBean idFattura;
+	private HashMap<ProductBean, Integer> fumetti = new HashMap<>();;
 	
 	public OrderBean() {
 		super();
 	}
 	
-	public OrderBean(String emailUtente, int id, String idPaypal, boolean shipped, Date dataEffettuato, int idFattura) {
+	public OrderBean(String emailUtente, int id, String idPaypal, boolean shipped, Date dataEffettuato, FatturaBean idFattura) {
 		super();
 		this.emailUtente = emailUtente;
 		this.id = id;
@@ -25,6 +30,14 @@ public class OrderBean implements Serializable {
 		this.shipped = shipped;
 		this.dataEffettuato = dataEffettuato;
 		this.idFattura = idFattura;
+	}
+	
+	public OrderBean(String emailUtente,  String idPaypal, boolean shipped, Date dataEffettuato) {
+		super();
+		this.emailUtente = emailUtente;
+		this.idPaypal = idPaypal;
+		this.shipped = shipped;
+		this.dataEffettuato = dataEffettuato;
 	}
 
 
@@ -69,12 +82,28 @@ public class OrderBean implements Serializable {
 		this.dataEffettuato = dataEffettuato;
 	}
 
-	public int getIdFattura() {
+	public FatturaBean getIdFattura() {
 		return idFattura;
 	}
 
-	public void setIdFattura(int idFattura) {
+	public void setIdFattura(FatturaBean idFattura) {
 		this.idFattura = idFattura;
 	}
+
+	public HashMap<ProductBean, Integer> getFumetti() {
+		return fumetti;
+	}
+
+	public void setFumetti(HashMap<ProductBean, Integer> fumetti) {
+		this.fumetti = fumetti;
+	}
+
+	public void addFumetti(ProductBean fumetto, int quantita) {
+		this.fumetti.put(fumetto, quantita);
+	}
+	
+	
+	
+	
 
 }

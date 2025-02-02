@@ -22,22 +22,22 @@ public class MagazzinoBean {
 	}
 	
 	
-	protected String getNome() {
+	public String getNome() {
 		return nome;
 	}
-	protected void setNome(String nome) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	protected IndirizzoBean getIndirizzo() {
+	public IndirizzoBean getIndirizzo() {
 		return indirizzo;
 	}
-	protected void setIndirizzo(IndirizzoBean indirizzo) {
+	public void setIndirizzo(IndirizzoBean indirizzo) {
 		this.indirizzo = indirizzo;
 	}
-	protected ArrayList<ScaffaliBean> getScaffali() {
+	public ArrayList<ScaffaliBean> getScaffali() {
 		return scaffali;
 	}
-	protected void setScaffali(ArrayList<ScaffaliBean> scaffali) {
+	public void setScaffali(ArrayList<ScaffaliBean> scaffali) {
 		this.scaffali = scaffali;
 	}
 	
