@@ -11,13 +11,15 @@ import java.util.List;
 import com.birdcomics.DatabaseImplementator.DBUtil;
 
 public class ProductServiceDAO {
-	/*    public String addProduct(String prodName, String prodType, String prodInfo, double prodPrice, int prodQuantity,
-            String prodImage) throws SQLException {
+	   public String addProduct(String name, String description, float price, String image) throws SQLException {
         String status = null;
-        String prodId = IDUtil.generateId();
 
-        ProductBean product = new ProductBean(prodId, prodName, prodType, prodInfo, prodPrice, prodQuantity, prodImage);
-
+        ProductBean product = new ProductBean();    
+        product.setName(name);
+        product.setDescription(description);
+        product.setPrice(price);
+        product.setImage(image);  
+       
         status = addProduct(product);
 
         return status;
@@ -26,28 +28,24 @@ public class ProductServiceDAO {
     public String addProduct(ProductBean product) throws SQLException {
         String status = "Product Registration Failed!";
 
-        if (product.getProdId() == null)
-            product.setProdId(IDUtil.generateId());
-
         Connection con = DBUtil.getConnection();
 
         PreparedStatement ps = null;
 
         try {
-            ps = con.prepareStatement("insert into product values(?,?,?,?,?,?,?, 1);");
-            ps.setString(1, product.getProdId());
-            ps.setString(2, product.getProdName());
-            ps.setString(3, product.getProdType());
-            ps.setString(4, product.getProdInfo());
-            ps.setDouble(5, product.getProdPrice());
-            ps.setInt(6, product.getProdQuantity());
-            ps.setString(7, product.getProdImage());
-
+            ps = con.prepareStatement("insert into Fumetto (nome, descrizione, prezzo, immagine, active) values(?,?,?,?,?);");
+            ps.setString(1, product.getName());
+            ps.setString(2, product.getDescription());
+            ps.setFloat(3, product.getPrice());
+            ps.setString(4, product.getImage());
+            ps.setBoolean(5, true);
+            
+           
             int k = ps.executeUpdate();
 
             if (k > 0) {
 
-                status = "Product Added Successfully with Product Id: " + product.getProdId();
+                status = "Product Added Successfully with Product Id: " + product.getId();
 
             } else {
 
@@ -63,7 +61,8 @@ public class ProductServiceDAO {
 
         return status;
     }
-
+ 
+ 
     public String removeProduct(String prodId) throws SQLException {
         String status = "Product Removal Failed!";
 
@@ -71,13 +70,14 @@ public class ProductServiceDAO {
         PreparedStatement ps = null;
 
         try {
-            ps = con.prepareStatement("UPDATE product SET active = 0 WHERE pid = ?");
+    
+        	ps = con.prepareStatement("DELETE FROM Fumetto WHERE id = ?");
             ps.setString(1, prodId);
 
             int k = ps.executeUpdate();
 
             if (k > 0) {
-                status = "Product Set as Inactive Successfully!";
+                status = "Fumetto Cancellato!";
             }
 
         } catch (SQLException e) {
@@ -89,7 +89,7 @@ public class ProductServiceDAO {
 
         return status;
     }
-
+/*
     public String updateProduct(ProductBean prevProduct, ProductBean updatedProduct) throws SQLException {
         String status = "Product Updation Failed!";
 
@@ -247,6 +247,53 @@ public class ProductServiceDAO {
             search = "%" + search.toLowerCase() + "%";
             ps.setString(1, search);
             ps.setString(2, search);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ProductBean product = new ProductBean();
+                product.setId(rs.getInt(1));
+                product.setName(rs.getString(2));
+                product.setDescription(rs.getString(3));
+                product.setPrice(rs.getFloat(4));
+                product.setImage(rs.getString(5));
+                // Assuming prodImage is stored as Blob or InputStream in the database
+                // product.setProdImage(rs.getAsciiStream("image")); // Uncomment and adjust if needed
+
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeConnection(ps);
+            DBUtil.closeConnection(rs);
+            DBUtil.closeConnection(con);
+        }
+
+        return products;
+    }
+    
+    
+    public List<ProductBean> searchAllProductsGestore(String search) throws SQLException {
+        List<ProductBean> products = new ArrayList<>();
+
+        Connection con = DBUtil.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+        	ps = con.prepareStatement(
+        		    "SELECT * FROM Fumetto, Genere_Fumetto " +
+        		    "WHERE Fumetto.id = Genere_Fumetto.idFumetto " +
+        		    "AND (lower(Genere_Fumetto.genere) LIKE ? OR lower(Fumetto.nome) LIKE ? OR Fumetto.id = ?) " +
+        		    "AND Fumetto.active = 1 " +
+        		    "GROUP BY Fumetto.id"
+        		);
+
+            String search1 = "%" + search.toLowerCase() + "%";
+            ps.setString(1, search1);
+            ps.setString(2, search1);
+            ps.setString(3, search);
 
             rs = ps.executeQuery();
 

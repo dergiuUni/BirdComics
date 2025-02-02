@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneProfili.Gestore.GestoreCatalogo;
+package com.birdcomics.GestioneCatalogo;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,16 +15,15 @@ import com.birdcomics.GestioneCatalogo.ProductBean;
 import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
 import com.birdcomics.GestioneOrdine.OrderServiceDAO;
 
-@WebServlet("/adminStock")
-public class adminStock extends HttpServlet {
+@WebServlet("/GestioneCatalogo")
+public class GestioneCatalogo extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductServiceDAO prodDao = new ProductServiceDAO();
-        OrderServiceDAO orderDao = new OrderServiceDAO();
         List<ProductBean> products = new ArrayList<>();
-        List<Integer> soldQuantities = new ArrayList<>(); // Array di interi per soldQty
+        
 
         String search = request.getParameter("search");
         String type = request.getParameter("type");
@@ -34,11 +33,8 @@ public class adminStock extends HttpServlet {
         try {
         	
             if (search != null) {
-                products = prodDao.searchAllProducts(search);
+                products = prodDao.searchAllProductsGestore(search);
                 message = "Showing Results for '" + search + "'";
-            } else if (type != null) {
-                products = prodDao.getAllProductsByType(type);
-                message = "Showing Results for '" + type + "'";
             } else {
                 products = prodDao.getAllProducts();
             }
@@ -47,23 +43,17 @@ public class adminStock extends HttpServlet {
                 message = "No items found for the search '" + (search != null ? search : type) + "'";        
             }
 
-            // Per ciascun prodotto, ottenere il numero di articoli venduti dal DAO
-            for (ProductBean product : products) {
-                int soldQty = orderDao.countSoldItem(product.getProdId());
-                soldQuantities.add(soldQty); // Aggiungi soldQty all'array di interi
-            }
 
             request.setAttribute("userType", userType);
             request.setAttribute("message", message);
             request.setAttribute("products", products);
-            request.setAttribute("soldQuantities", soldQuantities); // Passa l'array di soldQty come attributo
 
         } catch (SQLException e) {
             e.printStackTrace();
             // Gestire l'eccezione in modo appropriato
         }
 
-        request.getRequestDispatcher("/adminStock.jsp").forward(request, response);
+        request.getRequestDispatcher("/visualizzaCatalogo.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

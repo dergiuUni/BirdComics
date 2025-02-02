@@ -59,12 +59,10 @@ public class LoginSrv extends HttpServlet {
                 
                 session.setAttribute("usertype", userType);
 
-                if ("admin".equals(userType)) {
-                    response.sendRedirect("adminStock");
-                } else {
-                    RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-                    rd.forward(request, response);
-                }
+           
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                rd.forward(request, response);
+                
             } catch (SQLException e) {
                 e.printStackTrace();
             }

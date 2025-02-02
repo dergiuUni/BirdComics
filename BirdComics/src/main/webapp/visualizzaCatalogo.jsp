@@ -17,26 +17,24 @@
 </head>
 <jsp:include page="./fragments/header.jsp" />
 <body>
-  <%  String userType = (String) session.getAttribute("usertype");
-     if (userType == null || userType.isEmpty()) {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("./adminStock");
-        dispatcher.forward(request, response);
 
-        return;
-    }
-     
-     if (userType.isEmpty()) {
-         return;
-     }
+  <%   List<String> userRoles = (List<String>) session.getAttribute("usertype");
+
+  if (userRoles == null || !userRoles.contains("GestoreCatalogo")) {
+      RequestDispatcher dispatcher = request.getRequestDispatcher("./LoginSrv");
+      dispatcher.forward(request, response);
+      return;
+  }
+
+    
 %>
-
 
 
 <div class="text-center"
     style="color: green; font-size: 24px; font-weight: bold; margin-top: 15px; margin-bottom: 15px;">Gestione libri</div>
 
 
-    <form class="search-form" action="adminStock" method="get">
+    <form class="search-form" action="GestioneCatalogo" method="get">
         <input type="text" name="search" placeholder="Cerca un libro..."">
         <input type="submit" value="Submit">
     </form>   
@@ -48,43 +46,34 @@
             <thead style="background-color: #4CAF50; color: white; font-size: 18px;">
                 <tr>
                     <th>Image</th>
-                    <th>ProductId</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Price</th>
-                    <th>Sold Qty</th>
-                    <th>Stock Qty</th>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Prezzo</th>
                     <th colspan="2" style="text-align: center">Actions</th>
+                            
                 </tr>
             </thead>
             <tbody style="background-color: white; font-size: 16px;">
                 <% List<ProductBean> products = (List<ProductBean>) request.getAttribute("products");
-                List<Integer> soldQuantities = (List<Integer>) request.getAttribute("soldQuantities");
-                int index = 0;
-            	OrderServiceDAO orderDao = new OrderServiceDAO();
                    if (products != null) {
                        for (ProductBean product : products) { %>
        
                            <tr>
-                               <td><img src="./ShowImage?image=<%= product.getProdImage() %>"
+                               <td><img src="./ShowImage?image=<%= product.getImage()%>"
                                     style="width: 50px; height: 50px;"></td>
-                               <td><a href="./updateProduct.jsp?prodid=<%= product.getProdId() %>"><%= product.getProdId() %></a></td>
+                               <td><a href="./updateProduct.jsp?prodid=<%= product.getId() %>"><%= product.getId() %></a></td>
                                <%-- Limit name to 25 characters --%>
-                               <% String name = product.getProdName().substring(0, Math.min(product.getProdName().length(), 25)) + ".."; %>
-                               <td><%= name %></td>
-                               <td><%= product.getProdType().toUpperCase() %></td>
-                               <td><%= product.getProdPrice() %></td>
-                               <td><%= soldQuantities.get(index++) %></td>
-                               <td><%= product.getProdQuantity() %></td>
+                               <td><%= product.getName().substring(0, Math.min(product.getName().length(), 25)) + ".." %></td>
+                               <td><%= product.getPrice() %></td>
                                <td>
                                    <form method="get" action="./UpdateProductSrv">
-                                       <input type="hidden" name="prodid" value="<%= product.getProdId() %>">
+                                       <input type="hidden" name="prodid" value="<%= product.getId() %>">
                                        <button type="submit" class="btn btn-primary">Update</button>
                                    </form>
                                </td>
                                <td>
                                    <form method="post" action="./RemoveProductSrv">
-                                       <input type="hidden" name="prodid" value="<%= product.getProdId() %>">
+                                       <input type="hidden" name="prodid" value="<%= product.getId() %>">
                                        <button type="submit" class="btn btn-danger">Remove</button>
                                    </form>
                                </td>

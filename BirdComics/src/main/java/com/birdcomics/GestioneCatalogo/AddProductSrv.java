@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneProfili.Gestore.GestoreCatalogo;
+package com.birdcomics.GestioneCatalogo;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,8 +31,7 @@ public class AddProductSrv extends HttpServlet {
         String prodName = request.getParameter("name");
         String prodType = request.getParameter("type");
         String prodInfo = request.getParameter("info");
-        double prodPrice = Double.parseDouble(request.getParameter("price"));
-        int prodQuantity = Integer.parseInt(request.getParameter("quantity"));
+        float prodPrice = Float.parseFloat(request.getParameter("price"));
 
         Part filePart = request.getPart("image"); // Get the file part with the name "image"
 
@@ -68,7 +67,7 @@ public class AddProductSrv extends HttpServlet {
             // Call the DAO to add the product
             ProductServiceDAO productService = new ProductServiceDAO();
             try {
-                status = productService.addProduct(prodName, prodType, prodInfo, prodPrice, prodQuantity, uniqueFileName);
+                status = productService.addProduct(prodName, prodInfo, prodPrice, uniqueFileName);
             } catch (SQLException e) {
                 status = "Database error occurred while adding the product.";
                 e.printStackTrace();

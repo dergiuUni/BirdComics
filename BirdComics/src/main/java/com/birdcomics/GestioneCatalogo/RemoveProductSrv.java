@@ -35,7 +35,7 @@ public class RemoveProductSrv extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		RequestDispatcher rd = request.getRequestDispatcher("removeProduct.jsp?message=" + status);
+		RequestDispatcher rd = request.getRequestDispatcher("./GestioneCatalogo?message=" + status);
 
 		rd.forward(request, response);
 

@@ -59,7 +59,7 @@
 			return true;
 		}
 	}
-
+/*
 	function checkQuantity(input) {
 		if (input.value < 0) {
 			document.getElementById('quantityText').innerHTML = "La quantita non può essere negativa";
@@ -79,7 +79,7 @@
 			return true;
 		}
 	}
-
+*/
 	function checkImageType(input) {
 		var file = input.files[0];
 		var fileType = file.type.toLowerCase();
@@ -107,17 +107,17 @@
 	        alert("Controlla il campo descrizione!!");
 	        return false;
 	    }
-
+	
 	    if (!validPrice) {
 	        alert("Controlla il campo prezzo!!");
 	        return false;
 	    }
-
+/*
 	    if (!validQuantity) {
 	        alert("Controlla il campo quantità!!");
 	        return false;
 	    }
-	    
+	 */
 	    if(!validImageType) {
 	    	alert("Errore, scegli un altra foto!");
 	        return false;

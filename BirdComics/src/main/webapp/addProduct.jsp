@@ -79,15 +79,6 @@
 							<p id="priceText"></p>
 						</div>
 					</div>
-					<div class="col-md-6 form-group">
-						<label for="last_name">Stock Quantity</label> <input type="number"
-							placeholder="Enter Stock Quantity" name="quantity"
-							class="form-control" id="quantity" onkeyup="checkQuantity(this)"
-							required>
-						<div>
-							<p id="quantityText"></p>
-						</div>
-					</div>
 				</div>
 				<div>
 					<div class="col-md-12 form-group">

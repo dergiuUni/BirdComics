@@ -75,8 +75,11 @@
 							data-toggle="dropdown" href="#">Gestione Catalogo <span
 								class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="">Aggiungi Fumetto</a></li>
-								<li><a href="">lista catalogo</a></li>
+								<li><a href="./GestioneCatalogo">Visualizza Catalogo</a></li>
+								<li><a href="addProduct.jsp">Aggiungi Fumetto</a></li>
+								<li><a href="">Rimuovi Fumetto</a></li>
+								<li><a href="">Aggiorna Fumetto</a></li>
+								
 							</ul>
 						</li>
 						<li><a href="UserProfileServlet">Profilo</a></li>		
