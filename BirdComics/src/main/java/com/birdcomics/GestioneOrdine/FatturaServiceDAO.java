@@ -25,7 +25,7 @@ public class FatturaServiceDAO {
 		PreparedStatement ps = null;
 
 		try {
-			ps = con.prepareStatement("insert into Fattura(iva, nome, cognome, telefono, nomeCittaCliente, viaCliente, numeroCivicoCliente, capCliente, nomeCittaMagazzino, viaMagazzino, numeroCivicoMagazzino, capMagazzino, nomeMagazzino) values(?,?,?,?,?,?,?,?,?,?,?,?,?)", java.sql.Statement.RETURN_GENERATED_KEYS );
+			ps = con.prepareStatement("insert into Fattura(iva, nome, cognome, telefono, nomeCittaCliente, viaCliente, numeroCivicoCliente, capCliente) values(?,?,?,?,?,?,?,?)", java.sql.Statement.RETURN_GENERATED_KEYS );
 
 			ps.setInt(1, fattura.getIva());
 			ps.setString(2, fattura.getNome());
@@ -33,13 +33,9 @@ public class FatturaServiceDAO {
 			ps.setString(4, fattura.getTelefono());
 			ps.setString(5, fattura.getNomeCittaCliente());
 			ps.setString(6, fattura.getViaCliente());
-			ps.setString(7, fattura.getNumeroCivicoCliente());
+			ps.setInt(7, fattura.getNumeroCivicoCliente());
 			ps.setString(8, fattura.getCapCliente());
-			ps.setString(9, fattura.getNomeCittaMagazzino());
-			ps.setString(10, fattura.getViaMagazzino());
-			ps.setString(11, fattura.getNumeroCivicoMagazzino());
-			ps.setString(12, fattura.getCapMagazzino());
-			ps.setString(13, fattura.getNomeMagazzino());
+
 				
 
 			int k = ps.executeUpdate();
@@ -79,7 +75,7 @@ public class FatturaServiceDAO {
 
 			while (rs.next()) {
 
-				FatturaBean fattura = new FatturaBean(rs.getInt("id"), rs.getInt("iva"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getString("nomeCittaCliente"), rs.getString("viaCliente"), rs.getString("numeroCivicoCliente"), rs.getString("capCliente"), rs.getString("nomeCittaMagazzino"), rs.getString("viaMagazzino"), rs.getString("numeroCivicoMagazzino"), rs.getString("capMagazzino"), rs.getString("nomeMagazzino"));
+				FatturaBean fattura = new FatturaBean(rs.getInt("id"), rs.getInt("iva"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getString("nomeCittaCliente"), rs.getString("viaCliente"), rs.getInt("numeroCivicoCliente"), rs.getString("capCliente"));
 
 				 fatturaList.add(fattura);
 
@@ -110,7 +106,7 @@ public class FatturaServiceDAO {
 
 			while (rs.next()) {
 
-				FatturaBean fattura = new FatturaBean(rs.getInt("id"), rs.getInt("iva"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getString("nomeCittaCliente"), rs.getString("viaCliente"), rs.getString("numeroCivicoCliente"), rs.getString("capCliente"), rs.getString("nomeCittaMagazzino"), rs.getString("viaMagazzino"), rs.getString("numeroCivicoMagazzino"), rs.getString("capMagazzino"), rs.getString("nomeMagazzino"));
+				FatturaBean fattura = new FatturaBean(rs.getInt("id"), rs.getInt("iva"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getString("nomeCittaCliente"), rs.getString("viaCliente"), rs.getInt("numeroCivicoCliente"), rs.getString("capCliente"));
 
 				return fattura;
 

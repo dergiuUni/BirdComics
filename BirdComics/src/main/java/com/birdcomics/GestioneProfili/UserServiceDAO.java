@@ -175,10 +175,48 @@ public class UserServiceDAO {
 				while (rs.next()) {
 					ru.add(RuoloBean.fromString(rs.getString("idRuolo")));
 				}
-				
+				user.setRuoloBean(ru);
 			}
 			
-			user.setRuoloBean(ru);
+			
+			return user;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		DBUtil.closeConnection(ps);
+		DBUtil.closeConnection(rs);
+		return user;
+	}
+	
+	public UserBean getUserDetails(String emailId) throws SQLException {
+
+		UserBean user = null;
+
+		Connection con = DBUtil.getConnection();
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<RuoloBean> ru = new ArrayList<RuoloBean>();
+		
+		try {
+			ps = con.prepareStatement("select * from Utente, Utente_Ruolo where Utente.email=? and Utente.email = Utente_Ruolo.emailUtente");
+			ps.setString(1, emailId);
+			
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cap"));
+				user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in, null );
+				
+				
+				while (rs.next()) {
+					ru.add(RuoloBean.fromString(rs.getString("idRuolo")));
+				}
+				user.setRuoloBean(ru);
+			}
+			
+			
 			return user;
 
 		} catch (SQLException e) {

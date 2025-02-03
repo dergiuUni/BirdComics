@@ -13,7 +13,7 @@ public class UserBean implements Serializable {
 	protected String email, password, nome, cognome, numeroTelefono;
     protected java.sql.Date dataNascita;
 	protected IndirizzoBean indirizzo;
-	protected ArrayList<RuoloBean> ruolo;
+	protected ArrayList<RuoloBean> ruolo = new ArrayList<RuoloBean>();
 	
 
 

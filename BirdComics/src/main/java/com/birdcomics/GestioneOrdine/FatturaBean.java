@@ -2,18 +2,17 @@ package com.birdcomics.GestioneOrdine;
 
 public class FatturaBean {
 	private int id, iva;
-	private String nome, cognome, telefono, nomeCittaCliente, viaCliente, numeroCivicoCliente, capCliente, nomeCittaMagazzino, viaMagazzino, numeroCivicoMagazzino, capMagazzino, nomeMagazzino;
-	
-	
-	
-	
+	private String nome, cognome, telefono, nomeCittaCliente, viaCliente, capCliente;
+	private int numeroCivicoCliente;
 	
 
+	public FatturaBean() {
+		
+	}
 	
 	
 	public FatturaBean(int id, int iva, String nome, String cognome, String telefono, String nomeCittaCliente,
-			String viaCliente, String numeroCivicoCliente, String capCliente, String nomeCittaMagazzino,
-			String viaMagazzino, String numeroCivicoMagazzino, String capMagazzino, String nomeMagazzino) {
+			String viaCliente, int numeroCivicoCliente, String capCliente) {
 		super();
 		this.id = id;
 		this.iva = iva;
@@ -24,20 +23,24 @@ public class FatturaBean {
 		this.viaCliente = viaCliente;
 		this.numeroCivicoCliente = numeroCivicoCliente;
 		this.capCliente = capCliente;
-		this.nomeCittaMagazzino = nomeCittaMagazzino;
-		this.viaMagazzino = viaMagazzino;
-		this.numeroCivicoMagazzino = numeroCivicoMagazzino;
-		this.capMagazzino = capMagazzino;
-		this.nomeMagazzino = nomeMagazzino;
+	}
+	
+	
+	public FatturaBean(int iva, String nome, String cognome, String telefono, String nomeCittaCliente,
+			String viaCliente, int numeroCivicoCliente, String capCliente) {
+		super();
+		this.iva = iva;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.nomeCittaCliente = nomeCittaCliente;
+		this.viaCliente = viaCliente;
+		this.numeroCivicoCliente = numeroCivicoCliente;
+		this.capCliente = capCliente;
 	}
 
 
 
-	public FatturaBean() {
-	}
-	
-	
-	
 	public int getId() {
 		return id;
 	}
@@ -95,10 +98,10 @@ public class FatturaBean {
 	public void setViaCliente(String viaCliente) {
 		this.viaCliente = viaCliente;
 	}
-	public String getNumeroCivicoCliente() {
+	public int getNumeroCivicoCliente() {
 		return numeroCivicoCliente;
 	}
-	public void setNumeroCivicoCliente(String numeroCivicoCliente) {
+	public void setNumeroCivicoCliente(int numeroCivicoCliente) {
 		this.numeroCivicoCliente = numeroCivicoCliente;
 	}
 	public String getCapCliente() {
@@ -106,36 +109,6 @@ public class FatturaBean {
 	}
 	public void setCapCliente(String capCliente) {
 		this.capCliente = capCliente;
-	}
-	public String getNomeCittaMagazzino() {
-		return nomeCittaMagazzino;
-	}
-	public void setNomeCittaMagazzino(String nomeCittaMagazzino) {
-		this.nomeCittaMagazzino = nomeCittaMagazzino;
-	}
-	public String getViaMagazzino() {
-		return viaMagazzino;
-	}
-	public void setViaMagazzino(String viaMagazzino) {
-		this.viaMagazzino = viaMagazzino;
-	}
-	public String getNumeroCivicoMagazzino() {
-		return numeroCivicoMagazzino;
-	}
-	public void setNumeroCivicoMagazzino(String numeroCivicoMagazzino) {
-		this.numeroCivicoMagazzino = numeroCivicoMagazzino;
-	}
-	public String getCapMagazzino() {
-		return capMagazzino;
-	}
-	public void setCapMagazzino(String capMagazzino) {
-		this.capMagazzino = capMagazzino;
-	}
-	public String getNomeMagazzino() {
-		return nomeMagazzino;
-	}
-	public void setNomeMagazzino(String nomeMagazzino) {
-		this.nomeMagazzino = nomeMagazzino;
 	}
 
 	

@@ -50,24 +50,26 @@ public class ReviewPaymentServlet extends HttpServlet {
 			PaymentServices paymentServices = new PaymentServices();
 			Payment payment = paymentServices.executePayment(paymentId, payerId);
 			
-			//devo azzerare il carrello del cliente
-			CartServiceDAO c = new CartServiceDAO();
-			
-			
-			//////////////////////////////////////////////////////////////////////
+			HttpSession session = request.getSession();
 			PayerInfo payerInfo = payment.getPayer().getPayerInfo();
 			UserBean u = new UserBean();
 			UserServiceDAO us = new UserServiceDAO();
-			u = us.getUserDetails(payerInfo.getEmail(), request.getParameter("password"));
-			c.deleteAllCartItems(payerInfo.getEmail());
+			System.out.println((String) session.getAttribute("username") );
+			
+			u = us.getUserDetails((String) session.getAttribute("username"));
+			
+			CartServiceDAO c = new CartServiceDAO();
+			c.deleteAllCartItems((String) session.getAttribute("username"));
 			Transaction transaction = payment.getTransactions().get(0);
 			ItemList itemList = transaction.getItemList();
 			List<Item> items = itemList.getItems();
-			String transactionId = transaction.getRelatedResources().get(0).getSale().getId();
+			String transactionId = "testing";
+					//transaction.getRelatedResources().get(0).getSale().getId();
 
-			
-			OrderBean o = new OrderBean(payerInfo.getEmail(), transactionId, false, java.sql.Date.valueOf(LocalDate.now()));
+			FatturaBean f = new FatturaBean(22, u.getNome(), u.getCognome(), u.getNumeroTelefono(), u.getIndirizzo().getNomeCitta(), u.getIndirizzo().getVia(), u.getIndirizzo().getNumeroCivico(), u.getIndirizzo().getCap() );
+			OrderBean o = new OrderBean(u.getEmail(), transactionId, false, java.sql.Date.valueOf(LocalDate.now()));
 			// imposto i dettagli dell'ordine
+			o.setIdFattura(f);
 			
 			for (Item item : items) {
 				ProductBean p = new ProductBean();
@@ -77,8 +79,9 @@ public class ReviewPaymentServlet extends HttpServlet {
 				o.addFumetti(p, Integer.valueOf(item.getQuantity()));
 			}
 			
-			//manca fare la fattura nell'ordine
-
+			OrderServiceDAO os = new OrderServiceDAO();
+			os.addOrder(o);
+			
 			
 		
 			
@@ -88,14 +91,11 @@ public class ReviewPaymentServlet extends HttpServlet {
 			
 			
 			
-		} catch (PayPalRESTException ex) {
+		} catch (PayPalRESTException | SQLException ex) {
 			request.setAttribute("errorMessage", ex.getMessage());
 			ex.printStackTrace();
 			request.getRequestDispatcher("error.jsp").forward(request, response);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		} 	
 		
 	}
 

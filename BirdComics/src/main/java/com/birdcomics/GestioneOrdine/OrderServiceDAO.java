@@ -92,8 +92,10 @@ public class OrderServiceDAO {
 			ps.setString(2, order.getIdPaypal());
 			ps.setBoolean(3, order.isShipped());
 			ps.setDate(4, order.getDataEffettuato());
+			FatturaServiceDAO ft = new FatturaServiceDAO();
+			ft.addFattura(order.getIdFattura());
 			ps.setInt(5, order.getIdFattura().getId());
-			
+			ps.executeUpdate();
 			ResultSet rs = null;
         	rs = ps.getGeneratedKeys();
         	
@@ -105,7 +107,7 @@ public class OrderServiceDAO {
                 order.getFumetti().forEach((key, value) -> {
                 	try {
                 		PreparedStatement psscaf;
-                		PreparedStatement psFumetto = con.prepareStatement("select Magazzino.nome, Scaffali.id, Scaffali.quantita from Magazzino, Scaffali, MagazzinoScaffali where Magazzino.nome = MagazzinoScaffali.idMagazzino and MagazzinoScaffali.idScaffale = Scaffale.id and Scaffali.idFumetto = ? order by Scaffali.quantita DESC");
+                		PreparedStatement psFumetto = con.prepareStatement("select Magazzino.nome, Scaffali.id, Scaffali.quantita from Magazzino, Scaffali, MagazzinoScaffali where Magazzino.nome = MagazzinoScaffali.idMagazzino and MagazzinoScaffali.idScaffale = Scaffali.id and Scaffali.idFumetto = ? order by Scaffali.quantita DESC");
                         psFumetto.setInt(1, key.getId());
 
                         ResultSet rsFumetto = psFumetto.executeQuery();
@@ -129,7 +131,7 @@ public class OrderServiceDAO {
                             	// update scaffale
                             	psscaf = con.prepareStatement("UPDATE Scaffali SET quantita = 0 WHERE id = ?");
                             	psscaf.setInt(1, rsFumetto.getInt("Scaffali.id"));
-                            	psscaf.executeQuery();
+                            	psscaf.executeUpdate();
                             }
                             
                             if ((value-quantita) < rsFumetto.getInt("Scaffali.quantita")) {
@@ -140,9 +142,8 @@ public class OrderServiceDAO {
                             	psscaf = con.prepareStatement("UPDATE Scaffali SET quantita = ? WHERE id = ?");
                             	psscaf.setInt(1, rsFumetto.getInt("Scaffali.quantita") - (value - quantita));
                             	psscaf.setInt(2, rsFumetto.getInt("Scaffali.id"));
-                            	psscaf.executeQuery();
+                            	psscaf.executeUpdate();
                             }
-                            psFumetto.executeQuery();   
                     	}
                         	  
                 	} catch (SQLException e) {

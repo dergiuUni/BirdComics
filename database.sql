@@ -95,11 +95,7 @@ CREATE TABLE Fattura(
     viaCliente varchar(45) NOT NULL,
     numeroCivicoCliente int not  NULL,
     capCliente varchar(45) not  NULL,
-    nomeCittaMagazzino varchar(45) NOT NULL,
-    viaMagazzino varchar(45) NOT NULL,
-    numeroCivicoMagazzino int not  NULL,
-    capMagazzino varchar(45) not  NULL,
-    nomeMagazzino varchar(45) NOT NULL,
+    
 
     PRIMARY KEY (id)
 );
@@ -275,36 +271,26 @@ INSERT INTO Utente (email, pass, nome, cognome, telefono, nomeCitta, via, numero
 
 
 -- Inserimento nella tabella Fattura
-INSERT INTO Fattura (iva, nomeCittaCliente, viaCliente, numeroCivicoCliente, capCliente, nomeCittaMagazzino, viaMagazzino, numeroCivicoMagazzino, capMagazzino, nomeMagazzino) VALUES 
-    (22, 'Roma', 'Via della Conciliazione', 10, '1234', 'Roma', 'Via della Conciliazione', 10, '1234', 'Magazzino Centrale'),
-    (10, 'Milano', 'Via Po', 12, '8765', 'Milano', 'Via Vittorio Emanuele', 45, '7854', 'Magazzino Nord'),
-    (22, 'Roma', 'Via della Conciliazione', 10, '1234', 'Roma', 'Via della Conciliazione', 10, '1234', 'Magazzino Centrale'),
-    (22, 'Roma', 'Via della Conciliazione', 10, '1234', 'Roma', 'Via della Conciliazione', 10, '1234', 'Magazzino Centrale');
+INSERT INTO Fattura (iva, nome, cognome, telefono, nomeCittaCliente, viaCliente, numeroCivicoCliente, capCliente) VALUES 
+    (22, 'silvana','sana', '2325','Roma', 'Via della Conciliazione', 10, '1234'),
+    (22, 'silvana','sana', '2325','Milano', 'Via Po', 12, '8765');
 
 -- Inserimento nella tabella Ordine
 INSERT INTO Ordine (emailUtente, idpaypal, shipped, dataEffettuato, idFattura) VALUES 
     ('cliente@example.com', 'PAYPAL112233', false, '2025-02-20', 1),
     ('cliente@example.com', 'PAYPAL445566', true, '2025-02-22', 2),
-    ('cliente@example.com', 'PAYPAL778899', true, '2025-02-23', 3),
-    ('cliente@example.com', 'PAYPAL998877', false, '2025-02-24', 4);
-
--- Inserimento nella tabella Ordine_OrdineFumetto
-INSERT INTO Ordine_Fumetto (idOrdine, nome, idFumetto, descrizione, prezzo) VALUES 
-    (1, "qfqf", 1, "fwfe", 24.35),
-    (1, "fqwfqrf", 2, "fwfe", 12.54),
-    (2, "wgwgwg", 1, "fwfe", 11.55),
-    (3, "gwgwgw", 3, "fwfe", 21.55),
-    (4, "gwegw", 4, "fwfe", 22.55);
+    ('cliente@example.com', 'PAYPAL778899', true, '2025-02-23', 1),
+    ('cliente@example.com', 'PAYPAL998877', false, '2025-02-24', 1);
 
 
 -- Inserimento nella tabella Ordine_Magazzino
-INSERT INTO Ordine_Magazzino (idOrdine, nomeMagazzino) VALUES 
-    (1, 'Magazzino Napoli'),
-    (2, 'Magazzino Napoli'),
-    (3, 'Magazzino Napoli'),
-    (4, 'Magazzino Napoli'),
-    (1, 'Magazzino Bologna'),
-    (2, 'Magazzino Bologna');
+INSERT INTO Ordine_Magazzino (idOrdine, nomeMagazzino, idFumetto, nome, descrizione, prezzo, quantita) VALUES 
+    (1, 'Magazzino Napoli', 1, 'ciao', 'ciao', 23.2, 2),
+    (2, 'Magazzino Napoli', 1, 'ciao', 'ciao', 23.2, 2),
+    (3, 'Magazzino Napoli', 1, 'ciao', 'ciao', 23.2, 2),
+    (4, 'Magazzino Napoli', 1, 'ciao', 'ciao', 23.2, 2),
+    (1, 'Magazzino Bologna', 1, 'ciao', 'ciao', 23.2, 2),
+    (2, 'Magazzino Bologna', 1, 'ciao', 'ciao', 23.2, 2);
     
 
 
@@ -330,4 +316,4 @@ INSERT INTO Utente_Ruolo (idRuolo, emailUtente) VALUES
     ('Magazziniere', 'magazziniere@BirdComics.com'),
     ('Spedizioniere', 'spedizioniere@BirdComics.com'),
     ('Assistenza', 'assistenza@BirdComics.com'),
-    ('Finanza', 'finanza@BirdComics.com');#!/bin/bash
+    ('Finanza', 'finanza@BirdComics.com');
