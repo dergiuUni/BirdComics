@@ -5,62 +5,73 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.birdcomics.DatabaseImplementator.DBUtil;
 
 public class ProductServiceDAO {
-	   public String addProduct(String name, String description, float price, String image) throws SQLException {
-        String status = null;
+	  
 
-        ProductBean product = new ProductBean();    
-        product.setName(name);
-        product.setDescription(description);
-        product.setPrice(price);
-        product.setImage(image);  
-       
-        status = addProduct(product);
+	public String addProduct(String name, String description, float price, String image, String[] selectedGenres) throws SQLException {
+	    String status = "Product Registration Failed!";
 
-        return status;
-    }
+	    Connection con = DBUtil.getConnection();
+	    PreparedStatement ps = null;
+	    ResultSet generatedKeys = null;
 
-    public String addProduct(ProductBean product) throws SQLException {
-        String status = "Product Registration Failed!";
+	    try {
+	        // Inserisci il fumetto
+	        ps = con.prepareStatement("insert into Fumetto (nome, descrizione, prezzo, immagine, active) values(?,?,?,?,?);", 
+	                                  Statement.RETURN_GENERATED_KEYS);
+	        ps.setString(1, name);
+	        ps.setString(2, description);
+	        ps.setFloat(3, price);
+	        ps.setString(4, image);
+	        ps.setBoolean(5, true);
+	        
+	        int k = ps.executeUpdate();
 
-        Connection con = DBUtil.getConnection();
+	        if (k > 0) {
+	            // Recupera l'ID del fumetto appena inserito
+	            generatedKeys = ps.getGeneratedKeys();
+	            if (generatedKeys.next()) {
+	                int fumettoId = generatedKeys.getInt(1);
 
-        PreparedStatement ps = null;
+	                // Inserisci i generi nella tabella Genere_Fumetto
+	                for (String genre : selectedGenres) {
+	                    PreparedStatement genrePs = con.prepareStatement("insert into Genere_Fumetto (genere, idFumetto) values(?,?)");
+	                    genrePs.setString(1, genre);
+	                    genrePs.setInt(2, fumettoId);
+	                    genrePs.executeUpdate();
+	                    genrePs.close();
+	                }
 
-        try {
-            ps = con.prepareStatement("insert into Fumetto (nome, descrizione, prezzo, immagine, active) values(?,?,?,?,?);");
-            ps.setString(1, product.getName());
-            ps.setString(2, product.getDescription());
-            ps.setFloat(3, product.getPrice());
-            ps.setString(4, product.getImage());
-            ps.setBoolean(5, true);
-            
-           
-            int k = ps.executeUpdate();
+	                status = "Product Added Successfully";
+	            }
+	        } else {
+	            status = "Product Updation Failed!";
+	        }
 
-            if (k > 0) {
+	    } catch (SQLException e) {
+	        status = "Error: " + e.getMessage();
+	        e.printStackTrace();
+	    } finally {
+	        // Chiudi tutte le risorse
+	        DBUtil.closeConnection(ps);
+	        if (generatedKeys != null) {
+	            try {
+	                generatedKeys.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 
-                status = "Product Added Successfully with Product Id: " + product.getId();
+	    return status;
+	}
 
-            } else {
-
-                status = "Product Updation Failed!";
-            }
-
-        } catch (SQLException e) {
-            status = "Error: " + e.getMessage();
-            e.printStackTrace();
-        }
-
-        DBUtil.closeConnection(ps);
-
-        return status;
-    }
  
  
     public String removeProduct(String prodId) throws SQLException {

@@ -33,7 +33,7 @@ public class AddProductSrv extends HttpServlet {
 
         String status = "Product Registration Failed!";
         String prodName = request.getParameter("name");
-        String prodType = request.getParameter("type");
+        String[] selectedGenres = request.getParameterValues("genres"); // Recupera i generi selezionati
         String prodInfo = request.getParameter("info");
         float prodPrice = Float.parseFloat(request.getParameter("price"));
 
@@ -71,7 +71,7 @@ public class AddProductSrv extends HttpServlet {
             // Call the DAO to add the product
             ProductServiceDAO productService = new ProductServiceDAO();
             try {
-                status = productService.addProduct(prodName, prodInfo, prodPrice, uniqueFileName);
+                status = productService.addProduct(prodName, prodInfo, prodPrice, uniqueFileName, selectedGenres);
             } catch (SQLException e) {
                 status = "Database error occurred while adding the product.";
                 e.printStackTrace();

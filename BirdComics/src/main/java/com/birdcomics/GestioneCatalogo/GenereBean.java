@@ -20,6 +20,12 @@ public class GenereBean {
 	public void setGenere(String genere) {
 		this.genere = genere;
 	}
+
+	@Override
+	public String toString() {
+		return ""+genere;
+	}
+	
 	
 	
 }
