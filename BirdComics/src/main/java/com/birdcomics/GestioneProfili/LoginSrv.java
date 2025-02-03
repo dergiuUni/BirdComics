@@ -58,8 +58,6 @@ public class LoginSrv extends HttpServlet {
                 
                 
                 session.setAttribute("usertype", userType);
-
-           
                 RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                 rd.forward(request, response);
                 

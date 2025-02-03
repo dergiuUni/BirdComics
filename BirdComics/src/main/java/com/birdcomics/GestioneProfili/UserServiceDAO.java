@@ -255,11 +255,11 @@ public class UserServiceDAO {
 
 	        ps.setString(1, emailId);
 	        try (ResultSet rs = ps.executeQuery()) {
-	            if (rs.next()) {
+	            while (rs.next()) {
             		ruolo.add(RuoloBean.fromString(rs.getString("idRuolo")));
-	                
 	            }
 	        }
+	        
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
