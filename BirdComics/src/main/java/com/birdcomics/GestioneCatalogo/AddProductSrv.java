@@ -3,6 +3,8 @@ package com.birdcomics.GestioneCatalogo;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
@@ -12,9 +14,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
+import com.birdcomics.GestioneProfili.RuoloBean;
 
 /**
  * Servlet implementation class AddProductSrv
@@ -24,7 +28,7 @@ import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
 public class AddProductSrv extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String status = "Product Registration Failed!";
@@ -83,9 +87,24 @@ public class AddProductSrv extends HttpServlet {
         rd.forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+    	
+    	
+ 
+          HttpSession session = request.getSession();
+
+    	
+      		List<String> generi =new ArrayList<String>();
+    		GenereDAO genereDAO = new GenereDAO();
+    		List<GenereBean> generiBeans = genereDAO.getGeneri();
+    		for(GenereBean genereBean : generiBeans)
+    			generi.add(genereBean.toString());
+
+    		request.setAttribute("genres", generi);
+    		request.getRequestDispatcher("addProduct.jsp").forward(request, response);
+    		
+    	
     }
 
     // Utility method to get the file extension
