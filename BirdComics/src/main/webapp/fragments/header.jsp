@@ -35,7 +35,7 @@
 								<li><a href="">AggiungiMagazzino</a></li>
 								<li><a href="./ListaMagazziniServlet">Lista Magazzini</a></li>
 								<li><a href="">AggiungiDirettoreMagazzino</a></li>
-								<li><a href="">ListaDirettoreMagazzino</a></li>
+								<li><a href="./GestoriMagazziniServlet">Lista Direttori Magazzino</a></li>
 							</ul>
 						</li>
 						<li><a href="UserProfileServlet">Profilo</a></li>		

@@ -369,7 +369,54 @@ public class UserServiceDAO {
 	    return status;
 	}
 	
-	
+	public List<UserBean> getUsersByRole(String roleId) throws SQLException {
+	    List<UserBean> usersList = new ArrayList<>();
+
+	    Connection con = DBUtil.getConnection();
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+
+	    try {
+	        // SQL query to get users based on their role
+	        String sql = "SELECT Utente.email, Utente.nome, Utente.cognome, Utente.telefono, Utente.nomeCitta, Utente.via, Utente.numeroCivico, Utente.cap, Utente.dataNascita "
+	                   + "FROM Utente "
+	                   + "JOIN Utente_Ruolo ON Utente.email = Utente_Ruolo.emailUtente "
+	                   + "WHERE Utente_Ruolo.idRuolo = ?";
+	        ps = con.prepareStatement(sql);
+	        ps.setString(1, roleId); // Set the role ID in the query
+
+	        rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            // Create IndirizzoBean object for user address
+	            IndirizzoBean indirizzo = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cap"));
+	            
+	            // Create UserBean object for each user (without password)
+	            UserBean user = new UserBean(
+	                rs.getString("email"), 
+	                null, // Password is not needed
+	                rs.getString("nome"), 
+	                rs.getString("cognome"), 
+	                rs.getString("telefono"), 
+	                rs.getDate("dataNascita"), 
+	                indirizzo, 
+	                null // You can populate user roles here if needed
+	            );
+	            
+	            // Add the user to the list
+	            usersList.add(user);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        DBUtil.closeConnection(ps);
+	        DBUtil.closeConnection(rs);
+	    }
+
+	    return usersList;
+	}
+
 
 
 
