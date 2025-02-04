@@ -31,7 +31,6 @@
                 <thead style="background-color: #4CAF50; color: white; font-size: 18px;">
                     <tr>
                         <th>Id</th>
-                        <th>Nome</th>
                         <th>Città</th>
                         <th>Via</th>
                         <th>Numero Civico</th>
