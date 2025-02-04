@@ -88,7 +88,7 @@ public class MagazzinoDao {
 	
 	public ArrayList<MagazzinoBean> getMagazzini() throws SQLException {
 		Connection con = DBUtil.getConnection();
-		ArrayList<MagazzinoBean> magazzii = new ArrayList<MagazzinoBean>();
+		ArrayList<MagazzinoBean> magazzini = new ArrayList<MagazzinoBean>();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -102,7 +102,7 @@ public class MagazzinoDao {
 				ScaffaleDao sc = new ScaffaleDao();
 				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cap"));
 				MagazzinoBean mag = new MagazzinoBean(rs.getString("nome"), in, sc.getScaffaleMagazzino(rs.getString("nome")));
-				magazzii.add(mag);
+				magazzini.add(mag);
 			}
 				
 
@@ -114,6 +114,6 @@ public class MagazzinoDao {
 		DBUtil.closeConnection(ps);
 		DBUtil.closeConnection(rs);
 
-		return magazzii;
+		return magazzini;
 	}
 }

@@ -33,7 +33,7 @@
 							data-toggle="dropdown" href="#">Gestione Magazzini<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="">AggiungiMagazzino</a></li>
-								<li><a href="">listaMagazzino</a></li>
+								<li><a href="./ListaMagazziniServlet">Lista Magazzini</a></li>
 								<li><a href="">AggiungiDirettoreMagazzino</a></li>
 								<li><a href="">ListaDirettoreMagazzino</a></li>
 							</ul>
@@ -80,7 +80,7 @@
 								
 							</ul>
 						</li>
-						<li><a href="UserProfileServlet">Profilo</a></li>		
+						<li><a href="./UserProfileServlet">Profilo</a></li>		
 						<li><a href="./LogoutSrv">Logout</a></li>
 					</c:when>
 					
