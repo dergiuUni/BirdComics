@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Gestione Magazzini</title>
+<title>Gestione Utenti</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -19,10 +19,10 @@
 <body>
 	<div class="text-center"
 		style="color: green; font-size: 24px; font-weight: bold; margin-top: 15px; margin-bottom: 15px;">
-		Gestione Magazzini</div>
+		Gestione Utenti</div>
 
-	<form class="search-form" action="GestioneMagazzino" method="get">
-		<input type="text" name="search" placeholder="Cerca un magazzino...">
+	<form class="search-form" action="Gestione Utenti" method="get">
+		<input type="text" name="search" placeholder="Cerca utente...">
 		<input type="submit" value="Cerca">
 	</form>
 
@@ -82,7 +82,7 @@
 						%>
 					
 					<tr>
-						<td colspan="10" style="text-align: center;">Nessun magazzino disponibile.</td>
+						<td colspan="10" style="text-align: center;">Nessun utente.</td>
 					</tr>
 					<%
 					}

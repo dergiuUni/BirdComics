@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TimeZone;
 
 import javax.servlet.RequestDispatcher;
@@ -19,36 +20,35 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/RemoveUserServlet")
 public class RemoveUserServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    private static final long serialVersionUID = 1L;
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         String userEmail = request.getParameter("userId");
-        String status = "";
+        String status = null;
 
         if (userEmail != null && !userEmail.trim().isEmpty()) {
             UserServiceDAO dao = new UserServiceDAO();
             try {
-                status = dao.deleteUser(userEmail);
+                dao.deleteUser(userEmail);
+                // Fetch the updated list of users after deletion
+                
+                List<UserBean> updatedUserList = dao.getUsersByRole("GestoreMagazzino"); // Assuming you have a method like this in your DAO
+                request.setAttribute("gestoriMagazzino", updatedUserList); // Set the updated list
             } catch (SQLException e) {
                 status = "Errore di database: " + e.getMessage();
                 e.printStackTrace();
             }
         }
 
-        request.setAttribute("message", status);
         RequestDispatcher rd = request.getRequestDispatcher("manageUsers.jsp");
         rd.forward(request, response);
-		
+    }
 
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		doGet(request, response);
-	}
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
+    }
 }
+

@@ -365,8 +365,8 @@ public class UserServiceDAO {
 	}
 
 
-	public String deleteUser(String email) throws SQLException {
-	    String status = "User Deletion Failed!";
+	public void deleteUser(String email) throws SQLException {
+	    //String status = "";
 	    Connection con = DBUtil.getConnection();
 	    PreparedStatement ps = null;
 
@@ -389,15 +389,15 @@ public class UserServiceDAO {
 	        int affectedRows = ps.executeUpdate();
 
 	        if (affectedRows > 0) {
-	            status = "Utente cancellato!";
+	            //status = "Utente cancellato!";
 	            con.commit(); // Conferma la transazione
 	        } else {
-	            status = "Utente non trovato!";
+	            //status = "Utente non trovato!";
 	            con.rollback(); // Annulla la transazione se l'utente non è stato trovato
 	        }
 
 	    } catch (SQLException e) {
-	        status = "Error: " + e.getMessage();
+	        //status = "Error: " + e.getMessage();
 	        e.printStackTrace();
 	        con.rollback(); // Rollback in caso di errore
 	    } finally {
@@ -405,7 +405,7 @@ public class UserServiceDAO {
 	        con.setAutoCommit(true); // Ripristina il comportamento di default delle transazioni
 	    }
 
-	    return status;
+	    //return status;
 	}
 
 
