@@ -26,7 +26,8 @@
 		<input type="submit" value="Cerca">
 	</form>
 
-	<h3 style="text-align: center;"><%= request.getAttribute("message") %></h3>
+	<h3 style="text-align: center;"><%=request.getAttribute("message") != null ? request.getAttribute("message") : ""%></h3>
+
 
 	<div class="container-fluid">
 		<div class="table-responsive">
@@ -36,40 +37,56 @@
 					<tr>
 						<th>Email</th>
 						<th>Nome</th>
+						<th>Cognome</th>
 						<th>Numero di telefono</th>
-						<th>Indirizzo</th>
-						<th>Azioni</th>
-						<th></th>
-					</tr>
+						<th>Città</th>
+						<th>Via</th>
+						<th>NumeroCivico</th>
+						<th>CAP</th>
+						<th colspan="2" style="text-align: center;">Azioni</th>
 				</thead>
 				<tbody style="background-color: white; font-size: 16px;">
-					<% 
-        ArrayList<UserBean> listaGestoriMagazzino = (ArrayList<UserBean>) request.getAttribute("gestoriMagazzino");
-        if (listaGestoriMagazzino != null) {
-            for (UserBean user : listaGestoriMagazzino) { 
-    %>
+					<%
+					ArrayList<UserBean> listaGestoriMagazzino = (ArrayList<UserBean>) request.getAttribute("gestoriMagazzino");
+					if (listaGestoriMagazzino != null) {
+						for (UserBean user : listaGestoriMagazzino) {
+					%>
 					<tr>
-						<td><%= user.getEmail() %></td>
-						<td><%= user.getNome() %></td>
-						<td><%= user.getNumeroTelefono() %></td>
-						<td><%= user.getIndirizzo() %></td>
+						<td><%=user.getEmail()%></td>
+						<td><%=user.getNome()%></td>
+						<td><%=user.getCognome()%></td>
+						<td><%=user.getNumeroTelefono()%></td>
+						<td><%=user.getIndirizzo().getNomeCitta()%></td>
+						<td><%=user.getIndirizzo().getVia()%></td>
+						<td><%=user.getIndirizzo().getNumeroCivico()%></td>
+						<td><%=user.getIndirizzo().getCap()%></td>
 						<td style="text-align: center">
-							<form action="CancellaMagazzino" method="post">
-								<input type="hidden" name="warehouseId"
-									value="<%= user.getNome() %>">
+				
+							<form action="" method="post">
+								<input type="hidden" name="userId"
+									value="<%=user.getEmail()%>">
+								<button type="submit" class="btn btn-primary">Modifica</button>
+							</form>
+						</td>
+						<td style="text-align: center">
+							
+							<form action="RemoveUserServlet" method="post">
+								<input type="hidden" name="userId"
+									value="<%=user.getEmail()%>">
 								<button type="submit" class="btn btn-danger">Cancella</button>
 							</form>
 						</td>
-					</tr>
-					<% 
-            }
-        } else { 
-    %>
+						<%
+						}
+						} else {
+						%>
+					
 					<tr>
-						<td colspan="6" style="text-align: center;">Nessun magazzino
-							disponibile.</td>
+						<td colspan="10" style="text-align: center;">Nessun magazzino disponibile.</td>
 					</tr>
-					<% } %>
+					<%
+					}
+					%>
 				</tbody>
 			</table>
 		</div>

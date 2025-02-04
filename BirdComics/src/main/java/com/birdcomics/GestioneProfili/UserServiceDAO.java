@@ -228,61 +228,8 @@ public class UserServiceDAO {
 		return user;
 	}
 
-	public String getFName(String emailId) throws SQLException {
-		String fname = "";
 
-		Connection con = DBUtil.getConnection();
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = con.prepareStatement("select nome from Utente where email=?");
-			ps.setString(1, emailId);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				fname = rs.getString(1);
-
-				fname = fname.split(" ")[0];
-
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-
-		return fname;
-	}
-
-	
-	public IndirizzoBean getUserAddr(String userId) throws SQLException {
-		String userAddr = "";
-
-		Connection con = DBUtil.getConnection();
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		IndirizzoBean in = null;
-
-		try {
-			
-			ps = con.prepareStatement("select nomeCitta, via, numeroCivico, cap from Utente where email=?");
-
-			ps.setString(1, userId);
-			rs = ps.executeQuery();
-
-			if (rs.next())
-				in = new IndirizzoBean(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-
-		return in;
-	}
 	
 	public List<RuoloBean> getUserType(String emailId) throws SQLException {
 	    String userType = "";
@@ -418,6 +365,48 @@ public class UserServiceDAO {
 	}
 
 
+	public String deleteUser(String email) throws SQLException {
+	    String status = "User Deletion Failed!";
+	    Connection con = DBUtil.getConnection();
+	    PreparedStatement ps = null;
+
+	    if (con != null) {
+	        System.out.println("Connected Successfully!");
+	    }
+
+	    try {
+	        // Avvia una transazione
+	        con.setAutoCommit(false);
+
+	        // Elimina prima i ruoli associati all'utente
+	        ps = con.prepareStatement("DELETE FROM Utente_Ruolo WHERE emailUtente = ?");
+	        ps.setString(1, email);
+	        ps.executeUpdate();
+
+	        // Elimina l'utente dalla tabella Utente
+	        ps = con.prepareStatement("DELETE FROM Utente WHERE email = ?");
+	        ps.setString(1, email);
+	        int affectedRows = ps.executeUpdate();
+
+	        if (affectedRows > 0) {
+	            status = "Utente cancellato!";
+	            con.commit(); // Conferma la transazione
+	        } else {
+	            status = "Utente non trovato!";
+	            con.rollback(); // Annulla la transazione se l'utente non è stato trovato
+	        }
+
+	    } catch (SQLException e) {
+	        status = "Error: " + e.getMessage();
+	        e.printStackTrace();
+	        con.rollback(); // Rollback in caso di errore
+	    } finally {
+	        DBUtil.closeConnection(ps);
+	        con.setAutoCommit(true); // Ripristina il comportamento di default delle transazioni
+	    }
+
+	    return status;
+	}
 
 
 }
