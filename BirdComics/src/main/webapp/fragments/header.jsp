@@ -77,8 +77,6 @@
 							<ul class="dropdown-menu">
 								<li><a href="./GestioneCatalogo">Visualizza Catalogo</a></li>
 								<li><a href="./AddProductSrv">Aggiungi Fumetto</a></li>
-								<li><a href="">Rimuovi Fumetto</a></li>
-								<li><a href="">Aggiorna Fumetto</a></li>
 								
 							</ul>
 						</li>

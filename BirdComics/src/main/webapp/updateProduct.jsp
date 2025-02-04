@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="com.birdcomics.GestioneCatalogo.ProductBean"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,22 +15,24 @@
 </head>
 <jsp:include page="/fragments/header.jsp" />
 <body>
-    <%-- Recupera il prodotto e il messaggio dalla richiesta --%>
-    <% ProductBean product = (ProductBean) request.getAttribute("product1"); %>
+    
+    <% ProductBean product = (ProductBean) request.getAttribute("product"); %>
     <% String message = request.getParameter("message"); %>
+    <%
+	List<String> genres = (List<String>) request.getAttribute("genres");
+    
+	%>
+	<--recuperare anche generi del product tramite id e impostarli nella lista generi come gia selezionati-->
 
-    <%-- Controlla se il prodotto è nullo, se sì, reindirizza a updateProductById.jsp --%>
-    <% if (product == null) {
-        response.sendRedirect("updateProductById.jsp?message=Please Enter a valid product Id");
-        return;
-    } %>
-
+ 
     <div class="container">
         <div class="row" style="margin-top: 35px; margin-left: 2px; margin-right: 2px;">
-            <form action="./UpdateProductSrv" method="post" class="col-md-6 col-md-offset-3">
+            <form action="./UpdateProductSrv" method="post"
+				enctype="multipart/form-data" class="col-md-6 col-md-offset-3"
+				onsubmit="return validateForm()">
                 <div style="font-weight: bold;" class="text-center">
                     <div class="form-group">
-                        <img src="./ShowImage?image=<%=product.getProdImage()%>" alt="Product Image" height="100px" />
+                        <img src="./ShowImage?image=<%=product.getImage()%>" alt="Product Image" height="100px" />
                         <h2 style="color: green;">Product Update Form</h2>
                     </div>
 
@@ -42,51 +45,66 @@
                 </div>
 
                 <div class="row">
-                    <input type="hidden" name="pid" class="form-control" value="<%= product.getProdId() %>" required>
+                    <input type="hidden" name="pid" class="form-control" value="<%= product.getId() %>" required>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="name">Product Name</label>
-                        <input type="text" name="name" class="form-control" id="name" value="<%= product.getProdName() %>" onkeyup="checkName(this)" required>
+                        <input type="text" name="name" class="form-control" id="name" value="<%= product.getName() %>" onkeyup="checkName(this)" required>
                         <div><p id="nameText"></p></div> <!-- Mostra messaggi di errore qui -->
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="type">Product Type</label>
-                        <select name="type" id="type" class="form-control" required>
-                            <option value="avventura" <%= "avventura".equalsIgnoreCase(product.getProdType()) ? "selected" : "" %>>Avventura</option>
-                            <option value="azione" <%= "azione".equalsIgnoreCase(product.getProdType()) ? "selected" : "" %>>Azione</option>
-                            <option value="horror" <%= "horror".equalsIgnoreCase(product.getProdType()) ? "selected" : "" %>>Horror</option>
-                            <option value="thriller" <%= "thriller".equalsIgnoreCase(product.getProdType()) ? "selected" : "" %>>Thriller</option>
-                            <option value="fantasy" <%= "fantasy".equalsIgnoreCase(product.getProdType()) ? "selected" : "" %>>Fantasy</option>
-                            <option value="drammatico" <%= "drammatico".equalsIgnoreCase(product.getProdType()) ? "selected" : "" %>>Drammatico</option>
-                            <option value="fantascienza" <%= "fantascienza".equalsIgnoreCase(product.getProdType()) ? "selected" : "" %>>Fantascienza</option>
-                        </select>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="info">Product Description</label>
-                    <textarea name="info" class="form-control" id="info" onkeyup="checkDescription(this)" required><%= product.getProdInfo() %></textarea>
+                    <textarea name="info" class="form-control" id="info" onkeyup="checkDescription(this)" required><%= product.getDescription() %></textarea>
                     <div><p id="descriptionText"></p></div> <!-- Mostra messaggi di errore qui -->
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="price">Unit Price</label>
-                        <input type="number" step="0.01" name="price" class="form-control" id="price" value="<%= product.getProdPrice() %>" onkeyup="checkPrice(this)" required>
+                        <input type="number" step="0.01" name="price" class="form-control" id="price" value="<%= product.getPrice() %>" onkeyup="checkPrice(this)" required>
                         <div><p id="priceText"></p></div> <!-- Mostra messaggi di errore qui -->
                     </div>
-                    <div class="col-md-6 form-group">
-                        <label for="quantity">Stock Quantity</label>
-                        <input type="number" name="quantity" class="form-control" id="quantity" value="<%= product.getProdQuantity() %>" onkeyup="checkQuantity(this)" required>
-                        <div><p id="quantityText"></p></div> <!-- Mostra messaggi di errore qui -->
-                    </div>
                 </div>
+                <div class="form-group">
+					<label>Genres</label>
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle" type="button"
+							id="genreDropdown" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="true">
+							Select Genres <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="genreDropdown">
+							<%
+							if (genres != null) {
+								for (String genre : genres) {
+							%>
+							<li><label class="checkbox-inline"> <input
+									type="checkbox" name="genres" value="<%=genre%>"
+									onclick="checkGenres()"> <%=genre%>
+							</label></li>
+							<%
+							}
+							}
+							%>
+						</ul>
+					</div>
+					<p id="genreText" style="color: red;"></p>
+				</div>
+                
+                <div class="form-group">
+					<label for="image">Product Image</label> <input type="file"
+						name="image" class="form-control" id="image"
+						accept=".png, .jpeg, .jpg, .gif">
+					<p id="imageText"></p>
+				</div>
 
                 <div class="row text-center">
                     <div class="col-md-4" style="margin-bottom: 2px;">
-                        <button formaction="adminStock" class="btn btn-danger">Cancel</button>
+                        <button formaction="GestioneCatalogo" class="btn btn-danger">Cancel</button>
                     </div>
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-success">Update Product</button>

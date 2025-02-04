@@ -58,7 +58,14 @@ public class UpdateToCart extends HttpServlet {
 
 		
 		//int availableQty = product.getProdQuantity();
-		int availableQty = 500;
+		 ProductServiceDAO pr = new ProductServiceDAO();
+		int availableQty = 0;
+		try {
+			availableQty = pr.getAllQuantityProductsById(product);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		PrintWriter pw = response.getWriter();
 

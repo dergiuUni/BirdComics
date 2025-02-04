@@ -51,12 +51,14 @@ public class AddToCart extends HttpServlet {
         ProductServiceDAO pr = new ProductServiceDAO();
         //pr.getAllQuantityProductsById(product)
         int availableQty = 0;
-		try {
+		
+        try {
 			availableQty = pr.getAllQuantityProductsById(product);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
         int cartQty = 0;
 
         try {
@@ -82,12 +84,14 @@ public class AddToCart extends HttpServlet {
                 e.printStackTrace();
             }
 
+            /*
             String status = "La quantità richiesta di " + product.getName() + " non è disponibile al momento. "
                             + "Abbiamo aggiunto solo " + availableQty + " unità al tuo carrello. "
                             + "Ti avviseremo quando il prodotto sarà disponibile nuovamente.";
 
             // Reindirizza alla pagina del carrello con un messaggio di stato
             response.sendRedirect("cartDetails.jsp?message=" + status);
+            */
         } else {
             // Se la quantità totale è disponibile, aggiungi tutto al carrello
             try {
