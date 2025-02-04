@@ -4,6 +4,8 @@
 	var validPrice = false;
 	var validQuantity = false;
 	var validImageType = false;
+	var validGenres = false;
+	
 
 
 
@@ -59,27 +61,7 @@
 			return true;
 		}
 	}
-/*
-	function checkQuantity(input) {
-		if (input.value < 0) {
-			document.getElementById('quantityText').innerHTML = "La quantita non può essere negativa";
-			validQuantity = false;
-			return false;
-		} else if (input.value > 999) {
-			document.getElementById('quantityText').innerHTML = "Hai inserito un numero troppo grande";
-			validQuantity = false;
-			return false;
-		} else if (!/^\d+$/.test(input.value)) {
-			document.getElementById('quantityText').innerHTML = "La quantità non deve contenere lettere";
-			validQuantity = false;
-			return false;
-		} else {
-			document.getElementById('quantityText').innerHTML = "";
-			validQuantity = true;
-			return true;
-		}
-	}
-*/
+
 	function checkImageType(input) {
 		var file = input.files[0];
 		var fileType = file.type.toLowerCase();
@@ -95,6 +77,28 @@
 			return true;
 		}
 	}
+	
+	function checkGenres() {
+    var checkboxes = document.getElementsByName("genres");
+    var isChecked = false;
+
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            isChecked = true;
+            break;
+        }
+    }
+
+    if (!isChecked) {
+        document.getElementById('genreText').innerHTML = "Seleziona almeno un genere!";
+        validGenres = false;
+        return false;
+    } else {
+        document.getElementById('genreText').innerHTML = "";
+        validGenres = true;
+        return true;
+    }
+}
 
 	function validateForm() {
 		
@@ -112,21 +116,16 @@
 	        alert("Controlla il campo prezzo!!");
 	        return false;
 	    }
-/*
-	    if (!validQuantity) {
-	        alert("Controlla il campo quantità!!");
-	        return false;
-	    }
-	 */
+ 		if (!validGenres) {
+			 alert("Seleziona almeno un genere!");
+        return false;
+    }
 	    if(!validImageType) {
 	    	alert("Errore, scegli un altra foto!");
 	        return false;
 	    	
 	    }
 
-	
-
-	
 	    return true;
 	}
 
