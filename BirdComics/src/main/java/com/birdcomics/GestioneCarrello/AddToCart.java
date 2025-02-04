@@ -26,7 +26,7 @@ public class AddToCart extends HttpServlet {
         String userName = (String) session.getAttribute("username");
         String password = (String) session.getAttribute("password");
    
-
+   
         if (userName == null || password == null)  {
             response.sendRedirect("login.jsp?message=Session Expired, Login Again to Continue!");
             return;
@@ -47,7 +47,16 @@ public class AddToCart extends HttpServlet {
         }
 
         //int availableQty = product.getProdQuantity();
-        int availableQty = 500;
+        
+        ProductServiceDAO pr = new ProductServiceDAO();
+        //pr.getAllQuantityProductsById(product)
+        int availableQty = 0;
+		try {
+			availableQty = pr.getAllQuantityProductsById(product);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         int cartQty = 0;
 
         try {
@@ -58,7 +67,10 @@ public class AddToCart extends HttpServlet {
 
         // Calcola la quantità totale da aggiungere al carrello
         int totalQtyToAdd = pQty + cartQty;
-
+        
+        System.out.println(availableQty + " " + cartQty + " " + totalQtyToAdd);
+        
+        
         // Controlla se la quantità totale supera la disponibilità
         if (totalQtyToAdd > availableQty) {
             // Se la quantità supera la disponibilità, aggiungi solo fino alla disponibilità

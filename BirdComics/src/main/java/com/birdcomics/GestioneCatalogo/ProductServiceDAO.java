@@ -191,7 +191,34 @@ public class ProductServiceDAO {
 
         return products;
     }
+    public int getAllQuantityProductsById(ProductBean p) throws SQLException {
+        Connection con = DBUtil.getConnection();
 
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+        	ps = con.prepareStatement("select SUM(Scaffali.quantita) from Scaffali where Scaffali.idFumetto = ?");
+            ps.setInt(1, p.getId());
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+            	System.out.println("somma scaffali " + rs.getInt(1));
+            	return rs.getInt(1);
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        DBUtil.closeConnection(ps);
+        DBUtil.closeConnection(rs);
+        DBUtil.closeConnection(con);
+
+        return 0;
+    }
+    
     public List<ProductBean> getAllProductsByType(String type) throws SQLException {
         List<ProductBean> products = new ArrayList<>();
 

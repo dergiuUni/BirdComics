@@ -13,7 +13,7 @@ public class OrderBean implements Serializable {
 	private String emailUtente;
 	private int id;
 	private String idPaypal;
-	private 	boolean shipped;
+	private String shipped;
 	private Date dataEffettuato;
 	private FatturaBean idFattura;
 	private HashMap<ProductBean, Integer> fumetti = new HashMap<>();;
@@ -22,7 +22,7 @@ public class OrderBean implements Serializable {
 		super();
 	}
 	
-	public OrderBean(String emailUtente, int id, String idPaypal, boolean shipped, Date dataEffettuato, FatturaBean idFattura) {
+	public OrderBean(String emailUtente, int id, String idPaypal, String shipped, Date dataEffettuato, FatturaBean idFattura) {
 		super();
 		this.emailUtente = emailUtente;
 		this.id = id;
@@ -32,7 +32,7 @@ public class OrderBean implements Serializable {
 		this.idFattura = idFattura;
 	}
 	
-	public OrderBean(String emailUtente,  String idPaypal, boolean shipped, Date dataEffettuato) {
+	public OrderBean(String emailUtente,  String idPaypal, String shipped, Date dataEffettuato) {
 		super();
 		this.emailUtente = emailUtente;
 		this.idPaypal = idPaypal;
@@ -66,11 +66,11 @@ public class OrderBean implements Serializable {
 		this.idPaypal = idPaypal;
 	}
 
-	public boolean isShipped() {
+	public String getShipped() {
 		return shipped;
 	}
 
-	public void setShipped(boolean shipped) {
+	public void setShipped(String shipped) {
 		this.shipped = shipped;
 	}
 

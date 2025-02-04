@@ -120,7 +120,7 @@ CREATE TABLE Ordine(
   emailUtente VARCHAR(45) NOT NULL,
     id INT NOT NULL AUTO_INCREMENT,
     idpaypal varchar(45) NOT NULL,
-    shipped boolean NOT NULL,
+    shipped varchar(45) NOT NULL,
     dataEffettuato date NOT NULL,
     idFattura INT NOT NULL,
   
@@ -277,10 +277,10 @@ INSERT INTO Fattura (iva, nome, cognome, telefono, nomeCittaCliente, viaCliente,
 
 -- Inserimento nella tabella Ordine
 INSERT INTO Ordine (emailUtente, idpaypal, shipped, dataEffettuato, idFattura) VALUES 
-    ('cliente@example.com', 'PAYPAL112233', false, '2025-02-20', 1),
-    ('cliente@example.com', 'PAYPAL445566', true, '2025-02-22', 2),
-    ('cliente@example.com', 'PAYPAL778899', true, '2025-02-23', 1),
-    ('cliente@example.com', 'PAYPAL998877', false, '2025-02-24', 1);
+    ('cliente@example.com', 'PAYPAL112233', "Non Spedito", '2025-02-20', 1),
+    ('cliente@example.com', 'PAYPAL445566', "Non Spedito", '2025-02-22', 2),
+    ('cliente@example.com', 'PAYPAL778899', "Non Spedito", '2025-02-23', 1),
+    ('cliente@example.com', 'PAYPAL998877', "Non Spedito", '2025-02-24', 1);
 
 
 -- Inserimento nella tabella Ordine_Magazzino

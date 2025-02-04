@@ -63,11 +63,9 @@ public class ReviewPaymentServlet extends HttpServlet {
 			Transaction transaction = payment.getTransactions().get(0);
 			ItemList itemList = transaction.getItemList();
 			List<Item> items = itemList.getItems();
-			String transactionId = "testing";
-					//transaction.getRelatedResources().get(0).getSale().getId();
-
+			
 			FatturaBean f = new FatturaBean(22, u.getNome(), u.getCognome(), u.getNumeroTelefono(), u.getIndirizzo().getNomeCitta(), u.getIndirizzo().getVia(), u.getIndirizzo().getNumeroCivico(), u.getIndirizzo().getCap() );
-			OrderBean o = new OrderBean(u.getEmail(), transactionId, false, java.sql.Date.valueOf(LocalDate.now()));
+			OrderBean o = new OrderBean(u.getEmail(), paymentId, "Non Spedito", java.sql.Date.valueOf(LocalDate.now()));
 			// imposto i dettagli dell'ordine
 			o.setIdFattura(f);
 			
