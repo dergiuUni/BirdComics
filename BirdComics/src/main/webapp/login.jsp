@@ -17,7 +17,7 @@
 	<div class="container">
 		<h2>Login Page</h2>
 
-		<form action="LoginSrv" method="post">
+		<form action="LoginSrv" method="get">
 			<!-- Mostra il messaggio di errore se presente -->
 			<c:if test="${not empty param.message}">
 				<p style="color: red;">${param.message}</p>

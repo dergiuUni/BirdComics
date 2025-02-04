@@ -56,10 +56,13 @@ public class LoginSrv extends HttpServlet {
 					userType.add(ruoloBean.toString());	
 				} 
                 
-                
                 session.setAttribute("usertype", userType);
-                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/UserProfileServlet");
                 rd.forward(request, response);
+
+      
+                
+         
                 
             } catch (SQLException e) {
                 e.printStackTrace();
