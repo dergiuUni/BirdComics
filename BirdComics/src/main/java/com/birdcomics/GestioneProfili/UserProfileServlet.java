@@ -19,11 +19,10 @@ public class UserProfileServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = (String) request.getSession().getAttribute("username");
-        String password = (String) request.getSession().getAttribute("password");
         if (userName != null) {
         	UserServiceDAO dao = new UserServiceDAO();
         	try {
-				UserBean user = dao.getUserDetails(userName, password);
+				UserBean user = dao.getUserDetails(userName);
 				 request.setAttribute("user", user);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

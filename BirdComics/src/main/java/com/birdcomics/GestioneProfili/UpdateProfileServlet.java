@@ -12,8 +12,8 @@ import java.sql.SQLException;
 public class UpdateProfileServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
 		String userName = (String) request.getSession().getAttribute("username");
-		String password = (String) request.getSession().getAttribute("password");
 
 		// Retrieve user from session
 
@@ -27,6 +27,7 @@ public class UpdateProfileServlet extends HttpServlet {
 			}
 			// Redirect back to userProfile.jsp
 			  request.getRequestDispatcher("UserProfileServlet").forward(request, response);
-		}
+		}*/
 	}
+	
 }

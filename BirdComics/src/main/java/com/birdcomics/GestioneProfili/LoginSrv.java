@@ -39,7 +39,7 @@ public class LoginSrv extends HttpServlet {
         if (status.equalsIgnoreCase("valid")) {
             UserBean user = null;
             try {
-                user = udao.getUserDetails(userName, password);
+                user = udao.getUserDetails(userName);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -47,7 +47,6 @@ public class LoginSrv extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("userdata", user);
             session.setAttribute("username", userName);
-            session.setAttribute("password", password);
 
             try {
                 List<String> userType = new ArrayList<String>();

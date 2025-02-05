@@ -34,9 +34,8 @@ public class CartDetailsServlet extends HttpServlet {
 
         // Verifica le credenziali dell'utente
         String userName = (String) request.getSession().getAttribute("username");
-        String password = (String) request.getSession().getAttribute("password");
 
-        if (userName == null || password == null) {
+        if (userName == null) {
             response.sendRedirect("login.jsp?message=Session Expired, Login Again!!");
             return;
         }

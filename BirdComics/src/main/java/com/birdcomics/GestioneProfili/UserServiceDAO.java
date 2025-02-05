@@ -151,45 +151,6 @@ public class UserServiceDAO {
 	}
 
 	
-	public UserBean getUserDetails(String emailId, String password) throws SQLException {
-
-		UserBean user = null;
-
-		Connection con = DBUtil.getConnection();
-
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		ArrayList<RuoloBean> ru = new ArrayList<RuoloBean>();
-		
-		try {
-			ps = con.prepareStatement("select * from Utente, Utente_Ruolo where Utente.email=? and Utente.pass=? and Utente.email = Utente_Ruolo.emailUtente");
-			ps.setString(1, emailId);
-			ps.setString(2, password);
-			
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cap"));
-				user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in, null );
-				
-				
-				while (rs.next()) {
-					ru.add(RuoloBean.fromString(rs.getString("idRuolo")));
-				}
-				user.setRuoloBean(ru);
-			}
-			
-			
-			return user;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		DBUtil.closeConnection(ps);
-		DBUtil.closeConnection(rs);
-		return user;
-	}
-	
 	public UserBean getUserDetails(String emailId) throws SQLException {
 
 		UserBean user = null;
@@ -315,14 +276,14 @@ public class UserServiceDAO {
 
 	    return status;
 	}
-	
-	public List<UserBean> getUsersByRole(String roleId) throws SQLException {
+	public List<UserBean> getUsersByRole(RuoloBean ruolo, String nomeMagazzino) throws SQLException {
 	    List<UserBean> usersList = new ArrayList<>();
 
 	    Connection con = DBUtil.getConnection();
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
 
+	    
 	    try {
 	        // SQL query to get users based on their role
 	        String sql = "SELECT Utente.email, Utente.nome, Utente.cognome, Utente.telefono, Utente.nomeCitta, Utente.via, Utente.numeroCivico, Utente.cap, Utente.dataNascita "
@@ -330,7 +291,7 @@ public class UserServiceDAO {
 	                   + "JOIN Utente_Ruolo ON Utente.email = Utente_Ruolo.emailUtente "
 	                   + "WHERE Utente_Ruolo.idRuolo = ?";
 	        ps = con.prepareStatement(sql);
-	        ps.setString(1, roleId); // Set the role ID in the query
+	        ps.setString(1, ruolo.toString()); // Set the role ID in the query
 
 	        rs = ps.executeQuery();
 

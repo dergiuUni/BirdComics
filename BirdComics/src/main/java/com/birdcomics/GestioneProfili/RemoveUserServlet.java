@@ -34,15 +34,15 @@ public class RemoveUserServlet extends HttpServlet {
                 dao.deleteUser(userEmail);
                 // Fetch the updated list of users after deletion
                 
-                List<UserBean> updatedUserList = dao.getUsersByRole("GestoreMagazzino"); // Assuming you have a method like this in your DAO
-                request.setAttribute("gestoriMagazzino", updatedUserList); // Set the updated list
+                //List<UserBean> updatedUserList = dao.getUsersByRole("GestoreMagazzino"); // Assuming you have a method like this in your DAO
+                //request.setAttribute("gestoriMagazzino", updatedUserList); // Set the updated list
             } catch (SQLException e) {
                 status = "Errore di database: " + e.getMessage();
                 e.printStackTrace();
             }
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("manageUsers.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/GestoriMagazziniServlet");
         rd.forward(request, response);
     }
 

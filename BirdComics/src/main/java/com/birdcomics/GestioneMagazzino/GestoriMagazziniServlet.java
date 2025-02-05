@@ -39,7 +39,7 @@ public class GestoriMagazziniServlet extends HttpServlet {
         
         try {
             // Metodo che recupera gli utenti dal database (aggiungere logica per ottenere gli utenti reali)
-        	gestoriMagazzino =  uDao.getUsersByRole("GestoreMagazzino");// Funzione per ottenere gli utenti
+        	gestoriMagazzino =  uDao.getUsersByRole(RuoloBean.GestoreMagazzino, null);// Funzione per ottenere gli utenti
         } catch (SQLException e) {
         	request.setAttribute("message", "Errore nel recupero dei gestori magazzino.");
             e.printStackTrace();
