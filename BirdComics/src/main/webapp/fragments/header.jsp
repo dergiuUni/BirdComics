@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ page import="com.birdcomics.*"%>
+<%@ page import="com.birdcomics.*, com.birdcomics.GestioneProfili.*"%>
 <%@ page import="java.util.List"%>
 
 <!DOCTYPE html>
@@ -28,7 +28,7 @@
 
                     <%-- User-specific Menus --%>
                     <%
-                    if (userTypes.contains("GestoreGenerale")) {
+                    if (userTypes.contains(RuoloBean.GestoreGenerale.toString())) {
                     %>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestione Magazzini<span class="caret"></span></a>
@@ -36,12 +36,12 @@
                                 <li><a href="">AggiungiMagazzino</a></li>
                                 <li><a href="./ListaMagazziniServlet">Lista Magazzini</a></li>
                                 <li><a href="">AggiungiDirettoreMagazzino</a></li>
-                                <li><a href="./GestoriMagazziniServlet">Lista Direttori Magazzino</a></li>
+                                <li><a href="./GestioneUtentiServlet">Lista Direttori Magazzino</a></li>
                             </ul>
                         </li>
                     <%  
                     }
-                    if (userTypes.contains("GestoreMagazzino")) {
+                    if (userTypes.contains(RuoloBean.GestoreMagazzino.toString())) {
                     %>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestione Magazzino<span class="caret"></span></a>
@@ -49,23 +49,23 @@
                                 <li><a href="">AggiungiScaffale</a></li>
                                 <li><a href="">ListaScaffale</a></li>
                                 <li><a href="">AggiungiHr</a></li>
-                                <li><a href="">ListaHr</a></li>
+                                <li><a href="./GestioneUtentiServlet">ListaHr</a></li>
                             </ul>
                         </li>
                     <%  
                     }
-                    if (userTypes.contains("RisorseUmane")) {
+                    if (userTypes.contains(RuoloBean.RisorseUmane.toString())) {
                     %>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestione Dipendenti<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="">Aggiungi Dipendente</a></li>
-                                <li><a href="">Lista Dipendente</a></li>
+                                <li><a href="./GestioneUtentiServlet">Lista Dipendenti</a></li>
                             </ul>
                         </li>
                     <%  
                     }
-                    if (userTypes.contains("GestoreCatalogo")) {
+                    if (userTypes.contains(RuoloBean.GestoreCatalogo.toString())) {
                     %>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestione Catalogo <span class="caret"></span></a>
@@ -76,7 +76,7 @@
                         </li>
                     <%  
                     }
-                    if (userTypes.contains("Magazziniere")) {
+                    if (userTypes.contains(RuoloBean.Magazziniere.toString())) {
                     %>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Magazziniere <span class="caret"></span></a>
@@ -86,7 +86,7 @@
                         </li>
                     <%  
                     }
-                    if (userTypes.contains("Spedizioniere")) {
+                    if (userTypes.contains(RuoloBean.Spedizioniere.toString())) {
                     %>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Spedizioniere <span class="caret"></span></a>
@@ -96,7 +96,7 @@
                         </li>
                     <%  
                     }
-                    if (userTypes.contains("Assistenza")) {
+                    if (userTypes.contains(RuoloBean.Assistenza.toString())) {
                     %>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Assistenza <span class="caret"></span></a>
@@ -106,7 +106,7 @@
                         </li>
                     <%  
                     }
-                    if (userTypes.contains("Finanza")) {
+                    if (userTypes.contains(RuoloBean.Finanza.toString())) {
                     %>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Finanza <span class="caret"></span></a>
@@ -116,7 +116,7 @@
                         </li>
                     <%  
                     }
-                    if (userTypes.contains("Cliente")) {
+                    if (userTypes.contains(RuoloBean.Cliente.toString())) {
                     %>
                         <li><a href="index.jsp">Home</a></li>
                         <li><a href="CartDetailsServlet">Carrello</a></li>

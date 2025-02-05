@@ -276,7 +276,7 @@ public class UserServiceDAO {
 
 	    return status;
 	}
-	public List<UserBean> getUsersByRole(RuoloBean ruolo, String nomeMagazzino) throws SQLException {
+	public List<UserBean> getUsersByRole(List <RuoloBean> ruolo, String nomeMagazzino) throws SQLException {
 	    List<UserBean> usersList = new ArrayList<>();
 
 	    Connection con = DBUtil.getConnection();
