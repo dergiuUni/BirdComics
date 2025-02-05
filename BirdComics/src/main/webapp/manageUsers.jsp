@@ -47,9 +47,9 @@
 				</thead>
 				<tbody style="background-color: white; font-size: 16px;">
 					<%
-					ArrayList<UserBean> listaGestoriMagazzino = (ArrayList<UserBean>) request.getAttribute("gestoriMagazzino");
-					if (listaGestoriMagazzino != null) {
-						for (UserBean user : listaGestoriMagazzino) {
+					ArrayList<UserBean> utenti = (ArrayList<UserBean>) request.getAttribute("utenti");
+					if (utenti != null) {
+						for (UserBean user : utenti) {
 					%>
 					<tr>
 						<td><%=user.getEmail()%></td>

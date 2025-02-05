@@ -276,54 +276,82 @@ public class UserServiceDAO {
 
 	    return status;
 	}
-	public List<UserBean> getUsersByRole(List <RuoloBean> ruolo, String nomeMagazzino) throws SQLException {
+	public List<UserBean> getUsersByRole(List<RuoloBean> ruoli, String nomeMagazzino) throws SQLException {
 	    List<UserBean> usersList = new ArrayList<>();
-
 	    Connection con = DBUtil.getConnection();
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
 
-	    
 	    try {
-	        // SQL query to get users based on their role
-	        String sql = "SELECT Utente.email, Utente.nome, Utente.cognome, Utente.telefono, Utente.nomeCitta, Utente.via, Utente.numeroCivico, Utente.cap, Utente.dataNascita "
-	                   + "FROM Utente "
-	                   + "JOIN Utente_Ruolo ON Utente.email = Utente_Ruolo.emailUtente "
-	                   + "WHERE Utente_Ruolo.idRuolo = ?";
-	        ps = con.prepareStatement(sql);
-	        ps.setString(1, ruolo.toString()); // Set the role ID in the query
+	        // Costruzione della query SQL
+	        StringBuilder sql = new StringBuilder("SELECT Utente.email, Utente.nome, Utente.cognome, Utente.telefono, ")
+	            .append("Utente.nomeCitta, Utente.via, Utente.numeroCivico, Utente.cap, Utente.dataNascita ")
+	            .append("FROM Utente ")
+	            .append("JOIN Utente_Ruolo ON Utente.email = Utente_Ruolo.emailUtente ")
+	            .append("WHERE Utente_Ruolo.idRuolo IN (");
 
+	        // Aggiungi i ruoli nella query (in modo dinamico)
+	        for (int i = 0; i < ruoli.size(); i++) {
+	            sql.append("?");
+	            if (i < ruoli.size() - 1) {
+	                sql.append(", ");
+	            }
+	        }
+
+	        // Se viene fornito un nomeMagazzino, aggiungi anche il filtro per magazzino
+	        if (nomeMagazzino != null) {
+	            sql.append(") AND Utente_Ruolo.nomeMagazzino = ?");
+	        } else {
+	            sql.append(")");
+	        }
+
+	        // Prepara la query
+	        ps = con.prepareStatement(sql.toString());
+
+	        // Imposta i parametri dei ruoli
+	        for (int i = 0; i < ruoli.size(); i++) {
+	            ps.setString(i + 1, ruoli.get(i).toString()); // Usa .toString() per convertire l'enum in stringa
+	        }
+
+	        // Se c'è un nomeMagazzino, imposta anche questo parametro
+	        if (nomeMagazzino != null) {
+	            ps.setString(ruoli.size() + 1, nomeMagazzino);
+	        }
+
+	        // Esegui la query
 	        rs = ps.executeQuery();
 
+	        // Elenco degli utenti trovati
 	        while (rs.next()) {
-	            // Create IndirizzoBean object for user address
-	            IndirizzoBean indirizzo = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cap"));
-	            
-	            // Create UserBean object for each user (without password)
+	            IndirizzoBean indirizzo = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), 
+	                                                        rs.getInt("numeroCivico"), rs.getString("cap"));
+
 	            UserBean user = new UserBean(
 	                rs.getString("email"), 
-	                null, // Password is not needed
+	                null, // Non vogliamo la password
 	                rs.getString("nome"), 
 	                rs.getString("cognome"), 
 	                rs.getString("telefono"), 
 	                rs.getDate("dataNascita"), 
 	                indirizzo, 
-	                null // You can populate user roles here if needed
+	                null // Puoi eventualmente aggiungere qui i ruoli
 	            );
-	            
-	            // Add the user to the list
+
+	            // Aggiungi l'utente alla lista
 	            usersList.add(user);
 	        }
 
 	    } catch (SQLException e) {
 	        e.printStackTrace();
+	        throw e; // Rilancia l'eccezione
 	    } finally {
-	        DBUtil.closeConnection(ps);
 	        DBUtil.closeConnection(rs);
+	        DBUtil.closeConnection(ps);
 	    }
 
 	    return usersList;
 	}
+
 
 
 	public void deleteUser(String email) throws SQLException {

@@ -42,7 +42,7 @@ public class RemoveUserServlet extends HttpServlet {
             }
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("/GestoriMagazziniServlet");
+        RequestDispatcher rd = request.getRequestDispatcher("/GestioneUtentiServlet");
         rd.forward(request, response);
     }
 
