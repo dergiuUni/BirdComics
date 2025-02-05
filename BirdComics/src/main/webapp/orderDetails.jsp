@@ -33,7 +33,7 @@
 					<c:forEach var="order" items="${orders}">
 						<tr>
 							<td>${order.id}</td>
-							<td>${order.idFattura}</td>
+							<td>${order.idFattura.getId()}</td>
 							<td>${order.idPaypal}</td>
 							<td>${order.dataEffettuato}</td>
 							<td class="text-success">

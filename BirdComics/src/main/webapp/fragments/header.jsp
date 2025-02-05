@@ -81,9 +81,7 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Magazziniere <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="">ModificaPosizioneScaffale</a></li>
-                                <li><a href="">Mansioni</a></li>
-                                <li><a href="">LiberaScaffale</a></li>
+                                <li><a href="">ListaScaffali</a></li>
                             </ul>
                         </li>
                     <%  

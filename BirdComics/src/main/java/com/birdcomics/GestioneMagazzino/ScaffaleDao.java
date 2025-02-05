@@ -220,7 +220,7 @@ public class ScaffaleDao {
 		ResultSet rs = null;
 
 		try {
-			ps = con.prepareStatement("select idScaffale, quantita, quantitaMassima idFumetto  from MagazzinoScaffali, Scaffali where idMagazzino=? and idScaffale = id");
+			ps = con.prepareStatement("select idScaffale, quantita, quantitaMassima, idFumetto  from MagazzinoScaffali, Scaffali where idMagazzino=? and idScaffale = id");
 
 			ps.setString(1, nomeMagazzino);
 

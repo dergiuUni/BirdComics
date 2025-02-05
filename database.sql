@@ -160,9 +160,11 @@ CREATE TABLE CarrelloCliente(
 CREATE TABLE Utente_Ruolo (
     idRuolo ENUM('GestoreGenerale', 'GestoreMagazzino', 'RisorseUmane', 'GestoreCatalogo', 'Magazziniere', 'Spedizioniere', 'Assistenza', 'Finanza', 'Cliente') NOT NULL default  'Cliente',
     emailUtente VARCHAR(45) NOT NULL,
+    nomeMagazzino varchar(45) NOT NULL,
 
     PRIMARY KEY (idRuolo, emailUtente),
-    FOREIGN KEY (emailUtente) REFERENCES Utente (email) ON DELETE CASCADE
+    FOREIGN KEY (emailUtente) REFERENCES Utente (email) ON DELETE CASCADE,
+    FOREIGN KEY (nomeMagazzino) REFERENCES Magazzino (nome) ON DELETE CASCADE
 );
 
 
@@ -307,13 +309,13 @@ INSERT INTO CarrelloCliente (id, idFumetto, quantita) VALUES
 
 
 -- Inserimento nella tabella Utente_Ruolo
-INSERT INTO Utente_Ruolo (idRuolo, emailUtente) VALUES 
-    ('Cliente', 'cliente@example.com'),
-    ('GestoreGenerale', 'generale@BirdComics.com'),
-    ('GestoreMagazzino', 'magazzino@BirdComics.com'),
-    ('RisorseUmane', 'hr@BirdComics.com'),
-    ('GestoreCatalogo', 'catalogo@BirdComics.com'),
-    ('Magazziniere', 'magazziniere@BirdComics.com'),
-    ('Spedizioniere', 'spedizioniere@BirdComics.com'),
-    ('Assistenza', 'assistenza@BirdComics.com'),
-    ('Finanza', 'finanza@BirdComics.com');
+INSERT INTO Utente_Ruolo (idRuolo, emailUtente, nomeMagazzino) VALUES 
+    ('Cliente', 'cliente@example.com', 'Magazzino Napoli'),
+    ('GestoreGenerale', 'generale@BirdComics.com', 'Magazzino Napoli'),
+    ('GestoreMagazzino', 'magazzino@BirdComics.com', 'Magazzino Napoli'),
+    ('RisorseUmane', 'hr@BirdComics.com', 'Magazzino Napoli'),
+    ('GestoreCatalogo', 'catalogo@BirdComics.com', 'Magazzino Napoli'),
+    ('Magazziniere', 'magazziniere@BirdComics.com', 'Magazzino Napoli'),
+    ('Spedizioniere', 'spedizioniere@BirdComics.com','Magazzino Napoli' ),
+    ('Assistenza', 'assistenza@BirdComics.com','Magazzino Napoli'),
+    ('Finanza', 'finanza@BirdComics.com','Magazzino Napoli');

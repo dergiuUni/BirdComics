@@ -32,29 +32,29 @@ public class ScaffaliBean {
 	
 	
 	
-	protected int getId() {
+	public int getId() {
 		return id;
 	}
 
-	protected void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
 
-	protected ProductBean getFumetto() {
+	public ProductBean getFumetto() {
 		return fumetto;
 	}
 	
-	protected void setFumetto(ProductBean fumetto) {
+	public void setFumetto(ProductBean fumetto) {
 		this.fumetto = fumetto;
 	}
-	protected int getQuantitaOccupata() {
+	public int getQuantitaOccupata() {
 		return quantitaOccupata;
 	}
-	protected void setQuantitaOccupata(int quantitaOccupata) {
+	public void setQuantitaOccupata(int quantitaOccupata) {
 		this.quantitaOccupata = quantitaOccupata;
 	}
-	protected int getQuantitaMassima() {
+	public int getQuantitaMassima() {
 		return quantitaMassima;
 	}
 	
