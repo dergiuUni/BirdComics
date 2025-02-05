@@ -132,15 +132,17 @@ CREATE TABLE Ordine(
 CREATE TABLE Ordine_Magazzino(
     idOrdine INT NOT NULL,
     nomeMagazzino varchar(45) NOT NULL, 
-  idFumetto INT NOT NULL,
+    idFumetto INT NOT NULL,
+    idScaffale INT NOT NULL,
   nome varchar(45) NOT NULL,
     descrizione varchar(100) NOT NULL,
     prezzo float NOT NULL,
     quantita int not null,
     
-    PRIMARY KEY (idOrdine, nomeMagazzino, idFumetto),
-    FOREIGN KEY (idOrdine) REFERENCES Ordine (id) ON DELETE CASCADE,
-    FOREIGN KEY (nomeMagazzino) REFERENCES Magazzino (nome) ON DELETE CASCADE
+    PRIMARY KEY (idOrdine, nomeMagazzino, idFumetto, idScaffale),
+    FOREIGN KEY (idOrdine) REFERENCES Ordine (id) ,
+    FOREIGN KEY (nomeMagazzino) REFERENCES Magazzino (nome) ,
+    FOREIGN KEY (idScaffale) REFERENCES Scaffali (id) 
 );
 
 
@@ -286,13 +288,13 @@ INSERT INTO Ordine (emailUtente, idpaypal, shipped, dataEffettuato, idFattura) V
 
 
 -- Inserimento nella tabella Ordine_Magazzino
-INSERT INTO Ordine_Magazzino (idOrdine, nomeMagazzino, idFumetto, nome, descrizione, prezzo, quantita) VALUES 
-    (1, 'Magazzino Napoli', 1, 'ciao', 'ciao', 23.2, 2),
-    (2, 'Magazzino Napoli', 1, 'ciao', 'ciao', 23.2, 2),
-    (3, 'Magazzino Napoli', 1, 'ciao', 'ciao', 23.2, 2),
-    (4, 'Magazzino Napoli', 1, 'ciao', 'ciao', 23.2, 2),
-    (1, 'Magazzino Bologna', 1, 'ciao', 'ciao', 23.2, 2),
-    (2, 'Magazzino Bologna', 1, 'ciao', 'ciao', 23.2, 2);
+INSERT INTO Ordine_Magazzino (idOrdine, nomeMagazzino, idFumetto, idScaffale, nome, descrizione, prezzo, quantita) VALUES 
+    (1, 'Magazzino Napoli', 1,1, 'ciao', 'ciao', 23.2, 2),
+    (2, 'Magazzino Napoli', 1,1, 'ciao', 'ciao', 23.2, 2),
+    (3, 'Magazzino Napoli', 1,1, 'ciao', 'ciao', 23.2, 2),
+    (4, 'Magazzino Napoli', 1,1, 'ciao', 'ciao', 23.2, 2),
+    (1, 'Magazzino Bologna', 1,1, 'ciao', 'ciao', 23.2, 2),
+    (2, 'Magazzino Bologna', 1,1, 'ciao', 'ciao', 23.2, 2);
     
 
 
@@ -300,9 +302,9 @@ INSERT INTO Ordine_Magazzino (idOrdine, nomeMagazzino, idFumetto, nome, descrizi
 
 -- Inserimento nella tabella CarrelloCliente
 INSERT INTO CarrelloCliente (id, idFumetto, quantita) VALUES 
-    ("cliente@example.com", 1, 5),
-    ("cliente@example.com", 2, 3),
-    ("cliente@example.com", 3, 3);
+    ("generale@example.com", 1, 5),
+    ("generale@example.com", 2, 3),
+    ("generale@example.com", 3, 3);
 
 
 -- Inserimento nella tabella Utente

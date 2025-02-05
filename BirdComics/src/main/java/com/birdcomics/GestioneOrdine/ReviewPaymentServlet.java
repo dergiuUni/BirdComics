@@ -8,9 +8,12 @@ package com.birdcomics.GestioneOrdine;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -64,8 +67,23 @@ public class ReviewPaymentServlet extends HttpServlet {
 			ItemList itemList = transaction.getItemList();
 			List<Item> items = itemList.getItems();
 			
+			String dataNascitaStr = LocalDate.now().toString();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			sdf.setTimeZone(TimeZone.getTimeZone("UTC")); // Imposta il fuso orario a UTC per evitare offset
+			java.util.Date parsedDate;
+			java.sql.Date dataNascita = null;
+			try {
+				parsedDate = sdf.parse(dataNascitaStr);
+				dataNascita = new java.sql.Date(parsedDate.getTime());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+			
 			FatturaBean f = new FatturaBean(22, u.getNome(), u.getCognome(), u.getNumeroTelefono(), u.getIndirizzo().getNomeCitta(), u.getIndirizzo().getVia(), u.getIndirizzo().getNumeroCivico(), u.getIndirizzo().getCap() );
-			OrderBean o = new OrderBean(u.getEmail(), paymentId, "Non Spedito", java.sql.Date.valueOf(LocalDate.now()));
+			OrderBean o = new OrderBean(u.getEmail(), paymentId, "Non Spedito", dataNascita);
 			// imposto i dettagli dell'ordine
 			o.setIdFattura(f);
 			

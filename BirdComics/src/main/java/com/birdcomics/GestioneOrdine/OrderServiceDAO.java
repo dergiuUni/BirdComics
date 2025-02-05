@@ -16,6 +16,7 @@ import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
 //import com.birdcomics.GestioneProfili.Cliente.CartServiceDAO;
 import com.birdcomics.GestioneMagazzino.MagazzinoBean;
 import com.birdcomics.GestioneMagazzino.MagazzinoDao;
+import com.birdcomics.GestioneMagazzino.ScaffaleDao;
 import com.birdcomics.GestioneMagazzino.ScaffaliBean;
 
 
@@ -56,42 +57,44 @@ public class OrderServiceDAO {
                 order.getFumetti().forEach((key, value) -> {
                 	try {
                 		PreparedStatement psscaf;
-                		PreparedStatement psFumetto = con.prepareStatement("select Magazzino.nome, Scaffali.id, Scaffali.quantita from Magazzino, Scaffali, MagazzinoScaffali where Magazzino.nome = MagazzinoScaffali.idMagazzino and MagazzinoScaffali.idScaffale = Scaffali.id and Scaffali.idFumetto = ? order by Scaffali.quantita DESC");
-                        psFumetto.setInt(1, key.getId());
+                		PreparedStatement psFumetto, psFumetto2 = con.prepareStatement("select Magazzino.nome, Scaffali.id, Scaffali.quantita from Magazzino, Scaffali, MagazzinoScaffali where Magazzino.nome = MagazzinoScaffali.idMagazzino and MagazzinoScaffali.idScaffale = Scaffali.id and Scaffali.idFumetto = ? order by Scaffali.quantita DESC");
+                        psFumetto2.setInt(1, key.getId());
 
-                        ResultSet rsFumetto = psFumetto.executeQuery();
+                        ResultSet rsFumetto = psFumetto2.executeQuery();
                         
-                    	//rsFumetto.getString("Magazzino.nome");
-                        //rsFumetto.getInt("Scaffali.id");
-                    	int quantita = 0;
+                    	int quantita = 0, i;
                     	
                     	while(quantita < value && rsFumetto.next()) {
-                			psFumetto = con.prepareStatement("insert into Ordine_Magazzino(idOrdine, nomeMagazzino, idFumetto, nome, descrizione, prezzo, quantità) values(?,?,?,?,?,?,?)");
+                			ScaffaliBean s = new ScaffaliBean();
+                			s.setId(rsFumetto.getInt("Scaffali.id"));
+                			System.out.println("scaffale id " + rsFumetto.getInt("Scaffali.id"));
+                			ScaffaleDao sc = new ScaffaleDao();
+    		
+                    		psFumetto = con.prepareStatement("insert into Ordine_Magazzino(idOrdine, nomeMagazzino, idFumetto, nome, descrizione, prezzo, quantita, idScaffale) values(?,?,?,?,?,?,?,?)");
                             psFumetto.setInt(1, order.getId());
                             psFumetto.setString(2, rsFumetto.getString("Magazzino.nome"));
                             psFumetto.setInt(3, key.getId());
                             psFumetto.setString(4, key.getName());
                             psFumetto.setString(5, key.getDescription());
                             psFumetto.setFloat(6, key.getPrice());
+                            psFumetto.setInt(8, s.getId());
                             
-                            if((value-quantita) == rsFumetto.getInt("Scaffali.quantita") || (value-quantita) > rsFumetto.getInt("Scaffali.quantita")) {
-                            	psFumetto.setInt(7, value);
-                            	quantita += value;
-                            	// update scaffale
-                            	psscaf = con.prepareStatement("UPDATE Scaffali SET quantita = 0 WHERE id = ?");
-                            	psscaf.setInt(1, rsFumetto.getInt("Scaffali.id"));
-                            	psscaf.executeUpdate();
+                            int quantitaScaffale = rsFumetto.getInt("Scaffali.quantita");
+                            
+                            if((value-quantita) == quantitaScaffale || (value-quantita) > quantitaScaffale) {
+                            	psFumetto.setInt(7, quantitaScaffale);
+                            	psFumetto.executeUpdate();
+                            	quantita += quantitaScaffale;
+                            	s.setQuantitaOccupata(0);
+                            	sc.modifyQuantityFumetto(s);
+                            	quantitaScaffale = 0;
                             }
-                            
-                            if ((value-quantita) < rsFumetto.getInt("Scaffali.quantita")) {
-                            	
-                            	psFumetto.setInt(1, (value - quantita));
-                                	// update scaffale rsFumetto.getInt("Scaffali.quantita") - (value - quantita)
+                            if ((value-quantita) < quantitaScaffale) {
+                            	psFumetto.setInt(7, (value - quantita));
+                            	psFumetto.executeUpdate();
+                            	s.setQuantitaOccupata(quantitaScaffale - (value - quantita));
                             	quantita = value;
-                            	psscaf = con.prepareStatement("UPDATE Scaffali SET quantita = ? WHERE id = ?");
-                            	psscaf.setInt(1, rsFumetto.getInt("Scaffali.quantita") - (value - quantita));
-                            	psscaf.setInt(2, rsFumetto.getInt("Scaffali.id"));
-                            	psscaf.executeUpdate();
+                            	sc.modifyQuantityFumetto(s);
                             }
                     	}
                         	  
