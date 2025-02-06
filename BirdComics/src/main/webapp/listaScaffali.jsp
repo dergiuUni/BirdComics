@@ -51,14 +51,32 @@
             <td><%= scaffali.getQuantitaOccupata()%></td>
             <td><%= scaffali.getQuantitaMassima() %></td>
             <td style="text-align: center">
-                <form action="CancellaScaffale" method="post">
-                    <input type="hidden" name="warehouseId" value="<%= scaffali.getId() %>">
-                    <button type="submit" class="btn btn-danger">Cancella</button>
-                </form>
-                <form action="SpostaFumetto" method="post">
-                    <input type="hidden" name="warehouseId" value="<%= scaffali.getFumetto().getId() %>">
-                    <button type="submit" class="btn btn-danger">Cancella</button>
-                </form>
+
+                <% 
+			        if (scaffali.getQuantitaOccupata() == 0) {
+			    %>
+	                <form action="AggiungiFumetto" method="post">
+	                    <input type="hidden" name="warehouseId" value="<%= scaffali.getFumetto().getId() %>">
+	                    <button type="submit" class="btn btn-danger">Aggiungi</button>
+	                </form>
+                
+                <% 
+			        }else{
+			    %>
+			    
+	 	             <form action="CancellaScaffale" method="post">
+	                    <input type="hidden" name="warehouseId" value="<%= scaffali.getId() %>">
+	                    <button type="submit" class="btn btn-danger">Cancella</button>
+	                </form>
+	                <form action="SpostaFumetto" method="post">
+	                    <input type="hidden" name="warehouseId" value="<%= scaffali.getFumetto().getId() %>">
+	                    <button type="submit" class="btn btn-danger">Sposta</button>
+	                </form>
+			    
+			    <% 
+			        }
+			    %>
+                
             </td>
         </tr>
     <% 

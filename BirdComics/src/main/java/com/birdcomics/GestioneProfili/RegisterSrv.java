@@ -49,28 +49,70 @@ public class RegisterSrv extends HttpServlet {
 			parsedDate = sdf.parse(dataNascitaStr);
 			dataNascita = new java.sql.Date(parsedDate.getTime());
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
-		//System.out.println("Data ricevuta: " + dataNascitaStr);
-		//System.out.println("Data convertita: " + dataNascita);
-		
-		
+				
 		String status = "";
 		if (password != null && password.equals(confirmPassword)) {
 
 			UserServiceDAO dao = new UserServiceDAO();
 
-			try {
-				ArrayList<RuoloBean> ruoli = new ArrayList<RuoloBean>();
-				ruoli.add(RuoloBean.Cliente);
-				status = dao.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			HttpServletRequest httpRequest = (HttpServletRequest) request;
+			String username = (String) httpRequest.getSession().getAttribute("username");
+			
+			if(username == null || username.equals("null")) {
+				try {
+					ArrayList<RuoloBean> ruoli = new ArrayList<RuoloBean>();
+					ruoli.add(RuoloBean.Cliente);
+					status = dao.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}else {
+				UserBean at = new UserBean();
+				
+				try {
+					ArrayList<RuoloBean> ruoli = new ArrayList<RuoloBean>();
+					at = dao.getUserDetails(username);
+
+					
+					if(at.isRuolo(RuoloBean.GestoreGenerale)) {
+						ruoli.add(RuoloBean.GestoreMagazzino);
+						status = dao.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
+					}
+					if(at.isRuolo(RuoloBean.GestoreMagazzino)) {
+						ruoli.add(RuoloBean.RisorseUmane);
+						status = dao.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, at.getMagazzino().getNome());
+					}
+					if(at.isRuolo(RuoloBean.RisorseUmane)) {
+				        String[] ruoliSelezionati = request.getParameterValues("ruoli");
+				        if (ruoliSelezionati != null) {
+				            for (String ruolo : ruoliSelezionati) {
+				            	System.out.println(RuoloBean.fromString(ruolo));
+				                ruoli.add(RuoloBean.fromString(ruolo));
+				            }
+				            status = dao.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, at.getMagazzino().getNome());
+				        } else {
+				            System.out.println("Nessun ruolo selezionato.");
+			        }
+				        
+				        
+				        
+				        
+						//dobbiamo vedere jsp come passare le coseee piu ruoli
+						//status = dao.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, at.getMagazzino().getNome());
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
+			
+
 		} else {
 			status = "Password not matching!";
 		}

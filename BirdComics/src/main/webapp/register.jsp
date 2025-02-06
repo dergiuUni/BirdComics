@@ -79,6 +79,38 @@
                         <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" required>
                     </div>
                 </div>
+                
+                
+                
+                
+				<% List<String> userTypesS = (List<String>) session.getAttribute("usertype");
+	        		if (userTypesS != null && !userTypesS.isEmpty() && userTypesS.contains(RuoloBean.RisorseUmane.toString())) {
+	        			
+				%>
+                
+	                <div class="row">
+	                    <div class="col-md-6 form-group">
+	                        <label for="RuoloDipendente">Ruoli</label> 
+                            <select name="ruoli" id="ruoli" class="form-control" multiple required>
+					            <option value="Assistenza">Assistenza</option>
+					            <option value="Finanza">Finanza</option>
+					            <option value="GestoreCatalogo">Gestore Catalogo</option>
+					            <option value="Magazziniere">Magazziniere</option>
+					            <option value="Spedizioniere">Spedizioniere</option>
+					        </select>
+	                    </div>
+	                    
+	                </div>
+                
+                
+                <% 
+	        		}
+				%>
+                
+                
+                
+                
+                
 
                 <div class="row text-center">
                     <div class="col-md-6" style="margin-bottom: 2px;">

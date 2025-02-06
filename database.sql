@@ -162,7 +162,7 @@ CREATE TABLE CarrelloCliente(
 CREATE TABLE Utente_Ruolo (
     idRuolo ENUM('GestoreGenerale', 'GestoreMagazzino', 'RisorseUmane', 'GestoreCatalogo', 'Magazziniere', 'Spedizioniere', 'Assistenza', 'Finanza', 'Cliente') NOT NULL default  'Cliente',
     emailUtente VARCHAR(45) NOT NULL,
-    nomeMagazzino varchar(45) NOT NULL,
+    nomeMagazzino varchar(45) default null,
 
     PRIMARY KEY (idRuolo, emailUtente),
     FOREIGN KEY (emailUtente) REFERENCES Utente (email) ON DELETE CASCADE,
@@ -302,9 +302,9 @@ INSERT INTO Ordine_Magazzino (idOrdine, nomeMagazzino, idFumetto, idScaffale, no
 
 -- Inserimento nella tabella CarrelloCliente
 INSERT INTO CarrelloCliente (id, idFumetto, quantita) VALUES 
-    ("generale@example.com", 1, 5),
-    ("generale@example.com", 2, 3),
-    ("generale@example.com", 3, 3);
+    ("cliente@example.com", 1, 5),
+    ("cliente@example.com", 2, 3),
+    ("cliente@example.com", 3, 3);
 
 
 -- Inserimento nella tabella Utente

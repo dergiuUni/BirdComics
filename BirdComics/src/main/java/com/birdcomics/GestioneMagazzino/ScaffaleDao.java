@@ -226,8 +226,7 @@ public class ScaffaleDao {
 
 			rs = ps.executeQuery();
 
-			if (rs.next()) {
-				ProductBean pr = new ProductBean();
+			while (rs.next()) {
 				ProductBean fumetto = new ProductBean();
 				ProductServiceDAO ser = new ProductServiceDAO();
 				fumetto = ser.getProductsByID(String.valueOf(rs.getInt("idFumetto")));

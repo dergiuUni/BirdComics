@@ -35,7 +35,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="">AggiungiMagazzino</a></li>
                                 <li><a href="./ListaMagazziniServlet">Lista Magazzini</a></li>
-                                <li><a href="">AggiungiDirettoreMagazzino</a></li>
+                                <li><a href="register.jsp">AggiungiDirettoreMagazzino</a></li>
                                 <li><a href="./GestioneUtentiServlet">Lista Direttori Magazzino</a></li>
                             </ul>
                         </li>
@@ -48,7 +48,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="">AggiungiScaffale</a></li>
                                 <li><a href="">ListaScaffale</a></li>
-                                <li><a href="">AggiungiHr</a></li>
+                                <li><a href="register.jsp">AggiungiHr</a></li>
                                 <li><a href="./GestioneUtentiServlet">ListaHr</a></li>
                             </ul>
                         </li>
@@ -59,7 +59,7 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestione Dipendenti<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="">Aggiungi Dipendente</a></li>
+                                <li><a href="register.jsp">Aggiungi Dipendente</a></li>
                                 <li><a href="./GestioneUtentiServlet">Lista Dipendenti</a></li>
                             </ul>
                         </li>
@@ -81,7 +81,7 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Magazziniere <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="">ListaScaffali</a></li>
+                                <li><a href="GestioneMagazziniere">ListaScaffali</a></li>
                             </ul>
                         </li>
                     <%  

@@ -11,6 +11,7 @@ import java.util.List;
 import com.birdcomics.DatabaseImplementator.DBUtil;
 import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
 import com.birdcomics.GestioneIndirizzo.IndirizzoDao;
+import com.birdcomics.GestioneMagazzino.MagazzinoBean;
 
 
 public class UserServiceDAO {
@@ -70,6 +71,77 @@ public class UserServiceDAO {
 					ps = con.prepareStatement("INSERT INTO Utente_Ruolo (idRuolo, emailUtente) VALUES (?, ?)");
 					ps.setString(1, ruoloBean.toString());
 					ps.setString(2, user.getEmail());
+					ps.executeUpdate();
+				}
+	        	status = "User Registered Successfully!";
+	        }
+
+	    } catch (SQLException e) {
+	        status = "Error: " + e.getMessage();
+	        e.printStackTrace();
+	    } finally {
+	        DBUtil.closeConnection(ps);
+	    }
+
+	    return status;
+	}
+	
+	
+	public String registerUser(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, String nomeCitta, String via, int numeroCivico, String cap, ArrayList<RuoloBean> ruolo, String magazzino) throws SQLException {
+		IndirizzoBean indirizzo = new IndirizzoBean(nomeCitta, via, numeroCivico, cap);
+		UserBean user = new UserBean(email, password, nome, cognome, numeroTelefono, dataNascita, indirizzo, ruolo);
+
+	    String status = "User Registration Failed!";
+
+	    boolean isRegtd = isRegistered(user.getEmail());
+
+	    if (isRegtd) {
+	        status = "Email Id Already Registered!";
+	        return status;
+	    }
+
+	    Connection con = DBUtil.getConnection();
+	    PreparedStatement ps = null;
+
+	    if (con != null) {
+	        System.out.println("Connected Successfully!");
+	    }
+
+	    try {
+	        // Modifica della query per includere il campo usertype
+	    	IndirizzoDao in = new IndirizzoDao(con);
+	    	if(!in.ifExists(nomeCitta, via, numeroCivico, cap)) {
+	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cap) VALUES (?, ?, ?, ?)");
+	    		ps.setString(1, indirizzo.getNomeCitta());
+		        ps.setString(2, indirizzo.getVia());
+		        ps.setInt(3, indirizzo.getNumeroCivico());
+		        ps.setString(4, indirizzo.getCap());
+		        ps.executeUpdate();
+	    	}
+	    	
+	        ps = con.prepareStatement("INSERT INTO Utente (email, pass, nome, cognome, telefono, nomeCitta, via, numeroCivico, cap, dataNascita) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+	        ps.setString(1, user.getEmail());
+	        ps.setString(2, user.getPassword());
+	        ps.setString(3, user.getNome());
+	        ps.setString(4, user.getCognome());
+	        ps.setString(5, user.getNumeroTelefono());
+	        ps.setString(6, indirizzo.getNomeCitta());
+	        ps.setString(7, indirizzo.getVia());
+	        ps.setInt(8, indirizzo.getNumeroCivico());
+	        ps.setString(9, indirizzo.getCap());
+	        ps.setDate(10, (Date) user.getDataNascita());
+
+	        System.out.println();
+	        int k = ps.executeUpdate();
+
+	        if (k > 0) {
+	            
+	        	for (RuoloBean ruoloBean : ruolo) {
+					ps = con.prepareStatement("INSERT INTO Utente_Ruolo (idRuolo, emailUtente, nomeMagazzino) VALUES (?, ?, ?)");
+					ps.setString(1, ruoloBean.toString());
+					ps.setString(2, user.getEmail());
+					ps.setString(3, magazzino);
 					ps.executeUpdate();
 				}
 	        	status = "User Registered Successfully!";
@@ -168,8 +240,10 @@ public class UserServiceDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cap"));
-				user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in, null );
-				
+				MagazzinoBean m = new MagazzinoBean();
+				m.setNome(rs.getString("nomeMagazzino"));
+				user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in, null, m);
+				ru.add(RuoloBean.fromString(rs.getString("idRuolo")));
 				
 				while (rs.next()) {
 					ru.add(RuoloBean.fromString(rs.getString("idRuolo")));

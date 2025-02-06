@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
+import com.birdcomics.GestioneMagazzino.MagazzinoBean;
 
 @SuppressWarnings("serial")
 public class UserBean implements Serializable {
@@ -14,7 +15,10 @@ public class UserBean implements Serializable {
     protected java.sql.Date dataNascita;
 	protected IndirizzoBean indirizzo;
 	protected ArrayList<RuoloBean> ruolo = new ArrayList<RuoloBean>();
+	protected MagazzinoBean magazzino;
 	
+
+
 
 
 	public UserBean() {
@@ -30,6 +34,19 @@ public class UserBean implements Serializable {
 		this.dataNascita = dataNascita;
 		this.indirizzo = indirizzo;
 		this.ruolo = ruolo;
+	}
+	
+	public UserBean(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, IndirizzoBean indirizzo, ArrayList<RuoloBean> ruolo, MagazzinoBean magazzino) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.numeroTelefono = numeroTelefono;
+		this.dataNascita = dataNascita;
+		this.indirizzo = indirizzo;
+		this.ruolo = ruolo;
+		this.magazzino = magazzino;
 	}
 
 	public  String getEmail() {
@@ -87,5 +104,13 @@ public class UserBean implements Serializable {
 			}
 		}
 		return false;
+	}
+	
+	public MagazzinoBean getMagazzino() {
+		return magazzino;
+	}
+
+	public  void setMagazzino(MagazzinoBean magazzino) {
+		this.magazzino = magazzino;
 	}
 }
