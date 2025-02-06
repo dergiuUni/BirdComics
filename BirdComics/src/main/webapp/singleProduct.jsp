@@ -1,4 +1,4 @@
-<%@page import="com.birdcomics.GestioneCatalogo.ProductBean"%>
+<%@page import="com.birdcomics.Bean.ProductBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="com.birdcomics.*,java.util.*,javax.servlet.ServletOutputStream,java.io.*"%>

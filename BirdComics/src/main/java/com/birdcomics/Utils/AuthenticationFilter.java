@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneProfili;
+package com.birdcomics.Utils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

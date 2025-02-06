@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneCatalogo;
+package com.birdcomics.Utils;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;

@@ -315,7 +315,7 @@ INSERT INTO Utente_Ruolo (idRuolo, emailUtente, nomeMagazzino) VALUES
     ('Cliente', 'cliente@example.com', 'Magazzino Napoli'),
     ('GestoreGenerale', 'generale@BirdComics.com', 'Magazzino Napoli'),
     ('GestoreMagazzino', 'magazzino@BirdComics.com', 'Magazzino Napoli'),
-    ('RisorseUmane', 'hr@BirdComics.com', 'Magazzino Napoli'),
+    ('RisorseUmane', 'hr@BirdComics.com', 'Magazzino Bologna'),
     ('GestoreCatalogo', 'catalogo@BirdComics.com', 'Magazzino Napoli'),
     ('Magazziniere', 'magazziniere@BirdComics.com', 'Magazzino Napoli'),
     ('Spedizioniere', 'spedizioniere@BirdComics.com','Magazzino Napoli' ),

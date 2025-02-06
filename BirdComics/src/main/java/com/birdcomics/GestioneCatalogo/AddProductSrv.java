@@ -17,6 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.birdcomics.Bean.GenereBean;
+import com.birdcomics.Dao.GenereDAO;
+import com.birdcomics.Dao.ProductServiceDAO;
+
 
 /**
  * Servlet implementation class AddProductSrv

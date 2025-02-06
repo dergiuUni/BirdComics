@@ -1,5 +1,6 @@
+<%@page import="com.birdcomics.Bean.UserBean"%>
 <%@page import="java.util.*"%>
-<%@page import="com.birdcomics.GestioneProfili.*"%>
+<%@page import="com.birdcomics.*"%>
 <!DOCTYPE html>
 <html>
 <head>

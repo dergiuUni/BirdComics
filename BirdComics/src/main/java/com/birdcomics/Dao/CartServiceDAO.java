@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneCarrello;
+package com.birdcomics.Dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.birdcomics.DatabaseImplementator.DBUtil;
-import com.birdcomics.GestioneCatalogo.ProductBean;
-import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
+import com.birdcomics.Bean.CartBean;
+import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Utils.DBUtil;
 
 public class CartServiceDAO {
 

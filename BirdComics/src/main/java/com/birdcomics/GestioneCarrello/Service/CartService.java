@@ -1,7 +1,8 @@
 package com.birdcomics.GestioneCarrello.Service;
 
-import com.birdcomics.GestioneCarrello.CartBean;
-import com.birdcomics.GestioneCatalogo.ProductBean;
+import com.birdcomics.Bean.CartBean;
+import com.birdcomics.Bean.ProductBean;
+
 import java.sql.SQLException;
 import java.util.List;
 

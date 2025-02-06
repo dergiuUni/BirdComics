@@ -1,8 +1,6 @@
-package com.birdcomics.GestioneMagazzino;
+package com.birdcomics.Bean;
 
 import java.util.ArrayList;
-
-import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
 
 public class MagazzinoBean {
 	private String nome;

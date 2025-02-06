@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneMagazzino;
+package com.birdcomics.Dao;
 
 import java.beans.Statement;
 import java.sql.Connection;
@@ -7,13 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.birdcomics.DatabaseImplementator.DBUtil;
-import com.birdcomics.GestioneCatalogo.ProductBean;
-import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
-import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
-import com.birdcomics.GestioneIndirizzo.IndirizzoDao;
-import com.birdcomics.GestioneProfili.RuoloBean;
-import com.birdcomics.GestioneProfili.UserBean;
+import com.birdcomics.Bean.IndirizzoBean;
+import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Bean.RuoloBean;
+import com.birdcomics.Bean.ScaffaliBean;
+import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Utils.DBUtil;
 
 public class ScaffaleDao {
 	public ScaffaliBean addScaffale(int quantitaMassima) throws SQLException {

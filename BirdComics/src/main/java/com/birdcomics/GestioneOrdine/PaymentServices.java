@@ -8,7 +8,7 @@ package com.birdcomics.GestioneOrdine;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.birdcomics.GestioneCatalogo.ProductBean;
+import com.birdcomics.Bean.ProductBean;
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Details;
 import com.paypal.api.payments.Item;

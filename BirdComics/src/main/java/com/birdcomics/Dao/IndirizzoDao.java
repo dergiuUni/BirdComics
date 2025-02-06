@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneIndirizzo;
+package com.birdcomics.Dao;
 
 import java.beans.Statement;
 import java.sql.Connection;
@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.birdcomics.Bean.IndirizzoBean;
 
 public class IndirizzoDao {
 	 private Connection connection;

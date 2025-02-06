@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
+import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Dao.ProductServiceDAO;
 import com.google.gson.Gson;
 
 @WebServlet("/ProductListServlet")

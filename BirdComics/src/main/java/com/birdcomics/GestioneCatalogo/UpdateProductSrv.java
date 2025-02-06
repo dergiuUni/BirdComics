@@ -17,6 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.birdcomics.Bean.GenereBean;
+import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Dao.GenereDAO;
+import com.birdcomics.Dao.ProductServiceDAO;
+
 @WebServlet("/UpdateProductSrv")
 public class UpdateProductSrv extends HttpServlet {
 	private static final long serialVersionUID = 1L;

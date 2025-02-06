@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.birdcomics.Bean.RuoloBean;
+import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Dao.UserServiceDAO;
+
 @WebServlet("/LoginSrv")
 public class LoginSrv extends HttpServlet {
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package com.birdcomics.DatabaseImplementator;
+package com.birdcomics.Utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

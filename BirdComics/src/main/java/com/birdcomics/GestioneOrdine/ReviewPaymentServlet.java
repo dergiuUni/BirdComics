@@ -21,11 +21,14 @@ import javax.servlet.http.*;
 
 import org.apache.catalina.User;
 
-import com.birdcomics.GestioneCarrello.CartServiceDAO;
-import com.birdcomics.GestioneCatalogo.ProductBean;
-import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
-import com.birdcomics.GestioneProfili.UserBean;
-import com.birdcomics.GestioneProfili.UserServiceDAO;
+import com.birdcomics.Bean.FatturaBean;
+import com.birdcomics.Bean.OrderBean;
+import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Dao.CartServiceDAO;
+import com.birdcomics.Dao.OrderServiceDAO;
+import com.birdcomics.Dao.ProductServiceDAO;
+import com.birdcomics.Dao.UserServiceDAO;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.PayPalRESTException;
 
@@ -110,7 +113,7 @@ public class ReviewPaymentServlet extends HttpServlet {
 		} catch (PayPalRESTException | SQLException ex) {
 			request.setAttribute("errorMessage", ex.getMessage());
 			ex.printStackTrace();
-			request.getRequestDispatcher("error.jsp").forward(request, response);
+			request.getRequestDispatcher("error2.jsp").forward(request, response);
 		} 	
 		
 	}

@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneMagazzino;
+package com.birdcomics.Dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.birdcomics.DatabaseImplementator.DBUtil;
-import com.birdcomics.GestioneCatalogo.ProductBean;
-import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
-import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
-import com.birdcomics.GestioneIndirizzo.IndirizzoDao;
+import com.birdcomics.Bean.IndirizzoBean;
+import com.birdcomics.Bean.MagazzinoBean;
+import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Bean.ScaffaliBean;
+import com.birdcomics.Utils.DBUtil;
 
 public class MagazzinoDao {
 	public ScaffaliBean addMagazzino(MagazzinoBean magazzino) throws SQLException {
@@ -98,7 +98,7 @@ public class MagazzinoDao {
 
 			rs = ps.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				ScaffaleDao sc = new ScaffaleDao();
 				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cap"));
 				MagazzinoBean mag = new MagazzinoBean(rs.getString("nome"), in, sc.getScaffaleMagazzino(rs.getString("nome")));

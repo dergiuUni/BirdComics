@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Dao.UserServiceDAO;
+
 
 @WebServlet("/UserProfileServlet")
 public class UserProfileServlet extends HttpServlet {

@@ -1,6 +1,4 @@
-package com.birdcomics.GestioneMagazzino;
-
-import com.birdcomics.GestioneCatalogo.ProductBean;
+package com.birdcomics.Bean;
 
 public class ScaffaliBean {
 	private int id;

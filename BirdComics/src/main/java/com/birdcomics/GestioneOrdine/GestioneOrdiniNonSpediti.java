@@ -11,9 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.birdcomics.GestioneCatalogo.ProductBean;
-import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
-import com.birdcomics.GestioneOrdine.OrderServiceDAO;
+import com.birdcomics.Bean.OrderBean;
+import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Dao.OrderServiceDAO;
+import com.birdcomics.Dao.ProductServiceDAO;
 
 @WebServlet("/GestioneOrdiniNonSpediti")
 public class GestioneOrdiniNonSpediti extends HttpServlet {

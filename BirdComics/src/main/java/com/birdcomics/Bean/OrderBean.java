@@ -1,10 +1,8 @@
-package com.birdcomics.GestioneOrdine;
+package com.birdcomics.Bean;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
-
-import com.birdcomics.GestioneCatalogo.ProductBean;
 
 
 @SuppressWarnings("serial")

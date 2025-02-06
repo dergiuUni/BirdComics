@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneCatalogo;
+package com.birdcomics.Dao;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -9,7 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.birdcomics.DatabaseImplementator.DBUtil;
+import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Utils.DBUtil;
 
 public class ProductServiceDAO {
 	  

@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneCarrello;
+package com.birdcomics.Bean;
 
 import java.io.Serializable;
 

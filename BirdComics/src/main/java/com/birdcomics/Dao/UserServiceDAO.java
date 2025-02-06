@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneProfili;
+package com.birdcomics.Dao;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -8,10 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.birdcomics.DatabaseImplementator.DBUtil;
-import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
-import com.birdcomics.GestioneIndirizzo.IndirizzoDao;
-import com.birdcomics.GestioneMagazzino.MagazzinoBean;
+import com.birdcomics.Bean.IndirizzoBean;
+import com.birdcomics.Bean.MagazzinoBean;
+import com.birdcomics.Bean.RuoloBean;
+import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Utils.DBUtil;
 
 
 public class UserServiceDAO {

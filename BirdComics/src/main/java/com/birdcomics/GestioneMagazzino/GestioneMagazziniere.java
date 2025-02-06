@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.birdcomics.GestioneCatalogo.ProductBean;
-import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
-import com.birdcomics.GestioneOrdine.OrderServiceDAO;
-import com.birdcomics.GestioneProfili.UserBean;
-import com.birdcomics.GestioneProfili.UserServiceDAO;
+import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Bean.ScaffaliBean;
+import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Dao.OrderServiceDAO;
+import com.birdcomics.Dao.ProductServiceDAO;
+import com.birdcomics.Dao.ScaffaleDao;
+import com.birdcomics.Dao.UserServiceDAO;
 
 @WebServlet("/GestioneMagazziniere")
 public class GestioneMagazziniere extends HttpServlet {

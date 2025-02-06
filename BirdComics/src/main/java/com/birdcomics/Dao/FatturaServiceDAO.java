@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneOrdine;
+package com.birdcomics.Dao;
 
 
 import java.sql.Connection;
@@ -9,11 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.birdcomics.DatabaseImplementator.DBUtil;
-import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
-//import com.birdcomics.GestioneProfili.Cliente.CartBean;
-//import com.birdcomics.GestioneProfili.Cliente.CartServiceDAO;
-import com.birdcomics.GestioneMagazzino.ScaffaliBean;
+import com.birdcomics.Bean.FatturaBean;
+import com.birdcomics.Bean.ScaffaliBean;
+import com.birdcomics.Utils.DBUtil;
 
 
 public class FatturaServiceDAO {

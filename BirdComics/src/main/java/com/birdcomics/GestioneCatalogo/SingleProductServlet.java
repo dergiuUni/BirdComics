@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Dao.ProductServiceDAO;
+
 
 @WebServlet("/SingleProductServlet")
 public class SingleProductServlet extends HttpServlet {

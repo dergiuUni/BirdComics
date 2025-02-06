@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneProfili;
+package com.birdcomics.Bean;
 
 public enum RuoloBean {
     GestoreGenerale{

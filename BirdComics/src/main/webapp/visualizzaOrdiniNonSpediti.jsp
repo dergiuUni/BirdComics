@@ -1,6 +1,5 @@
-<%@page import="com.birdcomics.GestioneOrdine.OrderBean"%>
-<%@page import="com.birdcomics.GestioneOrdine.OrderServiceDAO"%>
-<%@page import="com.birdcomics.GestioneCatalogo.ProductBean"%>
+<%@page import="com.birdcomics.Bean.OrderBean"%>
+<%@page import="com.birdcomics.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page

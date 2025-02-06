@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneOrdine;
+package com.birdcomics.Bean;
 
 public class FatturaBean {
 	private int id, iva;

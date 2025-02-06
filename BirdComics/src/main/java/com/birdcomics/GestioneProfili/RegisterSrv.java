@@ -15,7 +15,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
+import com.birdcomics.Bean.IndirizzoBean;
+import com.birdcomics.Bean.RuoloBean;
+import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Dao.UserServiceDAO;
 
 
 /**

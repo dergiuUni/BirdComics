@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.birdcomics.Bean.MagazzinoBean;
+import com.birdcomics.Dao.MagazzinoDao;
+
 /**
  * Servlet per ottenere la lista dei magazzini e passarla alla JSP
  */

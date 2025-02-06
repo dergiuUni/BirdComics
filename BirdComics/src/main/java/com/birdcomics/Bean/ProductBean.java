@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneCatalogo;
+package com.birdcomics.Bean;
 
 import java.io.Serializable;
 

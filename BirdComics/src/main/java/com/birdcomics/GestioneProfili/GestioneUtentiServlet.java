@@ -11,6 +11,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.birdcomics.Bean.RuoloBean;
+import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Dao.UserServiceDAO;
 import com.birdcomics.GestioneProfili.*;
 import javax.servlet.http.HttpSession;
 
@@ -39,7 +43,16 @@ public class GestioneUtentiServlet extends HttpServlet {
 		List<RuoloBean> ruoloUtenti = new ArrayList<>();
 		List<UserBean> utenti = new ArrayList<>();
 		List<String> userTypes = (List<String>) session.getAttribute("usertype"); 
+		
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		String username = (String) httpRequest.getSession().getAttribute("username");
+		
+		UserBean u = new UserBean();
+		
+		
+		
 		try {
+			u = uDao.getUserDetails(username);
 
 			if(userTypes.contains(RuoloBean.GestoreGenerale.toString())) {
 				ruoloUtenti.add(RuoloBean.GestoreMagazzino);
@@ -47,7 +60,7 @@ public class GestioneUtentiServlet extends HttpServlet {
 			}
 			else if(userTypes.contains(RuoloBean.GestoreMagazzino.toString())) {
 				ruoloUtenti.add(RuoloBean.RisorseUmane);
-				utenti =  uDao.getUsersByRole(ruoloUtenti, null);
+				utenti =  uDao.getUsersByRole(ruoloUtenti, u.getMagazzino().getNome());
 			}
 			else if(userTypes.contains(RuoloBean.RisorseUmane.toString())) {
 				ruoloUtenti.add(RuoloBean.Assistenza);
@@ -55,7 +68,7 @@ public class GestioneUtentiServlet extends HttpServlet {
 				ruoloUtenti.add(RuoloBean.GestoreCatalogo);
 				ruoloUtenti.add(RuoloBean.Magazziniere);
 				ruoloUtenti.add(RuoloBean.Spedizioniere);
-				utenti =  uDao.getUsersByRole(ruoloUtenti, null); 	
+				utenti =  uDao.getUsersByRole(ruoloUtenti, u.getMagazzino().getNome()); 	
 			}
 		} catch (SQLException e) {
 			request.setAttribute("message", "Errore nel recupero degli utenti.");

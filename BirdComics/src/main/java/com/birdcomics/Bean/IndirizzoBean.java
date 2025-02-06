@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneIndirizzo;
+package com.birdcomics.Bean;
 
 public class IndirizzoBean {
     private String nomeCitta;

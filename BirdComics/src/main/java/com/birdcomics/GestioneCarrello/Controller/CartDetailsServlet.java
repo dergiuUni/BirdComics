@@ -5,10 +5,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.birdcomics.GestioneCarrello.CartBean;
+import com.birdcomics.Bean.CartBean;
+import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.GestioneCarrello.Service.CartService;
 import com.birdcomics.GestioneCarrello.Service.CartServiceImpl;
-import com.birdcomics.GestioneCatalogo.ProductBean;
 
 import javax.servlet.ServletException;
 import java.io.IOException;

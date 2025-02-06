@@ -14,12 +14,12 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import com.birdcomics.GestioneCarrello.CartBean;
-import com.birdcomics.GestioneCarrello.CartServiceDAO;
-import com.birdcomics.GestioneCatalogo.ProductBean;
-import com.birdcomics.GestioneCatalogo.ProductServiceDAO;
-import com.birdcomics.GestioneProfili.UserBean;
-import com.birdcomics.GestioneProfili.UserServiceDAO;
+import com.birdcomics.Bean.CartBean;
+import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Dao.CartServiceDAO;
+import com.birdcomics.Dao.ProductServiceDAO;
+import com.birdcomics.Dao.UserServiceDAO;
 import com.paypal.api.payments.Address;
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Details;

@@ -1,12 +1,9 @@
-package com.birdcomics.GestioneProfili;
+package com.birdcomics.Bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import com.birdcomics.GestioneIndirizzo.IndirizzoBean;
-import com.birdcomics.GestioneMagazzino.MagazzinoBean;
 
 @SuppressWarnings("serial")
 public class UserBean implements Serializable {
