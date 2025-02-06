@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneMagazzino;
+package com.birdcomics.GestioneMagazzino.Controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,32 +18,48 @@ import com.birdcomics.Dao.OrderServiceDAO;
 import com.birdcomics.Dao.ProductServiceDAO;
 import com.birdcomics.Dao.ScaffaleDao;
 import com.birdcomics.Dao.UserServiceDAO;
+import com.birdcomics.GestioneMagazzino.Service.MagazzinoService;
+import com.birdcomics.GestioneMagazzino.Service.MagazzinoServiceImpl;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.birdcomics.Bean.ScaffaliBean;
+import com.birdcomics.Bean.UserBean;
+
 
 @WebServlet("/GestioneMagazziniere")
 public class GestioneMagazziniere extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private MagazzinoService magazzinoService;
+
+    public GestioneMagazziniere() {
+        super();
+        this.magazzinoService = new MagazzinoServiceImpl();
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ScaffaleDao prodDao = new ScaffaleDao();
-        List<ScaffaliBean> products = new ArrayList<>();
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        String username = (String) httpRequest.getSession().getAttribute("username");
+        String username = (String) request.getSession().getAttribute("username");
         String message = "";
 
         try {
-        	UserBean u = new UserBean();
-        	u.setEmail(username);
-        	UserServiceDAO us = new UserServiceDAO();
-        	u = us.getUserDetails(u.getEmail());
-        	
-            products = prodDao.getScaffaleMagazzino(u.getMagazzino().getNome());
+            UserBean user = new UserBean();
+            user.setEmail(username);
+            List<ScaffaliBean> products = magazzinoService.getScaffaleMagazzino(user);
+
             message = "Showing Results ";
-            
+
             if (products.isEmpty()) {
                 message = "No items found for the search ";        
             }
-
 
             request.setAttribute("message", message);
             request.setAttribute("listaScaffali", products);
@@ -60,5 +76,4 @@ public class GestioneMagazziniere extends HttpServlet {
             throws ServletException, IOException {
         doGet(request, response);
     }
-
 }
