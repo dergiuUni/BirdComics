@@ -1,121 +1,49 @@
-/**
- * ReviewPaymentServlet class - show review payment page.
- * @author Nam Ha Minh
- * @copyright https://codeJava.net
- */
 package com.birdcomics.GestioneOrdine;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TimeZone;
 
-import javax.servlet.*;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.User;
-
-import com.birdcomics.Bean.FatturaBean;
-import com.birdcomics.Bean.OrderBean;
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Bean.UserBean;
-import com.birdcomics.Dao.CartServiceDAO;
-import com.birdcomics.Dao.OrderServiceDAO;
-import com.birdcomics.Dao.ProductServiceDAO;
-import com.birdcomics.Dao.UserServiceDAO;
-import com.paypal.api.payments.*;
-import com.paypal.base.rest.PayPalRESTException;
-
+import com.birdcomics.GestioneOrdine.Service.OrdineService;
+import com.birdcomics.GestioneOrdine.Service.OrdineServiceImpl;
 
 @WebServlet("/review_payment")
 public class ReviewPaymentServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ReviewPaymentServlet() {
-	}
+    private OrdineService ordineService;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String paymentId = request.getParameter("paymentId");
-		String payerId = request.getParameter("PayerID");
-		
-		
-		/*
-		PayerInfo payerInfo = payment.getPayer().getPayerInfo();
-		Transaction transaction = payment.getTransactions().get(0);
-		*/
-		
-		
-		try {
-			PaymentServices paymentServices = new PaymentServices();
-			Payment payment = paymentServices.executePayment(paymentId, payerId);
-			
-			HttpSession session = request.getSession();
-			PayerInfo payerInfo = payment.getPayer().getPayerInfo();
-			UserBean u = new UserBean();
-			UserServiceDAO us = new UserServiceDAO();
-			System.out.println((String) session.getAttribute("username") );
-			
-			u = us.getUserDetails((String) session.getAttribute("username"));
-			
-			CartServiceDAO c = new CartServiceDAO();
-			c.deleteAllCartItems((String) session.getAttribute("username"));
-			Transaction transaction = payment.getTransactions().get(0);
-			ItemList itemList = transaction.getItemList();
-			List<Item> items = itemList.getItems();
-			
-			String dataNascitaStr = LocalDate.now().toString();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			sdf.setTimeZone(TimeZone.getTimeZone("UTC")); // Imposta il fuso orario a UTC per evitare offset
-			java.util.Date parsedDate;
-			java.sql.Date dataNascita = null;
-			try {
-				parsedDate = sdf.parse(dataNascitaStr);
-				dataNascita = new java.sql.Date(parsedDate.getTime());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+    public ReviewPaymentServlet() {
+        this.ordineService = new OrdineServiceImpl(); // Inizializza il servizio
+    }
 
-			
-			
-			FatturaBean f = new FatturaBean(22, u.getNome(), u.getCognome(), u.getNumeroTelefono(), u.getIndirizzo().getNomeCitta(), u.getIndirizzo().getVia(), u.getIndirizzo().getNumeroCivico(), u.getIndirizzo().getCap() );
-			OrderBean o = new OrderBean(u.getEmail(), paymentId, "Non Spedito", dataNascita);
-			// imposto i dettagli dell'ordine
-			o.setIdFattura(f);
-			
-			for (Item item : items) {
-				ProductBean p = new ProductBean();
-				ProductServiceDAO pa = new ProductServiceDAO();
-				
-				p = pa.getProductsByID(item.getSku());
-				o.addFumetti(p, Integer.valueOf(item.getQuantity()));
-			}
-			
-			OrderServiceDAO os = new OrderServiceDAO();
-			os.addOrder(o);
-			
-			
-		
-			
-			
-	
-			response.sendRedirect("index.jsp");
-			
-			
-			
-		} catch (PayPalRESTException | SQLException ex) {
-			request.setAttribute("errorMessage", ex.getMessage());
-			ex.printStackTrace();
-			request.getRequestDispatcher("error2.jsp").forward(request, response);
-		} 	
-		
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String paymentId = request.getParameter("paymentId");
+        String payerId = request.getParameter("PayerID");
+        String username = (String) request.getSession().getAttribute("username");
 
+        try {
+            if (paymentId != null && payerId != null && username != null) {
+                // Usa il servizio per processare il pagamento e creare l'ordine
+                ordineService.processPaymentAndCreateOrder(paymentId, payerId, username);
+                // Reindirizza alla home page dopo l'elaborazione
+                response.sendRedirect("index.jsp");
+            } else {
+                // Se manca qualche parametro, invia un errore
+                request.setAttribute("errorMessage", "Missing required parameters.");
+                request.getRequestDispatcher("error2.jsp").forward(request, response);
+            }
+        } catch (SQLException ex) {
+            // Gestisci eventuali errori
+            request.setAttribute("errorMessage", ex.getMessage());
+            ex.printStackTrace();
+            request.getRequestDispatcher("error2.jsp").forward(request, response);
+        }
+    }
 }
