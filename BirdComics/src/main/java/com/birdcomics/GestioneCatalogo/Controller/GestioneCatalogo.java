@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneCatalogo;
+package com.birdcomics.GestioneCatalogo.Controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Dao.OrderServiceDAO;
 import com.birdcomics.Dao.ProductServiceDAO;
 
 @WebServlet("/GestioneCatalogo")

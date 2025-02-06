@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneCatalogo;
+package com.birdcomics.GestioneCatalogo.Controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,16 +19,21 @@ import javax.servlet.http.Part;
 
 import com.birdcomics.Bean.GenereBean;
 import com.birdcomics.Dao.GenereDAO;
-import com.birdcomics.Dao.ProductServiceDAO;
+import com.birdcomics.GestioneCatalogo.Service.CatalogoService;
+import com.birdcomics.GestioneCatalogo.Service.CatalogoServiceImpl;
 
 
-/**
- * Servlet implementation class AddProductSrv
- */
 @WebServlet("/AddProductSrv")
 @MultipartConfig(maxFileSize = 16177215)
 public class AddProductSrv extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
+    private CatalogoService catalogoService;
+
+    public AddProductSrv() {
+        super();
+        this.catalogoService = new CatalogoServiceImpl();  // Inizializziamo il servizio
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -68,12 +73,11 @@ public class AddProductSrv extends HttpServlet {
 
             // Write the file to the directory
             String filePath = uploadPath + File.separator + uniqueFileName;
-            filePart.write(filePath); 
+            filePart.write(filePath);
 
-            // Call the DAO to add the product
-            ProductServiceDAO productService = new ProductServiceDAO();
             try {
-                status = productService.addProduct(prodName, prodInfo, prodPrice, uniqueFileName, selectedGenres);
+                // Usa il CatalogoService per aggiungere il prodotto
+                status = catalogoService.addProduct(prodName, prodInfo, prodPrice, uniqueFileName, selectedGenres);
             } catch (SQLException e) {
                 status = "Database error occurred while adding the product.";
                 e.printStackTrace();
@@ -91,22 +95,17 @@ public class AddProductSrv extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
-    	
- 
-          HttpSession session = request.getSession();
 
-    	
-      		List<String> generi =new ArrayList<String>();
-    		GenereDAO genereDAO = new GenereDAO();
-    		List<GenereBean> generiBeans = genereDAO.getGeneri();
-    		for(GenereBean genereBean : generiBeans)
-    			generi.add(genereBean.toString());
+        HttpSession session = request.getSession();
 
-    		request.setAttribute("genres", generi);
-    		request.getRequestDispatcher("addProduct.jsp").forward(request, response);
-    		
-    	
+        List<String> generi = new ArrayList<String>();
+        GenereDAO genereDAO = new GenereDAO();
+        List<GenereBean> generiBeans = genereDAO.getGeneri();
+        for (GenereBean genereBean : generiBeans)
+            generi.add(genereBean.toString());
+
+        request.setAttribute("genres", generi);
+        request.getRequestDispatcher("addProduct.jsp").forward(request, response);
     }
 
     // Utility method to get the file extension
