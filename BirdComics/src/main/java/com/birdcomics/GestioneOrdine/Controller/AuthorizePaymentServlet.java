@@ -3,7 +3,7 @@
  * @author Nam Ha Minh
  * @copyright https://codeJava.net
  */
-package com.birdcomics.GestioneOrdine;
+package com.birdcomics.GestioneOrdine.Controller;
 
 import java.io.IOException;
 import java.sql.SQLException;

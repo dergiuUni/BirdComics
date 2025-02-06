@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneOrdine;
+package com.birdcomics.GestioneOrdine.Controller;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
