@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.Dao.ProductServiceDAO;
-import com.birdcomics.GestioneCarrello.Service.CartServiceImpl;
+import com.birdcomics.GestioneCarrello.Service.CarelloServiceImpl;
 
 @WebServlet("/UpdateToCart")
 public class UpdateToCart extends HttpServlet {
@@ -38,7 +38,7 @@ public class UpdateToCart extends HttpServlet {
         String prodId = request.getParameter("pid");
         int pQty = Integer.parseInt(request.getParameter("pqty"));
 
-        CartServiceImpl cartService = new CartServiceImpl(); // Usa il servizio CartService
+        CarelloServiceImpl cartService = new CarelloServiceImpl(); // Usa il servizio CartService
 
         ProductServiceDAO productDao = new ProductServiceDAO();
         ProductBean product = null;

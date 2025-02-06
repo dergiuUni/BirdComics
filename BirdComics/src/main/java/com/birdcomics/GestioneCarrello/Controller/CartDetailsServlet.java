@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.birdcomics.Bean.CartBean;
 import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.GestioneCarrello.Service.CartService;
-import com.birdcomics.GestioneCarrello.Service.CartServiceImpl;
+import com.birdcomics.GestioneCarrello.Service.CarrelloService;
+import com.birdcomics.GestioneCarrello.Service.CarelloServiceImpl;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -17,15 +17,15 @@ import java.util.List;
 
 @WebServlet("/CartDetailsServlet")
 public class CartDetailsServlet extends HttpServlet {
-    private CartService cartService;
+    private CarrelloService cartService;
 
     // Costruttore per iniezione di dipendenze (usato nei test)
-    public CartDetailsServlet(CartService cartService) {
+    public CartDetailsServlet(CarrelloService cartService) {
         this.cartService = cartService;
     }
 
     public CartDetailsServlet() {
-        this.cartService = new CartServiceImpl();  // Inizializza con l'implementazione di default
+        this.cartService = new CarelloServiceImpl();  // Inizializza con l'implementazione di default
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

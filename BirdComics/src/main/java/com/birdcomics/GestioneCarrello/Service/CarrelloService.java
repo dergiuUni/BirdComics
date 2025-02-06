@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-public interface CartService {
+public interface CarrelloService {
     void addToCart(String userId, String prodId, int pQty) throws SQLException;
     void removeFromCart(String userId, String prodId) throws SQLException;
     List<CartBean> getCartItems(String userId) throws SQLException;

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.birdcomics.GestioneCarrello.Service.CartServiceImpl;
+import com.birdcomics.GestioneCarrello.Service.CarelloServiceImpl;
 
 @WebServlet("/EmptyCartServlet")
 public class EmptyCartServlet extends HttpServlet {
@@ -30,7 +30,7 @@ public class EmptyCartServlet extends HttpServlet {
             return;
         }
 
-        CartServiceImpl cartService = new CartServiceImpl(); // Usa il servizio
+        CarelloServiceImpl cartService = new CarelloServiceImpl(); // Usa il servizio
 
         try {
             cartService.emptyCart(userName); // Svuota il carrello

@@ -9,11 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartServiceImpl implements CartService {
+public class CarelloServiceImpl implements CarrelloService {
     private CartServiceDAO cartServiceDAO;
     private ProductServiceDAO productServiceDAO;
 
-    public CartServiceImpl() {
+    public CarelloServiceImpl() {
         this.cartServiceDAO = new CartServiceDAO();
         this.productServiceDAO = new ProductServiceDAO();
     }

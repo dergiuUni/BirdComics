@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.birdcomics.GestioneCarrello.Service.CartService;
-import com.birdcomics.GestioneCarrello.Service.CartServiceImpl;
+import com.birdcomics.GestioneCarrello.Service.CarrelloService;
+import com.birdcomics.GestioneCarrello.Service.CarelloServiceImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,15 +16,15 @@ import java.sql.SQLException;
 @WebServlet("/AddToCart")
 public class AddToCart extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private CartService cartService;
+    private CarrelloService cartService;
 
     // Costruttore per iniezione di dipendenze (usato nel test)
-    public AddToCart(CartService cartService) {
+    public AddToCart(CarrelloService cartService) {
         this.cartService = cartService;
     }
 
     public AddToCart() {
-        this.cartService = new CartServiceImpl();  // Inizializza con l'implementazione di default
+        this.cartService = new CarelloServiceImpl();  // Inizializza con l'implementazione di default
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
