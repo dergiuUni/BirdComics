@@ -31,10 +31,11 @@ public class CartServiceDAO {
                 ProductBean product = new ProductServiceDAO().getProductsByID(prodId);
 
                 // Verifica se il prodotto è attivo
+                /*
                 if (!product.isActive()) {
                     return "Cannot add inactive product to cart.";
                 }
-
+*/
                 //int availableQty = product.getProdQuantity();
                 int availableQty = 500;
                 prodQty += cartQuantity;
@@ -47,12 +48,14 @@ public class CartServiceDAO {
                     status = updateProductToCart(userId, prodId, prodQty);
                 }
             } else {
+            	 /*
                 // Se il prodotto non è nel carrello, controlla se è attivo prima di aggiungerlo
                 ProductBean product = new ProductServiceDAO().getProductsByID(prodId);
+               
                 if (!product.isActive()) {
                     return "Cannot add inactive product to cart.";
                 }
-
+*/
                 ps = con.prepareStatement("INSERT INTO CarrelloCliente VALUES (?, ?, ?)");
                 ps.setString(1, userId);
                 ps.setString(2, prodId);
@@ -82,8 +85,12 @@ public class CartServiceDAO {
         ResultSet rs = null;
 
         try {
+        	/*
             ps = con.prepareStatement("SELECT uc.id, uc.idFumetto, uc.quantita, p.active FROM CarrelloCliente uc \r\n"
             		+ "JOIN Fumetto p ON uc.idFumetto = p.id WHERE uc.id=? AND p.active = 1;");
+            		*/
+        	 ps = con.prepareStatement("SELECT uc.id, uc.idFumetto, uc.quantita FROM CarrelloCliente uc \r\n"
+             		+ "JOIN Fumetto p ON uc.idFumetto = p.id WHERE uc.id=? ;");
             //qui bisogna controllare quantita > 0  and p.quantita > 0
             ps.setString(1, userId);
             rs = ps.executeQuery();
@@ -150,10 +157,11 @@ public class CartServiceDAO {
 
                 // Controllo se il prodotto è ancora attivo
                 ProductBean product = new ProductServiceDAO().getProductsByID(prodId);
+               /*
                 if (!product.isActive()) {
                     return "Cannot remove inactive product from cart.";
                 }
-
+*/
                 prodQuantity -= 1;
 
                 if (prodQuantity > 0) {

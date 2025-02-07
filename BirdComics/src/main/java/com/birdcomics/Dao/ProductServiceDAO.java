@@ -24,13 +24,17 @@ public class ProductServiceDAO {
 
 	    try {
 	        // Inserisci il fumetto
+	    	/*
 	        ps = con.prepareStatement("insert into Fumetto (nome, descrizione, prezzo, immagine, active) values(?,?,?,?,?);", 
 	                                  Statement.RETURN_GENERATED_KEYS);
+	                                  */
+	    	ps = con.prepareStatement("insert into Fumetto (nome, descrizione, prezzo, immagine) values(?,?,?,?);", 
+                    Statement.RETURN_GENERATED_KEYS);
 	        ps.setString(1, name);
 	        ps.setString(2, description);
 	        ps.setFloat(3, price);
 	        ps.setString(4, image);
-	        ps.setBoolean(5, true);
+	       // ps.setBoolean(5, true);
 	        
 	        int k = ps.executeUpdate();
 
@@ -110,7 +114,10 @@ public class ProductServiceDAO {
         ResultSet rs = null;
 
         try {
+        	/*
             ps = con.prepareStatement("SELECT * FROM Fumetto WHERE active = 1");
+            */
+        	 ps = con.prepareStatement("SELECT * FROM Fumetto");
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -173,7 +180,8 @@ public class ProductServiceDAO {
         ResultSet rs = null;
 
         try {
-        	ps = con.prepareStatement("select * from Fumetto, Genere_Fumetto where Fumetto.id = Genere_Fumetto.idFumetto and Genere_Fumetto.genere = ? and Fumetto.active = 1");
+        	//ps = con.prepareStatement("select * from Fumetto, Genere_Fumetto where Fumetto.id = Genere_Fumetto.idFumetto and Genere_Fumetto.genere = ? and Fumetto.active = 1");
+        	ps = con.prepareStatement("select * from Fumetto, Genere_Fumetto where Fumetto.id = Genere_Fumetto.idFumetto and Genere_Fumetto.genere = ?");
             ps.setString(1, type);
             rs = ps.executeQuery();
 
@@ -212,9 +220,14 @@ public class ProductServiceDAO {
         ResultSet rs = null;
 
         try {
+        	/*
+        	 ps = con.prepareStatement(
+                     "SELECT * FROM Fumetto, Genere_Fumetto  WHERE Fumetto.id = Genere_Fumetto.idFumetto"
+                     + " and (lower( Genere_Fumetto.genere) LIKE ? OR lower(Fumetto.nome) LIKE ?)  AND Fumetto.active = 1 GROUP BY Fumetto.id");
+        	*/
             ps = con.prepareStatement(
                 "SELECT * FROM Fumetto, Genere_Fumetto  WHERE Fumetto.id = Genere_Fumetto.idFumetto"
-                + " and (lower( Genere_Fumetto.genere) LIKE ? OR lower(Fumetto.nome) LIKE ?)  AND Fumetto.active = 1 GROUP BY Fumetto.id");
+                + " and (lower( Genere_Fumetto.genere) LIKE ? OR lower(Fumetto.nome) LIKE ?) GROUP BY Fumetto.id");
 
             search = "%" + search.toLowerCase() + "%";
             ps.setString(1, search);
@@ -254,11 +267,20 @@ public class ProductServiceDAO {
         ResultSet rs = null;
 
         try {
+        	/*
         	ps = con.prepareStatement(
         		    "SELECT * FROM Fumetto, Genere_Fumetto " +
         		    "WHERE Fumetto.id = Genere_Fumetto.idFumetto " +
         		    "AND (lower(Genere_Fumetto.genere) LIKE ? OR lower(Fumetto.nome) LIKE ? OR Fumetto.id = ?) " +
         		    "AND Fumetto.active = 1 " +
+        		    "GROUP BY Fumetto.id"
+        		);
+        	*/
+        	
+        	ps = con.prepareStatement(
+        		    "SELECT * FROM Fumetto, Genere_Fumetto " +
+        		    "WHERE Fumetto.id = Genere_Fumetto.idFumetto " +
+        		    "AND (lower(Genere_Fumetto.genere) LIKE ? OR lower(Fumetto.nome) LIKE ? OR Fumetto.id = ?) " +
         		    "GROUP BY Fumetto.id"
         		);
 
@@ -315,7 +337,8 @@ public class ProductServiceDAO {
 
         
         try {
-            ps = con.prepareStatement("SELECT * FROM Fumetto WHERE id=? AND active = 1");
+            //ps = con.prepareStatement("SELECT * FROM Fumetto WHERE id=? AND active = 1");
+            ps = con.prepareStatement("SELECT * FROM Fumetto WHERE id=?");
             ps.setInt(1,idfumetto );
             rs = ps.executeQuery();
 

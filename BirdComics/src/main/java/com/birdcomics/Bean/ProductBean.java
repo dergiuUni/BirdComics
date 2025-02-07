@@ -10,18 +10,17 @@ public class ProductBean implements Serializable {
     private String description; // corrisponde a descrizione
     private float price; // corrisponde a prezzo
     private String image;
-    private boolean active; // corrisponde a active
+    //private boolean active; // corrisponde a active
 
     public ProductBean() {
     }
 
-    public ProductBean(int id, String name, String description, float price, String image, boolean active) {
+    public ProductBean(int id, String name, String description, float price, String image) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.image = image;
-        this.active = active;
     }
 
     // Getter e Setter
@@ -55,14 +54,6 @@ public class ProductBean implements Serializable {
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
 	public String getImage() {
