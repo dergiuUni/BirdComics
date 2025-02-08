@@ -62,6 +62,7 @@ public class UpdateToCart extends HttpServlet {
             String status;
             try {
                 status = cartService.updateProductInCart(userId, prodId, availableQty);  // Usa il metodo nel servizio
+                
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -69,7 +70,7 @@ public class UpdateToCart extends HttpServlet {
             status = "Only " + availableQty + " of " + product.getName()
                     + " are available in the shop! So we are adding only " + availableQty + " products to your cart.";
 
-            RequestDispatcher rd = request.getRequestDispatcher("cartDetails.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("CartDetailsServlet");
             rd.include(request, response);
 
             pw.println("<script>document.getElementById('message').innerHTML='" + status + "'</script>");
@@ -78,6 +79,7 @@ public class UpdateToCart extends HttpServlet {
             String status = null;
             try {
                 status = cartService.updateProductInCart(userId, prodId, pQty);  // Usa il metodo nel servizio
+                
             } catch (SQLException e) {
                 e.printStackTrace();
             }
