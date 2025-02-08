@@ -1,91 +1,140 @@
 package com.birdcomics.Dao;
+
+import com.birdcomics.Bean.CartBean;
+import com.birdcomics.Dao.CartServiceDAO;
+import com.birdcomics.Utils.DBUtil;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.*;
-import org.mockito.MockedStatic;
+import java.util.List;
 
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Utils.DBUtil;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CartServiceDAOTest {
 
     @Mock
-    private Connection mockCon;  // Mock per la connessione
-    @Mock
-    private PreparedStatement mockSelectStmt;  // Mock per il PreparedStatement della SELECT
-    @Mock
-    private PreparedStatement mockInsertStmt;  // Mock per il PreparedStatement dell'INSERT
-    @Mock
-    private ResultSet mockRs;  // Mock per il ResultSet
+    private Connection connection;  
 
     @Mock
-    private ProductServiceDAO productServiceDAOMock;  // Mock per il ProductServiceDAO
+    private PreparedStatement preparedStatement;  
+
     @Mock
-    private ProductBean productBeanMock;  // Mock per il ProductBean
+    private ResultSet resultSet;  
 
     private CartServiceDAO cartServiceDAO;
+    private MockedStatic<DBUtil> mockedDBUtil;
 
     @BeforeEach
     void setUp() throws SQLException {
         MockitoAnnotations.openMocks(this);
-        cartServiceDAO = new CartServiceDAO();  // Istanza della classe da testare
+        cartServiceDAO = new CartServiceDAO();
 
-        // Mock di DBUtil.getConnection() per restituire la connessione mockata
-        try (MockedStatic<DBUtil> dbUtilMock = Mockito.mockStatic(DBUtil.class)) {
-            dbUtilMock.when(DBUtil::getConnection).thenReturn(mockCon);
+        // Mock dei metodi statici di DBUtil
+        mockedDBUtil = mockStatic(DBUtil.class);
+        when(DBUtil.getConnection()).thenReturn(connection);
+    }
 
-            // Mock della SELECT query per verificare se il prodotto è già nel carrello
-            when(mockCon.prepareStatement("SELECT * FROM CarrelloCliente WHERE id=? AND idFumetto=?"))
-                .thenReturn(mockSelectStmt);
-            when(mockSelectStmt.executeQuery()).thenReturn(mockRs);
-            when(mockRs.next()).thenReturn(false);  // Nessun risultato trovato, quindi inseriamo il prodotto
-
-            // Mock dell'INSERT query per aggiungere un prodotto al carrello
-            when(mockCon.prepareStatement("INSERT INTO CarrelloCliente VALUES (?, ?, ?)"))
-                .thenReturn(mockInsertStmt);
-            when(mockInsertStmt.executeUpdate()).thenReturn(1);  // Simula l'inserimento riuscito
-
-            // Mock per ProductServiceDAO e ProductBean
-            when(productServiceDAOMock.getProductsByID("1")).thenReturn(productBeanMock);
-            when(productBeanMock.isActive()).thenReturn(true);  // Il prodotto è attivo
-            when(productBeanMock.getId()).thenReturn(1);
-            when(productBeanMock.getName()).thenReturn("Test Product");
-
-            // Quando il CartServiceDAO chiama getProductsByID, simuliamo il comportamento desiderato
-            cartServiceDAO = new CartServiceDAO();  // Passiamo il mock del ProductServiceDAO al costruttore
-        }
+    @AfterEach
+    void tearDown() {
+        mockedDBUtil.close();
     }
 
     @Test
-    void testAddProductToCart_ProductNotInCart_Success() throws SQLException {
-        // Parametri di input
-        String userId = "test@sor.c";
-        int prodId = 1;
-        int prodQty = 3;
-        String expectedStatus = "Product Successfully added to Cart!";
+    void testAddProductToCart_NewProduct_Success() throws SQLException {
+        String userId = "cliente@example.com";
+        String prodId = "1";
+        int prodQty = 0;
 
-        // Chiamata al metodo addProductToCart
-        String actualStatus = cartServiceDAO.addProductToCart(userId, String.valueOf(prodId), prodQty);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(false); // Il prodotto non è già nel carrello
 
-        // Verifica che il risultato sia quello atteso
-        assertEquals(expectedStatus, actualStatus);
+        when(preparedStatement.executeUpdate()).thenReturn(1); // Inserimento avvenuto con successo
 
-        // Verifica che la query SELECT sia stata eseguita correttamente
-        verify(mockSelectStmt).setString(1, userId);
-        verify(mockSelectStmt).setInt(2, prodId);
+        String result = cartServiceDAO.addProductToCart(userId, prodId, prodQty);
+        System.out.println(result);
 
-        // Verifica che la query INSERT sia stata eseguita correttamente
-        verify(mockInsertStmt).setString(1, userId);
-        verify(mockInsertStmt).setInt(2, prodId);
-        verify(mockInsertStmt).setInt(3, prodQty);
+        assertEquals("Product Successfully added to Cart!", result);
 
-        // Verifica che la connessione sia stata ottenuta e rilasciata correttamente
-        try (MockedStatic<DBUtil> dbUtilMock = Mockito.mockStatic(DBUtil.class)) {
-            dbUtilMock.verify(DBUtil::getConnection, times(1));
-            dbUtilMock.verify(() -> DBUtil.closeConnection(mockCon), times(1));
-        }
+        verify(preparedStatement, times(1)).executeUpdate();
+    }
+
+    @Test
+    void testGetAllCartItems_Success() throws SQLException {
+        String userId = "cliente@example.com";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true, false);
+        when(resultSet.getString("id")).thenReturn(userId);
+        when(resultSet.getString("idFumetto")).thenReturn("1");
+        when(resultSet.getInt("quantita")).thenReturn(3);
+
+        List<CartBean> result = cartServiceDAO.getAllCartItems(userId);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals("1", result.get(0).getProdId());
+
+        verify(preparedStatement, times(1)).executeQuery();
+    }
+
+    @Test
+    void testRemoveProductFromCart_Success() throws SQLException {
+        String userId = "cliente@example.com";
+        String prodId = "1";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt("quantita")).thenReturn(1); // L'ultimo pezzo da rimuovere
+
+        when(preparedStatement.executeUpdate()).thenReturn(1); // Rimozione avvenuta con successo
+
+        String result = cartServiceDAO.removeProductFromCart(userId, prodId);
+        System.out.println(preparedStatement);
+       
+
+        assertEquals("Product Successfully removed from the Cart!", result);
+
+        verify(preparedStatement, times(1)).executeUpdate();
+        System.out.println(times(1)).executeUpdate().toString());
+    }
+
+    @Test
+    void testGetCartCount_Success() throws SQLException {
+        String userId = "cliente@example.com";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt(1)).thenReturn(5);
+
+        int result = cartServiceDAO.getCartCount(userId);
+
+        assertEquals(5, result);
+
+        verify(preparedStatement, times(1)).executeQuery();
+    }
+
+    @Test
+    void testUpdateProductToCart_Success() throws SQLException {
+        String userId = "cliente@example.com";
+        String prodId = "1";
+        int prodQty = 5;
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true); // Il prodotto è già nel carrello
+
+        when(preparedStatement.executeUpdate()).thenReturn(1); // Aggiornamento avvenuto con successo
+
+        String result = cartServiceDAO.updateProductToCart(userId, prodId, prodQty);
+
+        assertEquals("Product Successfully Updated to Cart!", result);
+
+        verify(preparedStatement, times(1)).executeUpdate();
     }
 }
