@@ -27,12 +27,15 @@ public class CarelloServiceImpl implements CarrelloService {
         int totalQtyToAdd = pQty + cartQty;
 
         // Verifica se la quantità totale supera la disponibilità
+        if(availableQty > 0) {
         if (totalQtyToAdd > availableQty) {
             totalQtyToAdd = availableQty;
         }
 
         // Aggiungi al carrello (o aggiorna la quantità)
         cartServiceDAO.updateProductToCart(userId, prodId, totalQtyToAdd);
+        }
+        
     }
 
     @Override
