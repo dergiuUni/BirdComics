@@ -55,8 +55,6 @@ public class ProductServiceDAO {
 
 	                status = "Product Added Successfully";
 	            }
-	        } else {
-	            status = "Product Updation Failed!";
 	        }
 
 	    } catch (SQLException e) {
