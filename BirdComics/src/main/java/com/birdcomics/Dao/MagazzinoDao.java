@@ -13,7 +13,7 @@ import com.birdcomics.Bean.ScaffaliBean;
 import com.birdcomics.Utils.DBUtil;
 
 public class MagazzinoDao {
-	public ScaffaliBean addMagazzino(MagazzinoBean magazzino) throws SQLException {
+	public String addMagazzino(MagazzinoBean magazzino) throws SQLException {
 	    String status = "User Registration Failed!";
 	    Connection con = DBUtil.getConnection();
 	    PreparedStatement ps = null;
@@ -46,7 +46,7 @@ public class MagazzinoDao {
 
 	        if (k > 0) {
 	            
-	        	status = "User Registered Successfully!";
+	        	status = "magazzino Registered Successfully!";
 	        }
 
 	    } catch (SQLException e) {
@@ -56,7 +56,7 @@ public class MagazzinoDao {
 	        DBUtil.closeConnection(ps);
 	    }
 
-	    return null;
+	    return status;
 	}
 	
 	public void removeMagazzino(MagazzinoBean magazzino) throws SQLException {

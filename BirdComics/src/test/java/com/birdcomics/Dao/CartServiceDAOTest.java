@@ -42,10 +42,10 @@ public class CartServiceDAOTest {
     }
 
     @Test
-    void testAddProductToCart_NewProduct_Success() throws SQLException {
-        String userId = "cliente@example.com";
+    void testAddProductToCartNewProduct() throws SQLException {
+        String userId = "client@example.com";
         String prodId = "1";
-        int prodQty = 0;
+        int prodQty = 23;
 
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
@@ -54,87 +54,359 @@ public class CartServiceDAOTest {
         when(preparedStatement.executeUpdate()).thenReturn(1); // Inserimento avvenuto con successo
 
         String result = cartServiceDAO.addProductToCart(userId, prodId, prodQty);
-        System.out.println(result);
 
         assertEquals("Product Successfully added to Cart!", result);
-
-        verify(preparedStatement, times(1)).executeUpdate();
     }
-
+    
     @Test
-    void testGetAllCartItems_Success() throws SQLException {
-        String userId = "cliente@example.com";
+    void testAddProductToCartExistsProduct() throws SQLException {
+        String userId = "client@example.com";
+        String prodId = "1";
+        int prodQty = 23;
 
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true, false);
+        when(resultSet.next()).thenReturn(true); // Il prodotto non è già nel carrello
+
+        when(preparedStatement.executeUpdate()).thenReturn(1); // Inserimento avvenuto con successo
+
+        String result = cartServiceDAO.addProductToCart(userId, prodId, prodQty);
+
+        assertEquals("Product Successfully Updated to Cart!", result);
+    }
+    
+    @Test
+    void testAddProductToCartExistsProductExecuteQueryFailed() throws SQLException {
+        String userId = "client@example.com";
+        String prodId = "1";
+        int prodQty = 23;
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true); // Il prodotto non è già nel carrello
+
+        when(preparedStatement.executeUpdate()).thenReturn(0); // Inserimento avvenuto con successo
+
+        String result = cartServiceDAO.addProductToCart(userId, prodId, prodQty);
+
+        assertEquals("Failed to Add into Cart", result);
+    }
+    
+    @Test
+    void testGetAllCartItems() throws SQLException {
+        String userId = "client@example.com";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true, false); // Simula un solo risultato
         when(resultSet.getString("id")).thenReturn(userId);
         when(resultSet.getString("idFumetto")).thenReturn("1");
-        when(resultSet.getInt("quantita")).thenReturn(3);
+        when(resultSet.getInt("quantita")).thenReturn(2);
 
-        List<CartBean> result = cartServiceDAO.getAllCartItems(userId);
+        List<CartBean> cartItems = cartServiceDAO.getAllCartItems(userId);
 
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals("1", result.get(0).getProdId());
-
-        verify(preparedStatement, times(1)).executeQuery();
+        assertNotNull(cartItems);
+        assertEquals(1, cartItems.size());
+        assertEquals(userId, cartItems.get(0).getUserId());
+        assertEquals("1", cartItems.get(0).getProdId());
+        assertEquals(2, cartItems.get(0).getQuantity());
     }
-
+    
     @Test
-    void testRemoveProductFromCart_Success() throws SQLException {
-        String userId = "cliente@example.com";
-        String prodId = "1";
+    void testGetAllCartItems_EmptyCart() throws SQLException {
+        String userId = "empty@example.com";
 
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true);
-        when(resultSet.getInt("quantita")).thenReturn(1); // L'ultimo pezzo da rimuovere
+        when(resultSet.next()).thenReturn(false); // Nessun risultato
 
-        when(preparedStatement.executeUpdate()).thenReturn(1); // Rimozione avvenuta con successo
+        List<CartBean> cartItems = cartServiceDAO.getAllCartItems(userId);
 
-        String result = cartServiceDAO.removeProductFromCart(userId, prodId);
-        System.out.println(preparedStatement);
-       
-
-        assertEquals("Product Successfully removed from the Cart!", result);
-
-        verify(preparedStatement, times(1)).executeUpdate();
-        System.out.println(times(1)).executeUpdate().toString());
+        assertTrue(cartItems.isEmpty());
     }
 
     @Test
-    void testGetCartCount_Success() throws SQLException {
-        String userId = "cliente@example.com";
+    void testGetAllCartItems_MultipleItems() throws SQLException {
+        String userId = "multi@example.com";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true, true, false); // Due risultati
+        
+        // Mock dei valori per le due righe
+        when(resultSet.getString("id")).thenReturn(userId, userId);
+        when(resultSet.getString("idFumetto")).thenReturn("1", "2");
+        when(resultSet.getInt("quantita")).thenReturn(3, 5);
+
+        List<CartBean> cartItems = cartServiceDAO.getAllCartItems(userId);
+
+        assertEquals(2, cartItems.size());
+        assertEquals("1", cartItems.get(0).getProdId());
+        assertEquals("2", cartItems.get(1).getProdId());
+        assertEquals(3, cartItems.get(0).getQuantity());
+        assertEquals(5, cartItems.get(1).getQuantity());
+    }
+
+    @Test
+    void testGetAllCartItems_SQLException() throws SQLException {
+        String userId = "error@example.com";
+
+        when(connection.prepareStatement(anyString()))
+            .thenThrow(new SQLException("Database error"));
+
+        List<CartBean> cartItems = cartServiceDAO.getAllCartItems(userId);
+
+        assertTrue(cartItems.isEmpty());
+    }
+ 
+    
+    @Test
+    void testGetCartCount() throws SQLException {
+        String userId = "client@example.com";
 
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
         when(resultSet.getInt(1)).thenReturn(5);
 
-        int result = cartServiceDAO.getCartCount(userId);
+        int count = cartServiceDAO.getCartCount(userId);
 
-        assertEquals(5, result);
+        assertEquals(5, count);
+    }
+    
+    @Test
+    void testGetCartCount_NoItems() throws SQLException {
+        String userId = "empty@example.com";
 
-        verify(preparedStatement, times(1)).executeQuery();
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(false); // Nessun risultato
+
+        int count = cartServiceDAO.getCartCount(userId);
+
+        assertEquals(0, count);
     }
 
     @Test
-    void testUpdateProductToCart_Success() throws SQLException {
-        String userId = "cliente@example.com";
+    void testGetCartCount_SQLException() throws SQLException {
+        String userId = "error@example.com";
+
+        when(connection.prepareStatement(anyString()))
+            .thenThrow(new SQLException("Database error"));
+
+        int count = cartServiceDAO.getCartCount(userId);
+
+        assertEquals(0, count);
+    }
+    
+    
+    @Test
+    void testRemoveProductFromCart() throws SQLException {
+        String userId = "client@example.com";
+        String prodId = "1";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt("quantita")).thenReturn(1);
+        when(preparedStatement.executeUpdate()).thenReturn(1);
+
+        String status = cartServiceDAO.removeProductFromCart(userId, prodId);
+
+        assertEquals("Product Successfully removed from the Cart!", status);
+    }
+    
+    @Test
+    void testRemoveProductFromCart_ProductNotInCart() throws SQLException {
+        String userId = "client@example.com";
+        String prodId = "999";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(false); // Prodotto non trovato
+
+        String status = cartServiceDAO.removeProductFromCart(userId, prodId);
+
+        assertEquals("Product Not Available in the cart!", status);
+    }
+
+    @Test
+    void testRemoveProductFromCart_UpdateFails() throws SQLException {
+        String userId = "client@example.com";
+        String prodId = "1";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt("quantita")).thenReturn(1);
+        when(preparedStatement.executeUpdate()).thenReturn(0); // Update fallito
+
+        String status = cartServiceDAO.removeProductFromCart(userId, prodId);
+
+        assertEquals("Product Removal Failed", status);
+    }
+    
+   
+    
+    @Test
+    void testUpdateProductToCart() throws SQLException {
+        String userId = "client@example.com";
         String prodId = "1";
         int prodQty = 5;
 
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true); // Il prodotto è già nel carrello
+        when(resultSet.next()).thenReturn(true);
+        when(preparedStatement.executeUpdate()).thenReturn(1);
 
-        when(preparedStatement.executeUpdate()).thenReturn(1); // Aggiornamento avvenuto con successo
+        String status = cartServiceDAO.updateProductToCart(userId, prodId, prodQty);
 
-        String result = cartServiceDAO.updateProductToCart(userId, prodId, prodQty);
+        assertEquals("Product Successfully Updated to Cart!", status);
+    }
+    @Test
+    void testUpdateProductToCart_ProductNotInCart() throws SQLException {
+        String userId = "client@example.com";
+        String prodId = "999";
+        int prodQty = 5;
 
-        assertEquals("Product Successfully Updated to Cart!", result);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(false); // Prodotto non trovato
+        when(preparedStatement.executeUpdate()).thenReturn(1); // Inserimento avvenuto
+
+        String status = cartServiceDAO.updateProductToCart(userId, prodId, prodQty);
+
+        assertEquals("Product Successfully Updated to Cart!", status);
+    }
+
+    @Test
+    void testUpdateProductToCart_UpdateFails() throws SQLException {
+        String userId = "client@example.com";
+        String prodId = "1";
+        int prodQty = 5;
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(preparedStatement.executeUpdate()).thenReturn(0); // Update fallito
+
+        String status = cartServiceDAO.updateProductToCart(userId, prodId, prodQty);
+
+        assertEquals("Failed to Add into Cart", status);
+    }
+    
+    @Test
+    void testGetProductCount() throws SQLException {
+        String userId = "client@example.com";
+        String prodId = "1";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.getInt(1)).thenReturn(3);
+
+        int count = cartServiceDAO.getProductCount(userId, prodId);
+
+        assertEquals(3, count);
+    }
+    @Test
+    void testGetProductCount_NoItems() throws SQLException {
+        String userId = "client@example.com";
+        String prodId = "999";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(false); // Nessun risultato
+
+        int count = cartServiceDAO.getProductCount(userId, prodId);
+
+        assertEquals(0, count);
+    }
+
+    @Test
+    void testGetProductCount_SQLException() throws SQLException {
+        String userId = "client@example.com";
+        String prodId = "1";
+
+        when(connection.prepareStatement(anyString()))
+            .thenThrow(new SQLException("Database error"));
+
+        int count = cartServiceDAO.getProductCount(userId, prodId);
+
+        assertEquals(0, count);
+    }
+    
+    @Test
+    void testGetCartItemCount() throws SQLException {
+        String userId = "client@example.com";
+        String itemId = "1";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+        when(resultSet.wasNull()).thenReturn(false);
+        when(resultSet.getInt(1)).thenReturn(2);
+
+        int count = cartServiceDAO.getCartItemCount(userId, itemId);
+        System.out.println(count);
+        assertEquals(2, count);
+    }
+    @Test
+    void testGetCartItemCount_NoItems() throws SQLException {
+        String userId = "client@example.com";
+        String itemId = "999";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(false); // Nessun risultato
+
+        int count = cartServiceDAO.getCartItemCount(userId, itemId);
+
+        assertEquals(0, count);
+    }
+
+    @Test
+    void testGetCartItemCount_SQLException() throws SQLException {
+        String userId = "client@example.com";
+        String itemId = "1";
+
+        when(connection.prepareStatement(anyString()))
+            .thenThrow(new SQLException("Database error"));
+
+        int count = cartServiceDAO.getCartItemCount(userId, itemId);
+
+        assertEquals(0, count);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    @Test
+    void testDeleteAllCartItems() throws SQLException {
+        String userName = "client@example.com";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeUpdate()).thenReturn(1);
+
+        cartServiceDAO.deleteAllCartItems(userName);
 
         verify(preparedStatement, times(1)).executeUpdate();
     }
+    @Test
+    void testDeleteAllCartItems_NoItems() throws SQLException {
+        String userName = "empty@example.com";
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeUpdate()).thenReturn(0); // Nessuna riga eliminata
+
+        cartServiceDAO.deleteAllCartItems(userName);
+
+        verify(preparedStatement, times(1)).executeUpdate();
+    }
+
+    
 }

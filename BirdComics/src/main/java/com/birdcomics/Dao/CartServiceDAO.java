@@ -199,31 +199,7 @@ public class CartServiceDAO {
         return status;
     }
 
-    public boolean removeAProduct(String userId, String prodId) throws SQLException {
-        boolean flag = false;
-
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = null;
-
-        try {
-            ps = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=? AND idFumetto=?");
-            ps.setString(1, userId);
-            ps.setString(2, prodId);
-
-            int k = ps.executeUpdate();
-            if (k > 0) {
-                flag = true;
-            }
-        } catch (SQLException e) {
-            flag = false;
-            e.printStackTrace();
-        } finally {
-            DBUtil.closeConnection(ps);
-        }
-
-        return flag;
-    }
-
+   
     public String updateProductToCart(String userId, String prodId, int prodQty) throws SQLException {
         String status = "Failed to Add into Cart";
 
@@ -256,7 +232,7 @@ public class CartServiceDAO {
 
                     int k = ps2.executeUpdate();
                     if (k > 0) {
-                        status = "Product Successfully Updated in Cart!";
+                        status = "Product Successfully Updated to Cart!";
                     }
                 }
             } else {
