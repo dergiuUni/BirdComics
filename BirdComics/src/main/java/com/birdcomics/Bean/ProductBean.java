@@ -1,6 +1,7 @@
 package com.birdcomics.Bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class ProductBean implements Serializable {
@@ -11,19 +12,34 @@ public class ProductBean implements Serializable {
     private float price; // corrisponde a prezzo
     private String image;
     //private boolean active; // corrisponde a active
+    private List<GenereBean> generi;
 
     public ProductBean() {
     }
 
-    public ProductBean(int id, String name, String description, float price, String image) {
+    public ProductBean(int id, String name, String description, float price, String image, List<GenereBean> generi) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.image = image;
+        this.generi = generi;
     }
 
-    // Getter e Setter
+    
+    public List<GenereBean> getGeneri() {
+		return generi;
+	}
+    
+	public void addGenere(GenereBean genere) {
+		this.generi.add(genere);
+	}
+
+	public void setGeneri(List<GenereBean> generi) {
+		this.generi = generi;
+	}
+
+	// Getter e Setter
     public int getId() {
         return id;
     }
