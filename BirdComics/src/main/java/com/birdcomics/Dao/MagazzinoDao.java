@@ -14,7 +14,7 @@ import com.birdcomics.Utils.DBUtil;
 
 public class MagazzinoDao {
 	public String addMagazzino(MagazzinoBean magazzino) throws SQLException {
-	    String status = "User Registration Failed!";
+	    String status = "add magazzino Failed!";
 	    Connection con = DBUtil.getConnection();
 	    PreparedStatement ps = null;
 	    
@@ -50,17 +50,16 @@ public class MagazzinoDao {
 	        }
 
 	    } catch (SQLException e) {
-	        status = "Error: " + e.getMessage();
+	        status = "Error sql";
 	        e.printStackTrace();
 	    } finally {
 	        DBUtil.closeConnection(ps);
 	    }
-
 	    return status;
 	}
 	
-	public void removeMagazzino(MagazzinoBean magazzino) throws SQLException {
-	    String status = "User Registration Failed!";
+	public String removeMagazzino(MagazzinoBean magazzino) throws SQLException {
+	    String status = "Delete magazzino Failed!";
 	    Connection con = DBUtil.getConnection();
 	    PreparedStatement ps = null;
 	    
@@ -76,13 +75,17 @@ public class MagazzinoDao {
 	        ps.setString(1, magazzino.getNome());
 
 	        ps.executeUpdate();
-
+	        
+	        status = "magazzino cancellato";
+	        
 	    } catch (SQLException e) {
-	        status = "Error: " + e.getMessage();
+	        status = "Error sql";
 	        e.printStackTrace();
 	    } finally {
 	        DBUtil.closeConnection(ps);
 	    }
+	    
+	    return status;
 
 	}
 	

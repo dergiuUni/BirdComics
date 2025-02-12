@@ -79,4 +79,22 @@ public class ProductBean implements Serializable {
 	public void setImage(String image) {
 		this.image = image;
 	}
+	
+	public void addGenere(String genere) {
+		if(ifExistsGenere(genere) == false) {
+			GenereBean g = new GenereBean();
+			g.setGenere(genere);
+			generi.add(g);
+		}
+		
+	}
+	
+	public boolean ifExistsGenere(String genere) {
+		for (GenereBean x : generi) {
+			if(genere == x.getGenere()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

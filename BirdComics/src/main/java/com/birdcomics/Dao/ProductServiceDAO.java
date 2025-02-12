@@ -115,9 +115,9 @@ public class ProductServiceDAO {
         	/*
             ps = con.prepareStatement("SELECT * FROM Fumetto WHERE active = 1");
             */
-        	 ps = con.prepareStatement("SELECT * FROM Fumetto");
+        	 ps = con.prepareStatement("select * from Fumetto, Genere_Fumetto where id=idFumetto");
             rs = ps.executeQuery();
-
+            
             while (rs.next()) {
                 ProductBean product = new ProductBean();
                 product.setId(rs.getInt(1));
@@ -125,6 +125,8 @@ public class ProductServiceDAO {
                 product.setDescription(rs.getString(3));
                 product.setPrice(rs.getFloat(4));
                 product.setImage(rs.getString(5));
+                
+                product.addGenere(rs.getString("genere"));
                 //ps.setString(7, product.getImage());
                 // Assuming prodImage is stored as Blob or InputStream in the database
                 // product.setProdImage(rs.getAsciiStream(7)); // Uncomment and adjust if needed

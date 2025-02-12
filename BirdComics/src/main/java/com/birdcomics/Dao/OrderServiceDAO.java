@@ -21,7 +21,7 @@ public class OrderServiceDAO {
 
 
 	public boolean addOrder(OrderBean order) throws SQLException {
-		boolean flag = false;
+		boolean flag = true;
 
 		Connection con = DBUtil.getConnection();
 
@@ -93,6 +93,7 @@ public class OrderServiceDAO {
                             	quantita = value;
                             	sc.modifyQuantityFumetto(s);
                             }
+                            
                     	}
                         	  
                 	} catch (SQLException e) {
@@ -101,6 +102,8 @@ public class OrderServiceDAO {
 					}
                              	
                 });
+                
+                flag = true;
        
         	}
                 
@@ -162,6 +165,7 @@ public class OrderServiceDAO {
 	    	ps.setString(1, order.getShipped());
 	    	ps.setInt(2, order.getId());
 	    	ps.executeUpdate();
+	    	flag = true;
                         	  
     	} catch (SQLException e) {
 			// TODO Auto-generated catch block

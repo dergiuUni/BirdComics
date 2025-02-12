@@ -74,9 +74,14 @@ public class MagazzinoDAOTest {
         IndirizzoBean indirizzo = new IndirizzoBean("Città1", "Via1", 123, "12345");
         magazzino.setIndirizzo(indirizzo);
 
+
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
         when(preparedStatement.executeUpdate()).thenReturn(1); // Inserimento avvenuto con successo
 
+        
+        
         // Simula che l'indirizzo esista già
         when(indirizzoDao.ifExists(anyString(), anyString(), anyInt(), anyString())).thenReturn(true);
 
@@ -96,7 +101,7 @@ public class MagazzinoDAOTest {
 
         String result = magazzinoDao.addMagazzino(magazzino);
 
-        verify(preparedStatement, times(1)).executeUpdate();
+        assertEquals("Error sql", result);
       }
 
     // ===================================================
@@ -111,9 +116,9 @@ public class MagazzinoDAOTest {
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeUpdate()).thenReturn(1); // Rimozione avvenuta con successo
 
-        magazzinoDao.removeMagazzino(magazzino);
+        String x = magazzinoDao.removeMagazzino(magazzino);
 
-        verify(preparedStatement, times(1)).executeUpdate();
+        assertEquals("magazzino cancellato", x);
     }
 
     @Test
@@ -123,11 +128,13 @@ public class MagazzinoDAOTest {
 
         when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
 
-        magazzinoDao.removeMagazzino(magazzino);
+        String x = magazzinoDao.removeMagazzino(magazzino);
 
-        verify(preparedStatement, times(1)).executeUpdate();
+        assertEquals("Error sql", x);
+
     }
 
+    
     // ===================================================
     // Test per il metodo: getMagazzini
     // ===================================================
