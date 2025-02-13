@@ -28,12 +28,9 @@ public class ProductBean implements Serializable {
     }
 
     
-    public String getGeneri() {
-		String x = "";
-		for (GenereBean s : generi) {
-			x += " " + s.toString();
-		}
-    	return x;
+    public List<GenereBean> getGeneri() {
+		
+    	return generi;
 	}
     
 	public void addGenere(GenereBean genere) {

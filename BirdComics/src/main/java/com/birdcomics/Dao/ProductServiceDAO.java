@@ -373,10 +373,10 @@ public class ProductServiceDAO {
             if (rs.next()) {
                 product = new ProductBean();
                 product.setId(rs.getInt("id"));
-                product.setName(rs.getString(2));
-                product.setDescription(rs.getString(3));
-                product.setPrice(rs.getFloat(4));
-                product.setImage(rs.getString(5));
+                product.setName(rs.getString("nome"));
+                product.setDescription(rs.getString("descrizione"));
+                product.setPrice(rs.getFloat("prezzo"));
+                product.setImage(rs.getString("immagine"));
                 product.addGenere(rs.getString("genere"));
             }
             while (rs.next()) {
