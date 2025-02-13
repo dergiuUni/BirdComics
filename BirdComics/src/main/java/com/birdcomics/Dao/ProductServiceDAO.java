@@ -7,7 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.Utils.DBUtil;
@@ -106,7 +109,7 @@ public class ProductServiceDAO {
 
     public List<ProductBean> getAllProducts() throws SQLException {
         List<ProductBean> products = new ArrayList<>();
-
+        Map<Integer, ProductBean> productMap = new HashMap<Integer, ProductBean>();
         Connection con = DBUtil.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -118,21 +121,26 @@ public class ProductServiceDAO {
         	 ps = con.prepareStatement("select * from Fumetto, Genere_Fumetto where id=idFumetto");
             rs = ps.executeQuery();
             
+            
             while (rs.next()) {
-                ProductBean product = new ProductBean();
-                product.setId(rs.getInt(1));
-                product.setName(rs.getString(2));
-                product.setDescription(rs.getString(3));
-                product.setPrice(rs.getFloat(4));
-                product.setImage(rs.getString(5));
-                
-                product.addGenere(rs.getString("genere"));
-                //ps.setString(7, product.getImage());
-                // Assuming prodImage is stored as Blob or InputStream in the database
-                // product.setProdImage(rs.getAsciiStream(7)); // Uncomment and adjust if needed
+                int productId = rs.getInt("id");
+                ProductBean product = productMap.get(productId);
 
-                products.add(product);
+                if (product == null) {
+                    product = new ProductBean();
+                    product.setId(productId);
+                    product.setName(rs.getString("nome"));
+                    product.setDescription(rs.getString("descrizione"));
+                    product.setPrice(rs.getFloat("prezzo"));
+                    product.setImage(rs.getString("immagine"));
+                    productMap.put(productId, product);
+                }
+
+                product.addGenere(rs.getString("genere"));
             }
+
+            products.addAll(productMap.values());
+            
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -185,21 +193,25 @@ public class ProductServiceDAO {
             ps.setString(1, type);
             rs = ps.executeQuery();
 
+            Map<Integer, ProductBean> productMap = new HashMap<Integer, ProductBean>();
             while (rs.next()) {
+                int productId = rs.getInt("id");
+                ProductBean product = productMap.get(productId);
 
-                ProductBean product = new ProductBean();
+                if (product == null) {
+                    product = new ProductBean();
+                    product.setId(productId);
+                    product.setName(rs.getString("nome"));
+                    product.setDescription(rs.getString("descrizione"));
+                    product.setPrice(rs.getFloat("prezzo"));
+                    product.setImage(rs.getString("immagine"));
+                    productMap.put(productId, product);
+                }
 
-                product.setId(rs.getInt(1));
-                product.setName(rs.getString(2));
-                product.setDescription(rs.getString(3));
-                product.setPrice(rs.getFloat(4));
-                product.setImage(rs.getString(5));
-                // Assuming prodImage is stored as Blob or InputStream in the database
-                // product.setProdImage(rs.getAsciiStream(7)); // Uncomment and adjust if needed
-
-                products.add(product);
-
+                product.addGenere(rs.getString("genere"));
             }
+
+            products.addAll(productMap.values());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -235,18 +247,26 @@ public class ProductServiceDAO {
 
             rs = ps.executeQuery();
 
+            
+            Map<Integer, ProductBean> productMap = new HashMap<Integer, ProductBean>();
             while (rs.next()) {
-                ProductBean product = new ProductBean();
-                product.setId(rs.getInt(1));
-                product.setName(rs.getString(2));
-                product.setDescription(rs.getString(3));
-                product.setPrice(rs.getFloat(4));
-                product.setImage(rs.getString(5));
-                // Assuming prodImage is stored as Blob or InputStream in the database
-                // product.setProdImage(rs.getAsciiStream("image")); // Uncomment and adjust if needed
+                int productId = rs.getInt("id");
+                ProductBean product = productMap.get(productId);
 
-                products.add(product);
+                if (product == null) {
+                    product = new ProductBean();
+                    product.setId(productId);
+                    product.setName(rs.getString("nome"));
+                    product.setDescription(rs.getString("descrizione"));
+                    product.setPrice(rs.getFloat("prezzo"));
+                    product.setImage(rs.getString("immagine"));
+                    productMap.put(productId, product);
+                }
+
+                product.addGenere(rs.getString("genere"));
             }
+
+            products.addAll(productMap.values());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -291,18 +311,26 @@ public class ProductServiceDAO {
 
             rs = ps.executeQuery();
 
+            
+            Map<Integer, ProductBean> productMap = new HashMap<Integer, ProductBean>();
             while (rs.next()) {
-                ProductBean product = new ProductBean();
-                product.setId(rs.getInt(1));
-                product.setName(rs.getString(2));
-                product.setDescription(rs.getString(3));
-                product.setPrice(rs.getFloat(4));
-                product.setImage(rs.getString(5));
-                // Assuming prodImage is stored as Blob or InputStream in the database
-                // product.setProdImage(rs.getAsciiStream("image")); // Uncomment and adjust if needed
+                int productId = rs.getInt("id");
+                ProductBean product = productMap.get(productId);
 
-                products.add(product);
+                if (product == null) {
+                    product = new ProductBean();
+                    product.setId(productId);
+                    product.setName(rs.getString("nome"));
+                    product.setDescription(rs.getString("descrizione"));
+                    product.setPrice(rs.getFloat("prezzo"));
+                    product.setImage(rs.getString("immagine"));
+                    productMap.put(productId, product);
+                }
+
+                product.addGenere(rs.getString("genere"));
             }
+
+            products.addAll(productMap.values());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -338,7 +366,7 @@ public class ProductServiceDAO {
         
         try {
             //ps = con.prepareStatement("SELECT * FROM Fumetto WHERE id=? AND active = 1");
-            ps = con.prepareStatement("SELECT * FROM Fumetto WHERE id=?");
+            ps = con.prepareStatement("select * from Fumetto, Genere_Fumetto where id=idFumetto and id=?");
             ps.setInt(1,idfumetto );
             rs = ps.executeQuery();
 
@@ -349,9 +377,12 @@ public class ProductServiceDAO {
                 product.setDescription(rs.getString(3));
                 product.setPrice(rs.getFloat(4));
                 product.setImage(rs.getString(5));
-                // Assuming prodImage is stored as Blob or InputStream in the database
-                // product.setProdImage(rs.getAsciiStream("image")); // Uncomment and adjust if needed
+                product.addGenere(rs.getString("genere"));
             }
+            while (rs.next()) {
+            	product.addGenere(rs.getString("genere"));
+            }
+
 
         } catch (SQLException e) {
             e.printStackTrace();

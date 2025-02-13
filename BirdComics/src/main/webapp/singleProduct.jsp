@@ -32,7 +32,7 @@
         <!-- Right Column / Product Details -->
         <div class="right-column">
             <div class="product-description">
-           <h4 style="display: inline;">Genere:</h4>
+           <h4 style="display: inline;">Genere: <%=product.getGeneri()%></h4>
                 <span></span>
                 <h4><%=product.getName()%></h4>
             </div>

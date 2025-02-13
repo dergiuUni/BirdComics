@@ -41,6 +41,9 @@ public class ProductListServlet extends HttpServlet {
                 message = "Search results for '" + search + "'";
             } else {
                 products = catalogoService.getAllProducts();  // Chiamata al servizio per ottenere tutti i prodotti
+                for (ProductBean x : products) {
+                	System.out.println(x.getId());
+                }                
                 message = "All Products";
             }
 

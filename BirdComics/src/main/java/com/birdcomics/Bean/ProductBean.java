@@ -1,6 +1,7 @@
 package com.birdcomics.Bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("serial")
@@ -12,7 +13,7 @@ public class ProductBean implements Serializable {
     private float price; // corrisponde a prezzo
     private String image;
     //private boolean active; // corrisponde a active
-    private List<GenereBean> generi;
+    private List<GenereBean> generi = new ArrayList<GenereBean>();
 
     public ProductBean() {
     }
@@ -27,8 +28,12 @@ public class ProductBean implements Serializable {
     }
 
     
-    public List<GenereBean> getGeneri() {
-		return generi;
+    public String getGeneri() {
+		String x = "";
+		for (GenereBean s : generi) {
+			x += " " + s.toString();
+		}
+    	return x;
 	}
     
 	public void addGenere(GenereBean genere) {
@@ -97,4 +102,5 @@ public class ProductBean implements Serializable {
 		}
 		return false;
 	}
+	
 }
