@@ -1,15 +1,13 @@
-package com.birdcomics.Dao;
+package com.birdcomics.Unit.Dao;
 
 import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Dao.ProductServiceDAO;
 import com.birdcomics.Utils.DBUtil;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;

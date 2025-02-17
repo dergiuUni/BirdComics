@@ -1,4 +1,4 @@
-package com.birdcomics.test_gestioneProfili;
+package com.birdcomics.Unit.test_gestioneProfili;
 
 import com.birdcomics.Bean.RuoloBean;
 import com.birdcomics.Bean.UserBean;
