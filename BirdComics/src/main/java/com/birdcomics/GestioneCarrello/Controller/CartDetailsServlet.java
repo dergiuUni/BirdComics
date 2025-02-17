@@ -28,7 +28,7 @@ public class CartDetailsServlet extends HttpServlet {
         this.cartService = new CarelloServiceImpl();  // Inizializza con l'implementazione di default
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
 
@@ -83,7 +83,7 @@ public class CartDetailsServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             response.sendRedirect("error.jsp");
         }
     }
@@ -94,7 +94,7 @@ public class CartDetailsServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             response.sendRedirect("error.jsp");
         }
     }

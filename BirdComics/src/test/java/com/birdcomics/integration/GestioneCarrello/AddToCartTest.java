@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneCarrello;
+package com.birdcomics.integration.GestioneCarrello;
 
 import com.birdcomics.GestioneCarrello.Controller.AddToCart;
 import com.birdcomics.GestioneCarrello.Service.CarrelloService;
