@@ -24,7 +24,7 @@ public class ListaMagazziniServlet extends HttpServlet {
         this.magazzinoService = new MagazzinoServiceImpl();  // Inizializzazione del servizio
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             List<MagazzinoBean> listaMagazzini = magazzinoService.getAllMagazzini();
             request.setAttribute("listaMagazzini", listaMagazzini);
@@ -35,7 +35,7 @@ public class ListaMagazziniServlet extends HttpServlet {
         request.getRequestDispatcher("listaMagazzini.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 }

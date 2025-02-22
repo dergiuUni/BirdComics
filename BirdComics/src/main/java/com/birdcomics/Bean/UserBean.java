@@ -61,6 +61,16 @@ public class UserBean implements Serializable {
 	public  String getNome() {
 		return nome;
 	}
+	
+	
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
 
 	public  String getCognome() {
 		return cognome;
@@ -68,6 +78,10 @@ public class UserBean implements Serializable {
 	
 	public  String getNumeroTelefono() {
 		return numeroTelefono;
+	}
+	
+	public void setNumeroTelefono(String numeroTelefono) {
+		this.numeroTelefono = numeroTelefono;
 	}
 
 	public  Date getDataNascita() {

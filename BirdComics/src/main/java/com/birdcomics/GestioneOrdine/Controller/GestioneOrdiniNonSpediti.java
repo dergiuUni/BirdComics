@@ -26,7 +26,7 @@ public class GestioneOrdiniNonSpediti extends HttpServlet {
         this.ordineService = new OrdineServiceImpl();  // Inizializza il servizio
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<OrderBean> products = new ArrayList<>();
         String message = "";
 
@@ -48,7 +48,7 @@ public class GestioneOrdiniNonSpediti extends HttpServlet {
         request.getRequestDispatcher("/visualizzaOrdiniNonSpediti.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 }

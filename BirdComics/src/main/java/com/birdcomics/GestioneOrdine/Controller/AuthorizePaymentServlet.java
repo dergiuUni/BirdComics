@@ -41,7 +41,7 @@ public class AuthorizePaymentServlet extends HttpServlet {
 	public AuthorizePaymentServlet() {
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CartServiceDAO carts = new CartServiceDAO();
 		ProductBean p = new ProductBean();
 		ProductServiceDAO ps = new ProductServiceDAO();
@@ -137,6 +137,7 @@ public class AuthorizePaymentServlet extends HttpServlet {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
+			response.sendRedirect("error.jsp");
 		}
 		
 	}

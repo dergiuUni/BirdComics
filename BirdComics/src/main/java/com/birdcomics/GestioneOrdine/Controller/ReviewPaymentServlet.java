@@ -22,7 +22,7 @@ public class ReviewPaymentServlet extends HttpServlet {
         this.ordineService = new OrdineServiceImpl(); // Inizializza il servizio
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String paymentId = request.getParameter("paymentId");
         String payerId = request.getParameter("PayerID");

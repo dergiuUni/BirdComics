@@ -38,14 +38,14 @@ import com.birdcomics.Bean.UserBean;
 @WebServlet("/GestioneMagazziniere")
 public class GestioneMagazziniere extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private MagazzinoService magazzinoService;
+    public MagazzinoService magazzinoService;
 
     public GestioneMagazziniere() {
         super();
         this.magazzinoService = new MagazzinoServiceImpl();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = (String) request.getSession().getAttribute("username");
         String message = "";
@@ -72,7 +72,7 @@ public class GestioneMagazziniere extends HttpServlet {
         request.getRequestDispatcher("listaScaffali.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
     }
