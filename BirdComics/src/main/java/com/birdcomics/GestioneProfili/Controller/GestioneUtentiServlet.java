@@ -41,11 +41,11 @@ public class GestioneUtentiServlet extends HttpServlet {
         List<UserBean> utenti = new ArrayList<>();
         List<String> userTypes = (List<String>) session.getAttribute("usertype"); 
         
-        String username = (String) request.getSession().getAttribute("username");
+        String email = (String) request.getSession().getAttribute("email");
         UserBean u = new UserBean();
         
         try {
-            u = profileService.getUserDetails(username);
+            u = profileService.getUserDetails(email);
 
             if(userTypes.contains(RuoloBean.GestoreGenerale.toString())) {
                 ruoloUtenti.add(RuoloBean.GestoreMagazzino);

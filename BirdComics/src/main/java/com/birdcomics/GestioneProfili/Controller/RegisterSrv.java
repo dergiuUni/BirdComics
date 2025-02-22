@@ -36,7 +36,7 @@ public class RegisterSrv extends HttpServlet {
         response.setContentType("text/html");
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
-        String email = request.getParameter("email");
+        String emailP = request.getParameter("email");
         String telefono = request.getParameter("telefono");
         String citta = request.getParameter("nomeCitta");
         String via = request.getParameter("via");
@@ -61,22 +61,22 @@ public class RegisterSrv extends HttpServlet {
         if (password != null && password.equals(confirmPassword)) {
 
             HttpServletRequest httpRequest = (HttpServletRequest) request;
-            String username = (String) httpRequest.getSession().getAttribute("username");
+            String email = (String) httpRequest.getSession().getAttribute("email");
             ArrayList<RuoloBean> ruoli = new ArrayList<RuoloBean>();
 
             try {
-                if (username == null || username.equals("null")) {
+                if (email == null || email.equals("null")) {
                     ruoli.add(RuoloBean.Cliente);
-                    status = profileService.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
+                    status = profileService.registerUser(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
                 } else {
-                    UserBean at = profileService.getUserDetails(username);
+                    UserBean at = profileService.getUserDetails(emailP);
                     if (at.isRuolo(RuoloBean.GestoreGenerale)) {
                         ruoli.add(RuoloBean.GestoreMagazzino);
-                        status = profileService.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
+                        status = profileService.registerUser(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
                     }
                     if (at.isRuolo(RuoloBean.GestoreMagazzino)) {
                         ruoli.add(RuoloBean.RisorseUmane);
-                        status = profileService.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
+                        status = profileService.registerUser(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
                     }
                     if (at.isRuolo(RuoloBean.RisorseUmane)) {
                         String[] ruoliSelezionati = request.getParameterValues("ruoli");
@@ -84,7 +84,7 @@ public class RegisterSrv extends HttpServlet {
                             for (String ruolo : ruoliSelezionati) {
                                 ruoli.add(RuoloBean.fromString(ruolo));
                             }
-                            status = profileService.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
+                            status = profileService.registerUser(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
                         }
                     }
                 }

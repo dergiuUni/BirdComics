@@ -191,7 +191,7 @@ public class UserServiceDAO {
 
 	
 	public String isValidCredential(String emailId, String password) throws SQLException {
-		String status = "Login Denied! Incorrect Username or Password";
+		String status = "Login Denied! Incorrect email or Password";
 
 		Connection con = DBUtil.getConnection();
 

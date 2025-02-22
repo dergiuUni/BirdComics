@@ -33,9 +33,9 @@ public class CartDetailsServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         // Verifica le credenziali dell'utente
-        String userName = (String) request.getSession().getAttribute("username");
+        String email = (String) request.getSession().getAttribute("email");
 
-        if (userName == null) {
+        if (email == null) {
             response.sendRedirect("login.jsp?message=Session Expired, Login Again!!");
             return;
         }
@@ -65,7 +65,7 @@ public class CartDetailsServlet extends HttpServlet {
         }
 
         // Ottieni gli articoli del carrello
-        List<CartBean> cartItems = cartService.getCartItems(userName);
+        List<CartBean> cartItems = cartService.getCartItems(email);
         List<ProductBean> products = cartService.getProductsFromCart(cartItems);
 
         // Calcola il totale

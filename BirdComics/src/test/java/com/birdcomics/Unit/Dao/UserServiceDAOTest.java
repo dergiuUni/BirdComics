@@ -173,7 +173,7 @@ public class UserServiceDAOTest {
         String result = userServiceDAO.isValidCredential(email, password);
 
         // Verifica il risultato
-        assertEquals("Login Denied! Incorrect Username or Password", result);
+        assertEquals("Login Denied! Incorrect email or Password", result);
     }
 
     @Test

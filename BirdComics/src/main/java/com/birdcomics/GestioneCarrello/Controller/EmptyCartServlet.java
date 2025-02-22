@@ -23,9 +23,9 @@ public class EmptyCartServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String userName = (String) session.getAttribute("username");
+        String email = (String) session.getAttribute("email");
 
-        if (userName == null) {
+        if (email == null) {
             response.sendRedirect("login.jsp?message=Session Expired, Login Again!!");
             return;
         }
@@ -33,7 +33,7 @@ public class EmptyCartServlet extends HttpServlet {
         CarelloServiceImpl cartService = new CarelloServiceImpl(); // Usa il servizio
 
         try {
-            cartService.emptyCart(userName); // Svuota il carrello
+            cartService.emptyCart(email); // Svuota il carrello
         } catch (SQLException e) {
             e.printStackTrace();
             response.sendRedirect("error.jsp?message=Errore durante lo svuotamento del carrello");

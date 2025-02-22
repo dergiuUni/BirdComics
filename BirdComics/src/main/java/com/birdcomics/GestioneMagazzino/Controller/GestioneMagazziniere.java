@@ -47,12 +47,12 @@ public class GestioneMagazziniere extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = (String) request.getSession().getAttribute("username");
+        String email = (String) request.getSession().getAttribute("email");
         String message = "";
 
         try {
             UserBean user = new UserBean();
-            user.setEmail(username);
+            user.setEmail(email);
             List<ScaffaliBean> products = magazzinoService.getScaffaleMagazzino(user);
 
             message = "Showing Results ";

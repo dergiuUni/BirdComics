@@ -24,11 +24,11 @@ public class UserProfileServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userName = (String) request.getSession().getAttribute("username");
-        if (userName != null) {
+        String email = (String) request.getSession().getAttribute("email");
+        if (email != null) {
             try {
                 // Usa ProfileService per ottenere i dettagli dell'utente
-                UserBean user = profileService.getUserDetails(userName);
+                UserBean user = profileService.getUserDetails(email);
                 request.setAttribute("user", user);  // Imposta l'utente nella request
             } catch (SQLException e) {
                 e.printStackTrace();

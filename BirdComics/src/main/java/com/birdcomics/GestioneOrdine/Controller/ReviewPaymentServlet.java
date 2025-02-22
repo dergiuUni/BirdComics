@@ -26,12 +26,12 @@ public class ReviewPaymentServlet extends HttpServlet {
             throws ServletException, IOException {
         String paymentId = request.getParameter("paymentId");
         String payerId = request.getParameter("PayerID");
-        String username = (String) request.getSession().getAttribute("username");
+        String email = (String) request.getSession().getAttribute("email");
 
         try {
-            if (paymentId != null && payerId != null && username != null) {
+            if (paymentId != null && payerId != null && email != null) {
                 // Usa il servizio per processare il pagamento e creare l'ordine
-                ordineService.processPaymentAndCreateOrder(paymentId, payerId, username);
+                ordineService.processPaymentAndCreateOrder(paymentId, payerId, email);
                 // Reindirizza alla home page dopo l'elaborazione
                 response.sendRedirect("index.jsp");
             } else {

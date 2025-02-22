@@ -387,23 +387,23 @@ public class CartServiceDAOTest {
     
     @Test
     void testDeleteAllCartItems() throws SQLException {
-        String userName = "client@example.com";
+        String email = "client@example.com";
 
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeUpdate()).thenReturn(1);
 
-        cartServiceDAO.deleteAllCartItems(userName);
+        cartServiceDAO.deleteAllCartItems(email);
 
         verify(preparedStatement, times(1)).executeUpdate();
     }
     @Test
     void testDeleteAllCartItems_NoItems() throws SQLException {
-        String userName = "empty@example.com";
+        String email = "empty@example.com";
 
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeUpdate()).thenReturn(0); // Nessuna riga eliminata
 
-        cartServiceDAO.deleteAllCartItems(userName);
+        cartServiceDAO.deleteAllCartItems(email);
 
         verify(preparedStatement, times(1)).executeUpdate();
     }

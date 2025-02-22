@@ -24,7 +24,7 @@ public interface OrdineService {
 
 	List<OrderBean> getOrdiniNonSpediti() throws SQLException;
 
-	List<OrderBean> getOrdiniPerUtente(String userName) throws SQLException;
+	List<OrderBean> getOrdiniPerUtente(String email) throws SQLException;
 
-	void processPaymentAndCreateOrder(String paymentId, String payerId, String username) throws SQLException;
+	void processPaymentAndCreateOrder(String paymentId, String payerId, String email) throws SQLException;
 }

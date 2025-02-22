@@ -28,13 +28,13 @@ public class LoginSrv extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String userName = request.getParameter("username");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         // Usa il ProfileService per validare le credenziali e ottenere i dettagli dell'utente
-        String status = "Login Denied! Invalid Username or password.";
+        String status = "Login Denied! Invalid email or password.";
         try {
-            status = profileService.validateCredentials(userName, password);
+            status = profileService.validateCredentials(email, password);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,13 +42,13 @@ public class LoginSrv extends HttpServlet {
         if ("valid".equalsIgnoreCase(status)) {
             try {
                 // Ottieni i dettagli dell'utente e il ruolo tramite il servizio
-                UserBean user = profileService.getUserDetails(userName);
-                List<String> userType = profileService.getUserTypes(userName);
+                UserBean user = profileService.getUserDetails(email);
+                List<String> userType = profileService.getUserTypes(email);
 
                 // Gestisci la sessione
                 HttpSession session = request.getSession();
                 session.setAttribute("userdata", user);
-                session.setAttribute("username", userName);
+                session.setAttribute("email", email);
                 session.setAttribute("usertype", userType);
 
                 // Redirigi all'UserProfileServlet

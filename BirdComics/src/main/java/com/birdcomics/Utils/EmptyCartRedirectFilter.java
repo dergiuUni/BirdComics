@@ -23,11 +23,11 @@ public class EmptyCartRedirectFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        String username = (String) httpRequest.getSession().getAttribute("username");
+        String email = (String) httpRequest.getSession().getAttribute("email");
 
-        if (username != null) {
+        if (email != null) {
             try {
-                int cartItemCount = cartService.getCartCount(username);
+                int cartItemCount = cartService.getCartCount(email);
 
                 if (cartItemCount == 0) {
                     // Cart is empty, redirect to index.jsp

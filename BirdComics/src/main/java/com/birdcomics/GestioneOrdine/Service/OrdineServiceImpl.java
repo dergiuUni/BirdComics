@@ -109,17 +109,17 @@ public class OrdineServiceImpl implements OrdineService {
 
 
 	@Override
-	public List<OrderBean> getOrdiniPerUtente(String userName) throws SQLException {
-		return orderServiceDAO.getAllOrderDetails(userName);  // Chiama il DAO per ottenere gli ordini di un utente
+	public List<OrderBean> getOrdiniPerUtente(String email) throws SQLException {
+		return orderServiceDAO.getAllOrderDetails(email);  // Chiama il DAO per ottenere gli ordini di un utente
 	}
 
 
-	public void processPaymentAndCreateOrder(String paymentId, String payerId, String username) throws SQLException {
+	public void processPaymentAndCreateOrder(String paymentId, String payerId, String email) throws SQLException {
 		// Ottieni i dettagli dell'utente
-		UserBean u = userServiceDAO.getUserDetails(username);
+		UserBean u = userServiceDAO.getUserDetails(email);
 
 		// Elimina gli articoli dal carrello
-		cartServiceDAO.deleteAllCartItems(username);
+		cartServiceDAO.deleteAllCartItems(email);
 
 		// Esegui il pagamento tramite PayPal
 		PaymentServices paymentServices = new PaymentServices();

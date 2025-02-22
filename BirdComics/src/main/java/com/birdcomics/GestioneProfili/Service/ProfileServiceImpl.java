@@ -26,8 +26,8 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
-	public UserBean getUserDetails(String username) throws SQLException {
-		return userDao.getUserDetails(username);
+	public UserBean getUserDetails(String email) throws SQLException {
+		return userDao.getUserDetails(email);
 	}
 
 	@Override
@@ -42,14 +42,14 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
-	public String validateCredentials(String userName, String password) throws SQLException {
-		return userDao.isValidCredential(userName, password); // Delegato al DAO
+	public String validateCredentials(String email, String password) throws SQLException {
+		return userDao.isValidCredential(email, password); // Delegato al DAO
 	}
 
 	@Override
-	public List<String> getUserTypes(String userName) throws SQLException {
+	public List<String> getUserTypes(String email) throws SQLException {
 		List<String> userTypes = new ArrayList<>();
-		List<RuoloBean> roles = userDao.getUserType(userName);
+		List<RuoloBean> roles = userDao.getUserType(email);
 		for (RuoloBean role : roles) {
 			userTypes.add(role.toString());
 		}

@@ -49,7 +49,7 @@ class UpdateToCartTest {
 
     @Test
     void testDoGet_SessionExpired() throws ServletException, IOException {
-        when(session.getAttribute("username")).thenReturn(null);
+        when(session.getAttribute("email")).thenReturn(null);
         
         updateToCartServlet.doGet(request, response);
         
@@ -59,7 +59,7 @@ class UpdateToCartTest {
     @Test
     void testDoGet_SuccessfulUpdate() throws Exception {
         // Mock session and parameters
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
         when(request.getParameter("pid")).thenReturn("123");
         when(request.getParameter("pqty")).thenReturn("3");
         
@@ -97,7 +97,7 @@ class UpdateToCartTest {
 
     @Test
     void testDoGet_InsufficientQuantity() throws Exception {
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
         when(request.getParameter("pid")).thenReturn("123");
         when(request.getParameter("pqty")).thenReturn("10"); // Quantity > available
         
@@ -132,7 +132,7 @@ class UpdateToCartTest {
 
     @Test
     void testDoGet_SQLException() throws Exception {
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
         when(request.getParameter("pid")).thenReturn("123");
         when(request.getParameter("pqty")).thenReturn("2");
         
@@ -159,7 +159,7 @@ class UpdateToCartTest {
 
     @Test
     void testDoPost_CallsDoGet() throws ServletException, IOException {
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
         when(request.getParameter("pid")).thenReturn("123");
         when(request.getParameter("pqty")).thenReturn("2");
         

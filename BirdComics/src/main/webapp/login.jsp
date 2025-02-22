@@ -26,7 +26,7 @@
 			<div class="row">
 				<div class="col-md-12 form-group">
 					<label for="email">Email</label> <input type="email"
-						class="form-control" id="username" name="username"
+						class="form-control" id="email" name="email"
 						placeholder="Enter Email" required>
 				</div>
 			</div>

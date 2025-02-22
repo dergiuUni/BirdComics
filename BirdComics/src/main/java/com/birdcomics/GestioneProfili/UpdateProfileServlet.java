@@ -13,14 +13,14 @@ public class UpdateProfileServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*
-		String userName = (String) request.getSession().getAttribute("username");
+		String email = (String) request.getSession().getAttribute("email");
 
 		// Retrieve user from session
 
-		if (userName != null) {
+		if (email != null) {
 			UserServiceDAO dao = new UserServiceDAO();
 			try {
-				dao.updateUserDetails(userName, password, request.getParameter("fullName"), request.getParameter("cognome"), request.getParameter("telefono"), request.getParameter("nomeCitta"), request.getParameter("via"), Integer.parseInt(request.getParameter("numeroCivico")), request.getParameter("cap"));		
+				dao.updateUserDetails(email, password, request.getParameter("fullName"), request.getParameter("cognome"), request.getParameter("telefono"), request.getParameter("nomeCitta"), request.getParameter("via"), Integer.parseInt(request.getParameter("numeroCivico")), request.getParameter("cap"));		
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
