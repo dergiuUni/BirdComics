@@ -18,6 +18,34 @@ public class UserBean implements Serializable {
 
 
 
+	public ArrayList<RuoloBean> getRuolo() {
+		return ruolo;
+	}
+
+	public void setRuolo(ArrayList<RuoloBean> ruolo) {
+		this.ruolo = ruolo;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+	public void setNumeroTelefono(String numeroTelefono) {
+		this.numeroTelefono = numeroTelefono;
+	}
+
+	public void setDataNascita(java.sql.Date dataNascita) {
+		this.dataNascita = dataNascita;
+	}
+
 	public UserBean() {
     }
 
@@ -64,13 +92,6 @@ public class UserBean implements Serializable {
 	
 	
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
 
 	public  String getCognome() {
 		return cognome;
@@ -78,10 +99,6 @@ public class UserBean implements Serializable {
 	
 	public  String getNumeroTelefono() {
 		return numeroTelefono;
-	}
-	
-	public void setNumeroTelefono(String numeroTelefono) {
-		this.numeroTelefono = numeroTelefono;
 	}
 
 	public  Date getDataNascita() {

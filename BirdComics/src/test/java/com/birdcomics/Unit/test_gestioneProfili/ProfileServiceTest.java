@@ -1,4 +1,4 @@
-package com.birdcomics.test_gestioneProfili;
+package com.birdcomics.Unit.test_gestioneProfili;
 
 import com.birdcomics.Bean.RuoloBean;
 import com.birdcomics.Bean.UserBean;
@@ -37,34 +37,34 @@ class ProfileServiceTest {
     @Test
     void testGetUserDetails_Success() throws SQLException {
         // Configura il mock
-        String username = "test@example.com";
+        String email = "test@example.com";
         UserBean expectedUser = new UserBean();
-        expectedUser.setEmail(username);
-        when(userDao.getUserDetails(username)).thenReturn(expectedUser);
+        expectedUser.setEmail(email);
+        when(userDao.getUserDetails(email)).thenReturn(expectedUser);
 
         // Esegui il metodo da testare
-        UserBean result = profileService.getUserDetails(username);
+        UserBean result = profileService.getUserDetails(email);
 
         // Verifica il risultato
         assertNotNull(result);
-        assertEquals(username, result.getEmail());
+        assertEquals(email, result.getEmail());
 
         // Verifica che il metodo del DAO sia stato chiamato
-        verify(userDao, times(1)).getUserDetails(username);
+        verify(userDao, times(1)).getUserDetails(email);
     }
 
     // Test di fallimento
     @Test
     void testGetUserDetails_Fail() throws SQLException {
         // Configura il mock per simulare un errore
-        String username = "test@example.com";
-        when(userDao.getUserDetails(username)).thenThrow(new SQLException("Database error"));
+        String email = "test@example.com";
+        when(userDao.getUserDetails(email)).thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare e verifica che sollevi un'eccezione
-        assertThrows(SQLException.class, () -> profileService.getUserDetails(username));
+        assertThrows(SQLException.class, () -> profileService.getUserDetails(email));
 
         // Verifica che il metodo del DAO sia stato chiamato
-        verify(userDao, times(1)).getUserDetails(username);
+        verify(userDao, times(1)).getUserDetails(email);
     }
 
     // Test di successo
@@ -138,48 +138,48 @@ class ProfileServiceTest {
     @Test
     void testValidateCredentials_Success() throws SQLException {
         // Configura il mock
-        String username = "test@example.com";
+        String email = "test@example.com";
         String password = "password123";
         String expectedResult = "SUCCESS";
-        when(userDao.isValidCredential(username, password)).thenReturn(expectedResult);
+        when(userDao.isValidCredential(email, password)).thenReturn(expectedResult);
 
         // Esegui il metodo da testare
-        String result = profileService.validateCredentials(username, password);
+        String result = profileService.validateCredentials(email, password);
 
         // Verifica il risultato
         assertEquals(expectedResult, result);
 
         // Verifica che il metodo del DAO sia stato chiamato
-        verify(userDao, times(1)).isValidCredential(username, password);
+        verify(userDao, times(1)).isValidCredential(email, password);
     }
 
     // Test di fallimento
     @Test
     void testValidateCredentials_Fail() throws SQLException {
         // Configura il mock per simulare un errore
-        String username = "test@example.com";
+        String email = "test@example.com";
         String password = "password123";
-        when(userDao.isValidCredential(username, password)).thenThrow(new SQLException("Database error"));
+        when(userDao.isValidCredential(email, password)).thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare e verifica che sollevi un'eccezione
-        assertThrows(SQLException.class, () -> profileService.validateCredentials(username, password));
+        assertThrows(SQLException.class, () -> profileService.validateCredentials(email, password));
 
         // Verifica che il metodo del DAO sia stato chiamato
-        verify(userDao, times(1)).isValidCredential(username, password);
+        verify(userDao, times(1)).isValidCredential(email, password);
     }
 
     // Test di successo
     @Test
     void testGetUserTypes_Success() throws SQLException {
         // Configura il mock
-        String username = "test@example.com";
+        String email = "test@example.com";
         List<RuoloBean> roles = new ArrayList<>();
         roles.add(RuoloBean.GestoreGenerale); // Usa i valori dell'enum
         roles.add(RuoloBean.Cliente);
-        when(userDao.getUserType(username)).thenReturn(roles);
+        when(userDao.getUserType(email)).thenReturn(roles);
 
         // Esegui il metodo da testare
-        List<String> result = profileService.getUserTypes(username);
+        List<String> result = profileService.getUserTypes(email);
 
         // Verifica il risultato
         assertNotNull(result);
@@ -188,21 +188,21 @@ class ProfileServiceTest {
         assertTrue(result.contains("Cliente"));
 
         // Verifica che il metodo del DAO sia stato chiamato
-        verify(userDao, times(1)).getUserType(username);
+        verify(userDao, times(1)).getUserType(email);
     }
 
     // Test di fallimento
     @Test
     void testGetUserTypes_Fail() throws SQLException {
         // Configura il mock per simulare un errore
-        String username = "test@example.com";
-        when(userDao.getUserType(username)).thenThrow(new SQLException("Database error"));
+        String email = "test@example.com";
+        when(userDao.getUserType(email)).thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare e verifica che sollevi un'eccezione
-        assertThrows(SQLException.class, () -> profileService.getUserTypes(username));
+        assertThrows(SQLException.class, () -> profileService.getUserTypes(email));
 
         // Verifica che il metodo del DAO sia stato chiamato
-        verify(userDao, times(1)).getUserType(username);
+        verify(userDao, times(1)).getUserType(email);
     }
 
     // Test di successo

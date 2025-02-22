@@ -1,3 +1,5 @@
+
+
 package com.birdcomics.GestioneOrdine.Controller;
 
 import javax.servlet.annotation.WebServlet;
@@ -25,13 +27,15 @@ public class OrderDetailsServlet extends HttpServlet {
         this.ordineService = new OrdineServiceImpl();  // Inizializza il servizio
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userName = (String) request.getSession().getAttribute("username");
 
-        if (userName != null) {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = (String) request.getSession().getAttribute("email");
+
+
+        if (email != null) {
             List<OrderBean> orders;
             try {
-                orders = ordineService.getOrdiniPerUtente(userName);  // Usa il servizio per ottenere gli ordini dell'utente
+                orders = ordineService.getOrdiniPerUtente(email);  // Usa il servizio per ottenere gli ordini dell'utente
 
                 // Passa gli ordini alla JSP
                 request.setAttribute("orders", orders);

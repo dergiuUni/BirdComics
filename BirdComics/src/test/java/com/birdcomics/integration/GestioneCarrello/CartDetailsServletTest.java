@@ -51,7 +51,7 @@ class CartDetailsServletTest {
     void testProcessRequest_SessionExpired() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione (utente non loggato)
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("username")).thenReturn(null);
+        when(session.getAttribute("email")).thenReturn(null);
 
         // Esegui il metodo processRequest
         cartDetailsServlet.processRequest(request, response);
@@ -64,7 +64,7 @@ class CartDetailsServletTest {
     void testProcessRequest_AddProductToCart() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
 
         // Configura i parametri della richiesta per aggiungere un prodotto
         when(request.getParameter("add")).thenReturn("1");
@@ -90,7 +90,7 @@ class CartDetailsServletTest {
     void testProcessRequest_RemoveProductFromCart() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
 
         // Configura i parametri della richiesta per rimuovere un prodotto
         when(request.getParameter("add")).thenReturn("0");
@@ -118,7 +118,7 @@ class CartDetailsServletTest {
     void testProcessRequest_GetCartDetails() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
 
         // Configura i parametri della richiesta (nessuna azione di aggiunta/rimozione)
         when(request.getParameter("add")).thenReturn(null);

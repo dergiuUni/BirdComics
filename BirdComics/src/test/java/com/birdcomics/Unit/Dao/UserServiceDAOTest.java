@@ -1,15 +1,16 @@
-package com.birdcomics.Dao;
+package com.birdcomics.Unit.Dao;
 
-import com.birdcomics.Bean.IndirizzoBean;
 import com.birdcomics.Bean.RuoloBean;
 import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Dao.IndirizzoDao;
+import com.birdcomics.Dao.UserServiceDAO;
 import com.birdcomics.Utils.DBUtil;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -172,7 +173,7 @@ public class UserServiceDAOTest {
         String result = userServiceDAO.isValidCredential(email, password);
 
         // Verifica il risultato
-        assertEquals("Login Denied! Incorrect Username or Password", result);
+        assertEquals("Login Denied! Incorrect email or Password", result);
     }
 
     @Test

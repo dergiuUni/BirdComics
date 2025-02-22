@@ -1,7 +1,9 @@
-package com.birdcomics.Dao;
+package com.birdcomics.Unit.Dao;
 
 import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.Bean.ScaffaliBean;
+import com.birdcomics.Dao.ProductServiceDAO;
+import com.birdcomics.Dao.ScaffaleDao;
 import com.birdcomics.Utils.DBUtil;
 import org.junit.jupiter.api.*;
 import org.mockito.*;

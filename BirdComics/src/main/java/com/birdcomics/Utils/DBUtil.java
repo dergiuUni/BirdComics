@@ -36,13 +36,13 @@ public class DBUtil {
         String ip = "localhost";
         String port = "3306";
         String db = "BirdComics";
-        String username = "root";
+        String email = "root";
         String password = "root";
 
         return DriverManager.getConnection(
             "jdbc:mysql://" + ip + ":" + port + "/" + db +
             "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false", 
-            username, 
+            email, 
             password
         );
     }

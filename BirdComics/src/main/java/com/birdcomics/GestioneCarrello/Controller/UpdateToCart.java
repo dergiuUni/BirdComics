@@ -27,14 +27,14 @@ public class UpdateToCart extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String userName = (String) session.getAttribute("username");
+        String email = (String) session.getAttribute("email");
 
-        if (userName == null) {
+        if (email == null) {
             response.sendRedirect("login.jsp?message=Session Expired, Login Again!!");
             return;
         }
 
-        String userId = userName;
+        String userId = email;
         String prodId = request.getParameter("pid");
         int pQty = Integer.parseInt(request.getParameter("pqty"));
 

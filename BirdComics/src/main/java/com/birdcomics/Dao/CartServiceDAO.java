@@ -312,14 +312,14 @@ public class CartServiceDAO {
         return count;
     }
 
-	public void deleteAllCartItems(String userName) throws SQLException {
+	public void deleteAllCartItems(String email) throws SQLException {
 
 	        Connection con = DBUtil.getConnection();
 	        PreparedStatement ps = null;
 
 	        try {
 	            ps = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=?");
-	            ps.setString(1, userName);
+	            ps.setString(1, email);
 
 	            ps.executeUpdate();
 

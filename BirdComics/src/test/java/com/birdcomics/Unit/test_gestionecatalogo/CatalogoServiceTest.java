@@ -1,4 +1,4 @@
-package com.birdcomics.test_gestionecatalogo;
+package com.birdcomics.Unit.test_gestionecatalogo;
 
 import com.birdcomics.Bean.GenereBean;
 import com.birdcomics.Bean.ProductBean;

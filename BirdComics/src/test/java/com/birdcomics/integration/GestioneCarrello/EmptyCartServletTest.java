@@ -44,7 +44,7 @@ class EmptyCartServletTest {
     void testDoGet_SessionValid() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
 
         // Simula il comportamento del CarelloServiceImpl
         try (MockedConstruction<CarelloServiceImpl> mocked = mockConstruction(CarelloServiceImpl.class, (mock, context) -> {
@@ -66,7 +66,7 @@ class EmptyCartServletTest {
     void testDoGet_SessionExpired() throws ServletException, IOException {
         // Configura il mock della sessione (utente non loggato)
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("username")).thenReturn(null);
+        when(session.getAttribute("email")).thenReturn(null);
 
         // Esegui il metodo doGet
         emptyCartServlet.doGet(request, response);
@@ -79,7 +79,7 @@ class EmptyCartServletTest {
     void testDoGet_SQLException() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
 
         // Simula un'eccezione SQL durante lo svuotamento del carrello
         try (MockedConstruction<CarelloServiceImpl> mocked = mockConstruction(CarelloServiceImpl.class, (mock, context) -> {
@@ -98,7 +98,7 @@ class EmptyCartServletTest {
     void testDoPost_CallsDoGet() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
 
         // Simula il comportamento del CarelloServiceImpl
         try (MockedConstruction<CarelloServiceImpl> mocked = mockConstruction(CarelloServiceImpl.class, (mock, context) -> {

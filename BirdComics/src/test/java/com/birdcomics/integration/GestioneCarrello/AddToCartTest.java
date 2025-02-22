@@ -44,7 +44,7 @@ class AddToCartTest {
     void testDoPost_SessionValid() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
 
         // Configura i parametri della richiesta
         when(request.getParameter("pid")).thenReturn("123");
@@ -64,7 +64,7 @@ class AddToCartTest {
     void testDoPost_SessionExpired() throws ServletException, IOException {
         // Configura il mock della sessione (utente non loggato)
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("username")).thenReturn(null);
+        when(session.getAttribute("email")).thenReturn(null);
 
         // Esegui il metodo doPost
         addToCartServlet.doPost(request, response);
@@ -77,7 +77,7 @@ class AddToCartTest {
     void testDoPost_SQLException() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
 
         // Configura i parametri della richiesta
         when(request.getParameter("pid")).thenReturn("123");
@@ -97,7 +97,7 @@ class AddToCartTest {
     void testDoGet_CallsDoPost() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("username")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testUser");
 
         // Configura i parametri della richiesta
         when(request.getParameter("pid")).thenReturn("123");
