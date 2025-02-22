@@ -22,7 +22,7 @@ public class AuthenticationFilter implements Filter {
         HttpSession session = httpRequest.getSession(false); // Non crea una nuova sessione se non esiste
 
         // Verifica se l'utente è autenticato
-        if (session == null || session.getAttribute("username") == null || session.getAttribute("password") == null) {
+        if (session == null || session.getAttribute("email") == null || session.getAttribute("password") == null) {
             // Utente non autenticato, reindirizza al login
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.jsp?message=Session Expired, Login Again!!");
         } else {
