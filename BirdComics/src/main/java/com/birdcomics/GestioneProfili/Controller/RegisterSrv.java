@@ -23,14 +23,14 @@ import com.birdcomics.GestioneProfili.Service.ProfileServiceImpl;
 @WebServlet("/RegisterSrv")
 public class RegisterSrv extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private ProfileService profileService;
+    public ProfileService profileService;
 
     public RegisterSrv() {
         super();
         this.profileService = new ProfileServiceImpl(); // Usa ProfileService per la logica
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         response.setContentType("text/html");

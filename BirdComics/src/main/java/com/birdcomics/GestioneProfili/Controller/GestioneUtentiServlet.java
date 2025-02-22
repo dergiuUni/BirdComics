@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/GestioneUtentiServlet")
 public class GestioneUtentiServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private ProfileService profileService;
+    public ProfileService profileService;
 
     public GestioneUtentiServlet() {
         super();
@@ -35,7 +35,7 @@ public class GestioneUtentiServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         List<RuoloBean> ruoloUtenti = new ArrayList<>();
         List<UserBean> utenti = new ArrayList<>();

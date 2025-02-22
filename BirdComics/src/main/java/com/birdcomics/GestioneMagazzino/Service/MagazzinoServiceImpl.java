@@ -22,6 +22,7 @@ public class MagazzinoServiceImpl implements MagazzinoService {
     @Override
     public List<ScaffaliBean> getScaffaleMagazzino(UserBean user) throws SQLException {
         return scaffaleDao.getScaffaleMagazzino(user.getMagazzino().getNome());
+        //qui è null, mai impostato il magazzino
     }
     
     @Override

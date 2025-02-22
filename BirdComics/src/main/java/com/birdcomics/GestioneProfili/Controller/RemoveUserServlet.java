@@ -16,14 +16,14 @@ import com.birdcomics.GestioneProfili.Service.ProfileServiceImpl;
 public class RemoveUserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private ProfileService profileService;
+    public ProfileService profileService;
 
     public RemoveUserServlet() {
         super();
         this.profileService = new ProfileServiceImpl(); // Inizializza il servizio
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String userEmail = request.getParameter("userId");

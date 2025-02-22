@@ -19,14 +19,14 @@ import com.birdcomics.GestioneProfili.Service.ProfileServiceImpl;
 @WebServlet("/LoginSrv")
 public class LoginSrv extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private ProfileService profileService;
+    public ProfileService profileService;
 
     public LoginSrv() {
         super();
         this.profileService = new ProfileServiceImpl(); // Inizializza il servizio di profilo
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");

@@ -14,14 +14,14 @@ import com.birdcomics.GestioneProfili.Service.ProfileServiceImpl;
 @WebServlet("/LogoutSrv")
 public class LogoutSrv extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private ProfileService profileService;
+    public ProfileService profileService;
 
     public LogoutSrv() {
         super();
         this.profileService = new ProfileServiceImpl();  // Usa ProfileService per gestire il logout
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         response.setContentType("text/html");
