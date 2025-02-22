@@ -16,14 +16,14 @@ import com.birdcomics.GestioneProfili.Service.ProfileServiceImpl;
 public class UserProfileServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
-    private ProfileService profileService;
+    public ProfileService profileService;
 
     public UserProfileServlet() {
         super();
         this.profileService = new ProfileServiceImpl();  // Inizializza il servizio
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = (String) request.getSession().getAttribute("username");
         if (userName != null) {
             try {
@@ -35,5 +35,10 @@ public class UserProfileServlet extends HttpServlet {
             }
             request.getRequestDispatcher("/userProfile.jsp").forward(request, response);  // Forward alla pagina del profilo
         }
+        else {
+        	 response.sendRedirect("login.jsp?message=Session Expired, Login Again!!");
+             return; // Importante: interrompi l'esecuzione del metodo
+        }
+        	
     }
 }
