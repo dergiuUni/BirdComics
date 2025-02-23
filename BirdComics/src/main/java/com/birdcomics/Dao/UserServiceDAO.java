@@ -18,7 +18,7 @@ import com.birdcomics.Utils.DBUtil;
 public class UserServiceDAO {
 
 
-	public String registerUser(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, String nomeCitta, String via, int numeroCivico, String cap, ArrayList<RuoloBean> ruolo) throws SQLException {
+	public String registerUser(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, String nomeCitta, String via, String numeroCivico, String cap, ArrayList<RuoloBean> ruolo) throws SQLException {
 		IndirizzoBean indirizzo = new IndirizzoBean(nomeCitta, via, numeroCivico, cap);
 		UserBean user = new UserBean(email, password, nome, cognome, numeroTelefono, dataNascita, indirizzo, ruolo);
 
@@ -45,7 +45,7 @@ public class UserServiceDAO {
 	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cap) VALUES (?, ?, ?, ?)");
 	    		ps.setString(1, indirizzo.getNomeCitta());
 		        ps.setString(2, indirizzo.getVia());
-		        ps.setInt(3, indirizzo.getNumeroCivico());
+		        ps.setString(3, indirizzo.getNumeroCivico());
 		        ps.setString(4, indirizzo.getCap());
 		        ps.executeUpdate();
 	    	}
@@ -59,7 +59,7 @@ public class UserServiceDAO {
 	        ps.setString(5, user.getNumeroTelefono());
 	        ps.setString(6, indirizzo.getNomeCitta());
 	        ps.setString(7, indirizzo.getVia());
-	        ps.setInt(8, indirizzo.getNumeroCivico());
+	        ps.setString(8, indirizzo.getNumeroCivico());
 	        ps.setString(9, indirizzo.getCap());
 	        ps.setDate(10, (Date) user.getDataNascita());
 
@@ -88,7 +88,7 @@ public class UserServiceDAO {
 	}
 	
 	
-	public String registerUser(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, String nomeCitta, String via, int numeroCivico, String cap, ArrayList<RuoloBean> ruolo, String magazzino) throws SQLException {
+	public String registerUser(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, String nomeCitta, String via, String numeroCivico, String cap, ArrayList<RuoloBean> ruolo, String magazzino) throws SQLException {
 		IndirizzoBean indirizzo = new IndirizzoBean(nomeCitta, via, numeroCivico, cap);
 		UserBean user = new UserBean(email, password, nome, cognome, numeroTelefono, dataNascita, indirizzo, ruolo);
 
@@ -115,7 +115,7 @@ public class UserServiceDAO {
 	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cap) VALUES (?, ?, ?, ?)");
 	    		ps.setString(1, indirizzo.getNomeCitta());
 		        ps.setString(2, indirizzo.getVia());
-		        ps.setInt(3, indirizzo.getNumeroCivico());
+		        ps.setString(3, indirizzo.getNumeroCivico());
 		        ps.setString(4, indirizzo.getCap());
 		        ps.executeUpdate();
 	    	}
@@ -129,7 +129,7 @@ public class UserServiceDAO {
 	        ps.setString(5, user.getNumeroTelefono());
 	        ps.setString(6, indirizzo.getNomeCitta());
 	        ps.setString(7, indirizzo.getVia());
-	        ps.setInt(8, indirizzo.getNumeroCivico());
+	        ps.setString(8, indirizzo.getNumeroCivico());
 	        ps.setString(9, indirizzo.getCap());
 	        ps.setDate(10, (Date) user.getDataNascita());
 
@@ -240,7 +240,7 @@ public class UserServiceDAO {
 			
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cap"));
+				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getString("numeroCivico"), rs.getString("cap"));
 				MagazzinoBean m = new MagazzinoBean();
 				m.setNome(rs.getString("nomeMagazzino"));
 				user = new UserBean(rs.getString("email"), rs.getString("pass"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getDate("dataNascita") ,in, null, m);
@@ -290,7 +290,7 @@ public class UserServiceDAO {
 
 
 // vedere se mettere i limiti e modificarlo
-	public void updateUserDetails(String email, String password, String nome, String cognome, String telefono, String nomeCitta, String via, int numeroCivico, String cap) throws SQLException {
+	public void updateUserDetails(String email, String password, String nome, String cognome, String telefono, String nomeCitta, String via, String numeroCivico, String cap) throws SQLException {
 	
 	    Connection con = DBUtil.getConnection();
 	    PreparedStatement ps = null;
@@ -301,7 +301,7 @@ public class UserServiceDAO {
 	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cap) VALUES (?, ?, ?, ?)");
 	    		ps.setString(1, indirizzo.getNomeCitta());
 		        ps.setString(2, indirizzo.getVia());
-		        ps.setInt(3, indirizzo.getNumeroCivico());
+		        ps.setString(3, indirizzo.getNumeroCivico());
 		        ps.setString(4, indirizzo.getCap());
 		        ps.executeUpdate();
 	    	}
@@ -315,7 +315,7 @@ public class UserServiceDAO {
 	        ps.setString(3, telefono);
 	        ps.setString(4, indirizzo.getNomeCitta());
 	        ps.setString(5, indirizzo.getVia());
-	        ps.setInt(6, indirizzo.getNumeroCivico());
+	        ps.setString(6, indirizzo.getNumeroCivico());
 	        ps.setString(7, indirizzo.getCap());
 	        ps.setString(8, email);
 	        ps.setString(9, password);
@@ -399,7 +399,7 @@ public class UserServiceDAO {
 	        // Elenco degli utenti trovati
 	        while (rs.next()) {
 	            IndirizzoBean indirizzo = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), 
-	                                                        rs.getInt("numeroCivico"), rs.getString("cap"));
+	                                                        rs.getString("numeroCivico"), rs.getString("cap"));
 
 	            UserBean user = new UserBean(
 	                rs.getString("email"), 

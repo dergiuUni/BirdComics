@@ -72,7 +72,7 @@ public class AuthorizePaymentServletTest {
         testUser.setEmail(testUsername);
         testUser.setNome("John");
         testUser.setCognome("Doe");
-        testUser.setIndirizzo(new IndirizzoBean("Roma", "Via Roma", 123, "00100"));
+        testUser.setIndirizzo(new IndirizzoBean("Roma", "Via Roma", "123", "00100"));
         
         testProduct.setId(1);
         testProduct.setPrice(10.0f);

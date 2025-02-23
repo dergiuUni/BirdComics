@@ -63,7 +63,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	public String registerUser(String email, String password, String nome, String cognome, String telefono, 
-			java.sql.Date dataNascita, String citta, String via, int numeroCivico, 
+			java.sql.Date dataNascita, String citta, String via, String numeroCivico, 
 			String cap, ArrayList<RuoloBean> ruoli) throws SQLException {
 		// Delego la registrazione al UserServiceDAO
 		return userDao.registerUser(email, password, nome, cognome, telefono, dataNascita, 

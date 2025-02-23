@@ -3,10 +3,11 @@ CREATE DATABASE BirdComics;
 
 USE BirdComics;
 
+
 CREATE TABLE Indirizzo (
     nomeCitta varchar(45) NOT NULL,
     via varchar(45) NOT NULL,
-    numeroCivico int NOT NULL,
+    numeroCivico varchar(10) NOT NULL,
     cap varchar(45) NOT NULL,
 
     PRIMARY KEY (nomeCitta, via, numeroCivico, cap)
@@ -29,7 +30,6 @@ CREATE TABLE Fumetto(
     descrizione varchar(100) NOT NULL,
     prezzo float NOT NULL,
     immagine varchar (255),
-    active boolean NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -69,7 +69,7 @@ CREATE TABLE Magazzino(
     nome varchar(45) NOT NULL,
     nomeCitta varchar(45) NOT NULL,
     via varchar(45) NOT NULL,
-    numeroCivico int not  NULL,
+    numeroCivico varchar(10) not  NULL,
     cap varchar(45) not  NULL,
 
     PRIMARY KEY (nome),
@@ -93,7 +93,7 @@ CREATE TABLE Fattura(
     telefono varchar(11) NOT NULL,
     nomeCittaCliente varchar(45) NOT NULL,
     viaCliente varchar(45) NOT NULL,
-    numeroCivicoCliente int not  NULL,
+    numeroCivicoCliente varchar(10) not  NULL,
     capCliente varchar(45) not  NULL,
     
 
@@ -108,7 +108,7 @@ CREATE TABLE Utente(
     telefono varchar(11) NOT NULL,
     nomeCitta varchar(45) NOT NULL,
     via varchar(45) NOT NULL,
-    numeroCivico int not  NULL,
+    numeroCivico varchar(10) not  NULL,
     cap varchar(45) not  NULL,
     dataNascita date,
     
@@ -140,9 +140,10 @@ CREATE TABLE Ordine_Magazzino(
     quantita int not null,
     
     PRIMARY KEY (idOrdine, nomeMagazzino, idFumetto, idScaffale),
-    FOREIGN KEY (idOrdine) REFERENCES Ordine (id) ,
-    FOREIGN KEY (nomeMagazzino) REFERENCES Magazzino (nome) ,
-    FOREIGN KEY (idScaffale) REFERENCES Scaffali (id) 
+    FOREIGN KEY (idOrdine) REFERENCES Ordine (id) ON DELETE CASCADE,
+    FOREIGN KEY (nomeMagazzino) REFERENCES Magazzino (nome) ON DELETE CASCADE,
+    FOREIGN KEY (idScaffale) REFERENCES Scaffali (id) ON DELETE CASCADE
+
 );
 
 
@@ -172,12 +173,12 @@ CREATE TABLE Utente_Ruolo (
 
 -- Inserimento nella tabella Indirizzo
 INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cap) VALUES 
-    ('Napoli', 'Via Toledo', 22, '4321'),
-    ('Torino', 'Via Po', 30, '8765'),
-    ('Bologna', 'Via Indipendenza', 15, '1357'),
-    ('Firenze', 'Piazza del Duomo', 5, '2468'),
-    ('Roma', 'Via della Conciliazione', 10, '1234'),
-    ('Milano', 'Corso Buenos Aires', 15, '5678');
+    ('Napoli', 'Via Toledo', '22', '4321'),
+    ('Torino', 'Via Po', '30', '8765'),
+    ('Bologna', 'Via Indipendenza', '15', '1357'),
+    ('Firenze', 'Piazza del Duomo', '5', '2468'),
+    ('Roma', 'Via della Conciliazione', '10', '1234'),
+    ('Milano', 'Corso Buenos Aires', '15', '5678');
 
 -- Inserimento nella tabella Autore
 INSERT INTO Autore (nome, cognome) VALUES 
@@ -202,15 +203,15 @@ INSERT INTO Genere (genere) VALUES
     ('Horror');
 
 -- Inserimento nella tabella Fumetto
-INSERT INTO Fumetto (nome, descrizione, prezzo, active) VALUES 
-    ('Green Lantern', 'Il supereroe con un anello che dà poteri illimitati', 12.99, TRUE),
-    ('Kick-Ass', 'Un ragazzo normale che decide di diventare un supereroe', 14.99, TRUE),
-    ('Batman: Arkham Asylum', 'Le avventure di Batman contro i suoi nemici più pericolosi', 17.99, TRUE),
-    ('Daredevil', 'Un avvocato cieco che combatte il crimine', 18.99, TRUE),
-    ('Captain America', 'Un soldato super-soldato durante la Seconda Guerra Mondiale', 16.99, TRUE),
-    ('X-Men', 'Un gruppo di supereroi mutanti che combattono per l uguaglianza', 13.99, TRUE),
-    ('Watchmen', 'Fumetto di supereroi con tematiche adulte', 19.99, TRUE),
-    ('The Dark Knight Returns', 'Racconto epico di Batman', 15.99, TRUE);
+INSERT INTO Fumetto (nome, descrizione, prezzo) VALUES 
+    ('Green Lantern', 'Il supereroe con un anello che dà poteri illimitati', 12.99),
+    ('Kick-Ass', 'Un ragazzo normale che decide di diventare un supereroe', 14.99),
+    ('Batman: Arkham Asylum', 'Le avventure di Batman contro i suoi nemici più pericolosi', 17.99),
+    ('Daredevil', 'Un avvocato cieco che combatte il crimine', 18.99),
+    ('Captain America', 'Un soldato super-soldato durante la Seconda Guerra Mondiale', 16.99),
+    ('X-Men', 'Un gruppo di supereroi mutanti che combattono per l uguaglianza', 13.99),
+    ('Watchmen', 'Fumetto di supereroi con tematiche adulte', 19.99),
+    ('The Dark Knight Returns', 'Racconto epico di Batman', 15.99);
 
 -- Inserimento nella tabella Autore_Fumetto
 INSERT INTO Autore_Fumetto (nomeAutore, cognomeAutore, idFumetto) VALUES 
@@ -248,8 +249,8 @@ INSERT INTO Scaffali (quantita, quantitaMassima, idFumetto) VALUES
 
 -- Inserimento nella tabella Magazzino
 INSERT INTO Magazzino (nome, nomeCitta, via, numeroCivico, cap) VALUES 
-    ('Magazzino Napoli', 'Napoli', 'Via Toledo', 22, '4321'),
-    ('Magazzino Bologna', 'Bologna', 'Via Indipendenza', 15, '1357');
+    ('Magazzino Napoli', 'Napoli', 'Via Toledo', '22', '4321'),
+    ('Magazzino Bologna', 'Bologna', 'Via Indipendenza', '15', '1357');
     
 INSERT INTO MagazzinoScaffali(idMagazzino, idScaffale) VALUES
     ('Magazzino Napoli',  1),
@@ -262,22 +263,22 @@ INSERT INTO MagazzinoScaffali(idMagazzino, idScaffale) VALUES
     ('Magazzino Bologna', 8);
 
     INSERT INTO Utente (email, pass, nome, cognome, telefono, nomeCitta, via, numeroCivico, cap) VALUES 
-    ('cliente@example.com', 'password', 'Silvia', 'Rossi', '6789012345', 'Torino', 'Via Po', 30, '8765');
+    ('cliente@example.com', 'password', 'Silvia', 'Rossi', '6789012345', 'Torino', 'Via Po', '30', '8765');
 INSERT INTO Utente (email, pass, nome, cognome, telefono, nomeCitta, via, numeroCivico, cap) VALUES 
-    ('generale@BirdComics.com', 'paolopass789', 'Paolo', 'Ferrari', '7890123456', 'Torino', 'Via Po', 30, '8765'),
-    ('magazzino@BirdComics.com', 'martapass012', 'Marta', 'Bianchi', '8901234567', 'Torino', 'Via Po', 30, '8765'),
-    ('hr@BirdComics.com', 'luigipass345', 'Luigi', 'Verdi', '9012345678', 'Torino', 'Via Po', 30, '8765'),
-    ('catalogo@BirdComics.com', 'francescapass678', 'Francesca', 'Galli', '1234098765', 'Torino', 'Via Po', 30, '8765'),
-    ('magazziniere@BirdComics.com', 'giorgiopass234', 'Giorgio', 'Moretti', '2345109876', 'Torino', 'Via Po', 30, '8765'),
-    ('spedizioniere@BirdComics.com', 'elisapass567', 'Elisa', 'Conti', '3456210987', 'Torino', 'Via Po', 30, '8765'),
-    ('assistenza@BirdComics.com', 'claudiopass890', 'Claudio', 'Ricci', '4567321098', 'Torino', 'Via Po', 30, '8765'),
-    ('finanza@BirdComics.com', 'serenapass345', 'Serena', 'Marini', '5678432109', 'Torino', 'Via Po', 30, '8765');
+    ('generale@BirdComics.com', 'paolopass789', 'Paolo', 'Ferrari', '7890123456', 'Torino', 'Via Po', '30', '8765'),
+    ('magazzino@BirdComics.com', 'martapass012', 'Marta', 'Bianchi', '8901234567', 'Torino', 'Via Po', '30', '8765'),
+    ('hr@BirdComics.com', 'luigipass345', 'Luigi', 'Verdi', '9012345678', 'Torino', 'Via Po', '30', '8765'),
+    ('catalogo@BirdComics.com', 'francescapass678', 'Francesca', 'Galli', '1234098765', 'Torino', 'Via Po', '30', '8765'),
+    ('magazziniere@BirdComics.com', 'giorgiopass234', 'Giorgio', 'Moretti', '2345109876', 'Torino', 'Via Po', '30', '8765'),
+    ('spedizioniere@BirdComics.com', 'elisapass567', 'Elisa', 'Conti', '3456210987', 'Torino', 'Via Po', '30', '8765'),
+    ('assistenza@BirdComics.com', 'claudiopass890', 'Claudio', 'Ricci', '4567321098', 'Torino', 'Via Po', '30', '8765'),
+    ('finanza@BirdComics.com', 'serenapass345', 'Serena', 'Marini', '5678432109', 'Torino', 'Via Po', '30', '8765');
 
 
 -- Inserimento nella tabella Fattura
 INSERT INTO Fattura (iva, nome, cognome, telefono, nomeCittaCliente, viaCliente, numeroCivicoCliente, capCliente) VALUES 
-    (22, 'silvana','sana', '2325','Roma', 'Via della Conciliazione', 10, '1234'),
-    (22, 'silvana','sana', '2325','Milano', 'Via Po', 12, '8765');
+    (22, 'silvana','sana', '2325','Roma', 'Via della Conciliazione', '10', '1234'),
+    (22, 'silvana','sana', '2325','Milano', 'Via Po', '12', '8765');
 
 -- Inserimento nella tabella Ordine
 INSERT INTO Ordine (emailUtente, idpaypal, shipped, dataEffettuato, idFattura) VALUES 

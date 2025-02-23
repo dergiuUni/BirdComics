@@ -29,7 +29,7 @@ public class MagazzinoDao {
 	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cap) VALUES (?, ?, ?, ?)");
 	    		ps.setString(1, magazzino.getIndirizzo().getNomeCitta());
 		        ps.setString(2, magazzino.getIndirizzo().getVia());
-		        ps.setInt(3, magazzino.getIndirizzo().getNumeroCivico());
+		        ps.setString(3, magazzino.getIndirizzo().getNumeroCivico());
 		        ps.setString(4, magazzino.getIndirizzo().getCap());
 		        ps.executeUpdate();
 	    	}
@@ -39,7 +39,7 @@ public class MagazzinoDao {
 	        ps.setString(1, magazzino.getNome());
 	        ps.setString(2, magazzino.getIndirizzo().getNomeCitta());
 	        ps.setString(3, magazzino.getIndirizzo().getVia());
-	        ps.setInt(4, magazzino.getIndirizzo().getNumeroCivico());
+	        ps.setString(4, magazzino.getIndirizzo().getNumeroCivico());
 	        ps.setString(5, magazzino.getIndirizzo().getCap());
 	        
 	        int k = ps.executeUpdate();
@@ -103,7 +103,7 @@ public class MagazzinoDao {
 
 			while (rs.next()) {
 				ScaffaleDao sc = new ScaffaleDao();
-				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getInt("numeroCivico"), rs.getString("cap"));
+				IndirizzoBean in = new IndirizzoBean(rs.getString("nomeCitta"), rs.getString("via"), rs.getString("numeroCivico"), rs.getString("cap"));
 				MagazzinoBean mag = new MagazzinoBean(rs.getString("nome"), in, sc.getScaffaleMagazzino(rs.getString("nome")));
 				magazzini.add(mag);
 			}

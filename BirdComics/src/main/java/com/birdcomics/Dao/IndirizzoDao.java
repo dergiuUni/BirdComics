@@ -25,19 +25,19 @@ public class IndirizzoDao {
 	        try (PreparedStatement stmt = connection.prepareStatement(query)) {
 	            stmt.setString(1, indirizzo.getNomeCitta());
 	            stmt.setString(2, indirizzo.getVia());
-	            stmt.setInt(3, indirizzo.getNumeroCivico());
+	            stmt.setString(3, indirizzo.getNumeroCivico());
 	            stmt.setString(4, indirizzo.getCap());
 	            stmt.executeUpdate();
 	        }
 	    }
 
 	    // Leggi un indirizzo dato un set di parametri (nomeCitta, via, numeroCivico, cap)
-	    public  boolean ifExists (String nomeCitta, String via, int numeroCivico, String cap) throws SQLException {
+	    public  boolean ifExists (String nomeCitta, String via, String numeroCivico, String cap) throws SQLException {
 	        String query = "SELECT * FROM Indirizzo WHERE nomeCitta = ? AND via = ? AND numeroCivico = ? AND cap = ?";
 	        try (PreparedStatement stmt = connection.prepareStatement(query)) {
 	            stmt.setString(1, nomeCitta);
 	            stmt.setString(2, via);
-	            stmt.setInt(3, numeroCivico);
+	            stmt.setString(3, numeroCivico);
 	            stmt.setString(4, cap);
 
 	            ResultSet rs = stmt.executeQuery();

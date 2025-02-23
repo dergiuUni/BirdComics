@@ -62,7 +62,7 @@ public class UserServiceDAOTest {
         Date dataNascita = Date.valueOf("1990-01-01");
         String nomeCitta = "Città";
         String via = "Via";
-        int numeroCivico = 123;
+        String numeroCivico = "123";
         String cap = "12345";
         ArrayList<RuoloBean> ruoli = new ArrayList<>();
         ruoli.add(RuoloBean.Cliente);
@@ -93,7 +93,7 @@ public class UserServiceDAOTest {
         Date dataNascita = Date.valueOf("1990-01-01");
         String nomeCitta = "Città";
         String via = "Via";
-        int numeroCivico = 123;
+        String numeroCivico = "123";
         String cap = "12345";
         ArrayList<RuoloBean> ruoli = new ArrayList<>();
         ruoli.add(RuoloBean.Cliente);
@@ -121,7 +121,7 @@ public class UserServiceDAOTest {
         Date dataNascita = Date.valueOf("1990-01-01");
         String nomeCitta = "Città";
         String via = "Via";
-        int numeroCivico = 123;
+        String numeroCivico = "123";
         String cap = "12345";
         ArrayList<RuoloBean> ruoli = new ArrayList<>();
         ruoli.add(RuoloBean.Cliente);

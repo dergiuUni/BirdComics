@@ -239,7 +239,7 @@ class ProfileServiceTest {
         java.sql.Date dataNascita = java.sql.Date.valueOf("1990-01-01");
         String citta = "New York";
         String via = "Main St";
-        int numeroCivico = 123;
+        String numeroCivico = "123";
         String cap = "12345";
         ArrayList<RuoloBean> ruoli = new ArrayList<>();
         ruoli.add(RuoloBean.Cliente); // Usa i valori dell'enum
@@ -269,7 +269,7 @@ class ProfileServiceTest {
         java.sql.Date dataNascita = java.sql.Date.valueOf("1990-01-01");
         String citta = "New York";
         String via = "Main St";
-        int numeroCivico = 123;
+        String numeroCivico = "123";
         String cap = "12345";
         ArrayList<RuoloBean> ruoli = new ArrayList<>();
         ruoli.add(RuoloBean.Cliente);

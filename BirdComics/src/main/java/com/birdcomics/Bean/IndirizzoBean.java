@@ -3,11 +3,11 @@ package com.birdcomics.Bean;
 public class IndirizzoBean {
     private String nomeCitta;
     private String via;
-    private int numeroCivico;
+    private String numeroCivico;
     private String cap;
 
     // Costruttore
-    public IndirizzoBean (String nomeCitta, String via, int numeroCivico, String cap) {
+    public IndirizzoBean (String nomeCitta, String via, String numeroCivico, String cap) {
         this.nomeCitta = nomeCitta;
         this.via = via;
         this.numeroCivico = numeroCivico;
@@ -35,11 +35,11 @@ public class IndirizzoBean {
         this.via = via;
     }
 
-    public int getNumeroCivico() {
+    public String getNumeroCivico() {
         return numeroCivico;
     }
 
-    public void setNumeroCivico(int numeroCivico) {
+    public void setNumeroCivico(String numeroCivico) {
         this.numeroCivico = numeroCivico;
     }
 

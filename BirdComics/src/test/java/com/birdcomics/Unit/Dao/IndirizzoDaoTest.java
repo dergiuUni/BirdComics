@@ -38,7 +38,7 @@ public class IndirizzoDaoTest {
         IndirizzoBean indirizzo = new IndirizzoBean();
         indirizzo.setNomeCitta("Roma");
         indirizzo.setVia("Via Roma");
-        indirizzo.setNumeroCivico(10);
+        indirizzo.setNumeroCivico("10");
         indirizzo.setCap("00100");
 
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
@@ -57,7 +57,7 @@ public class IndirizzoDaoTest {
         IndirizzoBean indirizzo = new IndirizzoBean();
         indirizzo.setNomeCitta("Roma");
         indirizzo.setVia("Via Roma");
-        indirizzo.setNumeroCivico(10);
+        indirizzo.setNumeroCivico("10");
         indirizzo.setCap("00100");
 
         when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
@@ -71,7 +71,7 @@ public class IndirizzoDaoTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
 
-        boolean exists = indirizzoDao.ifExists("Roma", "Via Roma", 10, "00100");
+        boolean exists = indirizzoDao.ifExists("Roma", "Via Roma", "10", "00100");
 
         assertTrue(exists);
         verify(preparedStatement, times(1)).setString(1, "Roma");
@@ -86,7 +86,7 @@ public class IndirizzoDaoTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(false);
 
-        boolean exists = indirizzoDao.ifExists("Roma", "Via Roma", 10, "00100");
+        boolean exists = indirizzoDao.ifExists("Roma", "Via Roma", "10", "00100");
 
         assertFalse(exists);
         verify(preparedStatement, times(1)).setString(1, "Roma");
@@ -99,6 +99,6 @@ public class IndirizzoDaoTest {
     void testIfExists_SQLException() throws SQLException {
         when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
 
-        assertThrows(SQLException.class, () -> indirizzoDao.ifExists("Roma", "Via Roma", 10, "00100"));
+        assertThrows(SQLException.class, () -> indirizzoDao.ifExists("Roma", "Via Roma", "10", "00100"));
     }
 }

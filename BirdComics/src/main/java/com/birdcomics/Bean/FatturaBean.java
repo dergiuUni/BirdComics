@@ -3,7 +3,7 @@ package com.birdcomics.Bean;
 public class FatturaBean {
 	private int id, iva;
 	private String nome, cognome, telefono, nomeCittaCliente, viaCliente, capCliente;
-	private int numeroCivicoCliente;
+	private String numeroCivicoCliente;
 	
 
 	public FatturaBean() {
@@ -12,7 +12,7 @@ public class FatturaBean {
 	
 	
 	public FatturaBean(int id, int iva, String nome, String cognome, String telefono, String nomeCittaCliente,
-			String viaCliente, int numeroCivicoCliente, String capCliente) {
+			String viaCliente, String numeroCivicoCliente, String capCliente) {
 		super();
 		this.id = id;
 		this.iva = iva;
@@ -27,7 +27,7 @@ public class FatturaBean {
 	
 	
 	public FatturaBean(int iva, String nome, String cognome, String telefono, String nomeCittaCliente,
-			String viaCliente, int numeroCivicoCliente, String capCliente) {
+			String viaCliente, String numeroCivicoCliente, String capCliente) {
 		super();
 		this.iva = iva;
 		this.nome = nome;
@@ -98,10 +98,10 @@ public class FatturaBean {
 	public void setViaCliente(String viaCliente) {
 		this.viaCliente = viaCliente;
 	}
-	public int getNumeroCivicoCliente() {
+	public String getNumeroCivicoCliente() {
 		return numeroCivicoCliente;
 	}
-	public void setNumeroCivicoCliente(int numeroCivicoCliente) {
+	public void setNumeroCivicoCliente(String numeroCivicoCliente) {
 		this.numeroCivicoCliente = numeroCivicoCliente;
 	}
 	public String getCapCliente() {

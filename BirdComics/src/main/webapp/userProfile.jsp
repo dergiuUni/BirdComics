@@ -134,7 +134,7 @@
 								<p class="mb-0">Numero Civico</p>
 							</div>
 							<div class="col-sm-9">
-								<p class="text-muted mb-0"><%=user.getIndirizzo().getNumeroCivico()%>
+								<p class="text-muted mb-0"><%=user.getIndirizzo().getNumeroCivico()%>	
 								</p>
 							</div>
 						</div>
@@ -156,7 +156,8 @@
             <!-- Aggiungi il tasto "Update Profile" qui -->
             <br>
             <br>
-         
+        
+        
         </div>
 	</div>
 

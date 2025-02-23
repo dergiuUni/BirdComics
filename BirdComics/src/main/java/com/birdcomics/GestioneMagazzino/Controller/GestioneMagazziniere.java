@@ -51,9 +51,7 @@ public class GestioneMagazziniere extends HttpServlet {
         String message = "";
 
         try {
-            UserBean user = new UserBean();
-            user.setEmail(email);
-            List<ScaffaliBean> products = magazzinoService.getScaffaleMagazzino(user);
+            List<ScaffaliBean> products = magazzinoService.getScaffaleMagazzino(email);
 
             message = "Showing Results ";
 

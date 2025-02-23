@@ -54,7 +54,7 @@ public class MagazzinoDAOTest {
     void testAddMagazzino_Success() throws SQLException {
         MagazzinoBean magazzino = new MagazzinoBean();
         magazzino.setNome("Magazzino1");
-        IndirizzoBean indirizzo = new IndirizzoBean("Città1", "Via1", 123, "12345");
+        IndirizzoBean indirizzo = new IndirizzoBean("Città1", "Via1", "123", "12345");
         magazzino.setIndirizzo(indirizzo);
 
         // Mock del comportamento del database
@@ -72,7 +72,7 @@ public class MagazzinoDAOTest {
     void testAddMagazzino_IndirizzoExists() throws SQLException {
         MagazzinoBean magazzino = new MagazzinoBean();
         magazzino.setNome("Magazzino1");
-        IndirizzoBean indirizzo = new IndirizzoBean("Città1", "Via1", 123, "12345");
+        IndirizzoBean indirizzo = new IndirizzoBean("Città1", "Via1", "123", "12345");
         magazzino.setIndirizzo(indirizzo);
 
 
@@ -84,7 +84,7 @@ public class MagazzinoDAOTest {
         
         
         // Simula che l'indirizzo esista già
-        when(indirizzoDao.ifExists(anyString(), anyString(), anyInt(), anyString())).thenReturn(true);
+        when(indirizzoDao.ifExists(anyString(), anyString(), anyString(), anyString())).thenReturn(true);
 
         String result = magazzinoDao.addMagazzino(magazzino);
 
@@ -95,7 +95,7 @@ public class MagazzinoDAOTest {
     void testAddMagazzino_SQLException() throws SQLException {
         MagazzinoBean magazzino = new MagazzinoBean();
         magazzino.setNome("Magazzino1");
-        IndirizzoBean indirizzo = new IndirizzoBean("Città1", "Via1", 123, "12345");
+        IndirizzoBean indirizzo = new IndirizzoBean("Città1", "Via1", "123", "12345");
         magazzino.setIndirizzo(indirizzo);
 
         when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));

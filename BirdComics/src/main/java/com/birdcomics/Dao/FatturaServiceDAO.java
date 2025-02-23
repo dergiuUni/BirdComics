@@ -31,7 +31,7 @@ public class FatturaServiceDAO {
 			ps.setString(4, fattura.getTelefono());
 			ps.setString(5, fattura.getNomeCittaCliente());
 			ps.setString(6, fattura.getViaCliente());
-			ps.setInt(7, fattura.getNumeroCivicoCliente());
+			ps.setString(7, fattura.getNumeroCivicoCliente());
 			ps.setString(8, fattura.getCapCliente());
 
 				
@@ -73,7 +73,7 @@ public class FatturaServiceDAO {
 
 			while (rs.next()) {
 
-				FatturaBean fattura = new FatturaBean(rs.getInt("id"), rs.getInt("iva"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getString("nomeCittaCliente"), rs.getString("viaCliente"), rs.getInt("numeroCivicoCliente"), rs.getString("capCliente"));
+				FatturaBean fattura = new FatturaBean(rs.getInt("id"), rs.getInt("iva"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getString("nomeCittaCliente"), rs.getString("viaCliente"), rs.getString("numeroCivicoCliente"), rs.getString("capCliente"));
 
 				 fatturaList.add(fattura);
 
@@ -104,7 +104,7 @@ public class FatturaServiceDAO {
 
 			while (rs.next()) {
 
-				FatturaBean fattura = new FatturaBean(rs.getInt("id"), rs.getInt("iva"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getString("nomeCittaCliente"), rs.getString("viaCliente"), rs.getInt("numeroCivicoCliente"), rs.getString("capCliente"));
+				FatturaBean fattura = new FatturaBean(rs.getInt("id"), rs.getInt("iva"), rs.getString("nome"), rs.getString("cognome"), rs.getString("telefono"), rs.getString("nomeCittaCliente"), rs.getString("viaCliente"), rs.getString("numeroCivicoCliente"), rs.getString("capCliente"));
 
 				return fattura;
 

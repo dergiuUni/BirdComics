@@ -8,6 +8,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface MagazzinoService {
-    List<ScaffaliBean> getScaffaleMagazzino(UserBean user) throws SQLException;
+    List<ScaffaliBean> getScaffaleMagazzino(String email) throws SQLException;
 	List<MagazzinoBean> getAllMagazzini() throws SQLException;
 }

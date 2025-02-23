@@ -62,6 +62,7 @@
             }
         } else { 
     %>
+    
         <tr>
             <td colspan="6" style="text-align: center;">Nessun magazzino disponibile.</td>
         </tr>

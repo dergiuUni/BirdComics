@@ -40,7 +40,7 @@ public class RegisterSrv extends HttpServlet {
         String telefono = request.getParameter("telefono");
         String citta = request.getParameter("nomeCitta");
         String via = request.getParameter("via");
-        int numeroCivico = Integer.valueOf(request.getParameter("numeroCivico"));
+        String numeroCivico = request.getParameter("numeroCivico");
         String cap = request.getParameter("cap");
         
         String password = request.getParameter("password");

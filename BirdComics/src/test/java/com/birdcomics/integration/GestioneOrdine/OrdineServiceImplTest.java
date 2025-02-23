@@ -53,7 +53,7 @@ public class OrdineServiceImplTest {
     public void setUp() {
         // Configura utente di test
         testUser.setEmail(testUsername);
-        testUser.setIndirizzo(new IndirizzoBean("Roma" ,"Via Roma", 123, "00100"));
+        testUser.setIndirizzo(new IndirizzoBean("Roma" ,"Via Roma", "123", "00100"));
         
         // Configura prodotto di test
         testProduct.setId(1);

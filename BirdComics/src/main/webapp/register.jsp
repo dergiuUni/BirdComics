@@ -57,7 +57,7 @@
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="numeroCivico">Numero Civico</label> 
-                        <input type="number" name="numeroCivico" class="form-control" id="numeroCivico" required>
+                        <input type="text" name="numeroCivico" class="form-control" id="numeroCivico" required>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="cvc">CAP</label> 
