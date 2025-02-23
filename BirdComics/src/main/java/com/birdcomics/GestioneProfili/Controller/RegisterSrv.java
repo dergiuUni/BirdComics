@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.birdcomics.Bean.RuoloBean;
 import com.birdcomics.Bean.UserBean;
@@ -42,10 +43,19 @@ public class RegisterSrv extends HttpServlet {
         String via = request.getParameter("via");
         String numeroCivico = request.getParameter("numeroCivico");
         String cap = request.getParameter("cap");
-        
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         String dataNascitaStr = request.getParameter("dataNascita");
+
+        // Verifica se i parametri obbligatori sono null o vuoti
+        if (nome == null || cognome == null || emailP == null || telefono == null || citta == null ||
+            via == null || numeroCivico == null || cap == null || password == null || confirmPassword == null ||
+            dataNascitaStr == null) {
+            RequestDispatcher rd = request.getRequestDispatcher("register.jsp?message=Parametri mancanti!");
+            rd.forward(request, response);
+            return;
+        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         java.util.Date parsedDate;
@@ -55,21 +65,27 @@ public class RegisterSrv extends HttpServlet {
             dataNascita = new java.sql.Date(parsedDate.getTime());
         } catch (ParseException e) {
             e.printStackTrace();
+            RequestDispatcher rd = request.getRequestDispatcher("register.jsp?message=Data di nascita non valida!");
+            rd.forward(request, response);
+            return;
         }
-        
-        String status = "";
-        if (password != null && password.equals(confirmPassword)) {
 
-            HttpServletRequest httpRequest = (HttpServletRequest) request;
-            String email = (String) httpRequest.getSession().getAttribute("email");
-            ArrayList<RuoloBean> ruoli = new ArrayList<RuoloBean>();
+        String status = "";
+        if (password.equals(confirmPassword)) {
+            ArrayList<RuoloBean> ruoli = new ArrayList<>();
+
+            // Ottieni la sessione (se esiste)
+            HttpSession session = request.getSession(false);
+            String email = (session != null) ? (String) session.getAttribute("email") : null;
 
             try {
-                if (email == null || email.equals("null")) {
+                if (email == null) {
+                    // Se non c'è una sessione attiva, registra l'utente come Cliente
                     ruoli.add(RuoloBean.Cliente);
                     status = profileService.registerUser(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
                 } else {
-                    UserBean at = profileService.getUserDetails(emailP);
+                    // Se c'è una sessione attiva, verifica il ruolo dell'utente
+                    UserBean at = profileService.getUserDetails(email);
                     if (at.isRuolo(RuoloBean.GestoreGenerale)) {
                         ruoli.add(RuoloBean.GestoreMagazzino);
                         status = profileService.registerUser(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);

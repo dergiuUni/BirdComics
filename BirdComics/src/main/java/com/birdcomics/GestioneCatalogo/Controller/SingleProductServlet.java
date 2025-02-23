@@ -15,14 +15,14 @@ import com.birdcomics.GestioneCatalogo.Service.CatalogoServiceImpl;
 @WebServlet("/SingleProductServlet")
 public class SingleProductServlet extends HttpServlet {
     
-    private CatalogoService catalogoService;
+    public CatalogoService catalogoService;
 
     public SingleProductServlet() {
         super();
         this.catalogoService = new CatalogoServiceImpl();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String id = request.getParameter("pid");

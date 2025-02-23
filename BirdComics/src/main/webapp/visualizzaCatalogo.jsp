@@ -34,7 +34,7 @@
     style="color: green; font-size: 24px; font-weight: bold; margin-top: 15px; margin-bottom: 15px;">Gestione libri</div>
 
 
-    <form class="search-form" action="GestioneCatalogo" method="get">
+    <form class="search-form" action="ProductListServlet" method="get">
         <input type="text" name="search" placeholder="Cerca un libro..."">
         <input type="submit" value="Submit">
     </form>   

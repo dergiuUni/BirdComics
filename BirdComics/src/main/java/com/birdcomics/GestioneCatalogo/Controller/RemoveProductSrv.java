@@ -18,30 +18,37 @@ import com.birdcomics.GestioneCatalogo.Service.CatalogoServiceImpl;
 public class RemoveProductSrv extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private CatalogoService catalogoService;
+    public CatalogoService catalogoService;
 
     public RemoveProductSrv() {
         super();
         this.catalogoService = new CatalogoServiceImpl();  // Inizializzazione del servizio
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String prodId = request.getParameter("prodid");
+
+        if (prodId == null || prodId.isEmpty()) {
+            // Se l'ID del prodotto è null o vuoto, reindirizza con un messaggio di errore
+            RequestDispatcher rd = request.getRequestDispatcher("./GestioneCatalogo?message=Error: Product ID is missing");
+            rd.forward(request, response);
+            return;
+        }
 
         String status = null;
         try {
             status = catalogoService.removeProduct(prodId);  // Chiamata al servizio per rimuovere il prodotto
         } catch (SQLException e) {
             e.printStackTrace();
+            status = "Error removing product";
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("./GestioneCatalogo?message=" + status);
-
         rd.forward(request, response);
     }
-
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

@@ -2,6 +2,7 @@ package com.birdcomics.GestioneCatalogo.Controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.GestioneCatalogo.Service.CatalogoService;
@@ -18,50 +20,73 @@ import com.birdcomics.GestioneCatalogo.Service.CatalogoServiceImpl;
 public class ProductListServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private CatalogoService catalogoService;
+    public CatalogoService catalogoService;
 
     public ProductListServlet() {
         super();
         this.catalogoService = new CatalogoServiceImpl();  // Inizializzazione del servizio
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            String type = request.getParameter("type");
-            String search = request.getParameter("search");
-            List<ProductBean> products;
-            String message;
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<ProductBean> products = new ArrayList<>();
+        String search = request.getParameter("search");
+        String type = request.getParameter("type");
+        String message = "";
 
+        // Recupera la sessione
+        HttpSession session = request.getSession(false); // Usa false per non creare una nuova sessione se non esiste
+        List<String> userTypes = null;
+
+        if (session != null) {
+            // Recupera userType dalla sessione
+            userTypes = (List<String>) session.getAttribute("usertype");
+        }
+
+        try {
             // Logica per il recupero dei prodotti
             if (type != null && !type.isEmpty()) {
-                products = catalogoService.getAllProductsByType(type);  // Chiamata al servizio per ottenere i prodotti per tipo
+                // Se è specificato un tipo, recupera i prodotti per tipo
+                products = catalogoService.getAllProductsByType(type); // Usa il servizio
                 message = "Products in " + type;
             } else if (search != null && !search.isEmpty()) {
-                products = catalogoService.searchAllProducts(search);  // Chiamata al servizio per la ricerca dei prodotti
-                message = "Search results for '" + search + "'";
+                // Se è specificata una ricerca, gestisci la ricerca in base al tipo di utente
+                if (userTypes != null && userTypes.contains("GestoreCatalogo")) {
+                    // Se l'utente è un GestoreCatalogo, usa searchAllProductsGestore
+                    products = catalogoService.searchAllProductsGestore(search); // Usa il servizio
+                } else {
+                    // Altrimenti, usa searchAllProducts
+                    products = catalogoService.searchAllProducts(search); // Usa il servizio
+                }
+
+                // Imposta il messaggio in base ai risultati della ricerca
+                if (products.isEmpty()) {
+                    message = "No products found.";
+                } else {
+                    message = "Showing Results for '" + search + "'";
+                }
             } else {
-                products = catalogoService.getAllProducts();  // Chiamata al servizio per ottenere tutti i prodotti
-                for (ProductBean x : products) {
-                	System.out.println(x.getId());
-                }                
+                // Se non è specificato né un tipo né una ricerca, recupera tutti i prodotti
+                products = catalogoService.getAllProducts(); // Usa il servizio
                 message = "All Products";
             }
 
-            // Se non ci sono prodotti
-            if (products.isEmpty()) {
-                message = "No products found.";
-            }
-
-            // Imposta gli attributi sulla richiesta per essere utilizzati nella JSP
+            // Imposta gli attributi della richiesta
             request.setAttribute("products", products);
             request.setAttribute("message", message);
 
-            // Forward alla pagina JSP
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-
         } catch (SQLException e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            // Gestire l'eccezione in modo appropriato
+            request.setAttribute("errorMessage", "An error occurred while retrieving products.");
+        }
+
+        // Reindirizza alla pagina JSP appropriata in base al tipo di utente
+        if (userTypes != null && userTypes.contains("GestoreCatalogo")) {
+            // Se l'utente è un GestoreCatalogo, reindirizza a visualizzaCatalogo.jsp
+            request.getRequestDispatcher("/visualizzaCatalogo.jsp").forward(request, response);
+        } else {
+            // Altrimenti, reindirizza a index.jsp
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
 

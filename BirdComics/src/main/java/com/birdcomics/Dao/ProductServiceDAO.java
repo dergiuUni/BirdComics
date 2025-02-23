@@ -296,7 +296,7 @@ public class ProductServiceDAO {
         		    "GROUP BY Fumetto.id"
         		);
         	*/
-        	
+
         	ps = con.prepareStatement(
         		    "SELECT * FROM Fumetto, Genere_Fumetto " +
         		    "WHERE Fumetto.id = Genere_Fumetto.idFumetto " +

@@ -78,7 +78,7 @@
 					data-toggle="dropdown" href="#">Gestione Catalogo <span
 						class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="./GestioneCatalogo">Visualizza Catalogo</a></li>
+						<li><a href="./ProductListServlet">Visualizza Catalogo</a></li>
 						<li><a href="./AddProductSrv">Aggiungi Fumetto</a></li>
 					</ul></li>
 				<%  

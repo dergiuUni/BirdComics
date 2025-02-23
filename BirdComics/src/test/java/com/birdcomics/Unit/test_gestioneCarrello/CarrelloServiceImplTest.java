@@ -1,4 +1,4 @@
-package com.birdcomics.integration.GestioneCarrello;
+package com.birdcomics.Unit.test_gestioneCarrello;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

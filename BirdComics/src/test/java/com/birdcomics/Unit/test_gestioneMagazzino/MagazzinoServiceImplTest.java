@@ -1,4 +1,4 @@
-package com.birdcomics.integration.GestioneMagazzino;
+package com.birdcomics.Unit.test_gestioneMagazzino;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;

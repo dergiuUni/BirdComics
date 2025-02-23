@@ -28,14 +28,14 @@ import com.birdcomics.GestioneCatalogo.Service.CatalogoServiceImpl;
 public class AddProductSrv extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private CatalogoService catalogoService;
+    public CatalogoService catalogoService;
 
     public AddProductSrv() {
         super();
         this.catalogoService = new CatalogoServiceImpl();  // Inizializziamo il servizio
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String status = "Product Registration Failed!";
@@ -93,7 +93,7 @@ public class AddProductSrv extends HttpServlet {
         rd.forward(request, response);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
