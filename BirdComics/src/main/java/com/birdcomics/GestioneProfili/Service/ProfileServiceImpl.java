@@ -1,5 +1,6 @@
 package com.birdcomics.GestioneProfili.Service;
 
+import com.birdcomics.Bean.MagazzinoBean;
 import com.birdcomics.Bean.RuoloBean;
 import com.birdcomics.Bean.UserBean;
 import com.birdcomics.Dao.UserServiceDAO;
@@ -64,10 +65,10 @@ public class ProfileServiceImpl implements ProfileService {
 
 	public String registerUser(String email, String password, String nome, String cognome, String telefono, 
 			java.sql.Date dataNascita, String citta, String via, String numeroCivico, 
-			String cap, ArrayList<RuoloBean> ruoli) throws SQLException {
+			String cap, ArrayList<RuoloBean> ruoli, MagazzinoBean magazzino) throws SQLException {
 		// Delego la registrazione al UserServiceDAO
 		return userDao.registerUser(email, password, nome, cognome, telefono, dataNascita, 
-				citta, via, numeroCivico, cap, ruoli);
+				citta, via, numeroCivico, cap, ruoli, magazzino);
 
 	}
 }

@@ -1,5 +1,6 @@
 package com.birdcomics.GestioneProfili.Service;
 
+import com.birdcomics.Bean.MagazzinoBean;
 import com.birdcomics.Bean.RuoloBean;
 import com.birdcomics.Bean.UserBean;
 import java.sql.SQLException;
@@ -18,5 +19,5 @@ public interface ProfileService {
 	void logout(HttpServletRequest request);
 	 String registerUser(String email, String password, String nome, String cognome, String telefono, 
              java.sql.Date dataNascita, String citta, String via, String numeroCivico, 
-             String cap, ArrayList<RuoloBean> ruoli) throws SQLException;
+             String cap, ArrayList<RuoloBean> ruoli, MagazzinoBean magazzino) throws SQLException;
 }

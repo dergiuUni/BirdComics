@@ -76,7 +76,7 @@ public class UserServiceDAOTest {
         when(preparedStatement.executeUpdate()).thenReturn(1); // Simula l'inserimento avvenuto con successo
 
         // Esegui il metodo da testare
-        String result = userServiceDAO.registerUser(email, password, nome, cognome, numeroTelefono, dataNascita, nomeCitta, via, numeroCivico, cap, ruoli);
+        String result = userServiceDAO.registerUser(email, password, nome, cognome, numeroTelefono, dataNascita, nomeCitta, via, numeroCivico, cap, ruoli, null);
 
         // Verifica il risultato
         assertEquals("User Registered Successfully!", result);
@@ -104,7 +104,7 @@ public class UserServiceDAOTest {
         when(resultSet.next()).thenReturn(true); // Simula che l'email esista già
 
         // Esegui il metodo da testare
-        String result = userServiceDAO.registerUser(email, password, nome, cognome, numeroTelefono, dataNascita, nomeCitta, via, numeroCivico, cap, ruoli);
+        String result = userServiceDAO.registerUser(email, password, nome, cognome, numeroTelefono, dataNascita, nomeCitta, via, numeroCivico, cap, ruoli, null);
 
         // Verifica il risultato
         assertEquals("Email Id Already Registered!", result);
@@ -130,7 +130,7 @@ public class UserServiceDAOTest {
         when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare
-        String result = userServiceDAO.registerUser(email, password, nome, cognome, numeroTelefono, dataNascita, nomeCitta, via, numeroCivico, cap, ruoli);
+        String result = userServiceDAO.registerUser(email, password, nome, cognome, numeroTelefono, dataNascita, nomeCitta, via, numeroCivico, cap, ruoli, null);
 
         // Verifica il risultato
         assertTrue(result.startsWith("Error: "));
@@ -228,10 +228,10 @@ public class UserServiceDAOTest {
         assertEquals("Cognome", user.getCognome());
 
         // Verifica che i ruoli siano stati correttamente aggiunti
-        assertNotNull(user.getRuoloBean());
-        assertEquals(2, user.getRuoloBean().size());
-        assertTrue(user.getRuoloBean().contains(RuoloBean.Cliente));
-        assertTrue(user.getRuoloBean().contains(RuoloBean.Magazziniere));
+        assertNotNull(user.getRuolo());
+        assertEquals(2, user.getRuolo().size());
+        assertTrue(user.getRuolo().contains(RuoloBean.Cliente));
+        assertTrue(user.getRuolo().contains(RuoloBean.Magazziniere));
     }
 
     @Test

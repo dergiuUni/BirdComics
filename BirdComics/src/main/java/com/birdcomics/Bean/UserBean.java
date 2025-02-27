@@ -113,14 +113,6 @@ public class UserBean implements Serializable {
 		this.indirizzo = indirizzo;
 	}
 	
-	public ArrayList<RuoloBean> getRuoloBean() {
-		return ruolo;
-	}
-
-	public void setRuoloBean(ArrayList<RuoloBean> ruoloBean) {
-		this.ruolo = ruoloBean;
-	}
-	
 	public void addRuolo(RuoloBean ruolo) {
 		this.ruolo.add(ruolo);
 	}
