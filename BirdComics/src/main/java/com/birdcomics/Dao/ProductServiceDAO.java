@@ -232,14 +232,13 @@ public class ProductServiceDAO {
         ResultSet rs = null;
 
         try {
-        	/*
-        	 ps = con.prepareStatement(
-                     "SELECT * FROM Fumetto, Genere_Fumetto  WHERE Fumetto.id = Genere_Fumetto.idFumetto"
-                     + " and (lower( Genere_Fumetto.genere) LIKE ? OR lower(Fumetto.nome) LIKE ?)  AND Fumetto.active = 1 GROUP BY Fumetto.id");
-        	*/
-            ps = con.prepareStatement(
-                "SELECT * FROM Fumetto, Genere_Fumetto  WHERE Fumetto.id = Genere_Fumetto.idFumetto"
-                + " and (lower( Genere_Fumetto.genere) LIKE ? OR lower(Fumetto.nome) LIKE ?) GROUP BY Fumetto.id");
+        	
+        	ps = con.prepareStatement(
+        		    "SELECT Fumetto.id, Fumetto.nome, Fumetto.descrizione, Fumetto.prezzo, Fumetto.immagine, Genere_Fumetto.genere "
+        		    + "FROM Fumetto "
+        		    + "JOIN Genere_Fumetto ON Fumetto.id = Genere_Fumetto.idFumetto "
+        		    + "WHERE LOWER(Genere_Fumetto.genere) LIKE ? OR LOWER(Fumetto.nome) LIKE ? "
+        		    + "GROUP BY Fumetto.id, Genere_Fumetto.genere");
 
             search = "%" + search.toLowerCase() + "%";
             ps.setString(1, search);
@@ -287,21 +286,11 @@ public class ProductServiceDAO {
         ResultSet rs = null;
 
         try {
-        	/*
         	ps = con.prepareStatement(
         		    "SELECT * FROM Fumetto, Genere_Fumetto " +
         		    "WHERE Fumetto.id = Genere_Fumetto.idFumetto " +
-        		    "AND (lower(Genere_Fumetto.genere) LIKE ? OR lower(Fumetto.nome) LIKE ? OR Fumetto.id = ?) " +
-        		    "AND Fumetto.active = 1 " +
-        		    "GROUP BY Fumetto.id"
-        		);
-        	*/
-
-        	ps = con.prepareStatement(
-        		    "SELECT * FROM Fumetto, Genere_Fumetto " +
-        		    "WHERE Fumetto.id = Genere_Fumetto.idFumetto " +
-        		    "AND (lower(Genere_Fumetto.genere) LIKE ? OR lower(Fumetto.nome) LIKE ? OR Fumetto.id = ?) " +
-        		    "GROUP BY Fumetto.id"
+        		    "AND (LOWER(Genere_Fumetto.genere) LIKE ? OR LOWER(Fumetto.nome) LIKE ? OR Fumetto.id = ?) " +
+        		    "GROUP BY Fumetto.id, Genere_Fumetto.genere"
         		);
 
             String search1 = "%" + search.toLowerCase() + "%";
