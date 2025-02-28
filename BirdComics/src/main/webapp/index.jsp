@@ -46,7 +46,7 @@
             <div class="col-sm-4" style='height: 350px;'>
                 <div class="thumbnail">
                     <a href="./SingleProductServlet?pid=<%= product.getId() %>">
-            <img src="./ShowImage?image=<%= product.getImage() %>" alt="Product" style="height: 150px; max-width: 180px">
+            <img src="./ShowImage?image=<%= product.getId()%>.jpg" alt="Product" style="height: 150px; max-width: 180px">
         </a>
                     <p class="productname"><%= product.getName() %></p>
                     <p class="productinfo">

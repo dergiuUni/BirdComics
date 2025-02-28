@@ -26,7 +26,7 @@
     <div class="prod-container">
         <!-- Left Column / Product Image -->
         <div class="left-column">
-            <img src="./ShowImage?image=<%= product.getImage() %>" alt="Product">
+            <img src="./ShowImage?image=<%= product.getId() %>.jpg" alt="Product">
         </div>
         
         <!-- Right Column / Product Details -->

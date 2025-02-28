@@ -24,6 +24,61 @@
 
 
 		<dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.10.0</version> <!-- You can update this to the latest version -->
+        </dependency>
+
+        <!-- WebDriver for Chrome (use the appropriate driver for your browser) -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-chrome-driver</artifactId>
+            <version>4.10.0</version> <!-- Ensure this matches the selenium-java version -->
+        </dependency>
+
+        <!-- WebDriver for Firefox (if you want to test with Firefox, optional) -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-firefox-driver</artifactId>
+            <version>4.10.0</version>
+        </dependency>
+
+        <!-- For working with WebDriverWait -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-support</artifactId>
+            <version>4.10.0</version>
+        </dependency>
+
+        <!-- To use Actions and other advanced Selenium APIs -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>4.10.0</version>
+        </dependency>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
 			<version>5.9.2</version>
