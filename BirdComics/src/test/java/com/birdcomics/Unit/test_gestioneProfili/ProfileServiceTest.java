@@ -244,17 +244,17 @@ class ProfileServiceTest {
         ArrayList<RuoloBean> ruoli = new ArrayList<>();
         ruoli.add(RuoloBean.Cliente); // Usa i valori dell'enum
         String expectedResult = "SUCCESS";
-        when(userDao.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli))
+        when(userDao.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null))
                 .thenReturn(expectedResult);
 
         // Esegui il metodo da testare
-        String result = profileService.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
+        String result = profileService.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null);
 
         // Verifica il risultato
         assertEquals(expectedResult, result);
 
         // Verifica che il metodo del DAO sia stato chiamato
-        verify(userDao, times(1)).registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
+        verify(userDao, times(1)).registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null);
     }
 
     // Test di fallimento
@@ -273,13 +273,13 @@ class ProfileServiceTest {
         String cap = "12345";
         ArrayList<RuoloBean> ruoli = new ArrayList<>();
         ruoli.add(RuoloBean.Cliente);
-        when(userDao.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli))
+        when(userDao.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null))
                 .thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare e verifica che sollevi un'eccezione
-        assertThrows(SQLException.class, () -> profileService.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli));
+        assertThrows(SQLException.class, () -> profileService.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null));
 
         // Verifica che il metodo del DAO sia stato chiamato
-        verify(userDao, times(1)).registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli);
+        verify(userDao, times(1)).registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null);
     }
 }

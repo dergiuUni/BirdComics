@@ -17,14 +17,15 @@ import com.birdcomics.Utils.DBUtil;
 
 public class UserServiceDAO {
 
-
-	public String registerUser(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, String nomeCitta, String via, String numeroCivico, String cap, ArrayList<RuoloBean> ruolo) throws SQLException {
-		IndirizzoBean indirizzo = new IndirizzoBean(nomeCitta, via, numeroCivico, cap);
-		UserBean user = new UserBean(email, password, nome, cognome, numeroTelefono, dataNascita, indirizzo, ruolo);
-
+	public String registerUser(String email, String password, String nome, String cognome, String telefono,
+			Date dataNascita, String citta, String via, String numeroCivico, String cap, ArrayList<RuoloBean> ruoli,
+			MagazzinoBean magazzino) throws SQLException {
 	    String status = "User Registration Failed!";
+	    UserBean newUser = new UserBean(email, password, nome,cognome, telefono, dataNascita, new IndirizzoBean(citta,via, numeroCivico, cap), ruoli, magazzino);
+	    
 
-	    boolean isRegtd = isRegistered(user.getEmail());
+	    List  <RuoloBean> ruolo = newUser.getRuolo();
+	    boolean isRegtd = isRegistered(newUser.getEmail());
 
 	    if (isRegtd) {
 	        status = "Email Id Already Registered!";
@@ -41,97 +42,27 @@ public class UserServiceDAO {
 	    try {
 	        // Modifica della query per includere il campo usertype
 	    	IndirizzoDao in = new IndirizzoDao(con);
-	    	if(!in.ifExists(nomeCitta, via, numeroCivico, cap)) {
+	    	if(!in.ifExists(newUser.getIndirizzo().getNomeCitta(),  newUser.getIndirizzo().getVia(),  newUser.getIndirizzo().getNumeroCivico(),  newUser.getIndirizzo().getCap())) {
 	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cap) VALUES (?, ?, ?, ?)");
-	    		ps.setString(1, indirizzo.getNomeCitta());
-		        ps.setString(2, indirizzo.getVia());
-		        ps.setString(3, indirizzo.getNumeroCivico());
-		        ps.setString(4, indirizzo.getCap());
+	    		ps.setString(1, newUser.getIndirizzo().getNomeCitta());
+		        ps.setString(2, newUser.getIndirizzo().getVia());
+		        ps.setString(3, newUser.getIndirizzo().getNumeroCivico());
+		        ps.setString(4, newUser.getIndirizzo().getCap());
 		        ps.executeUpdate();
 	    	}
 	    	
 	        ps = con.prepareStatement("INSERT INTO Utente (email, pass, nome, cognome, telefono, nomeCitta, via, numeroCivico, cap, dataNascita) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-	        ps.setString(1, user.getEmail());
-	        ps.setString(2, user.getPassword());
-	        ps.setString(3, user.getNome());
-	        ps.setString(4, user.getCognome());
-	        ps.setString(5, user.getNumeroTelefono());
-	        ps.setString(6, indirizzo.getNomeCitta());
-	        ps.setString(7, indirizzo.getVia());
-	        ps.setString(8, indirizzo.getNumeroCivico());
-	        ps.setString(9, indirizzo.getCap());
-	        ps.setDate(10, (Date) user.getDataNascita());
-
-	        System.out.println();
-	        int k = ps.executeUpdate();
-
-	        if (k > 0) {
-	            
-	        	for (RuoloBean ruoloBean : ruolo) {
-					ps = con.prepareStatement("INSERT INTO Utente_Ruolo (idRuolo, emailUtente) VALUES (?, ?)");
-					ps.setString(1, ruoloBean.toString());
-					ps.setString(2, user.getEmail());
-					ps.executeUpdate();
-				}
-	        	status = "User Registered Successfully!";
-	        }
-
-	    } catch (SQLException e) {
-	        status = "Error: " + e.getMessage();
-	        e.printStackTrace();
-	    } finally {
-	        DBUtil.closeConnection(ps);
-	    }
-
-	    return status;
-	}
-	
-	
-	public String registerUser(String email, String password, String nome, String cognome, String numeroTelefono, java.sql.Date dataNascita, String nomeCitta, String via, String numeroCivico, String cap, ArrayList<RuoloBean> ruolo, String magazzino) throws SQLException {
-		IndirizzoBean indirizzo = new IndirizzoBean(nomeCitta, via, numeroCivico, cap);
-		UserBean user = new UserBean(email, password, nome, cognome, numeroTelefono, dataNascita, indirizzo, ruolo);
-
-	    String status = "User Registration Failed!";
-
-	    boolean isRegtd = isRegistered(user.getEmail());
-
-	    if (isRegtd) {
-	        status = "Email Id Already Registered!";
-	        return status;
-	    }
-
-	    Connection con = DBUtil.getConnection();
-	    PreparedStatement ps = null;
-
-	    if (con != null) {
-	        System.out.println("Connected Successfully!");
-	    }
-
-	    try {
-	        // Modifica della query per includere il campo usertype
-	    	IndirizzoDao in = new IndirizzoDao(con);
-	    	if(!in.ifExists(nomeCitta, via, numeroCivico, cap)) {
-	    		ps = con.prepareStatement("INSERT INTO Indirizzo (nomeCitta, via, numeroCivico, cap) VALUES (?, ?, ?, ?)");
-	    		ps.setString(1, indirizzo.getNomeCitta());
-		        ps.setString(2, indirizzo.getVia());
-		        ps.setString(3, indirizzo.getNumeroCivico());
-		        ps.setString(4, indirizzo.getCap());
-		        ps.executeUpdate();
-	    	}
-	    	
-	        ps = con.prepareStatement("INSERT INTO Utente (email, pass, nome, cognome, telefono, nomeCitta, via, numeroCivico, cap, dataNascita) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-	        ps.setString(1, user.getEmail());
-	        ps.setString(2, user.getPassword());
-	        ps.setString(3, user.getNome());
-	        ps.setString(4, user.getCognome());
-	        ps.setString(5, user.getNumeroTelefono());
-	        ps.setString(6, indirizzo.getNomeCitta());
-	        ps.setString(7, indirizzo.getVia());
-	        ps.setString(8, indirizzo.getNumeroCivico());
-	        ps.setString(9, indirizzo.getCap());
-	        ps.setDate(10, (Date) user.getDataNascita());
+	        ps.setString(1, newUser.getEmail());
+	        ps.setString(2, newUser.getPassword());
+	        ps.setString(3, newUser.getNome());
+	        ps.setString(4, newUser.getCognome());
+	        ps.setString(5, newUser.getNumeroTelefono());
+	        ps.setString(6, newUser.getIndirizzo().getNomeCitta());
+	        ps.setString(7, newUser.getIndirizzo().getVia());
+	        ps.setString(8, newUser.getIndirizzo().getNumeroCivico());
+	        ps.setString(9, newUser.getIndirizzo().getCap());
+	        ps.setDate(10, (Date) newUser.getDataNascita());
 
 	        System.out.println();
 	        int k = ps.executeUpdate();
@@ -141,8 +72,8 @@ public class UserServiceDAO {
 	        	for (RuoloBean ruoloBean : ruolo) {
 					ps = con.prepareStatement("INSERT INTO Utente_Ruolo (idRuolo, emailUtente, nomeMagazzino) VALUES (?, ?, ?)");
 					ps.setString(1, ruoloBean.toString());
-					ps.setString(2, user.getEmail());
-					ps.setString(3, magazzino);
+					ps.setString(2, newUser.getEmail());
+					ps.setString(3, newUser.getMagazzino().getNome());
 					ps.executeUpdate();
 				}
 	        	status = "User Registered Successfully!";
@@ -249,7 +180,7 @@ public class UserServiceDAO {
 				while (rs.next()) {
 					ru.add(RuoloBean.fromString(rs.getString("idRuolo")));
 				}
-				user.setRuoloBean(ru);
+				user.setRuolo(ru);
 			}
 			
 			
@@ -472,5 +403,8 @@ public class UserServiceDAO {
 	    //return status;
 	}
 
+
+
+	
 
 }
