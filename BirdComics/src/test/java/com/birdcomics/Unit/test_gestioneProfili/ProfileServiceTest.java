@@ -248,7 +248,7 @@ class ProfileServiceTest {
                 .thenReturn(expectedResult);
 
         // Esegui il metodo da testare
-        String result = profileService.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null);
+        String result = profileService.registraAccount(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null);
 
         // Verifica il risultato
         assertEquals(expectedResult, result);
@@ -277,7 +277,7 @@ class ProfileServiceTest {
                 .thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare e verifica che sollevi un'eccezione
-        assertThrows(SQLException.class, () -> profileService.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null));
+        assertThrows(SQLException.class, () -> profileService.registraAccount(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null));
 
         // Verifica che il metodo del DAO sia stato chiamato
         verify(userDao, times(1)).registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null);

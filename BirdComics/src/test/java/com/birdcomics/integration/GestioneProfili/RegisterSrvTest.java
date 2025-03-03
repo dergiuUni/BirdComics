@@ -73,7 +73,7 @@ class RegisterSrvTest {
         when(request.getSession(false)).thenReturn(null); // Nessuna sessione attiva
 
         // Configura il mock del servizio per restituire un messaggio di successo
-        when(profileService.registerUser(
+        when(profileService.registraAccount(
                 eq("mario.rossi@example.com"), eq("password123"), eq("Mario"), eq("Rossi"),
                 eq("1234567890"), any(Date.class), eq("Roma"), eq("Via Roma"), eq("10"), eq("00100"),
                 argThat(ruoli -> ruoli.contains(RuoloBean.Cliente)), // Verifica che il ruolo Cliente sia presente
@@ -87,7 +87,7 @@ class RegisterSrvTest {
         registerSrv.doGet(request, response);
 
         // Verifica che il metodo registerUser sia stato chiamato con i parametri corretti
-        verify(profileService).registerUser(
+        verify(profileService).registraAccount(
                 eq("mario.rossi@example.com"), eq("password123"), eq("Mario"), eq("Rossi"),
                 eq("1234567890"), any(Date.class), eq("Roma"), eq("Via Roma"), eq("10"), eq("00100"),
                 argThat(ruoli -> ruoli.contains(RuoloBean.Cliente)),
@@ -150,7 +150,7 @@ class RegisterSrvTest {
         when(profileService.getUserDetails("manager@example.com")).thenReturn(manager);
         
         // Configura il mock del servizio per restituire un messaggio di successo
-        when(profileService.registerUser(
+        when(profileService.registraAccount(
                 eq("annabianchi@birdcomics.com"), eq("securePass123"), eq("Anna"), eq("Bianchi"),
                 eq("1234567890"), any(Date.class), eq("Milano"), eq("Via Milano"), eq("20"), eq("20100"),
                 argThat(ruoli -> ruoli.contains(RuoloBean.GestoreMagazzino)),
@@ -164,7 +164,7 @@ class RegisterSrvTest {
         registerSrv.doGet(request, response);
 
         // Verifica che il metodo registerUser sia stato chiamato con i parametri corretti
-        verify(profileService).registerUser(
+        verify(profileService).registraAccount(
                 eq("annabianchi@birdcomics.com"), eq("securePass123"), eq("Anna"), eq("Bianchi"),
                 eq("1234567890"), any(Date.class), eq("Milano"), eq("Via Milano"), eq("20"), eq("20100"),
                 argThat(ruoli -> ruoli.contains(RuoloBean.GestoreMagazzino)),

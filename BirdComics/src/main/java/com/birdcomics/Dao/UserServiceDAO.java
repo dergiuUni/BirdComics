@@ -21,9 +21,14 @@ public class UserServiceDAO {
 			Date dataNascita, String citta, String via, String numeroCivico, String cap, ArrayList<RuoloBean> ruoli,
 			MagazzinoBean magazzino) throws SQLException {
 	    String status = "User Registration Failed!";
-	    UserBean newUser = new UserBean(email, password, nome,cognome, telefono, dataNascita, new IndirizzoBean(citta,via, numeroCivico, cap), ruoli, magazzino);
+	    UserBean newUser;
+	    if(magazzino != null) {
+	    	newUser = new UserBean(email, password, nome,cognome, telefono, dataNascita, new IndirizzoBean(citta,via, numeroCivico, cap), ruoli, magazzino);
+	    }
+	    else {
+	    	newUser = new UserBean(email, password, nome,cognome, telefono, dataNascita, new IndirizzoBean(citta,via, numeroCivico, cap), ruoli);
+	    }
 	    
-
 	    List  <RuoloBean> ruolo = newUser.getRuolo();
 	    boolean isRegtd = isRegistered(newUser.getEmail());
 
@@ -73,7 +78,12 @@ public class UserServiceDAO {
 					ps = con.prepareStatement("INSERT INTO Utente_Ruolo (idRuolo, emailUtente, nomeMagazzino) VALUES (?, ?, ?)");
 					ps.setString(1, ruoloBean.toString());
 					ps.setString(2, newUser.getEmail());
-					ps.setString(3, newUser.getMagazzino().getNome());
+					if(magazzino != null) {
+						ps.setString(3, newUser.getMagazzino().getNome());
+					}
+					else {
+						ps.setString(3, null);
+					}
 					ps.executeUpdate();
 				}
 	        	status = "User Registered Successfully!";

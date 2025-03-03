@@ -82,18 +82,18 @@ public class RegisterSrv extends HttpServlet {
                 if (email == null) {
                     // Se non c'è una sessione attiva, registra l'utente come Cliente
                     ruoli.add(RuoloBean.Cliente);
-                    status = profileService.registerUser(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null);
+                    status = profileService.registraAccount(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, null);
                 } else {
                     // Se c'è una sessione attiva, verifica il ruolo dell'utente e il magazzino
                     UserBean at = profileService.getUserDetails(email);
                     if (at.isRuolo(RuoloBean.GestoreGenerale)) {
                         ruoli.add(RuoloBean.GestoreMagazzino);
                         //qui aggiungere il magazzino selezionato
-                        status = profileService.registerUser(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, at.getMagazzino());
+                        status = profileService.registraAccount(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, at.getMagazzino());
                     }
                     if (at.isRuolo(RuoloBean.GestoreMagazzino)) {
                         ruoli.add(RuoloBean.RisorseUmane);
-                        status = profileService.registerUser(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, at.getMagazzino());
+                        status = profileService.registraAccount(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, at.getMagazzino());
                     }
                     if (at.isRuolo(RuoloBean.RisorseUmane)) {
                         String[] ruoliSelezionati = request.getParameterValues("ruoli");
@@ -101,7 +101,7 @@ public class RegisterSrv extends HttpServlet {
                             for (String ruolo : ruoliSelezionati) { 	
                                 ruoli.add(RuoloBean.fromString(ruolo));
                             }
-                            status = profileService.registerUser(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, at.getMagazzino());
+                            status = profileService.registraAccount(emailP, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, at.getMagazzino());
                         }
                     }
                 }

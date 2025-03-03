@@ -17,7 +17,7 @@ public interface ProfileService {
 	String validateCredentials(String email, String password) throws SQLException;
 	List<String> getUserTypes(String email) throws SQLException;
 	void logout(HttpServletRequest request);
-	 String registerUser(String email, String password, String nome, String cognome, String telefono, 
+	 String registraAccount(String email, String password, String nome, String cognome, String telefono, 
              java.sql.Date dataNascita, String citta, String via, String numeroCivico, 
              String cap, ArrayList<RuoloBean> ruoli, MagazzinoBean magazzino) throws SQLException;
 }

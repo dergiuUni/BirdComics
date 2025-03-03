@@ -63,7 +63,7 @@ public class ProfileServiceImpl implements ProfileService {
 		session.invalidate();  // Invalida la sessione dell'utente
 	}
 
-	public String registerUser(String email, String password, String nome, String cognome, String telefono, 
+	public String registraAccount(String email, String password, String nome, String cognome, String telefono, 
 			java.sql.Date dataNascita, String citta, String via, String numeroCivico, 
 			String cap, ArrayList<RuoloBean> ruoli, MagazzinoBean magazzino) throws SQLException {
 		// Delego la registrazione al UserServiceDAO

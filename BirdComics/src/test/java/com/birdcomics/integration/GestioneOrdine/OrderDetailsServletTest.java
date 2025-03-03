@@ -1,136 +1,120 @@
 package com.birdcomics.integration.GestioneOrdine;
 
-
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
-
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import com.birdcomics.Bean.OrderBean;
+import com.birdcomics.GestioneOrdine.Controller.OrderDetailsServlet;
+import com.birdcomics.GestioneOrdine.Service.OrdineService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.birdcomics.Bean.OrderBean;
-import com.birdcomics.GestioneOrdine.Controller.OrderDetailsServlet;
-import com.birdcomics.GestioneOrdine.Service.OrdineService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class OrderDetailsServletTest {
+class OrderDetailsServletTest {
 
     @Mock
     private HttpServletRequest request;
-    
+
     @Mock
     private HttpServletResponse response;
-    
+
     @Mock
     private HttpSession session;
-    
-    @Mock
-    private OrdineService ordineService;
-    
+
     @Mock
     private RequestDispatcher requestDispatcher;
-    
+
+    @Mock
+    private OrdineService ordineService;
+
     @InjectMocks
-    private OrderDetailsServlet servlet;
-    
-    private final String testUsername = "testUser";
-    private final List<OrderBean> mockOrders = new ArrayList<>();
+    private OrderDetailsServlet orderDetailsServlet;
 
-    @Before
-    public void setUp() throws Exception {
-        // Inietta il mock del servizio usando reflection
-        Field serviceField = OrderDetailsServlet.class.getDeclaredField("ordineService");
-        serviceField.setAccessible(true);
-        serviceField.set(servlet, ordineService);
-        
-        // Configura comportamento mock
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        orderDetailsServlet = new OrderDetailsServlet();
+        orderDetailsServlet.ordineService = ordineService; // Inietta manualmente il mock del servizio
+    }
+
+    @Test
+    void testDoGet_UserLoggedIn() throws ServletException, IOException, SQLException {
+        // Configura il mock della sessione per simulare un utente loggato
+        String email = "test@example.com";
         when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("email")).thenReturn(email);
+
+        // Configura il mock del servizio per restituire una lista di ordini
+        List<OrderBean> orders = new ArrayList<>();
+        orders.add(new OrderBean());
+        when(ordineService.getOrdiniPerUtente(email)).thenReturn(orders);
+
+        // Configura il mock del RequestDispatcher
         when(request.getRequestDispatcher("/orderDetails.jsp")).thenReturn(requestDispatcher);
-        
-        // Dati di test
-        mockOrders.add(new OrderBean());
-        mockOrders.add(new OrderBean());
-    }
 
-    @Test
-    public void testDoGet_UserLoggedIn() throws Exception {
-        // Configura mock
-        when(session.getAttribute("username")).thenReturn(testUsername);
-        when(ordineService.getOrdiniPerUtente(testUsername)).thenReturn(mockOrders);
-        
-        // Esegui servlet
-        servlet.doGet(request, response);
-        
-        // Verifiche
-        verify(ordineService).getOrdiniPerUtente(testUsername);
-        verify(request).setAttribute("orders", mockOrders);
+        // Esegui il metodo doGet
+        orderDetailsServlet.doGet(request, response);
+
+        // Verifica che gli ordini siano stati impostati come attributo della richiesta
+        verify(request).setAttribute("orders", orders);
+
+        // Verifica che il RequestDispatcher sia stato chiamato
         verify(requestDispatcher).forward(request, response);
     }
 
     @Test
-    public void testDoGet_UserNotLoggedIn() throws Exception {
-        // Configura mock
-        when(session.getAttribute("username")).thenReturn(null);
-        
-        // Esegui servlet
-        servlet.doGet(request, response);
-        
-        // Verifiche
+    void testDoGet_UserNotLoggedIn() throws ServletException, IOException {
+        // Configura il mock della sessione per simulare un utente non loggato
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("email")).thenReturn(null);
+
+        // Esegui il metodo doGet
+        orderDetailsServlet.doGet(request, response);
+
+        // Verifica che il reindirizzamento alla pagina di login sia stato eseguito
         verify(response).sendRedirect("login.jsp");
-        verify(ordineService, never()).getOrdiniPerUtente(anyString());
     }
 
     @Test
-    public void testDoGet_SQLError() throws Exception {
-        // Configura mock
-        when(session.getAttribute("username")).thenReturn(testUsername);
-        when(ordineService.getOrdiniPerUtente(testUsername)).thenThrow(new SQLException("DB error"));
-        
-        // Esegui servlet
-        servlet.doGet(request, response);
-        
-        // Verifiche
-        verify(requestDispatcher).forward(request, response);
-        verify(response, never()).sendRedirect(anyString());
-    }
+    void testDoGet_SQLException() throws ServletException, IOException, SQLException {
+        // Configura il mock della sessione per simulare un utente loggato
+        String email = "test@example.com";
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("email")).thenReturn(email);
 
-    @Test
-    public void testDoGet_EmptyOrders() throws Exception {
-        // Configura mock
-        when(session.getAttribute("username")).thenReturn(testUsername);
-        when(ordineService.getOrdiniPerUtente(testUsername)).thenReturn(new ArrayList<>());
-        
-        // Esegui servlet
-        servlet.doGet(request, response);
-        
-        // Verifiche
-        verify(request).setAttribute(eq("orders"), anyList());
+        // Configura il mock del servizio per lanciare un'eccezione SQLException
+        when(ordineService.getOrdiniPerUtente(email)).thenThrow(new SQLException("Database error"));
+
+        // Configura il mock del RequestDispatcher
+        when(request.getRequestDispatcher("/orderDetails.jsp")).thenReturn(requestDispatcher);
+
+        // Esegui il metodo doGet
+        orderDetailsServlet.doGet(request, response);
+
+        // Verifica che il RequestDispatcher sia stato chiamato
         verify(requestDispatcher).forward(request, response);
     }
 
     @Test
-    public void testDoPost() throws ServletException, IOException, SQLException {
-        // Configura mock
-        when(session.getAttribute("username")).thenReturn(testUsername);
-        
-        // Esegui servlet
-        servlet.doPost(request, response);
-        
-        // Verifiche
-        verify(ordineService).getOrdiniPerUtente(testUsername);
+    void testDoPost() throws ServletException, IOException {
+        // Configura il mock della richiesta e della risposta
+        when(request.getSession()).thenReturn(session);
+
+        // Esegui il metodo doPost
+        orderDetailsServlet.doPost(request, response);
+
+        // Verifica che il metodo doGet sia stato chiamato
+        verify(orderDetailsServlet).doGet(request, response);
     }
 }

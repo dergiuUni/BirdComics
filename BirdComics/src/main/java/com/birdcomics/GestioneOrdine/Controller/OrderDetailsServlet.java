@@ -20,7 +20,7 @@ import java.util.List;
 public class OrderDetailsServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private OrdineService ordineService;  // Riferimento al servizio
+    public OrdineService ordineService;  // Riferimento al servizio
 
     public OrderDetailsServlet() {
         super();
