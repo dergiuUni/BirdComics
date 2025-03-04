@@ -40,16 +40,16 @@ public class AddProductSrv extends HttpServlet {
 
         String status = "Product Registration Failed!";
         String prodName = request.getParameter("name");
-        String[] selectedGenres = request.getParameterValues("genres"); // Recupera i generi selezionati
+        String[] selectedGenres = request.getParameterValues("genres");
         String prodInfo = request.getParameter("info");
         float prodPrice = Float.parseFloat(request.getParameter("price"));
 
-        Part filePart = request.getPart("image"); // Get the file part with the name "image"
+        Part filePart = request.getPart("image"); // Ottieni il file caricato
 
         if (filePart != null && filePart.getSize() > 0) {
-            String fileName = filePart.getSubmittedFileName(); // Get the original file name
+            String fileName = filePart.getSubmittedFileName(); // Ottieni il nome originale del file
 
-            // Check file extension to ensure it's an image
+            // Verifica l'estensione del file
             String fileExtension = getFileExtension(fileName);
             if (!fileExtension.equals("jpg") && !fileExtension.equals("jpeg") && !fileExtension.equals("png")) {
                 status = "Invalid file type! Only JPG, JPEG, and PNG are allowed.";
@@ -59,35 +59,29 @@ public class AddProductSrv extends HttpServlet {
                 return;
             }
 
-            // Create a unique name for the image to avoid conflicts
-            String uniqueFileName = UUID.randomUUID().toString() + "." + fileExtension;
-
-            // Define the upload path
+            // Salva il file con un nome temporaneo
             String uploadPath = request.getServletContext().getRealPath("uploads/");
-
-            // Ensure the directory exists
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
-                uploadDir.mkdirs(); // Create the directory if it doesn't exist
+                uploadDir.mkdirs();
             }
 
-            // Write the file to the directory
-            String filePath = uploadPath + File.separator + uniqueFileName;
-            filePart.write(filePath);
+            String tempFileName = "temp_" + UUID.randomUUID().toString() + "." + fileExtension;
+            String tempFilePath = uploadPath + File.separator + tempFileName;
+            filePart.write(tempFilePath);
 
             try {
                 // Usa il CatalogoService per aggiungere il prodotto
-                status = catalogoService.addProduct(prodName, prodInfo, prodPrice, uniqueFileName, selectedGenres);
+                status = catalogoService.addProduct(prodName, prodInfo, prodPrice, tempFilePath, selectedGenres);
             } catch (SQLException e) {
                 status = "Database error occurred while adding the product.";
                 e.printStackTrace();
             }
         } else {
-            // If no image is provided, handle it accordingly (optional)
             status = "Please provide an image for the product.";
         }
 
-        // Redirect back to the JSP page with the status message
+        // Reindirizza alla pagina JSP con il messaggio di stato
         request.setAttribute("message", status);
         RequestDispatcher rd = request.getRequestDispatcher("addProduct.jsp");
         rd.forward(request, response);

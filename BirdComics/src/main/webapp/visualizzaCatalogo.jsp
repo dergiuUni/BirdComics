@@ -57,10 +57,9 @@
                 <% List<ProductBean> products = (List<ProductBean>) request.getAttribute("products");
                    if (products != null) {
                        for (ProductBean product : products) { %>
-       
                            <tr>
-                               <td><img src="./ShowImage?image=<%= product.getImage()%>"
-                                    style="width: 50px; height: 50px;"></td>
+                               <td><td><img src="./ShowImage?image=<%=product.getImage()%>" alt="Product"
+                                    style="width: 50px; height: 70px;"></td>
                                <td><a href="./updateProduct.jsp?prodid=<%= product.getId() %>"><%= product.getId() %></a></td>
                                <%-- Limit name to 25 characters --%>
                                <td><%= product.getName().substring(0, Math.min(product.getName().length(), 25)) + ".." %></td>

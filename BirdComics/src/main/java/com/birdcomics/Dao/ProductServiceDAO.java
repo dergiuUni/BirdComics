@@ -1,5 +1,6 @@
 package com.birdcomics.Dao;
 
+import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ import com.birdcomics.Utils.DBUtil;
 public class ProductServiceDAO {
 	  
 
-	public String addProduct(String name, String description, float price, String image, String[] selectedGenres) throws SQLException {
+	public String addProduct(String name, String description, float price, String imagePath, String[] selectedGenres) throws SQLException {
 	    String status = "Product Registration Failed!";
 
 	    Connection con = DBUtil.getConnection();
@@ -27,18 +28,12 @@ public class ProductServiceDAO {
 
 	    try {
 	        // Inserisci il fumetto
-	    	/*
-	        ps = con.prepareStatement("insert into Fumetto (nome, descrizione, prezzo, immagine, active) values(?,?,?,?,?);", 
+	        ps = con.prepareStatement("INSERT INTO Fumetto (nome, descrizione, prezzo) VALUES (?, ?, ?)", 
 	                                  Statement.RETURN_GENERATED_KEYS);
-	                                  */
-	    	ps = con.prepareStatement("insert into Fumetto (nome, descrizione, prezzo, immagine) values(?,?,?,?);", 
-                    Statement.RETURN_GENERATED_KEYS);
 	        ps.setString(1, name);
 	        ps.setString(2, description);
 	        ps.setFloat(3, price);
-	        ps.setString(4, image);
-	       // ps.setBoolean(5, true);
-	        
+
 	        int k = ps.executeUpdate();
 
 	        if (k > 0) {
@@ -47,9 +42,15 @@ public class ProductServiceDAO {
 	            if (generatedKeys.next()) {
 	                int fumettoId = generatedKeys.getInt(1);
 
+	                // Rinomina l'immagine con l'ID del fumetto
+	                String newImageName = fumettoId + ".jpg"; // Usa l'ID come nome dell'immagine
+	                File oldFile = new File(imagePath);
+	                File newFile = new File(oldFile.getParent(), newImageName);
+	                oldFile.renameTo(newFile); // Rinomina il file
+
 	                // Inserisci i generi nella tabella Genere_Fumetto
 	                for (String genre : selectedGenres) {
-	                    PreparedStatement genrePs = con.prepareStatement("insert into Genere_Fumetto (genere, idFumetto) values(?,?)");
+	                    PreparedStatement genrePs = con.prepareStatement("INSERT INTO Genere_Fumetto (genere, idFumetto) VALUES (?, ?)");
 	                    genrePs.setString(1, genre);
 	                    genrePs.setInt(2, fumettoId);
 	                    genrePs.executeUpdate();
@@ -59,7 +60,6 @@ public class ProductServiceDAO {
 	                status = "Product Added Successfully";
 	            }
 	        }
-
 	    } catch (SQLException e) {
 	        status = "Error: " + e.getMessage();
 	        e.printStackTrace();
@@ -132,7 +132,7 @@ public class ProductServiceDAO {
                     product.setName(rs.getString("nome"));
                     product.setDescription(rs.getString("descrizione"));
                     product.setPrice(rs.getFloat("prezzo"));
-                    product.setImage(rs.getString("immagine"));
+                    product.setImage(product.getId() + ".jpg");
                     productMap.put(productId, product);
                 }
 
@@ -204,7 +204,7 @@ public class ProductServiceDAO {
                     product.setName(rs.getString("nome"));
                     product.setDescription(rs.getString("descrizione"));
                     product.setPrice(rs.getFloat("prezzo"));
-                    product.setImage(rs.getString("immagine"));
+                    product.setImage(product.getId() + ".jpg");
                     productMap.put(productId, product);
                 }
 
@@ -258,7 +258,7 @@ public class ProductServiceDAO {
                     product.setName(rs.getString("nome"));
                     product.setDescription(rs.getString("descrizione"));
                     product.setPrice(rs.getFloat("prezzo"));
-                    product.setImage(rs.getString("immagine"));
+                    product.setImage(product.getId() + ".jpg");
                     productMap.put(productId, product);
                 }
 
@@ -312,7 +312,7 @@ public class ProductServiceDAO {
                     product.setName(rs.getString("nome"));
                     product.setDescription(rs.getString("descrizione"));
                     product.setPrice(rs.getFloat("prezzo"));
-                    product.setImage(rs.getString("immagine"));
+                    product.setImage(product.getId() + ".jpg");
                     productMap.put(productId, product);
                 }
 
@@ -338,25 +338,21 @@ public class ProductServiceDAO {
         Connection con = DBUtil.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
-        int idfumetto = -1; // Valore di default
+
+        int idfumetto = -1;
 
         if (idString != null) {
             try {
-            	idfumetto = Integer.parseInt(idString); // Tenta di fare il parsing
+                idfumetto = Integer.parseInt(idString);
             } catch (NumberFormatException e) {
-                // Gestisci l'errore se il parametro non è un numero valido
                 System.out.println("Errore nel parsing del parametro pid: " + e.getMessage());
-                return null; 
+                return null;
             }
         }
 
-
-        
         try {
-            //ps = con.prepareStatement("SELECT * FROM Fumetto WHERE id=? AND active = 1");
-            ps = con.prepareStatement("select * from Fumetto, Genere_Fumetto where id=idFumetto and id=?");
-            ps.setInt(1,idfumetto );
+            ps = con.prepareStatement("SELECT * FROM Fumetto, Genere_Fumetto WHERE id = idFumetto AND id = ?");
+            ps.setInt(1, idfumetto);
             rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -365,14 +361,13 @@ public class ProductServiceDAO {
                 product.setName(rs.getString("nome"));
                 product.setDescription(rs.getString("descrizione"));
                 product.setPrice(rs.getFloat("prezzo"));
-                product.setImage(rs.getString("immagine"));
+                // Genera il percorso dell'immagine dinamicamente
+                product.setImage(product.getId() + ".jpg");
                 product.addGenere(rs.getString("genere"));
             }
             while (rs.next()) {
-            	product.addGenere(rs.getString("genere"));
+                product.addGenere(rs.getString("genere"));
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

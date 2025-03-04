@@ -71,7 +71,7 @@
                 %>
 				<tr>
 					<td><img src="./ShowImage?image=<%=product.getImage()%>"
-						style="width: 50px; height: 50px;"></td>
+						style="width: 50px; height: 75px;"></td>
 					<td><%=product.getName()%></td>
 					<td><%=product.getPrice()%></td>
 					<td>
