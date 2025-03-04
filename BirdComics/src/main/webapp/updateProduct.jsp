@@ -21,9 +21,9 @@
     <% String message = request.getParameter("message"); %>
     <%
 	List<String> genres = (List<String>) request.getAttribute("genres");
-    
+    //<--recuperare anche generi del product tramite id e impostarli nella lista generi come gia selezionati-->
 	%>
-	<--recuperare anche generi del product tramite id e impostarli nella lista generi come gia selezionati-->
+	
 
  
     <div class="container">
@@ -33,7 +33,7 @@
 				onsubmit="return validateForm()">
                 <div style="font-weight: bold;" class="text-center">
                     <div class="form-group">
-                        <img src="./ShowImage?image=<%=product.getImage()%>" alt="Product Image" height="100px" />
+                        <img src="./ShowImage?image=<%=product.getImage()%>" alt="Product Image" style="width: 200px; height: 280px;"/>
                         <h2 style="color: green;">Product Update Form</h2>
                     </div>
 
