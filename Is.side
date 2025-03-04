@@ -21,6 +21,80 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "4be79334-afa4-4813-9452-a1531517264b",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "//a[contains(text(),'Logout')]",
+      "targets": [],
+      "value": "logout_count"
+    }, {
+      "id": "c25c9fe0-65ac-498f-8a0f-79dff07ba0bd",
+      "comment": "",
+      "command": "if",
+      "target": "${logout_count} > 0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cbce03d2-15c2-423d-968a-713c11f9e0e3",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Carrello",
+      "targets": [
+        ["linkText=Carrello", "linkText"],
+        ["css=.nav > li:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Carrello')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'CartDetailsServlet')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Carrello')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3ca367e7-aa2e-4c6f-b1e5-0f443dff7293",
+      "comment": "",
+      "command": "click",
+      "target": "css=td:nth-child(2) button",
+      "targets": [
+        ["css=td:nth-child(2) button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Svuota')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad28e423-2b7e-450f-a72b-822890ce811f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=.nav > li:nth-child(6) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './LogoutSrv')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d449380-fb9e-4895-9adf-4b25dddac26b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "590a504c-1e0b-4587-b8f0-a2d2dfaae417",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "51b910a5-cea9-49a4-b6af-d111c6df0d30",
       "comment": "",
       "command": "click",
@@ -237,6 +311,80 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "4be79334-afa4-4813-9452-a1531517264b",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "//a[contains(text(),'Logout')]",
+      "targets": [],
+      "value": "logout_count"
+    }, {
+      "id": "c25c9fe0-65ac-498f-8a0f-79dff07ba0bd",
+      "comment": "",
+      "command": "if",
+      "target": "${logout_count} > 0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cbce03d2-15c2-423d-968a-713c11f9e0e3",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Carrello",
+      "targets": [
+        ["linkText=Carrello", "linkText"],
+        ["css=.nav > li:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Carrello')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'CartDetailsServlet')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Carrello')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3ca367e7-aa2e-4c6f-b1e5-0f443dff7293",
+      "comment": "",
+      "command": "click",
+      "target": "css=td:nth-child(2) button",
+      "targets": [
+        ["css=td:nth-child(2) button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Svuota')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad28e423-2b7e-450f-a72b-822890ce811f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=.nav > li:nth-child(6) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './LogoutSrv')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d449380-fb9e-4895-9adf-4b25dddac26b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "590a504c-1e0b-4587-b8f0-a2d2dfaae417",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "57fb69d8-4d06-4a67-890c-c2787e29d302",
       "comment": "",
       "command": "click",
@@ -366,6 +514,80 @@
       "comment": "",
       "command": "setWindowSize",
       "target": "1265x949",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4be79334-afa4-4813-9452-a1531517264b",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "//a[contains(text(),'Logout')]",
+      "targets": [],
+      "value": "logout_count"
+    }, {
+      "id": "c25c9fe0-65ac-498f-8a0f-79dff07ba0bd",
+      "comment": "",
+      "command": "if",
+      "target": "${logout_count} > 0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cbce03d2-15c2-423d-968a-713c11f9e0e3",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Carrello",
+      "targets": [
+        ["linkText=Carrello", "linkText"],
+        ["css=.nav > li:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Carrello')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'CartDetailsServlet')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Carrello')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3ca367e7-aa2e-4c6f-b1e5-0f443dff7293",
+      "comment": "",
+      "command": "click",
+      "target": "css=td:nth-child(2) button",
+      "targets": [
+        ["css=td:nth-child(2) button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Svuota')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad28e423-2b7e-450f-a72b-822890ce811f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=.nav > li:nth-child(6) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './LogoutSrv')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d449380-fb9e-4895-9adf-4b25dddac26b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "590a504c-1e0b-4587-b8f0-a2d2dfaae417",
+      "comment": "",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -514,6 +736,80 @@
       "comment": "",
       "command": "setWindowSize",
       "target": "1261x949",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4be79334-afa4-4813-9452-a1531517264b",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "//a[contains(text(),'Logout')]",
+      "targets": [],
+      "value": "logout_count"
+    }, {
+      "id": "c25c9fe0-65ac-498f-8a0f-79dff07ba0bd",
+      "comment": "",
+      "command": "if",
+      "target": "${logout_count} > 0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cbce03d2-15c2-423d-968a-713c11f9e0e3",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Carrello",
+      "targets": [
+        ["linkText=Carrello", "linkText"],
+        ["css=.nav > li:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Carrello')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'CartDetailsServlet')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Carrello')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3ca367e7-aa2e-4c6f-b1e5-0f443dff7293",
+      "comment": "",
+      "command": "click",
+      "target": "css=td:nth-child(2) button",
+      "targets": [
+        ["css=td:nth-child(2) button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Svuota')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad28e423-2b7e-450f-a72b-822890ce811f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=.nav > li:nth-child(6) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './LogoutSrv')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d449380-fb9e-4895-9adf-4b25dddac26b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "590a504c-1e0b-4587-b8f0-a2d2dfaae417",
+      "comment": "",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -669,17 +965,66 @@
       "targets": [],
       "value": ""
     }, {
-      "id": "8ef34b46-784d-4af5-9ab5-39db83a4ebdb",
+      "id": "4be79334-afa4-4813-9452-a1531517264b",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "//a[contains(text(),'Logout')]",
+      "targets": [],
+      "value": "logout_count"
+    }, {
+      "id": "c25c9fe0-65ac-498f-8a0f-79dff07ba0bd",
+      "comment": "",
+      "command": "if",
+      "target": "${logout_count} > 0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ad28e423-2b7e-450f-a72b-822890ce811f",
       "comment": "",
       "command": "click",
       "target": "linkText=Logout",
       "targets": [
         ["linkText=Logout", "linkText"],
-        ["css=.nav > li:nth-child(3) > a", "css:finder"],
+        ["css=.nav > li:nth-child(6) > a", "css:finder"],
         ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
         ["xpath=//a[contains(@href, './LogoutSrv')]", "xpath:href"],
-        ["xpath=//div[3]/ul/li[3]/a", "xpath:position"],
+        ["xpath=//div[3]/ul/li[6]/a", "xpath:position"],
         ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d449380-fb9e-4895-9adf-4b25dddac26b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "590a504c-1e0b-4587-b8f0-a2d2dfaae417",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9b883495-6773-4688-92b0-76c8bb6435b7",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
@@ -1017,6 +1362,55 @@
       "comment": "",
       "command": "setWindowSize",
       "target": "1197x949",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4be79334-afa4-4813-9452-a1531517264b",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "//a[contains(text(),'Logout')]",
+      "targets": [],
+      "value": "logout_count"
+    }, {
+      "id": "c25c9fe0-65ac-498f-8a0f-79dff07ba0bd",
+      "comment": "",
+      "command": "if",
+      "target": "${logout_count} > 0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ad28e423-2b7e-450f-a72b-822890ce811f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=.nav > li:nth-child(6) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './LogoutSrv')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d449380-fb9e-4895-9adf-4b25dddac26b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "590a504c-1e0b-4587-b8f0-a2d2dfaae417",
+      "comment": "",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -1492,17 +1886,66 @@
       "targets": [],
       "value": ""
     }, {
-      "id": "ca2a97b7-d664-4513-bbb0-228ae78652ee",
+      "id": "4be79334-afa4-4813-9452-a1531517264b",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "//a[contains(text(),'Logout')]",
+      "targets": [],
+      "value": "logout_count"
+    }, {
+      "id": "c25c9fe0-65ac-498f-8a0f-79dff07ba0bd",
+      "comment": "",
+      "command": "if",
+      "target": "${logout_count} > 0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ad28e423-2b7e-450f-a72b-822890ce811f",
       "comment": "",
       "command": "click",
       "target": "linkText=Logout",
       "targets": [
         ["linkText=Logout", "linkText"],
-        ["css=.nav > li:nth-child(3) > a", "css:finder"],
+        ["css=.nav > li:nth-child(6) > a", "css:finder"],
         ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
         ["xpath=//a[contains(@href, './LogoutSrv')]", "xpath:href"],
-        ["xpath=//div[3]/ul/li[3]/a", "xpath:position"],
+        ["xpath=//div[3]/ul/li[6]/a", "xpath:position"],
         ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d449380-fb9e-4895-9adf-4b25dddac26b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "590a504c-1e0b-4587-b8f0-a2d2dfaae417",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1734f024-11ba-408d-a1e7-df33dc4aa600",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
@@ -1641,6 +2084,55 @@
       "comment": "",
       "command": "setWindowSize",
       "target": "1411x949",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4be79334-afa4-4813-9452-a1531517264b",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "//a[contains(text(),'Logout')]",
+      "targets": [],
+      "value": "logout_count"
+    }, {
+      "id": "c25c9fe0-65ac-498f-8a0f-79dff07ba0bd",
+      "comment": "",
+      "command": "if",
+      "target": "${logout_count} > 0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ad28e423-2b7e-450f-a72b-822890ce811f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=.nav > li:nth-child(6) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './LogoutSrv')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d449380-fb9e-4895-9adf-4b25dddac26b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "590a504c-1e0b-4587-b8f0-a2d2dfaae417",
+      "comment": "",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
@@ -2380,260 +2872,6 @@
       "value": ""
     }]
   }, {
-    "id": "308dfcbf-4f45-48de-b159-847417c8d852",
-    "name": "sd13.2",
-    "commands": [{
-      "id": "e34e2b1d-00dd-474f-a553-cc8217386892",
-      "comment": "",
-      "command": "open",
-      "target": "http://localhost:8080/BirdComics/index.jsp",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "46b45466-ec02-4308-9f5e-064cca60f428",
-      "comment": "",
-      "command": "setWindowSize",
-      "target": "1230x949",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "83037b2a-3bb9-4a5e-b8a0-a211ad33c436",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Login",
-      "targets": [
-        ["linkText=Login", "linkText"],
-        ["css=.nav > li:nth-child(4) > a", "css:finder"],
-        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
-        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
-        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "13569d87-e6bf-4554-86c0-6496c7d7936f",
-      "comment": "",
-      "command": "click",
-      "target": "id=email",
-      "targets": [
-        ["id=email", "id"],
-        ["name=email", "name"],
-        ["css=#email", "css:finder"],
-        ["xpath=//input[@id='email']", "xpath:attributes"],
-        ["xpath=//div/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "292324a5-e596-44ec-bbaf-e045f3cecd4a",
-      "comment": "",
-      "command": "type",
-      "target": "id=email",
-      "targets": [
-        ["id=email", "id"],
-        ["name=email", "name"],
-        ["css=#email", "css:finder"],
-        ["xpath=//input[@id='email']", "xpath:attributes"],
-        ["xpath=//div/input", "xpath:position"]
-      ],
-      "value": "cliente@example.com"
-    }, {
-      "id": "eccd1d88-7ffe-4063-862e-802fe06bdc77",
-      "comment": "",
-      "command": "type",
-      "target": "id=password",
-      "targets": [
-        ["id=password", "id"],
-        ["name=password", "name"],
-        ["css=#password", "css:finder"],
-        ["xpath=//input[@id='password']", "xpath:attributes"],
-        ["xpath=//div[2]/div/input", "xpath:position"]
-      ],
-      "value": "password"
-    }, {
-      "id": "75b54c96-ab75-4e51-b638-977899cdf2cf",
-      "comment": "",
-      "command": "click",
-      "target": "css=.btn",
-      "targets": [
-        ["css=.btn", "css:finder"],
-        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
-        ["xpath=//div/button", "xpath:position"],
-        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "c48e8250-90ce-4270-b7f6-b20ee4fde4a7",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Home",
-      "targets": [
-        ["linkText=Home", "linkText"],
-        ["css=.nav > li:nth-child(1) > a", "css:finder"],
-        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
-        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
-        ["xpath=//a", "xpath:position"],
-        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "c4003d1f-ac4f-48b2-9358-9ffaea26fe01",
-      "comment": "",
-      "command": "click",
-      "target": "css=.col-sm-4:nth-child(5) .btn",
-      "targets": [
-        ["css=.col-sm-4:nth-child(5) .btn", "css:finder"],
-        ["xpath=(//button[@type='submit'])[5]", "xpath:attributes"],
-        ["xpath=//div[5]/div/form/button", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "f2bf2a01-4a2e-4cb3-850f-3dbf17262514",
-      "comment": "",
-      "command": "click",
-      "target": "css=td:nth-child(3) button",
-      "targets": [
-        ["css=td:nth-child(3) button", "css:finder"],
-        ["xpath=//button[@type='submit']", "xpath:attributes"],
-        ["xpath=//td[3]/form/button", "xpath:position"],
-        ["xpath=//button[contains(.,'Paga ora')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "8a977a01-3758-4095-85c6-c6fe37f376d4",
-      "comment": "",
-      "command": "click",
-      "target": "css=form:nth-child(1) > button",
-      "targets": [
-        ["css=form:nth-child(1) > button", "css:finder"],
-        ["xpath=//button[@type='submit']", "xpath:attributes"],
-        ["xpath=//button", "xpath:position"],
-        ["xpath=//button[contains(.,'Conferma Ordine')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "47a31b41-edf4-4dec-94d0-fe99dc07a73d",
-      "comment": "",
-      "command": "click",
-      "target": "css=form:nth-child(1) > button",
-      "targets": [
-        ["css=form:nth-child(1) > button", "css:finder"],
-        ["xpath=//button[@type='submit']", "xpath:attributes"],
-        ["xpath=//button", "xpath:position"],
-        ["xpath=//button[contains(.,'Conferma Indirizzo')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "49e52970-8125-4d03-8f5c-8c02d7be7399",
-      "comment": "",
-      "command": "type",
-      "target": "id=email",
-      "targets": [
-        ["id=email", "id"],
-        ["name=login_email", "name"],
-        ["css=#email", "css:finder"],
-        ["xpath=//input[@id='email']", "xpath:attributes"],
-        ["xpath=//div[@id='login_emaildiv']/div/input", "xpath:idRelative"],
-        ["xpath=//div/input", "xpath:position"]
-      ],
-      "value": "sb-te594337122129@personal.example.com"
-    }, {
-      "id": "66007857-ecb7-4b10-b266-00b746b320ad",
-      "comment": "",
-      "command": "type",
-      "target": "id=password",
-      "targets": [
-        ["id=password", "id"],
-        ["name=login_password", "name"],
-        ["css=#password", "css:finder"],
-        ["xpath=//input[@id='password']", "xpath:attributes"],
-        ["xpath=//div[@id='login_passworddiv']/div/input", "xpath:idRelative"],
-        ["xpath=//div[2]/div/div/input", "xpath:position"]
-      ],
-      "value": "@L;tc2H>"
-    }, {
-      "id": "da47ab72-0898-439e-9b8b-5663b9f3d6b7",
-      "comment": "",
-      "command": "click",
-      "target": "id=btnLogin",
-      "targets": [
-        ["id=btnLogin", "id"],
-        ["name=btnLogin", "name"],
-        ["css=#btnLogin", "css:finder"],
-        ["xpath=//button[@id='btnLogin']", "xpath:attributes"],
-        ["xpath=//div[@id='content']/form/div[2]/button", "xpath:idRelative"],
-        ["xpath=//div[2]/button", "xpath:position"],
-        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "34b51891-f4aa-4302-ab57-b294f8cb3973",
-      "comment": "",
-      "command": "click",
-      "target": "id=payment-submit-btn",
-      "targets": [
-        ["id=payment-submit-btn", "id"],
-        ["css=#payment-submit-btn", "css:finder"],
-        ["xpath=//button[@id='payment-submit-btn']", "xpath:attributes"],
-        ["xpath=//div[@id='hermione-container']/div/main/div[3]/div[2]/button", "xpath:idRelative"],
-        ["xpath=//div[2]/button", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "3b6cb05f-5681-4f25-91aa-0152dffd4b23",
-      "comment": "",
-      "command": "mouseOver",
-      "target": "id=payment-submit-btn",
-      "targets": [
-        ["id=payment-submit-btn", "id"],
-        ["css=#payment-submit-btn", "css:finder"],
-        ["xpath=//button[@id='payment-submit-btn']", "xpath:attributes"],
-        ["xpath=//div[@id='hermione-container']/div/main/div[3]/div[2]/button", "xpath:idRelative"],
-        ["xpath=//div[2]/button", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "1d2b3a26-5061-4bb0-81d5-9ac61ada1216",
-      "comment": "",
-      "command": "mouseOut",
-      "target": "id=payment-submit-btn",
-      "targets": [
-        ["id=payment-submit-btn", "id"],
-        ["css=#payment-submit-btn", "css:finder"],
-        ["xpath=//button[@id='payment-submit-btn']", "xpath:attributes"],
-        ["xpath=//div[@id='hermione-container']/div/main/div[3]/div[2]/button", "xpath:idRelative"],
-        ["xpath=//div[2]/button", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "22576486-4661-4b3c-92d3-3b3396182c05",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Ordini",
-      "targets": [
-        ["linkText=Ordini", "linkText"],
-        ["css=.nav > li:nth-child(4) > a", "css:finder"],
-        ["xpath=//a[contains(text(),'Ordini')]", "xpath:link"],
-        ["xpath=//a[contains(@href, 'OrderDetailsServlet')]", "xpath:href"],
-        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Ordini')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "4474b0b5-71ab-4509-9623-c70b37346a20",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Logout",
-      "targets": [
-        ["linkText=Logout", "linkText"],
-        ["css=.nav > li:nth-child(6) > a", "css:finder"],
-        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
-        ["xpath=//a[contains(@href, './LogoutSrv')]", "xpath:href"],
-        ["xpath=//div[3]/ul/li[6]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }]
-  }, {
     "id": "90564c9a-665b-4624-b5ca-fbe1221083ed",
     "name": "SD41?",
     "commands": []
@@ -2652,6 +2890,55 @@
       "comment": "",
       "command": "setWindowSize",
       "target": "1325x949",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4be79334-afa4-4813-9452-a1531517264b",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "//a[contains(text(),'Logout')]",
+      "targets": [],
+      "value": "logout_count"
+    }, {
+      "id": "c25c9fe0-65ac-498f-8a0f-79dff07ba0bd",
+      "comment": "",
+      "command": "if",
+      "target": "${logout_count} > 0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ad28e423-2b7e-450f-a72b-822890ce811f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=.nav > li:nth-child(6) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './LogoutSrv')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d449380-fb9e-4895-9adf-4b25dddac26b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "590a504c-1e0b-4587-b8f0-a2d2dfaae417",
+      "comment": "",
+      "command": "end",
+      "target": "",
       "targets": [],
       "value": ""
     }, {
