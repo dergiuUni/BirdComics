@@ -32,7 +32,7 @@ public class RemoveProductSrv extends HttpServlet {
 
         if (prodId == null || prodId.isEmpty()) {
             // Se l'ID del prodotto è null o vuoto, reindirizza con un messaggio di errore
-            RequestDispatcher rd = request.getRequestDispatcher("./GestioneCatalogo?message=Error: Product ID is missing");
+            RequestDispatcher rd = request.getRequestDispatcher("./ProductListServlet?message=Error: Product ID is missing");
             rd.forward(request, response);
             return;
         }
@@ -45,7 +45,7 @@ public class RemoveProductSrv extends HttpServlet {
             status = "Error removing product";
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("./GestioneCatalogo?message=" + status);
+        RequestDispatcher rd = request.getRequestDispatcher("./ProductListServlet?message=" + status);
         rd.forward(request, response);
     }
     
