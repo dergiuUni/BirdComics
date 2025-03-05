@@ -29,7 +29,7 @@
 				<div class="text-center" style="font-weight: bold;">
 					<h2 style="color: green;">Product Addition Form</h2>
 					<%
-					String message = request.getParameter("message");
+					String message = (String)request.getAttribute("message");
 					if (message != null) {
 					%>
 					<p style="color: blue;"><%=message%></p>
