@@ -20,6 +20,10 @@ public class RemoveProductSrv extends HttpServlet {
 
     public CatalogoService catalogoService;
 
+    public RemoveProductSrv(CatalogoService catalogoService) {
+        this.catalogoService = catalogoService;
+    }
+    
     public RemoveProductSrv() {
         super();
         this.catalogoService = new CatalogoServiceImpl();  // Inizializzazione del servizio

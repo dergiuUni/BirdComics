@@ -44,8 +44,7 @@ class OrderDetailsServletTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        orderDetailsServlet = new OrderDetailsServlet();
-        orderDetailsServlet.ordineService = ordineService; // Inietta manualmente il mock del servizio
+        orderDetailsServlet = new OrderDetailsServlet(ordineService); // Usa il costruttore con iniezione
     }
 
     @Test
@@ -108,13 +107,16 @@ class OrderDetailsServletTest {
 
     @Test
     void testDoPost() throws ServletException, IOException {
+        // Crea uno spy dell'istanza reale di OrderDetailsServlet
+        OrderDetailsServlet spyServlet = spy(orderDetailsServlet);
+
         // Configura il mock della richiesta e della risposta
         when(request.getSession()).thenReturn(session);
 
         // Esegui il metodo doPost
-        orderDetailsServlet.doPost(request, response);
+        spyServlet.doPost(request, response);
 
         // Verifica che il metodo doGet sia stato chiamato
-        verify(orderDetailsServlet).doGet(request, response);
+        verify(spyServlet).doGet(request, response);
     }
 }

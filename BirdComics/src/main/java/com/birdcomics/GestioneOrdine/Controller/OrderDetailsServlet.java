@@ -22,6 +22,10 @@ public class OrderDetailsServlet extends HttpServlet {
 
     public OrdineService ordineService;  // Riferimento al servizio
 
+    public OrderDetailsServlet(OrdineService ordineService) {
+        this.ordineService = ordineService;
+    }
+    
     public OrderDetailsServlet() {
         super();
         this.ordineService = new OrdineServiceImpl();  // Inizializza il servizio

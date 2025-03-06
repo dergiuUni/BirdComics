@@ -63,15 +63,22 @@ public class ProductServiceDAOTest {
             .thenReturn(genrePsMock);
         when(genrePsMock.executeUpdate()).thenReturn(1);
 
+        // Esegui il metodo da testare
         String status = productServiceDAO.addProduct(name, description, price, image, selectedGenres);
 
+        // Verifica il risultato
         assertEquals("Product Added Successfully", status);
+
+        // Verifica che il PreparedStatement principale sia stato chiamato correttamente
+        verify(preparedStatement).setString(1, name);
+        verify(preparedStatement).setString(2, description);
+        verify(preparedStatement).setFloat(3, price);
+        verify(preparedStatement).executeUpdate();
 
         // Verifica che il PreparedStatement dei generi sia stato chiamato correttamente
         verify(genrePsMock, times(2)).setString(anyInt(), anyString());
         verify(genrePsMock, times(2)).setInt(anyInt(), anyInt());
         verify(genrePsMock, times(2)).executeUpdate();
-        verify(genrePsMock, times(2)).close();
     }
     
     @Test

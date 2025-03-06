@@ -48,7 +48,7 @@ public class IndirizzoDaoTest {
 
         verify(preparedStatement, times(1)).setString(1, "Roma");
         verify(preparedStatement, times(1)).setString(2, "Via Roma");
-        verify(preparedStatement, times(1)).setInt(3, 10);
+        verify(preparedStatement, times(1)).setString(3, "10");
         verify(preparedStatement, times(1)).setString(4, "00100");
     }
 
@@ -76,7 +76,7 @@ public class IndirizzoDaoTest {
         assertTrue(exists);
         verify(preparedStatement, times(1)).setString(1, "Roma");
         verify(preparedStatement, times(1)).setString(2, "Via Roma");
-        verify(preparedStatement, times(1)).setInt(3, 10);
+        verify(preparedStatement, times(1)).setString(3, "10");
         verify(preparedStatement, times(1)).setString(4, "00100");
     }
 
@@ -91,7 +91,7 @@ public class IndirizzoDaoTest {
         assertFalse(exists);
         verify(preparedStatement, times(1)).setString(1, "Roma");
         verify(preparedStatement, times(1)).setString(2, "Via Roma");
-        verify(preparedStatement, times(1)).setInt(3, 10);
+        verify(preparedStatement, times(1)).setString(3, "10");
         verify(preparedStatement, times(1)).setString(4, "00100");
     }
 

@@ -4,7 +4,6 @@ import com.birdcomics.GestioneCatalogo.Controller.RemoveProductSrv;
 import com.birdcomics.GestioneCatalogo.Service.CatalogoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -31,14 +30,12 @@ class RemoveProductSrvTest {
     @Mock
     private CatalogoService catalogoService;
 
-    @InjectMocks
     private RemoveProductSrv removeProductSrv;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        removeProductSrv = new RemoveProductSrv();
-        removeProductSrv.catalogoService = catalogoService; // Inietta manualmente il mock del servizio
+        removeProductSrv = new RemoveProductSrv(catalogoService); // Usa il costruttore con iniezione
     }
 
     @Test
@@ -50,7 +47,7 @@ class RemoveProductSrvTest {
         when(catalogoService.removeProduct("123")).thenReturn("Product removed successfully");
 
         // Configura il mock del RequestDispatcher
-        when(request.getRequestDispatcher("./GestioneCatalogo?message=Product removed successfully"))
+        when(request.getRequestDispatcher("./ProductListServlet?message=Product removed successfully"))
                 .thenReturn(requestDispatcher);
 
         // Esegui il metodo doGet
@@ -72,7 +69,7 @@ class RemoveProductSrvTest {
         when(catalogoService.removeProduct("999")).thenThrow(new SQLException("Database error"));
 
         // Configura il mock del RequestDispatcher
-        when(request.getRequestDispatcher("./GestioneCatalogo?message=Error removing product"))
+        when(request.getRequestDispatcher("./ProductListServlet?message=Error removing product"))
                 .thenReturn(requestDispatcher);
 
         // Esegui il metodo doGet
@@ -91,7 +88,7 @@ class RemoveProductSrvTest {
         when(request.getParameter("prodid")).thenReturn(null);
 
         // Configura il mock del RequestDispatcher per gestire il reindirizzamento
-        when(request.getRequestDispatcher("./GestioneCatalogo?message=Error: Product ID is missing"))
+        when(request.getRequestDispatcher("./ProductListServlet?message=Error: Product ID is missing"))
                 .thenReturn(requestDispatcher);
 
         // Esegui il metodo doGet

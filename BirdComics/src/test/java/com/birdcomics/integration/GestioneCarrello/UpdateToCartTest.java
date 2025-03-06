@@ -149,43 +149,86 @@ class UpdateToCartTest {
 
     @Test
     void testDoGet_SQLException() throws Exception {
+        // Configura il mock della sessione
         when(session.getAttribute("email")).thenReturn("testUser");
+
+        // Configura i parametri della richiesta
         when(request.getParameter("pid")).thenReturn("123");
         when(request.getParameter("pqty")).thenReturn("2");
 
+        // Mock delle dipendenze
         try (
             MockedConstruction<CarelloServiceImpl> mockedCart = mockConstruction(CarelloServiceImpl.class,
                 (mock, context) -> when(mock.updateProductInCart(anyString(), anyString(), anyInt())).thenThrow(new SQLException("DB Error")));
 
             MockedConstruction<ProductServiceDAO> mockedDao = mockConstruction(ProductServiceDAO.class,
                 (mock, context) -> {
-                    when(mock.getProductsByID("123")).thenReturn(new ProductBean());
-                    when(mock.getAllQuantityProductsById(any())).thenReturn(5);
+                    ProductBean product = mock(ProductBean.class); // Mock di ProductBean
+                    when(product.getName()).thenReturn("Test Product"); // Configura il nome
+                    when(mock.getProductsByID("123")).thenReturn(product); // Restituisci il mock
+                    when(mock.getAllQuantityProductsById(product)).thenReturn(5); // Quantità disponibile
                 })
         ) {
+            // Mock del writer della risposta
             StringWriter stringWriter = new StringWriter();
             PrintWriter printWriter = new PrintWriter(stringWriter);
             when(response.getWriter()).thenReturn(printWriter);
 
+            // Configura il RequestDispatcher
+            when(request.getRequestDispatcher("CartDetailsServlet")).thenReturn(requestDispatcher);
+
+            // Esegui il metodo doGet
             updateToCartServlet.doGet(request, response);
 
+            // Verifica che il RequestDispatcher sia stato chiamato
+            verify(requestDispatcher).include(request, response);
+
+            // Verifica che il messaggio sia stato scritto correttamente
             printWriter.flush();
             assertTrue(stringWriter.toString().contains("null")); // Stato null dall'eccezione
         }
     }
 
     @Test
-    void testDoPost_CallsDoGet() throws ServletException, IOException {
+    void testDoPost_CallsDoGet() throws Exception {
+        // Configura il mock della sessione
         when(session.getAttribute("email")).thenReturn("testUser");
+        
+        // Configura i parametri della richiesta
         when(request.getParameter("pid")).thenReturn("123");
         when(request.getParameter("pqty")).thenReturn("2");
 
+        // Mock delle dipendenze
         try (
-            MockedConstruction<CarelloServiceImpl> ignoredCart = mockConstruction(CarelloServiceImpl.class);
-            MockedConstruction<ProductServiceDAO> ignoredDao = mockConstruction(ProductServiceDAO.class)
+            MockedConstruction<CarelloServiceImpl> mockedCart = mockConstruction(CarelloServiceImpl.class,
+                (mock, context) -> when(mock.updateProductInCart(anyString(), anyString(), anyInt())).thenReturn("Success"));
+
+            MockedConstruction<ProductServiceDAO> mockedDao = mockConstruction(ProductServiceDAO.class,
+                (mock, context) -> {
+                    ProductBean product = mock(ProductBean.class); // Mock di ProductBean
+                    when(product.getName()).thenReturn("Test Product"); // Configura il nome
+                    when(mock.getProductsByID("123")).thenReturn(product); // Restituisci il mock
+                    when(mock.getAllQuantityProductsById(product)).thenReturn(5); // Quantità disponibile
+                })
         ) {
+            // Mock del writer della risposta
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            when(response.getWriter()).thenReturn(printWriter);
+
+            // Mock del RequestDispatcher
+            when(request.getRequestDispatcher("CartDetailsServlet")).thenReturn(requestDispatcher);
+
+            // Esegui il metodo doPost
             updateToCartServlet.doPost(request, response);
-            verify(request).getParameter("pid"); // Verifica che doGet sia stato chiamato
+
+            // Verifica che doGet sia stato chiamato
+            verify(request).getParameter("pid");
+            verify(request).getParameter("pqty");
+
+            // Verifica che il messaggio sia stato scritto correttamente
+            printWriter.flush();
+            assertTrue(stringWriter.toString().contains("Success"));
         }
     }
 }

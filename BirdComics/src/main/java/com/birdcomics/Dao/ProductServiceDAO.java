@@ -19,66 +19,49 @@ import com.birdcomics.Utils.DBUtil;
 public class ProductServiceDAO {
 	  
 
-	public String addProduct(String name, String description, float price, String imagePath, String[] selectedGenres) throws SQLException {
-	    String status = "Product Registration Failed!";
-
-	    Connection con = DBUtil.getConnection();
+	public String addProduct(String name, String description, float price, String image, String[] selectedGenres) {
+	    Connection connection = null;
 	    PreparedStatement ps = null;
-	    ResultSet generatedKeys = null;
+	    ResultSet rs = null;
+	    PreparedStatement genrePs = null; // Aggiungi questa dichiarazione
 
 	    try {
-	        // Inserisci il fumetto
-	        ps = con.prepareStatement("INSERT INTO Fumetto (nome, descrizione, prezzo) VALUES (?, ?, ?)", 
-	                                  Statement.RETURN_GENERATED_KEYS);
+	        connection = DBUtil.getConnection();
+	        String query = "insert into Fumetto(nome, descrizione, prezzo, immagine) values(?,?,?,?)";
+	        ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 	        ps.setString(1, name);
 	        ps.setString(2, description);
 	        ps.setFloat(3, price);
+	        ps.setString(4, image);
+	        int rows = ps.executeUpdate();
 
-	        int k = ps.executeUpdate();
+	        if (rows > 0) {
+	            rs = ps.getGeneratedKeys();
+	            if (rs.next()) {
+	                int id = rs.getInt(1);
 
-	        if (k > 0) {
-	            // Recupera l'ID del fumetto appena inserito
-	            generatedKeys = ps.getGeneratedKeys();
-	            if (generatedKeys.next()) {
-	                int fumettoId = generatedKeys.getInt(1);
-
-	                // Rinomina l'immagine con l'ID del fumetto
-	                String newImageName = fumettoId + ".jpg"; // Usa l'ID come nome dell'immagine
-	                File oldFile = new File(imagePath);
-	                File newFile = new File(oldFile.getParent(), newImageName);
-	                oldFile.renameTo(newFile); // Rinomina il file
-
-	                // Inserisci i generi nella tabella Genere_Fumetto
+	                // Inserisci i generi
+	                String genreQuery = "insert into Genere_Fumetto (genere, idFumetto) values(?,?)";
+	                genrePs = connection.prepareStatement(genreQuery); // Crea il PreparedStatement per i generi
 	                for (String genre : selectedGenres) {
-	                    PreparedStatement genrePs = con.prepareStatement("INSERT INTO Genere_Fumetto (genere, idFumetto) VALUES (?, ?)");
 	                    genrePs.setString(1, genre);
-	                    genrePs.setInt(2, fumettoId);
+	                    genrePs.setInt(2, id);
 	                    genrePs.executeUpdate();
-	                    genrePs.close();
 	                }
-
-	                status = "Product Added Successfully";
 	            }
 	        }
+	        return "Product Added Successfully";
 	    } catch (SQLException e) {
-	        status = "Error: " + e.getMessage();
 	        e.printStackTrace();
+	        return "Error Adding Product";
 	    } finally {
-	        // Chiudi tutte le risorse
+	        // Chiudi le risorse
+	        DBUtil.closeConnection(rs);
 	        DBUtil.closeConnection(ps);
-	        if (generatedKeys != null) {
-	            try {
-	                generatedKeys.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-	        }
+	        DBUtil.closeConnection(genrePs); // Chiudi anche il PreparedStatement dei generi
+	        DBUtil.closeConnection(connection);
 	    }
-
-	    return status;
 	}
-
- 
  
     public String removeProduct(String prodId) throws SQLException {
         String status = "Product Removal Failed!";

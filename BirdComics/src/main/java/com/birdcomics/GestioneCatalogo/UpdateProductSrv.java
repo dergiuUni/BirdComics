@@ -104,12 +104,7 @@ public class UpdateProductSrv extends HttpServlet {
 
 	            // Call the DAO to add the product
 	            ProductServiceDAO productService = new ProductServiceDAO();
-	            try {
-	                status = productService.addProduct(prodName, prodInfo, prodPrice, uniqueFileName, selectedGenres);
-	            } catch (SQLException e) {
-	                status = "Database error occurred while adding the product.";
-	                e.printStackTrace();
-	            }
+	            status = productService.addProduct(prodName, prodInfo, prodPrice, uniqueFileName, selectedGenres);
 	        } else {
 	            // If no image is provided, handle it accordingly (optional)
 	            status = "Please provide an image for the product.";

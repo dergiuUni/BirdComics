@@ -131,18 +131,6 @@ class CatalogoServiceTest {
         verify(productServiceDAO, times(1)).addProduct("Product 1", "Description 1", 10.0f, "image1.jpg", new String[]{"Action"});
     }
 
-    @Test
-    void testAddProduct_SQLException() throws SQLException {
-        // Simula un'eccezione SQL
-        when(productServiceDAO.addProduct("Product 1", "Description 1", 10.0f, "image1.jpg", new String[]{"Action"}))
-                .thenThrow(new SQLException("Database error"));
-
-        // Esegui il metodo da testare e verifica che l'eccezione venga propagata
-        assertThrows(SQLException.class, () -> catalogoService.addProduct("Product 1", "Description 1", 10.0f, "image1.jpg", new String[]{"Action"}));
-
-        // Verifica che il metodo del DAO sia stato chiamato
-        verify(productServiceDAO, times(1)).addProduct("Product 1", "Description 1", 10.0f, "image1.jpg", new String[]{"Action"});
-    }
 
     // ===================================================
     // Test per il metodo: searchAllProductsGestore
