@@ -70,7 +70,7 @@ public class ProductServiceDAO {
         PreparedStatement ps = null;
 
         try {
-    
+        	System.out.println(prodId);
         	ps = con.prepareStatement("DELETE FROM Fumetto WHERE id = ?");
             ps.setString(1, prodId);
 
@@ -101,7 +101,7 @@ public class ProductServiceDAO {
         	/*
             ps = con.prepareStatement("SELECT * FROM Fumetto WHERE active = 1");
             */
-        	 ps = con.prepareStatement("select * from Fumetto, Genere_Fumetto where id=idFumetto");
+        	 ps = con.prepareStatement("select * from Fumetto");
             rs = ps.executeQuery();
             
             
@@ -119,7 +119,6 @@ public class ProductServiceDAO {
                     productMap.put(productId, product);
                 }
 
-                product.addGenere(rs.getString("genere"));
             }
 
             products.addAll(productMap.values());
