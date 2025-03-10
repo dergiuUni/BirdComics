@@ -4,8 +4,2902 @@
   "name": "Is",
   "url": "http://localhost:8080/BirdComics/index.jsp",
   "tests": [{
+    "id": "c4505de2-bd29-47e7-9bf7-9d377596d9f9",
+    "name": "TC1 - Ricerca Fumetti per genere",
+    "commands": [{
+      "id": "3ab5f3a5-ec58-4056-8209-21dd6f96a870",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c2472d63-99fa-44fb-9ea1-419cad0afe6e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x878",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "032ec1bd-ad77-45a3-bc96-83c183dae7c6",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Generi",
+      "targets": [
+        ["linkText=Generi", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Generi')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1a0719ca-5449-4892-b163-27d7cf2be398",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Avventura",
+      "targets": [
+        ["linkText=Avventura", "linkText"],
+        ["css=li:nth-child(1) > .genre-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Avventura')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'ProductListServlet?type=avventura')]", "xpath:href"],
+        ["xpath=//li[2]/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Avventura')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "258fe391-2b57-4a74-94a8-3ecee68f2d38",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Generi",
+      "targets": [
+        ["linkText=Generi", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Generi')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1da6dff3-db46-4557-821b-9b31e9684dc9",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Azione",
+      "targets": [
+        ["linkText=Azione", "linkText"],
+        ["css=li:nth-child(2) > .genre-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Azione')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'ProductListServlet?type=azione')]", "xpath:href"],
+        ["xpath=//li[2]/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Azione')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab2970ac-3db9-4444-b304-5343c202a3cf",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Generi",
+      "targets": [
+        ["linkText=Generi", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Generi')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2dcb65a0-02a8-408d-878b-e805a459514f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Horror",
+      "targets": [
+        ["linkText=Horror", "linkText"],
+        ["css=li:nth-child(3) > .genre-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Horror')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'ProductListServlet?type=horror')]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Horror')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "07945db6-85fb-41b7-a5e8-20f9696a579c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Generi",
+      "targets": [
+        ["linkText=Generi", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Generi')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5939d540-db96-45eb-baae-4ecbd92b66d6",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Thriller",
+      "targets": [
+        ["linkText=Thriller", "linkText"],
+        ["css=li:nth-child(4) > .genre-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Thriller')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'ProductListServlet?type=thriller')]", "xpath:href"],
+        ["xpath=//li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Thriller')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7e0f36f4-4508-4c65-b23a-2309b7f1aa0b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Generi",
+      "targets": [
+        ["linkText=Generi", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Generi')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b4a2f088-c8e8-46b2-bf99-cc26ef8e39ad",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Fantasy",
+      "targets": [
+        ["linkText=Fantasy", "linkText"],
+        ["css=li:nth-child(5) > .genre-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Fantasy')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/ul/li[5]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'ProductListServlet?type=fantasy')]", "xpath:href"],
+        ["xpath=//li[5]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Fantasy')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "857ff9ec-b678-4dba-a3de-ef8bf198b502",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Generi",
+      "targets": [
+        ["linkText=Generi", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Generi')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "530b4437-3451-4f64-97b7-63e5b2060d69",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Drammatico",
+      "targets": [
+        ["linkText=Drammatico", "linkText"],
+        ["css=li:nth-child(6) > .genre-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Drammatico')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/ul/li[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'ProductListServlet?type=drammatico')]", "xpath:href"],
+        ["xpath=//li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Drammatico')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "540824fa-1891-4b08-b772-c07e3151019e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Generi",
+      "targets": [
+        ["linkText=Generi", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Generi')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7af4818c-870e-4d32-aaf0-9a0f6051cf97",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Fantascienza",
+      "targets": [
+        ["linkText=Fantascienza", "linkText"],
+        ["css=li:nth-child(7) > .genre-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Fantascienza')]", "xpath:link"],
+        ["xpath=//li[@id='generi-dropdown']/ul/li[7]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'ProductListServlet?type=fantascienza')]", "xpath:href"],
+        ["xpath=//li[7]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Fantascienza')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "36f5f743-71a3-41f1-9306-3e68eb930946",
+    "name": "TC2 - Ricerca fumetti per nome/id",
+    "commands": [{
+      "id": "842727b6-85c2-473c-bd7e-96fce63af134",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/index.jsp",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "93a3e2ad-4025-4b7b-82ce-b47c73847ac9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x878",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "75418785-fee5-4f55-a881-0ef083fc3f87",
+      "comment": "",
+      "command": "click",
+      "target": "name=search",
+      "targets": [
+        ["name=search", "name"],
+        ["css=.search-data", "css:finder"],
+        ["xpath=//input[@name='search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5761c484-7d06-4ce0-9395-95e6f06acd55",
+      "comment": "",
+      "command": "type",
+      "target": "name=search",
+      "targets": [
+        ["name=search", "name"],
+        ["css=.search-data", "css:finder"],
+        ["xpath=//input[@name='search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Batman"
+    }, {
+      "id": "e7b8bb50-2a38-422a-8eda-fe284bed9e60",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=search",
+      "targets": [
+        ["name=search", "name"],
+        ["css=.search-data", "css:finder"],
+        ["xpath=//input[@name='search']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }]
+  }, {
+    "id": "07973aa3-93ed-4e98-a127-e239f6170c55",
+    "name": "TC3 - Visualizzazione pagina dettagliata fumetto",
+    "commands": [{
+      "id": "58ad5631-41ba-474d-a33d-0d1cfbc1b874",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "eb4326c9-2ac8-4998-a2ec-20e5c817caa5",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1382x878",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7a60b819-439f-493e-87c3-c0722949f24f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-4:nth-child(1) img",
+      "targets": [
+        ["css=.col-sm-4:nth-child(1) img", "css:finder"],
+        ["xpath=//img[@alt='Product']", "xpath:img"],
+        ["xpath=//img", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "ca4c1ce4-de62-4ce6-8b1c-651b5fc631d5",
+    "name": "TC4 - Aggiunta al carrello tramite la pagina principale",
+    "commands": [{
+      "id": "ffa3c729-3e92-4f0e-9a50-8be425ff933c",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c2828584-7eb3-4f98-bf1c-39afd3bfa008",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a2534c9e-4c20-44af-892d-b42e9bf25fee",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e70e13bc-a1fb-4fad-949a-1bf86693f7c7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3778beb4-6eb8-4033-a2f3-dce71f68ab25",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f34b99cd-fdb9-4db1-92ce-562da77eb9bb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-4:nth-child(1) .btn",
+      "targets": [
+        ["css=.col-sm-4:nth-child(1) .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add to Cart')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "7ec30ef7-e318-4612-a521-12033614c27e",
+    "name": "TC5 - Aggiunta fumetto al carrello tramite la pagina del fumetto",
+    "commands": [{
+      "id": "2b255723-13aa-453c-8038-4957b727a496",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d7225acd-82d3-4766-a59c-9f1edab51a7c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6cefa784-855d-4c74-8e68-c2fb271771f3",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "533caebe-9dc5-4e3b-af73-bd2983a68292",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a35060a9-dc11-4d04-ada4-a2433ef22d87",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9996cc97-a6da-4ed1-80e1-fa9c81c0911d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-4:nth-child(1) img",
+      "targets": [
+        ["css=.col-sm-4:nth-child(1) img", "css:finder"],
+        ["xpath=//img[@alt='Product']", "xpath:img"],
+        ["xpath=//img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab1c31a5-26c3-4b01-b9e2-82d0986f8be9",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=.product-price > span",
+      "targets": [
+        ["css=.product-price > span", "css:finder"],
+        ["xpath=//div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'12.99€')]", "xpath:innerText"]
+      ],
+      "value": "71.96728515625,17.0849609375"
+    }, {
+      "id": "04b41af4-4941-4ad4-abaf-ea774fd38108",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=.product-price > span",
+      "targets": [
+        ["css=.product-price > span", "css:finder"],
+        ["xpath=//div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'12.99€')]", "xpath:innerText"]
+      ],
+      "value": "71.96728515625,17.0849609375"
+    }, {
+      "id": "397929fe-1b82-486e-b1ed-26678f1dd1e8",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=.product-price > span",
+      "targets": [
+        ["css=.product-price > span", "css:finder"],
+        ["xpath=//div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'12.99€')]", "xpath:innerText"]
+      ],
+      "value": "71.96728515625,17.0849609375"
+    }, {
+      "id": "7aef3bed-6ed9-43e5-af92-599efddfa0a4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.product-price",
+      "targets": [
+        ["css=.product-price", "css:finder"],
+        ["xpath=//div[2]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b3122738-b6bb-49d3-ad87-a4eaed1e7571",
+      "comment": "",
+      "command": "type",
+      "target": "name=pqty",
+      "targets": [
+        ["name=pqty", "name"],
+        ["css=input:nth-child(2)", "css:finder"],
+        ["xpath=//input[@name='pqty']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "2"
+    }, {
+      "id": "b2f87662-18f5-405b-89d5-44b800535b93",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add to Cart')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "04fe0c00-3d27-457d-b45e-5c29f2dc92da",
+    "name": "TC6 - Visualizzazione del carrello",
+    "commands": [{
+      "id": "400418ed-558a-419d-a328-d06e86f520c9",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e167ec3e-c647-4f0b-a48a-3b3b81572601",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e0609925-9079-45f5-85e0-d63f34ab4869",
+      "comment": "",
+      "command": "storeXpathCount",
+      "target": "//a[contains(text(),'Logout')]",
+      "targets": [],
+      "value": "logout_count"
+    }, {
+      "id": "98264f78-349e-4fbd-bfb4-454bd1be8fc5",
+      "comment": "",
+      "command": "if",
+      "target": "${logout_count} > 0",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "373fbea5-685a-4ad1-91b7-62e11ef58091",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=.nav > li:nth-child(6) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './LogoutSrv')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "eb6213f2-b04a-476d-b13c-3f2f2098cb1a",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b5e2582-b470-4a94-87d6-36cf2ca1a817",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "349cc66d-9ad1-4126-ad8f-7ab91ec89c08",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4bf047f4-8ab7-4411-9abd-2713664a1b8a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d06498b1-029b-4c5f-b9dd-f21c47416fdf",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Carrello",
+      "targets": [
+        ["linkText=Carrello", "linkText"],
+        ["css=.nav > li:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Carrello')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'CartDetailsServlet')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Carrello')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "3129ee67-7614-4359-9492-42740aee9a9a",
+    "name": "TC7 - Modifica della quantità di un prodotto nel carrello",
+    "commands": [{
+      "id": "9015b86f-78ca-4255-bd5c-904be7cdab94",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dc60749d-e664-4541-80ba-4958a5b60ff8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c4a165b8-a5ea-4e7e-95bb-48d4a7bf748d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a56c0683-d78e-479c-977b-a3cec1c094d2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d32a014b-bf2d-4798-811c-b87ba23026f7",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a0876590-62a5-405f-9181-e66a08b8a617",
+      "comment": "",
+      "command": "type",
+      "target": "name=pqty",
+      "targets": [
+        ["name=pqty", "name"],
+        ["css=.col-sm-4:nth-child(1) input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='pqty']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "2"
+    }, {
+      "id": "6788464f-0dbc-4e2d-b0e6-9daca093d895",
+      "comment": "",
+      "command": "click",
+      "target": "name=pqty",
+      "targets": [
+        ["name=pqty", "name"],
+        ["css=.col-sm-4:nth-child(1) input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='pqty']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "081fbe95-cb02-45fd-9a7f-94a1a19415fe",
+      "comment": "",
+      "command": "type",
+      "target": "name=pqty",
+      "targets": [
+        ["name=pqty", "name"],
+        ["css=.col-sm-4:nth-child(1) input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='pqty']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "3"
+    }, {
+      "id": "2eb83de0-68e8-4ca8-99b4-0384097def8f",
+      "comment": "",
+      "command": "click",
+      "target": "name=pqty",
+      "targets": [
+        ["name=pqty", "name"],
+        ["css=.col-sm-4:nth-child(1) input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='pqty']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c0c6300d-18fa-448c-8933-53e3f93299d2",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "name=pqty",
+      "targets": [
+        ["name=pqty", "name"],
+        ["css=.col-sm-4:nth-child(1) input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='pqty']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fed071b3-59c8-486f-aa44-60cbef1ad8f3",
+      "comment": "",
+      "command": "type",
+      "target": "name=pqty",
+      "targets": [
+        ["name=pqty", "name"],
+        ["css=.col-sm-4:nth-child(1) input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='pqty']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "4"
+    }, {
+      "id": "71343118-ef46-483e-954e-3a19b5c2df2c",
+      "comment": "",
+      "command": "click",
+      "target": "name=pqty",
+      "targets": [
+        ["name=pqty", "name"],
+        ["css=.col-sm-4:nth-child(1) input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='pqty']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "10e91a65-d982-4eca-b370-d021ca360b90",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-4:nth-child(1) .btn",
+      "targets": [
+        ["css=.col-sm-4:nth-child(1) .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add to Cart')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0f742e0c-842f-497b-845d-0d43039a24fd",
+      "comment": "",
+      "command": "click",
+      "target": "css=tbody > tr:nth-child(1)",
+      "targets": [
+        ["css=tbody > tr:nth-child(1)", "css:finder"],
+        ["xpath=//tbody/tr", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f2b3c8b7-904c-4124-a11d-8fa9c6c4bb6e",
+      "comment": "",
+      "command": "type",
+      "target": "name=pqty",
+      "targets": [
+        ["name=pqty", "name"],
+        ["css=input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='pqty']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "6"
+    }, {
+      "id": "0e9265cc-ac9c-46ee-b5d1-0a6cec3aa6da",
+      "comment": "",
+      "command": "click",
+      "target": "name=Update",
+      "targets": [
+        ["name=Update", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='Update']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "68dc3661-a19d-4189-9013-d9729f079b72",
+    "name": "TC8 - Rimozione fumetto dal carrello",
+    "commands": [{
+      "id": "f4f0d0a0-44b3-4942-a676-5be93080514a",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6ed01229-dfb2-4aae-a0ca-e08492e3ca23",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a266ce68-7059-4da6-8976-73d1b20c048f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "22f067f7-77e6-424a-830c-01e681ff6f85",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4d66f92b-9bca-4370-bf40-2097de14ec16",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b7bba699-e9b7-45c2-96fd-190d9ea568a5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-4:nth-child(1) .btn",
+      "targets": [
+        ["css=.col-sm-4:nth-child(1) .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add to Cart')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad11bfd3-7513-4da8-a2b9-a38296862b05",
+      "comment": "",
+      "command": "click",
+      "target": "css=tbody > tr:nth-child(1)",
+      "targets": [
+        ["css=tbody > tr:nth-child(1)", "css:finder"],
+        ["xpath=//tbody/tr", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6a9e5c47-954d-4670-b02e-bf26cab1aca9",
+      "comment": "",
+      "command": "type",
+      "target": "name=pqty",
+      "targets": [
+        ["name=pqty", "name"],
+        ["css=input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='pqty']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "0"
+    }, {
+      "id": "57110fb4-be2d-42ad-9e38-5a178e304296",
+      "comment": "",
+      "command": "click",
+      "target": "name=Update",
+      "targets": [
+        ["name=Update", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='Update']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "96f83ced-0746-4c92-81ce-16390ff15aa3",
+    "name": "TC9 - Effettua acquisto",
+    "commands": [{
+      "id": "7b11c8d4-0ea0-4d18-a2b0-1460817e43d3",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "03f015b1-8a87-45de-992f-fdb0ce49349e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a9372cd5-f7bf-4176-970f-89abc045f563",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "99bd8036-5789-4555-95dd-79cf1fbbe368",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e2273cbb-bc64-404e-8d90-bb60f6e632c2",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Carrello",
+      "targets": [
+        ["linkText=Carrello", "linkText"],
+        ["css=.nav > li:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Carrello')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'CartDetailsServlet')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Carrello')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bce17cb5-1e34-4876-aebe-b0288b65678a",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "874e79ef-e192-4cd2-8d88-dec5995da28d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-4:nth-child(1) .btn",
+      "targets": [
+        ["css=.col-sm-4:nth-child(1) .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add to Cart')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "41526651-14e5-48d0-8851-882caa5329c9",
+      "comment": "",
+      "command": "click",
+      "target": "css=td:nth-child(3) button",
+      "targets": [
+        ["css=td:nth-child(3) button", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//td[3]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Paga ora')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8dcc08b1-311f-4494-a3a4-3e5920ebb43b",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(1) > button",
+      "targets": [
+        ["css=form:nth-child(1) > button", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Conferma Ordine')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7edaf128-34bc-4411-a2d8-421a8e33b115",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(1) > button",
+      "targets": [
+        ["css=form:nth-child(1) > button", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Conferma Indirizzo')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "41048c10-9921-4c51-8868-5c54e2dc953c",
+      "comment": "",
+      "command": "click",
+      "target": "id=payment-submit-btn",
+      "targets": [
+        ["id=payment-submit-btn", "id"],
+        ["css=#payment-submit-btn", "css:finder"],
+        ["xpath=//button[@id='payment-submit-btn']", "xpath:attributes"],
+        ["xpath=//div[@id='hermione-container']/div/main/div[3]/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "717dcc36-588e-4510-a9b2-d4b77b75e4d4",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Ordini",
+      "targets": [
+        ["linkText=Ordini", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Ordini')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'OrderDetailsServlet')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Ordini')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "ce84594a-53fa-482e-a6af-01800e084bc3",
+    "name": "TC10 - Svuota Carrello",
+    "commands": [{
+      "id": "672b9369-6bc1-4777-a310-b26d16bb75f1",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cf92016c-9bb6-449b-a09e-df07e4974622",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "abfd4bb8-c3f0-4455-a2b5-dd4837eb8843",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dc915d54-d2b8-463f-9528-650e1f6874b1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7c9e20cd-d929-48af-8376-5c1ae93f2c66",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a1c52ffe-6c4a-483e-b80c-fee8e7e346c1",
+      "comment": "",
+      "command": "type",
+      "target": "name=pqty",
+      "targets": [
+        ["name=pqty", "name"],
+        ["css=.col-sm-4:nth-child(1) input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='pqty']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "2"
+    }, {
+      "id": "b218ad03-4a1d-46a8-a0c1-d8e4fdd7d0b5",
+      "comment": "",
+      "command": "click",
+      "target": "name=pqty",
+      "targets": [
+        ["name=pqty", "name"],
+        ["css=.col-sm-4:nth-child(1) input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='pqty']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0dc2d602-1e5c-4e9f-8819-91478d7188ed",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-4:nth-child(1) .btn",
+      "targets": [
+        ["css=.col-sm-4:nth-child(1) .btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add to Cart')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6d320727-5c88-45d2-9973-168e57e7b880",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'index.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1bbd4b4f-c860-42ef-b594-b310c095ac06",
+      "comment": "",
+      "command": "type",
+      "target": "css=.col-sm-4:nth-child(2) input:nth-child(3)",
+      "targets": [
+        ["css=.col-sm-4:nth-child(2) input:nth-child(3)", "css:finder"],
+        ["xpath=(//input[@name='pqty'])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/div/form/input[2]", "xpath:position"]
+      ],
+      "value": "2"
+    }, {
+      "id": "99d0f53a-97db-4261-9568-63d5718e4c14",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-4:nth-child(2) input:nth-child(3)",
+      "targets": [
+        ["css=.col-sm-4:nth-child(2) input:nth-child(3)", "css:finder"],
+        ["xpath=(//input[@name='pqty'])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/div/form/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c25168e9-999c-4f0e-a5c4-81cb9d37c61e",
+      "comment": "",
+      "command": "type",
+      "target": "css=.col-sm-4:nth-child(2) input:nth-child(3)",
+      "targets": [
+        ["css=.col-sm-4:nth-child(2) input:nth-child(3)", "css:finder"],
+        ["xpath=(//input[@name='pqty'])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/div/form/input[2]", "xpath:position"]
+      ],
+      "value": "3"
+    }, {
+      "id": "385267cd-dd0b-45d8-a2fc-d65e4e5b1ad8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-4:nth-child(2) input:nth-child(3)",
+      "targets": [
+        ["css=.col-sm-4:nth-child(2) input:nth-child(3)", "css:finder"],
+        ["xpath=(//input[@name='pqty'])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/div/form/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "92451fd6-ba45-47b3-9f47-1201e343c59d",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "css=.col-sm-4:nth-child(2) input:nth-child(3)",
+      "targets": [
+        ["css=.col-sm-4:nth-child(2) input:nth-child(3)", "css:finder"],
+        ["xpath=(//input[@name='pqty'])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/div/form/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e464a450-e543-416a-942d-c63e4cd82c5e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.col-sm-4:nth-child(2) .btn",
+      "targets": [
+        ["css=.col-sm-4:nth-child(2) .btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/div/form/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9e9cb7c4-5081-4970-9235-03dcb4b1e07b",
+      "comment": "",
+      "command": "click",
+      "target": "css=td:nth-child(2) button",
+      "targets": [
+        ["css=td:nth-child(2) button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Svuota')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "10ab8120-3866-44e7-8969-5990135481c1",
+    "name": "TC11 - Registrazione alla piattaforma",
+    "commands": [{
+      "id": "4b0b8899-b8b4-417d-a784-f42bdf3011e1",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5bfc0b72-a557-4a92-908d-179fa3e78884",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "25bad391-7b30-49fd-b708-540327fefeec",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Registrati",
+      "targets": [
+        ["linkText=Registrati", "linkText"],
+        ["css=.nav > li:nth-child(5) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Registrati')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'register.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[5]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "edb57f51-3d8c-4e77-ac9a-6314bdd8a547",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "36e41f1e-5d91-4bfe-b24f-7879681aab4a",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "Marco"
+    }, {
+      "id": "2ec3e0ce-91e8-46c1-905a-467beb1d4224",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Rossi"
+    }, {
+      "id": "632dfbf3-934f-4fcd-a930-2d91d778e55d",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "marcorossi@gmail.com"
+    }, {
+      "id": "6ab59922-0fa3-4c1e-b8b7-ce1cff185f35",
+      "comment": "",
+      "command": "type",
+      "target": "id=telefono",
+      "targets": [
+        ["id=telefono", "id"],
+        ["name=telefono", "name"],
+        ["css=#telefono", "css:finder"],
+        ["xpath=//input[@id='telefono']", "xpath:attributes"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "1234567890"
+    }, {
+      "id": "aa9ed217-2cf6-4536-9d1b-56d0795a6565",
+      "comment": "",
+      "command": "type",
+      "target": "id=nomeCitta",
+      "targets": [
+        ["id=nomeCitta", "id"],
+        ["name=nomeCitta", "name"],
+        ["css=#nomeCitta", "css:finder"],
+        ["xpath=//input[@id='nomeCitta']", "xpath:attributes"],
+        ["xpath=//div[5]/div/input", "xpath:position"]
+      ],
+      "value": "Salerno"
+    }, {
+      "id": "db8c5422-1fb6-41cf-ba60-25a19d2d0a3e",
+      "comment": "",
+      "command": "type",
+      "target": "id=via",
+      "targets": [
+        ["id=via", "id"],
+        ["name=via", "name"],
+        ["css=#via", "css:finder"],
+        ["xpath=//input[@id='via']", "xpath:attributes"],
+        ["xpath=//div[5]/div[2]/input", "xpath:position"]
+      ],
+      "value": "Via Testo"
+    }, {
+      "id": "8c6b9a7e-a8de-4885-a182-28f2d11cab39",
+      "comment": "",
+      "command": "type",
+      "target": "id=numeroCivico",
+      "targets": [
+        ["id=numeroCivico", "id"],
+        ["name=numeroCivico", "name"],
+        ["css=#numeroCivico", "css:finder"],
+        ["xpath=//input[@id='numeroCivico']", "xpath:attributes"],
+        ["xpath=//div[6]/div/input", "xpath:position"]
+      ],
+      "value": "3"
+    }, {
+      "id": "8de82a3d-b36b-46f9-9921-e69234c25c44",
+      "comment": "",
+      "command": "type",
+      "target": "id=cap",
+      "targets": [
+        ["id=cap", "id"],
+        ["name=cap", "name"],
+        ["css=#cap", "css:finder"],
+        ["xpath=//input[@id='cap']", "xpath:attributes"],
+        ["xpath=//div[6]/div[2]/input", "xpath:position"]
+      ],
+      "value": "84121"
+    }, {
+      "id": "fcf76efd-2ba2-43b9-878d-f13e977bef38",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "646a3a55-fb04-466a-8cd3-c07714614c7a",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "0001-10-15"
+    }, {
+      "id": "60fe277d-feca-46a3-8008-3dceae9e6b37",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "0019-10-15"
+    }, {
+      "id": "0bb81a3a-7c67-401b-ad6c-7f642ac6af83",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "0199-10-15"
+    }, {
+      "id": "ea08b6ef-b8c9-422d-9604-900690573e52",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "1996-10-15"
+    }, {
+      "id": "27443946-4b0b-48c9-91f4-cc5fb8754ee4",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[8]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ac54aa55-cf36-4dbc-9622-5d1e0221d118",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[8]/div/input", "xpath:position"]
+      ],
+      "value": "password123"
+    }, {
+      "id": "c6a24f43-45b9-4e03-a086-a7c19fedad97",
+      "comment": "",
+      "command": "type",
+      "target": "id=confirmPassword",
+      "targets": [
+        ["id=confirmPassword", "id"],
+        ["name=confirmPassword", "name"],
+        ["css=#confirmPassword", "css:finder"],
+        ["xpath=//input[@id='confirmPassword']", "xpath:attributes"],
+        ["xpath=//div[8]/div[2]/input", "xpath:position"]
+      ],
+      "value": "password123"
+    }, {
+      "id": "eaf17d7e-a400-4942-9816-0fbaabada62e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-success",
+      "targets": [
+        ["css=.btn-success", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "11d8dae6-d4d9-4e3f-b7f0-adbe21c868c3",
+    "name": "TC12 - Visualizzazione dei propri ordini",
+    "commands": [{
+      "id": "3e16af9a-e1de-46a2-b1af-2b768d8f824b",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c45da19a-6036-4b4e-bd19-465c70f984e5",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cc8ba78f-2631-44b4-98f5-454597c17880",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6ec54f8e-bdf8-4b08-b21b-67c0a0a06a62",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c363e129-80f4-4b48-a4b4-3797f4844cff",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Ordini",
+      "targets": [
+        ["linkText=Ordini", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Ordini')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'OrderDetailsServlet')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Ordini')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "b3176c6d-a514-4621-9023-40a5e4424141",
+    "name": "TC13/TC14 - Autenticazione e Disconnessione",
+    "commands": [{
+      "id": "ebf003ef-d698-4e20-90b2-6509828daa71",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e7fb5a0a-bebc-4fa5-8400-94efba23f829",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3b01d2c8-9427-446a-a20b-3926dfab6971",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b34ac9ea-a6ef-4c00-89d8-195fae86724c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9552af9a-a427-42ca-8568-5c1e0f98b860",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=.nav > li:nth-child(6) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './LogoutSrv')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "59d6c6b5-7b3b-47ec-8ec6-2b0eafe9ba9b",
+    "name": "TC19 - Visualizza profilo",
+    "commands": [{
+      "id": "0dde4a8b-049b-403c-a6f1-a69cae99bb1f",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dd373084-3e22-4886-aa50-f076e687300b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "251fd81a-d0f5-47db-837d-8a197f1f53b7",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dafc8677-f025-4b7c-99c0-d3fb8780858d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a7d3667b-98d2-4fa4-9698-b4533086ec24",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Profilo",
+      "targets": [
+        ["linkText=Profilo", "linkText"],
+        ["css=.nav > li:nth-child(5) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Profilo')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'UserProfileServlet')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[5]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Profilo')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "82c04019-35d4-438c-8106-b0d58b877cca",
+    "name": "TC22 - Crezione Account Risorse Umane",
+    "commands": [{
+      "id": "b7684353-3934-4905-b06c-95dcc4616425",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3a455ec4-8fb5-483e-86d7-4e45f237962f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f970095e-a4f1-4547-9615-fd58ac2f6da9",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dc3cbc4e-cdf7-4623-a0d2-465c1eaa66d4",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b532cd7c-d135-4d06-b42d-f3981903fda2",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "magazzino@BirdComics.com"
+    }, {
+      "id": "9bdc1a4d-29c0-4258-82fc-010467980e1f",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "martapass012"
+    }, {
+      "id": "1d9095ec-3659-4ec7-9af1-bf91b3c59db2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1519b4c9-614a-4d59-956e-73fa48543689",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Gestione Magazzino",
+      "targets": [
+        ["linkText=Gestione Magazzino", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Magazzino')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Gestione Magazzino')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "733454b5-f9f1-44ea-967e-287d59fd8149",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=AggiungiHr",
+      "targets": [
+        ["linkText=AggiungiHr", "linkText"],
+        ["css=.dropdown-menu > li:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'AggiungiHr')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'register.jsp')]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'AggiungiHr')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8202a96d-c0fe-4fef-86bd-0ebe9f7a7017",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dacd87ea-7fe0-4127-a5f3-e0b608956c9f",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Giuseppe"
+    }, {
+      "id": "7680a9b4-c2c5-42e9-84e5-0dc860331c0b",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Verdi"
+    }, {
+      "id": "630cbf58-0c47-4445-8e69-126ca79fcbee",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "giuseppeverdi@birdcomics.com"
+    }, {
+      "id": "69fe621e-b39c-4378-a693-5d73265ce428",
+      "comment": "",
+      "command": "type",
+      "target": "id=telefono",
+      "targets": [
+        ["id=telefono", "id"],
+        ["name=telefono", "name"],
+        ["css=#telefono", "css:finder"],
+        ["xpath=//input[@id='telefono']", "xpath:attributes"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "1234567890"
+    }, {
+      "id": "9e638456-8a8e-4c95-b8ed-e9c07a86c023",
+      "comment": "",
+      "command": "type",
+      "target": "id=nomeCitta",
+      "targets": [
+        ["id=nomeCitta", "id"],
+        ["name=nomeCitta", "name"],
+        ["css=#nomeCitta", "css:finder"],
+        ["xpath=//input[@id='nomeCitta']", "xpath:attributes"],
+        ["xpath=//div[5]/div/input", "xpath:position"]
+      ],
+      "value": "Napoli"
+    }, {
+      "id": "2084d3cd-900b-4e33-810f-869e167d729d",
+      "comment": "",
+      "command": "type",
+      "target": "id=via",
+      "targets": [
+        ["id=via", "id"],
+        ["name=via", "name"],
+        ["css=#via", "css:finder"],
+        ["xpath=//input[@id='via']", "xpath:attributes"],
+        ["xpath=//div[5]/div[2]/input", "xpath:position"]
+      ],
+      "value": "Via toledo"
+    }, {
+      "id": "be3dfd28-e46e-445d-a1a9-1c528e2fe54c",
+      "comment": "",
+      "command": "type",
+      "target": "id=numeroCivico",
+      "targets": [
+        ["id=numeroCivico", "id"],
+        ["name=numeroCivico", "name"],
+        ["css=#numeroCivico", "css:finder"],
+        ["xpath=//input[@id='numeroCivico']", "xpath:attributes"],
+        ["xpath=//div[6]/div/input", "xpath:position"]
+      ],
+      "value": "13"
+    }, {
+      "id": "c0ce8c25-136e-4ef0-a72e-b1686ac3d8df",
+      "comment": "",
+      "command": "type",
+      "target": "id=cap",
+      "targets": [
+        ["id=cap", "id"],
+        ["name=cap", "name"],
+        ["css=#cap", "css:finder"],
+        ["xpath=//input[@id='cap']", "xpath:attributes"],
+        ["xpath=//div[6]/div[2]/input", "xpath:position"]
+      ],
+      "value": "80013"
+    }, {
+      "id": "4efa5cba-c461-4c9b-b7d0-3f3eaeeb1417",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "0001-10-15"
+    }, {
+      "id": "9fc2de8f-f3fc-4fbf-9784-382bb5bbd805",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "0019-10-15"
+    }, {
+      "id": "63df5741-34c4-4030-9dfb-92382a1f02c0",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "0199-10-15"
+    }, {
+      "id": "6ca7cf3e-816f-4c64-9292-c8cf5a361db3",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "1994-10-15"
+    }, {
+      "id": "16cad67c-8e7c-478d-b155-4a8976001069",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[8]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "aeaa6507-0113-49b4-bdf7-6828cea9d496",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[8]/div/input", "xpath:position"]
+      ],
+      "value": "password123"
+    }, {
+      "id": "be6be52b-e04a-4d08-95d5-112ea47379ab",
+      "comment": "",
+      "command": "click",
+      "target": "id=confirmPassword",
+      "targets": [
+        ["id=confirmPassword", "id"],
+        ["name=confirmPassword", "name"],
+        ["css=#confirmPassword", "css:finder"],
+        ["xpath=//input[@id='confirmPassword']", "xpath:attributes"],
+        ["xpath=//div[8]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f650be78-49eb-4779-9090-e19c86cc0d08",
+      "comment": "",
+      "command": "type",
+      "target": "id=confirmPassword",
+      "targets": [
+        ["id=confirmPassword", "id"],
+        ["name=confirmPassword", "name"],
+        ["css=#confirmPassword", "css:finder"],
+        ["xpath=//input[@id='confirmPassword']", "xpath:attributes"],
+        ["xpath=//div[8]/div[2]/input", "xpath:position"]
+      ],
+      "value": "password123"
+    }, {
+      "id": "c862649f-b71e-49f1-96c5-7fcfc055ce5a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-success",
+      "targets": [
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "83407590-35e4-49b3-87f3-a47f10b544da",
+    "name": "TC23 - Cancellazione Account Risorse Umane",
+    "commands": [{
+      "id": "9cf0b852-ab64-416d-b790-0d5d9b21b84e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d06d025e-1ff8-46cf-8097-ca5b28084cbf",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "04125293-4a20-40a7-9a91-bc911dc4ccd8",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Gestione Magazzino",
+      "targets": [
+        ["linkText=Gestione Magazzino", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Magazzino')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Gestione Magazzino')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4550721b-5690-498d-9d4b-5cf32878a8b8",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=ListaHr",
+      "targets": [
+        ["linkText=ListaHr", "linkText"],
+        ["css=li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'ListaHr')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './GestioneUtentiServlet')]", "xpath:href"],
+        ["xpath=//li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'ListaHr')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5ad1639f-fd6a-4af1-b9ab-a27ec717f8f7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-danger",
+      "targets": [
+        ["css=.btn-danger", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//td[10]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Cancella')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "12baa171-29f7-4cf8-822e-336122bd78c7",
+    "name": "TC24 - Creazione account con il ruolo di un addetto",
+    "commands": [{
+      "id": "6853154a-dea7-4a91-a69e-50272da874c8",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "633fc213-4ad1-44e7-bd71-c4443aebff0b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9f15b93f-16fc-4d34-91f2-6ed059addfb5",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6c0810df-da64-4526-be12-455f546eb744",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "08b266b4-9c27-4a2d-98d3-ca583d9df529",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Gestione Dipendenti",
+      "targets": [
+        ["linkText=Gestione Dipendenti", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Dipendenti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Gestione Dipendenti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0793bc6b-88c6-4c5b-9f7e-7f9a97d36783",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Aggiungi Dipendente",
+      "targets": [
+        ["linkText=Aggiungi Dipendente", "linkText"],
+        ["css=.dropdown-menu > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Aggiungi Dipendente')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'register.jsp')]", "xpath:href"],
+        ["xpath=//li/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Aggiungi Dipendente')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e0c90d31-43a7-4a9c-bf39-ce5b8116c991",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e337e86f-f9cf-4d09-9b48-9c2ae7f1b693",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Giuseppe"
+    }, {
+      "id": "1575caa3-ecd9-4479-93af-2b49fef41ef3",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Rossi"
+    }, {
+      "id": "9e062433-c718-4f88-bf9c-caf0ac58614c",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "giusepperossi@birdcomics.com"
+    }, {
+      "id": "fabb38d8-c185-4873-9c0e-16bd818bd146",
+      "comment": "",
+      "command": "type",
+      "target": "id=telefono",
+      "targets": [
+        ["id=telefono", "id"],
+        ["name=telefono", "name"],
+        ["css=#telefono", "css:finder"],
+        ["xpath=//input[@id='telefono']", "xpath:attributes"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "1234567890"
+    }, {
+      "id": "38321517-8bc6-4c20-8357-795464aabd98",
+      "comment": "",
+      "command": "click",
+      "target": "id=nomeCitta",
+      "targets": [
+        ["id=nomeCitta", "id"],
+        ["name=nomeCitta", "name"],
+        ["css=#nomeCitta", "css:finder"],
+        ["xpath=//input[@id='nomeCitta']", "xpath:attributes"],
+        ["xpath=//div[5]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bc4b6854-49d4-41f2-8ea5-cdc1eaf280ac",
+      "comment": "",
+      "command": "click",
+      "target": "id=nomeCitta",
+      "targets": [
+        ["id=nomeCitta", "id"],
+        ["name=nomeCitta", "name"],
+        ["css=#nomeCitta", "css:finder"],
+        ["xpath=//input[@id='nomeCitta']", "xpath:attributes"],
+        ["xpath=//div[5]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2bde2ab7-2bf5-4325-ab7b-82db36d1d9ed",
+      "comment": "",
+      "command": "type",
+      "target": "id=nomeCitta",
+      "targets": [
+        ["id=nomeCitta", "id"],
+        ["name=nomeCitta", "name"],
+        ["css=#nomeCitta", "css:finder"],
+        ["xpath=//input[@id='nomeCitta']", "xpath:attributes"],
+        ["xpath=//div[5]/div/input", "xpath:position"]
+      ],
+      "value": "Torino"
+    }, {
+      "id": "1704f901-fd74-4f51-8adc-a04f8ac9a852",
+      "comment": "",
+      "command": "click",
+      "target": "id=via",
+      "targets": [
+        ["id=via", "id"],
+        ["name=via", "name"],
+        ["css=#via", "css:finder"],
+        ["xpath=//input[@id='via']", "xpath:attributes"],
+        ["xpath=//div[5]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6fcf6b76-9ff2-4bcb-8be0-0fcc14889a50",
+      "comment": "",
+      "command": "type",
+      "target": "id=via",
+      "targets": [
+        ["id=via", "id"],
+        ["name=via", "name"],
+        ["css=#via", "css:finder"],
+        ["xpath=//input[@id='via']", "xpath:attributes"],
+        ["xpath=//div[5]/div[2]/input", "xpath:position"]
+      ],
+      "value": "via poggio"
+    }, {
+      "id": "6f61997b-7ba5-4ecf-968e-72571cdc31a8",
+      "comment": "",
+      "command": "click",
+      "target": "id=numeroCivico",
+      "targets": [
+        ["id=numeroCivico", "id"],
+        ["name=numeroCivico", "name"],
+        ["css=#numeroCivico", "css:finder"],
+        ["xpath=//input[@id='numeroCivico']", "xpath:attributes"],
+        ["xpath=//div[6]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f6ad02c3-7f5b-49c1-902d-faef222ddc43",
+      "comment": "",
+      "command": "type",
+      "target": "id=numeroCivico",
+      "targets": [
+        ["id=numeroCivico", "id"],
+        ["name=numeroCivico", "name"],
+        ["css=#numeroCivico", "css:finder"],
+        ["xpath=//input[@id='numeroCivico']", "xpath:attributes"],
+        ["xpath=//div[6]/div/input", "xpath:position"]
+      ],
+      "value": "13"
+    }, {
+      "id": "668a6d64-f3a2-44d9-b5e8-116255e34670",
+      "comment": "",
+      "command": "click",
+      "target": "id=cap",
+      "targets": [
+        ["id=cap", "id"],
+        ["name=cap", "name"],
+        ["css=#cap", "css:finder"],
+        ["xpath=//input[@id='cap']", "xpath:attributes"],
+        ["xpath=//div[6]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dbd3a3ee-3403-4498-a9e9-5605aa6d3771",
+      "comment": "",
+      "command": "type",
+      "target": "id=cap",
+      "targets": [
+        ["id=cap", "id"],
+        ["name=cap", "name"],
+        ["css=#cap", "css:finder"],
+        ["xpath=//input[@id='cap']", "xpath:attributes"],
+        ["xpath=//div[6]/div[2]/input", "xpath:position"]
+      ],
+      "value": "10024"
+    }, {
+      "id": "601bbaa7-7e34-4db8-99fd-cec18177a37d",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c771e2a7-b885-4f32-b3fd-00cb15363573",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "0001-09-10"
+    }, {
+      "id": "a7f282c6-53dd-4005-8129-be40d48c6ba0",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "0019-09-10"
+    }, {
+      "id": "db78b455-d97a-44f1-a54a-d2c062c83c98",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "0199-09-10"
+    }, {
+      "id": "a992d1f5-1890-4172-af52-00ddce4eaa1c",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataNascita",
+      "targets": [
+        ["id=dataNascita", "id"],
+        ["name=dataNascita", "name"],
+        ["css=#dataNascita", "css:finder"],
+        ["xpath=//input[@id='dataNascita']", "xpath:attributes"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "1995-09-10"
+    }, {
+      "id": "d47cd0f9-75de-4af8-baa8-b939a3b5a151",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[8]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3333fce2-a5a9-4655-9aec-9a796468af35",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[8]/div/input", "xpath:position"]
+      ],
+      "value": "password123"
+    }, {
+      "id": "ac685e18-272b-4cfc-a7ad-24f9f7131dae",
+      "comment": "",
+      "command": "click",
+      "target": "id=confirmPassword",
+      "targets": [
+        ["id=confirmPassword", "id"],
+        ["name=confirmPassword", "name"],
+        ["css=#confirmPassword", "css:finder"],
+        ["xpath=//input[@id='confirmPassword']", "xpath:attributes"],
+        ["xpath=//div[8]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "38ea65f2-06bb-4745-b640-b96df829123b",
+      "comment": "",
+      "command": "type",
+      "target": "id=confirmPassword",
+      "targets": [
+        ["id=confirmPassword", "id"],
+        ["name=confirmPassword", "name"],
+        ["css=#confirmPassword", "css:finder"],
+        ["xpath=//input[@id='confirmPassword']", "xpath:attributes"],
+        ["xpath=//div[8]/div[2]/input", "xpath:position"]
+      ],
+      "value": "password123"
+    }, {
+      "id": "7b3745f6-89f6-4c29-bb2c-5b7eeed87133",
+      "comment": "",
+      "command": "click",
+      "target": "css=.checkbox:nth-child(3) > label",
+      "targets": [
+        ["css=.checkbox:nth-child(3) > label", "css:finder"],
+        ["xpath=//div/div[3]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Gestore Catalogo')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0bde0c12-64d5-4d53-b7f5-784b8b5f5643",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-success",
+      "targets": [
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Registra Account')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "d23b427f-e6eb-47ce-9e2f-0fab1afb9818",
+    "name": "TC25 - Eliminazione account con il ruolo di un addetto",
+    "commands": [{
+      "id": "49b2b1f6-8515-4c3e-b2e0-bebd3fb40ffb",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "544aa789-4b63-4681-98ae-433b2c5c3f28",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d0ad1e9a-8462-4b8d-81b5-bd15049c306d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Gestione Dipendenti",
+      "targets": [
+        ["linkText=Gestione Dipendenti", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Dipendenti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Gestione Dipendenti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "eadf085b-99e2-4683-aec8-09319cd5f9cd",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Lista Dipendenti",
+      "targets": [
+        ["linkText=Lista Dipendenti", "linkText"],
+        ["css=.dropdown-menu > li:nth-child(2) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Lista Dipendenti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './GestioneUtentiServlet')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Lista Dipendenti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4685004e-fa64-414c-951b-30650ac1d9d8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-danger",
+      "targets": [
+        ["css=.btn-danger", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//td[10]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Cancella')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "bed7e350-d0d8-41f7-b1b5-e150fe5f54b9",
+    "name": "TC31 - Aggiunta di un fumetto al catalogo",
+    "commands": [{
+      "id": "23238ae7-6dc8-4792-992d-43f3d206af65",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cca0a674-c5b8-41b5-8d83-bb7f1b939bf8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "36964f79-88da-4a7d-af23-18780e46b598",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6079242b-2ec4-4772-bbe3-c38b833311eb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bd518994-f555-40d0-8e76-4250991871e0",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Gestione Catalogo",
+      "targets": [
+        ["linkText=Gestione Catalogo", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Catalogo')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Gestione Catalogo ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "42dad784-4285-409f-b2ab-e78077902d00",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Aggiungi Fumetto",
+      "targets": [
+        ["linkText=Aggiungi Fumetto", "linkText"],
+        ["css=.dropdown-menu > li:nth-child(2) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Aggiungi Fumetto')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './AddProductSrv')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Aggiungi Fumetto')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a2fc4c1a-fdf0-4897-97c5-bfd18ec2f71d",
+      "comment": "",
+      "command": "click",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["name=name", "name"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e741ddda-d99e-430c-be3d-ba5d5d14e165",
+      "comment": "",
+      "command": "type",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["name=name", "name"],
+        ["css=#name", "css:finder"],
+        ["xpath=//input[@id='name']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "The Amazing Spiderman"
+    }, {
+      "id": "a79563b8-7014-4eb6-b278-3502a1745af7",
+      "comment": "",
+      "command": "click",
+      "target": "id=description",
+      "targets": [
+        ["id=description", "id"],
+        ["name=info", "name"],
+        ["css=#description", "css:finder"],
+        ["xpath=//textarea[@id='description']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "deb06262-672a-4d99-8f29-563d6f2110cb",
+      "comment": "",
+      "command": "type",
+      "target": "id=description",
+      "targets": [
+        ["id=description", "id"],
+        ["name=info", "name"],
+        ["css=#description", "css:finder"],
+        ["xpath=//textarea[@id='description']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Un nuovo, entusiasmante inizio per Spider-Man. Peter Parker torna all'università e il passato gli gioca un brutto scherzo. Ma cosa ci fanno due Spider-Man in giro per New York? Incredibili avventure e un grande ritorno: Mary Jane."
+    }, {
+      "id": "7cb725ca-0824-4788-a227-41421bb65357",
+      "comment": "",
+      "command": "click",
+      "target": "id=price",
+      "targets": [
+        ["id=price", "id"],
+        ["name=price", "name"],
+        ["css=#price", "css:finder"],
+        ["xpath=//input[@id='price']", "xpath:attributes"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dd1f069b-b1f2-4e13-957b-8dfbf5c1be21",
+      "comment": "",
+      "command": "type",
+      "target": "id=price",
+      "targets": [
+        ["id=price", "id"],
+        ["name=price", "name"],
+        ["css=#price", "css:finder"],
+        ["xpath=//input[@id='price']", "xpath:attributes"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": "12"
+    }, {
+      "id": "a6a3285d-1056-4ce5-a691-8200241ade81",
+      "comment": "",
+      "command": "click",
+      "target": "id=genreDropdown",
+      "targets": [
+        ["id=genreDropdown", "id"],
+        ["css=#genreDropdown", "css:finder"],
+        ["xpath=//button[@id='genreDropdown']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Genres ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d1b11990-67ee-45e3-b7ad-a783d7311c68",
+      "comment": "",
+      "command": "click",
+      "target": "css=li:nth-child(9) input",
+      "targets": [
+        ["css=li:nth-child(9) input", "css:finder"],
+        ["xpath=(//input[@name='genres'])[9]", "xpath:attributes"],
+        ["xpath=//li[9]/label/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "98e9da14-bd9b-44f9-8301-3d809e544854",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2eea27dd-5a4f-424f-bc97-0b55549adb8d",
+      "comment": "",
+      "command": "click",
+      "target": "id=genreDropdown",
+      "targets": [
+        ["id=genreDropdown", "id"],
+        ["css=#genreDropdown", "css:finder"],
+        ["xpath=//button[@id='genreDropdown']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select Genres ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "27673764-d5c7-4b5d-bac7-4e5792752221",
+      "comment": "",
+      "command": "click",
+      "target": "css=.container:nth-child(2) > .row",
+      "targets": [
+        ["css=.container:nth-child(2) > .row", "css:finder"],
+        ["xpath=//div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "26ce800e-ead1-48a1-9b00-29b0dc46a7b6",
+      "comment": "",
+      "command": "click",
+      "target": "id=image",
+      "targets": [
+        ["id=image", "id"],
+        ["name=image", "name"],
+        ["css=#image", "css:finder"],
+        ["xpath=//input[@id='image']", "xpath:attributes"],
+        ["xpath=//div[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bc42fc9e-e6ae-48bb-890d-ae98fc171617",
+      "comment": "",
+      "command": "type",
+      "target": "css=input[type=\"file\"]",
+      "targets": [
+        ["id=image", "id"],
+        ["name=image", "name"],
+        ["css=#image", "css:finder"],
+        ["xpath=//input[@id='image']", "xpath:attributes"],
+        ["xpath=//div[6]/input", "xpath:position"]
+      ],
+      "value": "M:\\Desktop\\91B4zjBblTL._AC_UF1000,1000_QL80_.jpg"
+    }, {
+      "id": "ba5c7166-1975-414a-8d9a-3c80f3d91f19",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-success",
+      "targets": [
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Product')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c7449b9e-4aa4-4182-b6de-4614ece7e6b7",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Controlla il campo prezzo!!",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "018c1e42-b322-4d05-94e2-3923f98aa252",
+      "comment": "",
+      "command": "click",
+      "target": "id=price",
+      "targets": [
+        ["id=price", "id"],
+        ["name=price", "name"],
+        ["css=#price", "css:finder"],
+        ["xpath=//input[@id='price']", "xpath:attributes"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8c002638-bb08-49c9-a312-b864577ac692",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-success",
+      "targets": [
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Product')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "bf95fc1c-a584-4ff5-b059-80d699be0520",
+    "name": "TC32 - Rimozione fumetto dal catalogo",
+    "commands": [{
+      "id": "9054fa00-8901-4a8e-94d6-1a420a0d913e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/BirdComics/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1b600c73-09f4-4ad6-97e9-47b9a69b922d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1448x781",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "96f16703-6e14-45a6-ba86-0f76bd51fd28",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.nav > li:nth-child(4) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//div[3]/ul/li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e9b2eede-31d4-44f7-9208-afcc5c3efc44",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ef4b6aaa-de00-4e02-ae57-fb24d3190731",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Gestione Catalogo",
+      "targets": [
+        ["linkText=Gestione Catalogo", "linkText"],
+        ["css=.dropdown-toggle", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Catalogo')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Gestione Catalogo ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0370c9d2-5101-429c-8ee8-78783d9834ed",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Visualizza Catalogo",
+      "targets": [
+        ["linkText=Visualizza Catalogo", "linkText"],
+        ["css=.dropdown-menu > li:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Visualizza Catalogo')]", "xpath:link"],
+        ["xpath=//a[contains(@href, './ProductListServlet')]", "xpath:href"],
+        ["xpath=//li/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Visualizza Catalogo')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a415f102-24ec-469f-a89c-69088206bb28",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(6) .btn-danger",
+      "targets": [
+        ["css=tr:nth-child(6) .btn-danger", "css:finder"],
+        ["xpath=(//button[@type='submit'])[12]", "xpath:attributes"],
+        ["xpath=//tr[6]/td[5]/div/form[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
     "id": "041595f9-ba25-4008-b9aa-d73c09301a32",
-    "name": "SD14-EffettuaAcquistoAnnullato1",
+    "name": "TC16-EffettuaAcquistoAnnullato1",
     "commands": [{
       "id": "b025b1fe-2f94-4eed-b9fe-0b6d55e8be17",
       "comment": "",
@@ -295,7 +3189,7 @@
     }]
   }, {
     "id": "0eb8e988-090f-4b46-818c-41ef4c0252f8",
-    "name": "SD15-EffettuaAcquistoAnnullato2",
+    "name": "TC17-EffettuaAcquistoAnnullato2",
     "commands": [{
       "id": "0776fbfd-6ab4-4982-bd49-5adef6f04269",
       "comment": "",
@@ -501,7 +3395,7 @@
     }]
   }, {
     "id": "8a66264b-2324-4b3b-9d54-688ea1d2c3b0",
-    "name": "SD16-EffettuaAcquistoAnnullato3",
+    "name": "TC18-EffettuaAcquistoAnnullato3",
     "commands": [{
       "id": "1a73772d-9b5a-4a7f-b320-6b7de7eb04ac",
       "comment": "",
@@ -718,12 +3612,8 @@
       "value": ""
     }]
   }, {
-    "id": "be77994a-67a9-4f59-ad50-27ac74e64c1a",
-    "name": "SD17-EffettuaAcquistoModificaIndirizzo",
-    "commands": []
-  }, {
     "id": "e5bb5644-86f5-431a-af19-03aaed8cb0db",
-    "name": "SD22-VisualizzaOrdini",
+    "name": "TC20-VisualizzaOrdini",
     "commands": [{
       "id": "f0613216-df3e-4a67-806a-3259dcf71a00",
       "comment": "",
@@ -933,23 +3823,11 @@
     }]
   }, {
     "id": "f20c3e77-f968-4dc3-ab74-c808d31f6e12",
-    "name": "SD23-VisualizzaFatturaOrdine",
-    "commands": []
-  }, {
-    "id": "b9115bf8-0eea-4020-8f8f-161f9c06bbd2",
-    "name": "SD33-AggiungiSede",
-    "commands": []
-  }, {
-    "id": "7d170289-b1f0-4e74-bb40-e44eb523dccc",
-    "name": "SD34-AggiungiSedeIndirizzoPresente",
-    "commands": []
-  }, {
-    "id": "2df59c84-dcce-4bc1-a29e-f3f336a163a8",
-    "name": "SD35-DeleteSede",
+    "name": "TC21-VisualizzaFatturaOrdine",
     "commands": []
   }, {
     "id": "07f80a4e-90dd-4699-aff4-8071056a9c33",
-    "name": "SD36-AggiungiDirettoreMagazzino",
+    "name": "TC26-AggiungiDirettoreMagazzino",
     "commands": [{
       "id": "587f7532-2fb3-439b-a0b5-da89270578ed",
       "comment": "",
@@ -1349,7 +4227,7 @@
     }]
   }, {
     "id": "a6952951-9df3-4c5e-917e-bc6109d495b7",
-    "name": "SD37-AggiungiDirettoreMagazzinoEsistente",
+    "name": "TC27-AggiungiDirettoreMagazzinoEsistente",
     "commands": [{
       "id": "f0915a76-537e-4b78-a2fc-3abc83214fee",
       "comment": "",
@@ -1609,7 +4487,7 @@
         ["xpath=//input[@id='telefono']", "xpath:attributes"],
         ["xpath=//div[4]/input", "xpath:position"]
       ],
-      "value": "sd"
+      "value": "TC"
     }, {
       "id": "d0c1c810-3184-45ee-8d5c-a7af810ded2f",
       "comment": "",
@@ -1865,12 +4743,8 @@
       "value": ""
     }]
   }, {
-    "id": "8bb8bb23-721b-42ec-b312-80ba438ba19d",
-    "name": "SD38-AssunzioneDirettoreMagazzinoCredenzialiNonConformi",
-    "commands": []
-  }, {
     "id": "87d6a972-358c-4d89-b56c-72610d446966",
-    "name": "SD39-LicenziaDirettoreMagazzino",
+    "name": "TC28-LicenziaDirettoreMagazzino",
     "commands": [{
       "id": "067a2270-26d0-40b2-ba90-e7af6dbae8b0",
       "comment": "",
@@ -2066,12 +4940,8 @@
       "value": ""
     }]
   }, {
-    "id": "1c0e0bbf-b0b9-4d34-909a-bd9a7be5017a",
-    "name": "SD40-DeleteScaffale",
-    "commands": []
-  }, {
     "id": "c9ded6af-a85e-4339-a14b-53a40af2f389",
-    "name": "SD42-AssumiHR",
+    "name": "TC29-AssumiHR",
     "commands": [{
       "id": "c8538eac-014e-4db5-91b7-b9b6efbdde90",
       "comment": "",
@@ -2253,7 +5123,7 @@
         ["xpath=//input[@id='nome']", "xpath:attributes"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "sdfsdf"
+      "value": "TCfTCf"
     }, {
       "id": "94fbb02c-f89a-40d6-b7ad-0f82102228f7",
       "comment": "",
@@ -2279,7 +5149,7 @@
         ["xpath=//input[@id='cognome']", "xpath:attributes"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "sdfsdf"
+      "value": "TCfTCf"
     }, {
       "id": "7b576048-831f-483d-b287-ead72dda3c55",
       "comment": "",
@@ -2305,7 +5175,7 @@
         ["xpath=//input[@id='email']", "xpath:attributes"],
         ["xpath=//div[3]/input", "xpath:position"]
       ],
-      "value": "asd@birdcomics.com"
+      "value": "aTC@birdcomics.com"
     }, {
       "id": "8d74b10e-8d55-4641-94e6-75a33188203c",
       "comment": "",
@@ -2474,40 +5344,8 @@
       "value": ""
     }]
   }, {
-    "id": "3f4245e4-46a5-46be-a0f0-d0381de6cfc5",
-    "name": "SD56-MagazziniereInsertNewFumetto",
-    "commands": []
-  }, {
-    "id": "01e123ed-d028-498c-bc5f-d5558528d416",
-    "name": "SD57-MagazziniereSpostaFumetto",
-    "commands": []
-  }, {
-    "id": "ebe89092-c7b2-46b5-8285-ba75c42324e8",
-    "name": "SD58-MagazziniereRimozioneFumetto",
-    "commands": []
-  }, {
-    "id": "f340a8cc-0185-4539-9c4c-162463dd0482",
-    "name": "SD59-OperatoreLogisticoInsertTracking",
-    "commands": []
-  }, {
-    "id": "e7ae4325-7264-4fc7-a47d-314cbbcf5d5d",
-    "name": "SD60-AssisntezaFindByIdOrdine",
-    "commands": []
-  }, {
-    "id": "7900be01-359f-46e6-817e-b57948c147e1",
-    "name": "SD61-AssistenzaFindByIdOrdineErrato",
-    "commands": []
-  }, {
-    "id": "38a5ac3b-9e2f-4459-8a6b-ae773efc2bd8",
-    "name": "SD62-AssistenzaFatturaOrdineCercato",
-    "commands": []
-  }, {
-    "id": "85cd16e2-2ec9-43cd-a431-b85e38723eb2",
-    "name": "SD63-FinanzaFatturaSelezioneData",
-    "commands": []
-  }, {
     "id": "4faf50fe-86ba-422b-9f68-2e35e345926e",
-    "name": "SD13-EffettuaAcquistoSuccess",
+    "name": "TC15-EffettuaAcquistoSuccess",
     "commands": [{
       "id": "2fd02743-6541-43e3-bbcf-2e82a58ed66b",
       "comment": "",
@@ -2872,12 +5710,8 @@
       "value": ""
     }]
   }, {
-    "id": "90564c9a-665b-4624-b5ca-fbe1221083ed",
-    "name": "SD41?",
-    "commands": []
-  }, {
     "id": "395a763c-f952-4cde-a965-1c81e6386785",
-    "name": "SD43-AssumiHRAccountEsistente",
+    "name": "TC30-AssumiHRAccountEsistente",
     "commands": [{
       "id": "d6810098-98de-4183-a3f8-2722303d857f",
       "comment": "",
@@ -3396,10 +6230,6 @@
       ],
       "value": ""
     }]
-  }, {
-    "id": "13bc5e16-25f6-4e95-be51-f0eab2cf5f15",
-    "name": "SD44-AssumiHRCredenzialiNonConformi",
-    "commands": []
   }],
   "suites": [{
     "id": "38852178-8e1e-4f6f-89b0-5fdb587cb1d5",
