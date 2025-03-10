@@ -1,6 +1,6 @@
 package com.birdcomics.integration.GestioneCarrello;
 
-import com.birdcomics.Bean.CartBean;
+import com.birdcomics.Bean.CartItem;
 import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.GestioneCarrello.Controller.CartDetailsServlet;
 import com.birdcomics.GestioneCarrello.Service.CarrelloService;
@@ -124,8 +124,8 @@ class CartDetailsServletTest {
         when(request.getParameter("add")).thenReturn(null);
 
         // Simula gli articoli del carrello e i prodotti
-        List<CartBean> cartItems = new ArrayList<>();
-        CartBean cartItem = new CartBean();
+        List<CartItem> cartItems = new ArrayList<>();
+        CartItem cartItem = new CartItem();
         cartItem.setUserId("testUser");
         cartItem.setProdId("123");
         cartItem.setQuantity(2);

@@ -1,48 +1,62 @@
 package com.birdcomics.Bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class CartBean implements Serializable {
 
-	public CartBean() {
-	}
+    private String userId;
+    private List<CartItem> cartItems;
 
-	public String userId;
+    // 🔧 Costruttore vuoto
+    public CartBean() {
+        this.cartItems = new ArrayList<>();
+    }
 
-	public String prodId;
+    // 🔧 Costruttore con userId
+    public CartBean(String userId) {
+        this.userId = userId;
+        this.cartItems = new ArrayList<>();
+    }
 
-	public int quantity;
+    // Getter e Setter
+    public String getUserId() {
+        return userId;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
 
-	public String getProdId() {
-		return prodId;
-	}
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
 
-	public void setProdId(String prodId) {
-		this.prodId = prodId;
-	}
+    // Aggiungi un prodotto al carrello
+    public void addItem(CartItem item) {
+        boolean itemFound = false;
 
-	public int getQuantity() {
-		return quantity;
-	}
+        for (CartItem cartItem : cartItems) {
+            if (cartItem.getProdId().equals(item.getProdId())) {
+                cartItem.setQuantity(cartItem.getQuantity() + item.getQuantity());
+                itemFound = true;
+                break;
+            }
+        }
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+        if (!itemFound) {
+            cartItems.add(item);
+        }
+    }
 
-	public CartBean(String userId, String prodId, int quantity) {
-		super();
-		this.userId = userId;
-		this.prodId = prodId;
-		this.quantity = quantity;
-	}
-
+    // Rimuovi un prodotto dal carrello
+    public void removeItem(String prodId) {
+        cartItems.removeIf(cartItem -> cartItem.getProdId().equals(prodId));
+    }
 }

@@ -11,19 +11,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.birdcomics.Bean.CartBean;
 import com.birdcomics.Bean.RuoloBean;
 import com.birdcomics.Bean.UserBean;
 import com.birdcomics.GestioneProfili.Service.ProfileService;
 import com.birdcomics.GestioneProfili.Service.ProfileServiceImpl;
+import com.birdcomics.GestioneCarrello.Service.*;
+
 
 @WebServlet("/LoginSrv")
 public class LoginSrv extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    public ProfileService profileService;
+    private ProfileService profileService;
+    private CarrelloService cartService; // Dichiara una variabile di istanza per CarrelloService
 
     public LoginSrv() {
         super();
         this.profileService = new ProfileServiceImpl(); // Inizializza il servizio di profilo
+        this.cartService = new CarrelloServiceImpl(); // Inizializza il servizio per il carrello
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -51,6 +56,15 @@ public class LoginSrv extends HttpServlet {
                 session.setAttribute("email", email);
                 session.setAttribute("usertype", userType);
 
+                // Verifica se il carrello esiste già nella sessione
+                CartBean cart = (CartBean) session.getAttribute("cartBean");
+
+                if (cart == null) {
+                    // Se il carrello non esiste nella sessione, caricalo dal database
+                    cart = cartService.loadCartFromDB(session, email);  // Carica il carrello dal database
+                    session.setAttribute("cart", cart);  // Memorizza il carrello nella sessione
+                }
+
                 // Redirigi all'UserProfileServlet
                 RequestDispatcher rd = request.getRequestDispatcher("/UserProfileServlet");
                 rd.forward(request, response);
@@ -70,3 +84,7 @@ public class LoginSrv extends HttpServlet {
         doGet(request, response);
     }
 }
+
+
+
+

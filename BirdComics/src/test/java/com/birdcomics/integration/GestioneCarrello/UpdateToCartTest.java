@@ -3,7 +3,7 @@ package com.birdcomics.integration.GestioneCarrello;
 import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.Dao.ProductServiceDAO;
 import com.birdcomics.GestioneCarrello.Controller.UpdateToCart;
-import com.birdcomics.GestioneCarrello.Service.CarelloServiceImpl;
+import com.birdcomics.GestioneCarrello.Service.CarrelloServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -38,7 +38,7 @@ class UpdateToCartTest {
     private HttpSession session;
 
     @Mock
-    private CarelloServiceImpl cartService;
+    private CarrelloServiceImpl cartService;
 
     @Mock
     private ProductServiceDAO productDao;
@@ -82,7 +82,7 @@ class UpdateToCartTest {
 
         // Mock dei servizi
         try (
-            MockedConstruction<CarelloServiceImpl> mockedCart = mockConstruction(CarelloServiceImpl.class,
+            MockedConstruction<CarrelloServiceImpl> mockedCart = mockConstruction(CarrelloServiceImpl.class,
                 (mock, context) -> when(mock.updateProductInCart(anyString(), anyString(), anyInt())).thenReturn("Success"));
 
             MockedConstruction<ProductServiceDAO> mockedDao = mockConstruction(ProductServiceDAO.class,
@@ -104,7 +104,7 @@ class UpdateToCartTest {
             updateToCartServlet.doGet(request, response);
 
             // Verifica
-            CarelloServiceImpl cartService = mockedCart.constructed().get(0);
+            CarrelloServiceImpl cartService = mockedCart.constructed().get(0);
             verify(cartService).updateProductInCart("testUser", "123", 3);
 
             printWriter.flush();
@@ -119,7 +119,7 @@ class UpdateToCartTest {
         when(request.getParameter("pqty")).thenReturn("10"); // Quantità > disponibile
 
         try (
-            MockedConstruction<CarelloServiceImpl> mockedCart = mockConstruction(CarelloServiceImpl.class,
+            MockedConstruction<CarrelloServiceImpl> mockedCart = mockConstruction(CarrelloServiceImpl.class,
                 (mock, context) -> when(mock.updateProductInCart(anyString(), anyString(), anyInt())).thenReturn("Adjusted"));
 
             MockedConstruction<ProductServiceDAO> mockedDao = mockConstruction(ProductServiceDAO.class,
@@ -138,7 +138,7 @@ class UpdateToCartTest {
             updateToCartServlet.doGet(request, response);
 
             // Verifica la quantità aggiustata
-            CarelloServiceImpl cartService = mockedCart.constructed().get(0);
+            CarrelloServiceImpl cartService = mockedCart.constructed().get(0);
             verify(cartService).updateProductInCart("testUser", "123", 5);
 
             printWriter.flush();
@@ -158,7 +158,7 @@ class UpdateToCartTest {
 
         // Mock delle dipendenze
         try (
-            MockedConstruction<CarelloServiceImpl> mockedCart = mockConstruction(CarelloServiceImpl.class,
+            MockedConstruction<CarrelloServiceImpl> mockedCart = mockConstruction(CarrelloServiceImpl.class,
                 (mock, context) -> when(mock.updateProductInCart(anyString(), anyString(), anyInt())).thenThrow(new SQLException("DB Error")));
 
             MockedConstruction<ProductServiceDAO> mockedDao = mockConstruction(ProductServiceDAO.class,
@@ -200,7 +200,7 @@ class UpdateToCartTest {
 
         // Mock delle dipendenze
         try (
-            MockedConstruction<CarelloServiceImpl> mockedCart = mockConstruction(CarelloServiceImpl.class,
+            MockedConstruction<CarrelloServiceImpl> mockedCart = mockConstruction(CarrelloServiceImpl.class,
                 (mock, context) -> when(mock.updateProductInCart(anyString(), anyString(), anyInt())).thenReturn("Success"));
 
             MockedConstruction<ProductServiceDAO> mockedDao = mockConstruction(ProductServiceDAO.class,

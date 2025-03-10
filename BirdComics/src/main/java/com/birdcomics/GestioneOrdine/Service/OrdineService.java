@@ -6,6 +6,8 @@ import com.paypal.base.rest.PayPalRESTException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.birdcomics.Bean.OrderBean;
 import com.birdcomics.Bean.ProductBean;
 import com.paypal.api.payments.Payer;
@@ -26,5 +28,5 @@ public interface OrdineService {
 
 	List<OrderBean> getOrdiniPerUtente(String email) throws SQLException;
 
-	void processPaymentAndCreateOrder(String paymentId, String payerId, String email) throws SQLException;
+	void processPaymentAndCreateOrder(String paymentId, String payerId, String email, HttpSession session) throws SQLException;
 }

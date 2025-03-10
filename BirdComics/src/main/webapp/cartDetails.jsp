@@ -1,10 +1,10 @@
 <%@page import="com.birdcomics.Bean.ProductBean"%>
-<%@page import="com.birdcomics.Bean.CartBean"%>
+<%@page import="com.birdcomics.Bean.CartItem"%>
 <%@page import="com.birdcomics.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page
-	import="com.birdcomics.*, java.util.List, java.util.ArrayList, javax.servlet.ServletOutputStream, java.io.*"%>
+	import="com.birdcomics.*,java.util.List,java.util.ArrayList,javax.servlet.ServletOutputStream,java.io.*"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -52,23 +52,23 @@
 			<tbody
 				style="background-color: white; font-size: 15px; font-weight: bold;">
 				<% 
-                List<CartBean> cartItems = (List<CartBean>) request.getAttribute("cartItems");
-                //List<ProductBean> products = new ProductServiceDAO().getProductDetails(prodId);
-                List<ProductBean> products = (List<ProductBean>) request.getAttribute("productItems");
+				                List<CartItem> cartItems = (List<CartItem>) request.getAttribute("cartItems");
+				                //List<ProductBean> products = new ProductServiceDAO().getProductDetails(prodId);
+				                List<ProductBean> products = (List<ProductBean>) request.getAttribute("productItems");
 
-                float totAmount = (float) request.getAttribute("totAmount");
+				                float totAmount = (float) request.getAttribute("totAmount");
 
-                if (cartItems != null && !cartItems.isEmpty()) {
-                	int index = 0;
-                    for (CartBean item : cartItems) {
-                    	
-                        String prodId = item.getProdId();
-                        int prodQuantity = item.getQuantity();
-                        
-                        ProductBean product = products.get(index);
-                        float currAmount = product.getPrice() * prodQuantity;
-                        index++;
-                %>
+				                if (cartItems != null && !cartItems.isEmpty()) {
+				                	int index = 0;
+				                    for (CartItem item : cartItems) {
+				                    	
+				                        String prodId = item.getProdId();
+				                        int prodQuantity = item.getQuantity();
+				                        
+				                        ProductBean product = products.get(index);
+				                        float currAmount = product.getPrice() * prodQuantity;
+				                        index++;
+				%>
 				<tr>
 					<td><img src="./ShowImage?image=<%=product.getImage()%>"
 						style="width: 50px; height: 75px;"></td>

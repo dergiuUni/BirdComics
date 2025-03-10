@@ -1,6 +1,6 @@
 package com.birdcomics.integration.GestioneOrdine;
 
-import com.birdcomics.Bean.CartBean;
+import com.birdcomics.Bean.CartItem;
 import com.birdcomics.Bean.IndirizzoBean;
 import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.Bean.UserBean;
@@ -77,8 +77,8 @@ class AuthorizePaymentServletTest {
         when(userServiceDAO.getUserDetails(email)).thenReturn(user);
 
         // Configura il mock del CartServiceDAO per restituire una lista di carrelli
-        List<CartBean> cartItems = new ArrayList<>();
-        CartBean cartItem = new CartBean();
+        List<CartItem> cartItems = new ArrayList<>();
+        CartItem cartItem = new CartItem();
         cartItem.setProdId("1");
         cartItem.setQuantity(2);
         cartItems.add(cartItem);

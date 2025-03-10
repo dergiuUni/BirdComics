@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.birdcomics.Bean.CartBean;
 import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.Dao.ProductServiceDAO;
-import com.birdcomics.GestioneCarrello.Service.CarelloServiceImpl;
+import com.birdcomics.GestioneCarrello.Service.CarrelloServiceImpl;
 
 @WebServlet("/UpdateToCart")
 public class UpdateToCart extends HttpServlet {
@@ -23,7 +24,6 @@ public class UpdateToCart extends HttpServlet {
     public UpdateToCart() {
         super();
     }
-
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -38,61 +38,40 @@ public class UpdateToCart extends HttpServlet {
         String prodId = request.getParameter("pid");
         int pQty = Integer.parseInt(request.getParameter("pqty"));
 
-        CarelloServiceImpl cartService = new CarelloServiceImpl(); // Usa il servizio CartService
-
+        CarrelloServiceImpl cartService = new CarrelloServiceImpl();
         ProductServiceDAO productDao = new ProductServiceDAO();
         ProductBean product = null;
+
         try {
             product = productDao.getProductsByID(prodId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            int availableQty = productDao.getAllQuantityProductsById(product);
 
-        int availableQty = 0;
-        try {
-            availableQty = productDao.getAllQuantityProductsById(product);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        PrintWriter pw = response.getWriter();
-        response.setContentType("text/html");
-
-        if (availableQty < pQty) {
-            String status;
-            try {
-                status = cartService.updateProductInCart(userId, prodId, availableQty);  // Usa il metodo nel servizio
-                
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (availableQty < pQty) {
+                // Se la quantità richiesta supera la disponibilità, aggiorna al massimo disponibile
+                pQty = availableQty;
+                String status = "Only " + availableQty + " of " + product.getName()
+                        + " are available in the shop! So we are adding only " + availableQty + " products to your cart.";
+                session.setAttribute("message", status);
             }
 
-            status = "Only " + availableQty + " of " + product.getName()
-                    + " are available in the shop! So we are adding only " + availableQty + " products to your cart.";
+            // Aggiorna il carrello nel database
+            cartService.updateProductInCart(session, userId, prodId, pQty);
 
-            RequestDispatcher rd = request.getRequestDispatcher("CartDetailsServlet");
-            rd.include(request, response);
+            // Ricarica il carrello dal database e aggiorna la sessione
+            CartBean cartBean = cartService.loadCartFromDB(session, userId);
+            session.setAttribute("cart", cartBean);
 
-            pw.println("<script>document.getElementById('message').innerHTML='" + status + "'</script>");
-
-        } else {
-            String status = null;
-            try {
-                status = cartService.updateProductInCart(userId, prodId, pQty);  // Usa il metodo nel servizio
-                
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            RequestDispatcher rd = request.getRequestDispatcher("CartDetailsServlet");
-            rd.include(request, response);
-
-            pw.println("<script>document.getElementById('message').innerHTML='" + status + "'</script>");
+            // Reindirizza alla pagina del carrello
+            response.sendRedirect("CartDetailsServlet");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendRedirect("error.jsp?message=Error updating cart.");
         }
     }
-
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
     }
+
+
 }

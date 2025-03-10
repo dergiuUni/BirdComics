@@ -6,11 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.birdcomics.Bean.CartBean;
+import com.birdcomics.Bean.CartItem;
 import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.GestioneCarrello.Service.CarrelloService;
-import com.birdcomics.GestioneCarrello.Service.CarelloServiceImpl;
+import com.birdcomics.GestioneCarrello.Service.CarrelloServiceImpl;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -19,58 +21,56 @@ import java.util.List;
 public class CartDetailsServlet extends HttpServlet {
     private CarrelloService cartService;
 
-    // Costruttore per iniezione di dipendenze (usato nei test)
-    public CartDetailsServlet(CarrelloService cartService) {
-        this.cartService = cartService;
-    }
-
     public CartDetailsServlet() {
-        this.cartService = new CarelloServiceImpl();  // Inizializza con l'implementazione di default
+        this.cartService = new CarrelloServiceImpl();
     }
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
 
-        // Verifica le credenziali dell'utente
-        String email = (String) request.getSession().getAttribute("email");
+        // Recupera l'email dell'utente dalla sessione
+        String email = (String) session.getAttribute("email");
 
         if (email == null) {
             response.sendRedirect("login.jsp?message=Session Expired, Login Again!!");
             return;
         }
 
+        // Verifica se il carrello è già presente nella sessione
+        CartBean cartBean = (CartBean) session.getAttribute("cart");
+
+        if (cartBean == null) {
+            // Se il carrello non esiste nella sessione, caricalo dal database
+            cartBean = cartService.loadCartFromDB(session, email);
+            session.setAttribute("cart", cartBean);  // Memorizza il carrello nella sessione
+        }
+
         String addS = request.getParameter("add");
 
         if (addS != null) {
             int add = Integer.parseInt(addS);
-            String uid = request.getParameter("uid");
             String pid = request.getParameter("pid");
             int avail = Integer.parseInt(request.getParameter("avail"));
             int cartQty = Integer.parseInt(request.getParameter("qty"));
 
             if (add == 1) {
-                // Aggiungi prodotto al carrello
                 cartQty += 1;
                 if (cartQty <= avail) {
-                    cartService.addToCart(uid, pid, 1);
+                    cartService.addToCart(session, email, pid, 1);
                 } else {
                     response.sendRedirect("./AddtoCart?pid=" + pid + "&pqty=" + cartQty);
                     return;
                 }
-            } else if (add == 0) {
-                // Rimuovi prodotto dal carrello
-                cartService.removeFromCart(uid, pid);
             }
         }
-
-        // Ottieni gli articoli del carrello
-        List<CartBean> cartItems = cartService.getCartItems(email);
+        
+        List<CartItem> cartItems = cartBean.getCartItems();
         List<ProductBean> products = cartService.getProductsFromCart(cartItems);
-
-        // Calcola il totale
         float totAmount = cartService.calculateTotalAmount(cartItems);
 
+        // Imposta gli attributi per la visualizzazione nella JSP
         request.setAttribute("cartItems", cartItems);
         request.setAttribute("productItems", products);
         request.setAttribute("totAmount", totAmount);
@@ -83,7 +83,6 @@ public class CartDetailsServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException e) {
-            //e.printStackTrace();
             response.sendRedirect("error.jsp");
         }
     }
@@ -94,8 +93,9 @@ public class CartDetailsServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException e) {
-            //e.printStackTrace();
             response.sendRedirect("error.jsp");
         }
-    }
+    
+}
+
 }

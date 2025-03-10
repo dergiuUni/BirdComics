@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.birdcomics.Bean.CartBean;
+import com.birdcomics.Bean.CartItem;
 import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.Bean.UserBean;
 import com.birdcomics.Dao.CartServiceDAO;
@@ -42,10 +43,10 @@ public class AuthorizePaymentServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CartServiceDAO carts = new CartServiceDAO();
+		CartServiceDAO cart = new CartServiceDAO();
 		ProductBean p = new ProductBean();
 		ProductServiceDAO ps = new ProductServiceDAO();
-		List<CartBean> ca = new ArrayList<CartBean>();
+		List<CartItem> ca = new ArrayList<CartItem>();
 		List<Item> items = new ArrayList<>();
 		Transaction transaction = new Transaction();
 		ItemList itemList = new ItemList();
@@ -63,8 +64,11 @@ public class AuthorizePaymentServlet extends HttpServlet {
 		try {
 			usb = usd.getUserDetails(request.getSession().getAttribute("email").toString());
 				
-			ca = carts.getAllCartItems(request.getSession().getAttribute("email").toString());
-			for (CartBean c : ca) {
+			String userId = request.getSession().getAttribute("email").toString();  // Assuming 'email' is used as userId
+		    CartBean cartBean = cart.getCartFromSession(request.getSession(), userId);
+		    ca = cartBean.getCartItems();  // Get all items from the car
+
+			for (CartItem c : ca) {
 				 p = ps.getProductsByID(c.prodId);
 				 
 				 Item item = new Item();

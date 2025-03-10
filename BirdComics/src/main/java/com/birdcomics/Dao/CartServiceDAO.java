@@ -4,290 +4,28 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 import com.birdcomics.Bean.CartBean;
-import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Bean.CartItem;
 import com.birdcomics.Utils.DBUtil;
 
 public class CartServiceDAO {
 
-    public String addProductToCart(String userId, String prodId, int prodQty) throws SQLException {
-        String status = "Failed to Add into Cart";
-
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            ps = con.prepareStatement("SELECT * FROM CarrelloCliente WHERE id=? AND idFumetto=?");
-            ps.setString(1, userId);
-            ps.setString(2, prodId);
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                int cartQuantity = rs.getInt("quantity");
-                ProductBean product = new ProductServiceDAO().getProductsByID(prodId);
-
-                // Verifica se il prodotto è attivo
-                /*
-                if (!product.isActive()) {
-                    return "Cannot add inactive product to cart.";
-                }
-*/
-                //int availableQty = product.getProdQuantity();
-                int availableQty = 500;
-                prodQty += cartQuantity;
-
-                if (availableQty < prodQty) {
-                    status = updateProductToCart(userId, prodId, availableQty);
-                    status = "Only " + availableQty + " units of " + product.getName() +
-                             " are available in the shop. Added maximum available units to your cart.";
-                } else {
-                    status = updateProductToCart(userId, prodId, prodQty);
-                }
-            } else {
-            	 /*
-                // Se il prodotto non è nel carrello, controlla se è attivo prima di aggiungerlo
-                ProductBean product = new ProductServiceDAO().getProductsByID(prodId);
-               
-                if (!product.isActive()) {
-                    return "Cannot add inactive product to cart.";
-                }
-*/
-                ps = con.prepareStatement("INSERT INTO CarrelloCliente VALUES (?, ?, ?)");
-                ps.setString(1, userId);
-                ps.setString(2, prodId);
-                ps.setInt(3, prodQty);
-
-                int k = ps.executeUpdate();
-                if (k > 0) {
-                    status = "Product Successfully added to Cart!";
-                }
-            }
-        } catch (SQLException e) {
-            status = "Error: " + e.getMessage();
-            e.printStackTrace();
-        } finally {
-            DBUtil.closeConnection(ps);
-            DBUtil.closeConnection(rs);
+    // 🔹 Metodo per ottenere il carrello dalla sessione
+    public CartBean getCartFromSession(HttpSession session, String userId) {
+        CartBean cart = (CartBean) session.getAttribute("cartBean");
+        if (cart == null) {
+            cart = new CartBean(userId);
+            session.setAttribute("cartBean", cart);
         }
-
-        return status;
+        return cart;
     }
 
-    public List<CartBean> getAllCartItems(String userId) throws SQLException {
-        List<CartBean> items = new ArrayList<>();
+    // 🔹 Metodo per aggiungere un prodotto al carrello
+    public String addProductToCart(HttpSession session, String userId, String prodId, int prodQty) throws SQLException {
+        CartBean cart = getCartFromSession(session, userId);
 
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-        	/*
-            ps = con.prepareStatement("SELECT uc.id, uc.idFumetto, uc.quantita, p.active FROM CarrelloCliente uc \r\n"
-            		+ "JOIN Fumetto p ON uc.idFumetto = p.id WHERE uc.id=? AND p.active = 1;");
-            		*/
-        	 ps = con.prepareStatement("SELECT uc.id, uc.idFumetto, uc.quantita FROM CarrelloCliente uc \r\n"
-             		+ "JOIN Fumetto p ON uc.idFumetto = p.id WHERE uc.id=? ;");
-            //qui bisogna controllare quantita > 0  and p.quantita > 0
-            ps.setString(1, userId);
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                CartBean cart = new CartBean();
-                cart.setUserId(rs.getString("id"));
-                cart.setProdId(rs.getString("idFumetto"));
-                cart.setQuantity(rs.getInt("quantita"));
-                items.add(cart);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBUtil.closeConnection(ps);
-            DBUtil.closeConnection(rs);
-        }
-
-        return items;
-    }
-
-    public int getCartCount(String userId) throws SQLException {
-        int count = 0;
-
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            ps = con.prepareStatement("SELECT SUM(quantita) FROM CarrelloCliente WHERE id=?");
-            ps.setString(1, userId);
-            rs = ps.executeQuery();
-
-            if (rs.next() && !rs.wasNull()) {
-                count = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
- 
-            DBUtil.closeConnection(ps);
-            DBUtil.closeConnection(rs);
-        }
-
-        return count;
-    }
-
-    public String removeProductFromCart(String userId, String prodId) throws SQLException {
-        String status = "Product Removal Failed";
-
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = null;
-        PreparedStatement ps2 = null;
-        ResultSet rs = null;
-
-        try {
-            ps = con.prepareStatement("SELECT * FROM CarrelloCliente WHERE id=? AND idFumetto=?");
-            ps.setString(1, userId);
-            ps.setString(2, prodId);
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                int prodQuantity = rs.getInt("quantita");
-
-                // Controllo se il prodotto è ancora attivo
-                ProductBean product = new ProductServiceDAO().getProductsByID(prodId);
-               /*
-                if (!product.isActive()) {
-                    return "Cannot remove inactive product from cart.";
-                }
-*/
-                prodQuantity -= 1;
-
-                if (prodQuantity > 0) {
-                    ps2 = con.prepareStatement("UPDATE CarrelloCliente SET quantita=? WHERE id=? AND idFumetto=?");
-                    ps2.setInt(1, prodQuantity);
-                    ps2.setString(2, userId);
-                    ps2.setString(3, prodId);
-
-                    int k = ps2.executeUpdate();
-                    if (k > 0) {
-                        status = "Product Successfully removed from the Cart!";
-                    }
-                } else if (prodQuantity <= 0) {
-                    ps2 = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=? AND idFumetto=?");
-                    ps2.setString(1, userId);
-                    ps2.setString(2, prodId);
-
-                    int k = ps2.executeUpdate();
-                    if (k > 0) {
-                        status = "Product Successfully removed from the Cart!";
-                    }
-                }
-            } else {
-                status = "Product Not Available in the cart!";
-            }
-        } catch (SQLException e) {
-            status = "Error: " + e.getMessage();
-            e.printStackTrace();
-        } finally {
-            DBUtil.closeConnection(ps);
-            DBUtil.closeConnection(rs);
-            DBUtil.closeConnection(ps2);
-        }
-
-        return status;
-    }
-
-   
-    public String updateProductToCart(String userId, String prodId, int prodQty) throws SQLException {
-        String status = "Failed to Add into Cart";
-
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = null;
-        PreparedStatement ps2 = null;
-        ResultSet rs = null;
-
-        try {
-            ps = con.prepareStatement("SELECT * FROM CarrelloCliente WHERE id=? AND idFumetto=?");
-            ps.setString(1, userId);
-            ps.setString(2, prodId);
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                if (prodQty > 0) {
-                    ps2 = con.prepareStatement("UPDATE CarrelloCliente SET quantita=? WHERE id=? AND idFumetto=?");
-                    ps2.setInt(1, prodQty);
-                    ps2.setString(2, userId);
-                    ps2.setString(3, prodId);
-
-                    int k = ps2.executeUpdate();
-                    if (k > 0) {
-                        status = "Product Successfully Updated to Cart!";
-                    }
-                } else if (prodQty == 0) {
-                    ps2 = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=? AND idFumetto=?");
-                    ps2.setString(1, userId);
-                    ps2.setString(2, prodId);
-
-                    int k = ps2.executeUpdate();
-                    if (k > 0) {
-                        status = "Product Successfully Updated to Cart!";
-                    }
-                }
-            } else {
-                ps2 = con.prepareStatement("INSERT INTO CarrelloCliente VALUES (?, ?, ?)");
-                ps2.setString(1, userId);
-                ps2.setString(2, prodId);
-                ps2.setInt(3, prodQty);
-
-                int k = ps2.executeUpdate();
-                if (k > 0) {
-                    status = "Product Successfully Updated to Cart!";
-                }
-            }
-        } catch (SQLException e) {
-            status = "Error: " + e.getMessage();
-            e.printStackTrace();
-        } finally {
-            DBUtil.closeConnection(ps);
-            DBUtil.closeConnection(rs);
-            DBUtil.closeConnection(ps2);
-        }
-
-        return status;
-    }
-
-    public int getProductCount(String userId, String prodId) throws SQLException {
-        int count = 0;
-
-        Connection con = DBUtil.getConnection();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            ps = con.prepareStatement("SELECT SUM(quantita) FROM CarrelloCliente WHERE id=? AND idFumetto=?");
-            ps.setString(1, userId);
-            ps.setString(2, prodId);
-            rs = ps.executeQuery();
-
-            if (rs.next() && !rs.wasNull()) {
-                count = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBUtil.closeConnection(ps);
-            DBUtil.closeConnection(rs);
-        }
-
-        return count;
-    }
-
-    public int getCartItemCount(String userId, String itemId) throws SQLException {
-        int count = 0;
-        if (userId == null || itemId == null)
-            return 0;
         Connection con = DBUtil.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -295,41 +33,147 @@ public class CartServiceDAO {
         try {
             ps = con.prepareStatement("SELECT quantita FROM CarrelloCliente WHERE id=? AND idFumetto=?");
             ps.setString(1, userId);
-            ps.setString(2, itemId);
-
+            ps.setString(2, prodId);
             rs = ps.executeQuery();
 
-            if (rs.next() && !rs.wasNull())
-                count = rs.getInt(1);
+            if (rs.next()) {
+                int currentQty = rs.getInt("quantita");
+                prodQty += currentQty;
+                updateProductToCart(userId, prodId, prodQty);
+            } else {
+                ps = con.prepareStatement("INSERT INTO CarrelloCliente (id, idFumetto, quantita) VALUES (?, ?, ?)");
+                ps.setString(1, userId);
+                ps.setString(2, prodId);
+                ps.setInt(3, prodQty);
+                ps.executeUpdate();
+            }
 
+            // Ricarica il carrello dal database
+            loadCartFromDB(session, userId);  // Aggiungi questa riga per ricaricare il carrello dalla base dati
+            return "Product added to cart successfully!";
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Error adding product to cart: " + e.getMessage();
         } finally {
             DBUtil.closeConnection(ps);
             DBUtil.closeConnection(rs);
         }
-
-        return count;
     }
 
-	public void deleteAllCartItems(String email) throws SQLException {
+    // 🔹 Metodo per rimuovere un prodotto dal carrello
+    public String removeProductFromCart(HttpSession session, String userId, String prodId) throws SQLException {
+        CartBean cart = getCartFromSession(session, userId);
 
-	        Connection con = DBUtil.getConnection();
-	        PreparedStatement ps = null;
+        Connection con = DBUtil.getConnection();
+        PreparedStatement ps = null;
 
-	        try {
-	            ps = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=?");
-	            ps.setString(1, email);
+        try {
+            ps = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=? AND idFumetto=?");
+            ps.setString(1, userId);
+            ps.setString(2, prodId);
+            ps.executeUpdate();
 
-	            ps.executeUpdate();
+            // Rimuovi il prodotto dal carrello nella sessione
+            cart.removeItem(prodId);
+            session.setAttribute("cartBean", cart);
 
-	        } catch (SQLException e) {
-	        	e.printStackTrace();
-	        } finally {
-	            DBUtil.closeConnection(ps);
-	        }
+            // Ricarica il carrello dal database
+            loadCartFromDB(session, userId);  // Aggiungi questa riga per ricaricare il carrello dalla base dati
+            return "Product removed from cart successfully!";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Error removing product from cart: " + e.getMessage();
+        } finally {
+            DBUtil.closeConnection(ps);
+        }
+    }
 
-	    
-	}
+    // 🔹 Metodo per aggiornare la quantità di un prodotto nel carrello
+    public String updateProductToCart(String userId, String prodId, int prodQty) throws SQLException {
+        Connection con = DBUtil.getConnection();
+        PreparedStatement ps = null;
+
+        try {
+            if (prodQty > 0) {
+                ps = con.prepareStatement("UPDATE CarrelloCliente SET quantita=? WHERE id=? AND idFumetto=?");
+                ps.setInt(1, prodQty);
+                ps.setString(2, userId);
+                ps.setString(3, prodId);
+                ps.executeUpdate();
+            } else {
+                ps = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=? AND idFumetto=?");
+                ps.setString(1, userId);
+                ps.setString(2, prodId);
+                ps.executeUpdate();
+            }
+
+            return "Product updated in cart successfully!";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Error updating cart: " + e.getMessage();
+        } finally {
+            DBUtil.closeConnection(ps);
+        }
+    }
+
+ // 🔹 Metodo per ottenere tutti gli articoli del carrello dal database
+    public CartBean loadCartFromDB(HttpSession session, String userId) throws SQLException {
+        // Crea un nuovo carrello per l'utente
+        CartBean cart = new CartBean(userId);
+        
+        // Connessione al database
+        Connection con = DBUtil.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            // Prepara la query per ottenere tutti gli articoli del carrello dell'utente
+            ps = con.prepareStatement("SELECT idFumetto, quantita FROM CarrelloCliente WHERE id=?");
+            ps.setString(1, userId);  // Imposta l'ID dell'utente
+
+            rs = ps.executeQuery();
+
+            // Scorri i risultati e aggiungi gli articoli al carrello
+            while (rs.next()) {
+                String prodId = rs.getString("idFumetto");
+                int quantity = rs.getInt("quantita");
+                
+                // Aggiungi ogni articolo al carrello
+                CartItem item = new CartItem(prodId, quantity);
+                cart.addItem(item);
+            }
+
+            // Memorizza il carrello nella sessione
+            session.setAttribute("cartBean", cart);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Chiudi le risorse
+            DBUtil.closeConnection(ps);
+            DBUtil.closeConnection(rs);
+        }
+
+        // Restituisci il carrello caricato
+        return cart;
+    }
+
+
+    // 🔹 Metodo per eliminare tutti i prodotti dal carrello dell'utente
+    public void deleteAllCartItems(HttpSession session, String userId) throws SQLException {
+        Connection con = DBUtil.getConnection();
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=?");
+            ps.setString(1, userId);
+            ps.executeUpdate();
+
+            // Rimuovi il carrello dalla sessione
+            session.removeAttribute("cartBean");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeConnection(ps);
+        }
+    }
 }
-

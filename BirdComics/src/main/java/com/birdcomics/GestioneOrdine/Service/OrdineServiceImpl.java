@@ -26,6 +26,8 @@ import com.paypal.base.rest.PayPalRESTException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 public class OrdineServiceImpl implements OrdineService {
 
 	private static final String CLIENT_ID = "ASuCpKOzpG4whs0IxSBo_DH7Kkq-j-o9bNcikgPghWSkPB-jlaftSbtzCnPEmewvQeqscCgjQ74DMK5T";
@@ -114,12 +116,16 @@ public class OrdineServiceImpl implements OrdineService {
 	}
 
 
-	public void processPaymentAndCreateOrder(String paymentId, String payerId, String email) throws SQLException {
+	public void processPaymentAndCreateOrder(String paymentId, String payerId, String email, HttpSession session) throws SQLException {
 		// Ottieni i dettagli dell'utente
 		UserBean u = userServiceDAO.getUserDetails(email);
-
+		
 		// Elimina gli articoli dal carrello
-		cartServiceDAO.deleteAllCartItems(email);
+		 cartServiceDAO.deleteAllCartItems(session, email);
+
+		 // Rimuovi il carrello dalla sessione (per assicurarti che non venga visualizzato ancora)
+		 session.removeAttribute("cart"); // Se il carrello è memorizzato nella sessione
+
 
 		// Esegui il pagamento tramite PayPal
 		PaymentServices paymentServices = new PaymentServices();

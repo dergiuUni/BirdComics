@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-import com.birdcomics.Bean.CartBean;
+import com.birdcomics.Bean.CartItem;
 import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.Dao.CartServiceDAO;
 import com.birdcomics.Dao.ProductServiceDAO;
-import com.birdcomics.GestioneCarrello.Service.CarelloServiceImpl;
+import com.birdcomics.GestioneCarrello.Service.CarrelloServiceImpl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,12 +30,12 @@ public class CarrelloServiceImplTest {
     private ProductServiceDAO productServiceDAO;
 
     @InjectMocks
-    private CarelloServiceImpl carelloService;
+    private CarrelloServiceImpl carelloService;
 
     private final String userId = "user123";
     private final String prodId = "prod456";
     private final ProductBean product = new ProductBean();
-    private final CartBean cartItem = new CartBean();
+    private final CartItem cartItem = new CartItem();
 
     @Before
     public void setUp() {
@@ -87,16 +87,16 @@ public class CarrelloServiceImplTest {
 
     @Test
     public void testGetCartItems() throws SQLException {
-        List<CartBean> expected = Arrays.asList(cartItem);
+        List<CartItem> expected = Arrays.asList(cartItem);
         when(cartServiceDAO.getAllCartItems(userId)).thenReturn(expected);
 
-        List<CartBean> result = carelloService.getCartItems(userId);
+        List<CartItem> result = carelloService.getCartItems(userId);
         assertEquals(expected, result);
     }
 
     @Test
     public void testGetProductsFromCart() throws SQLException {
-        List<CartBean> cartItems = Arrays.asList(cartItem);
+        List<CartItem> cartItems = Arrays.asList(cartItem);
         when(productServiceDAO.getProductsByID(prodId)).thenReturn(product);
 
         List<ProductBean> products = carelloService.getProductsFromCart(cartItems);
@@ -106,7 +106,7 @@ public class CarrelloServiceImplTest {
 
     @Test
     public void testCalculateTotalAmount() throws SQLException {
-        List<CartBean> cartItems = Arrays.asList(cartItem);
+        List<CartItem> cartItems = Arrays.asList(cartItem);
         when(productServiceDAO.getProductsByID(prodId)).thenReturn(product);
 
         float total = carelloService.calculateTotalAmount(cartItems);

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.birdcomics.GestioneOrdine.Service.OrdineService;
 import com.birdcomics.GestioneOrdine.Service.OrdineServiceImpl;
@@ -28,10 +29,13 @@ public class ReviewPaymentServlet extends HttpServlet {
         String payerId = request.getParameter("PayerID");
         String email = (String) request.getSession().getAttribute("email");
 
+        // Retrieve HttpSession object from the request
+        HttpSession session = request.getSession();
+
         try {
             if (paymentId != null && payerId != null && email != null) {
-                // Usa il servizio per processare il pagamento e creare l'ordine
-                ordineService.processPaymentAndCreateOrder(paymentId, payerId, email);
+                // Pass the session to the service method
+                ordineService.processPaymentAndCreateOrder(paymentId, payerId, email, session);
                 // Reindirizza alla home page dopo l'elaborazione
                 response.sendRedirect("index.jsp");
             } else {

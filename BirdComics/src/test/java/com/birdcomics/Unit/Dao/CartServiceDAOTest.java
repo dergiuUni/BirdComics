@@ -1,6 +1,6 @@
 package com.birdcomics.Unit.Dao;
 
-import com.birdcomics.Bean.CartBean;
+import com.birdcomics.Bean.CartItem;
 import com.birdcomics.Dao.CartServiceDAO;
 import com.birdcomics.Utils.DBUtil;
 import org.junit.jupiter.api.*;
@@ -108,7 +108,7 @@ public class CartServiceDAOTest {
         when(resultSet.getString("idFumetto")).thenReturn("1");
         when(resultSet.getInt("quantita")).thenReturn(2);
 
-        List<CartBean> cartItems = cartServiceDAO.getAllCartItems(userId);
+        List<CartItem> cartItems = cartServiceDAO.getAllCartItems(userId);
 
         assertNotNull(cartItems);
         assertEquals(1, cartItems.size());
@@ -125,7 +125,7 @@ public class CartServiceDAOTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(false); // Nessun risultato
 
-        List<CartBean> cartItems = cartServiceDAO.getAllCartItems(userId);
+        List<CartItem> cartItems = cartServiceDAO.getAllCartItems(userId);
 
         assertTrue(cartItems.isEmpty());
     }
@@ -143,7 +143,7 @@ public class CartServiceDAOTest {
         when(resultSet.getString("idFumetto")).thenReturn("1", "2");
         when(resultSet.getInt("quantita")).thenReturn(3, 5);
 
-        List<CartBean> cartItems = cartServiceDAO.getAllCartItems(userId);
+        List<CartItem> cartItems = cartServiceDAO.getAllCartItems(userId);
 
         assertEquals(2, cartItems.size());
         assertEquals("1", cartItems.get(0).getProdId());

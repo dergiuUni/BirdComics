@@ -1,7 +1,7 @@
 package com.birdcomics.integration.GestioneCarrello;
 
 import com.birdcomics.GestioneCarrello.Controller.EmptyCartServlet;
-import com.birdcomics.GestioneCarrello.Service.CarelloServiceImpl;
+import com.birdcomics.GestioneCarrello.Service.CarrelloServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -29,7 +29,7 @@ class EmptyCartServletTest {
     private HttpSession session;
 
     @Mock
-    private CarelloServiceImpl cartService;
+    private CarrelloServiceImpl cartService;
 
     @InjectMocks
     private EmptyCartServlet emptyCartServlet;
@@ -47,7 +47,7 @@ class EmptyCartServletTest {
         when(session.getAttribute("email")).thenReturn("testUser");
 
         // Simula il comportamento del CarelloServiceImpl
-        try (MockedConstruction<CarelloServiceImpl> mocked = mockConstruction(CarelloServiceImpl.class, (mock, context) -> {
+        try (MockedConstruction<CarrelloServiceImpl> mocked = mockConstruction(CarrelloServiceImpl.class, (mock, context) -> {
             doNothing().when(mock).emptyCart("testUser"); // Simula lo svuotamento del carrello
         })) {
 
@@ -82,7 +82,7 @@ class EmptyCartServletTest {
         when(session.getAttribute("email")).thenReturn("testUser");
 
         // Simula un'eccezione SQL durante lo svuotamento del carrello
-        try (MockedConstruction<CarelloServiceImpl> mocked = mockConstruction(CarelloServiceImpl.class, (mock, context) -> {
+        try (MockedConstruction<CarrelloServiceImpl> mocked = mockConstruction(CarrelloServiceImpl.class, (mock, context) -> {
             doThrow(new SQLException("Database error")).when(mock).emptyCart("testUser");
         })) {
 
@@ -101,7 +101,7 @@ class EmptyCartServletTest {
         when(session.getAttribute("email")).thenReturn("testUser");
 
         // Simula il comportamento del CarelloServiceImpl
-        try (MockedConstruction<CarelloServiceImpl> mocked = mockConstruction(CarelloServiceImpl.class, (mock, context) -> {
+        try (MockedConstruction<CarrelloServiceImpl> mocked = mockConstruction(CarrelloServiceImpl.class, (mock, context) -> {
             doNothing().when(mock).emptyCart("testUser"); // Simula lo svuotamento del carrello
         })) {
 

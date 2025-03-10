@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.birdcomics.GestioneCarrello.Service.CarelloServiceImpl;
+import com.birdcomics.Bean.CartBean;
+import com.birdcomics.GestioneCarrello.Service.CarrelloServiceImpl;
 
 @WebServlet("/EmptyCartServlet")
 public class EmptyCartServlet extends HttpServlet {
@@ -30,17 +31,25 @@ public class EmptyCartServlet extends HttpServlet {
             return;
         }
 
-        CarelloServiceImpl cartService = new CarelloServiceImpl(); // Usa il servizio
+        CarrelloServiceImpl cartService = new CarrelloServiceImpl(); // Usa il servizio
 
         try {
-            cartService.emptyCart(email); // Svuota il carrello
+            // Svuota il carrello nel database
+            cartService.emptyCart(session, email);
+
+            // Crea un nuovo carrello vuoto e aggiorna la sessione
+            CartBean cartBean = new CartBean(email);
+            session.setAttribute("cart", cartBean);
+
+            // Mostra un messaggio di conferma
+            session.setAttribute("message", "Cart emptied successfully!");
+
+            // Reindirizza alla pagina del carrello
+            response.sendRedirect("CartDetailsServlet");
         } catch (SQLException e) {
             e.printStackTrace();
             response.sendRedirect("error.jsp?message=Errore durante lo svuotamento del carrello");
-            return;
         }
-
-        response.sendRedirect("CartDetailsServlet");  // Redirige alla pagina del carrello
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
