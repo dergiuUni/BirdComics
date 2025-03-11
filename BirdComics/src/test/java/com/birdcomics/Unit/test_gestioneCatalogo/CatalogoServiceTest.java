@@ -50,7 +50,7 @@ class CatalogoServiceTest {
         when(productServiceDAO.getAllProducts()).thenReturn(mockProducts);
 
         // Esegui il metodo da testare
-        List<ProductBean> result = catalogoService.getAllProducts();
+        List<ProductBean> result = catalogoService.visualizzaCatalogo();
 
         // Verifica il risultato
         assertNotNull(result);
@@ -68,7 +68,7 @@ class CatalogoServiceTest {
         when(productServiceDAO.getAllProducts()).thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare e verifica che l'eccezione venga propagata
-        assertThrows(SQLException.class, () -> catalogoService.getAllProducts());
+        assertThrows(SQLException.class, () -> catalogoService.visualizzaCatalogo());
 
         // Verifica che il metodo del DAO sia stato chiamato
         verify(productServiceDAO, times(1)).getAllProducts();
@@ -88,7 +88,7 @@ class CatalogoServiceTest {
         when(productServiceDAO.getProductsByID("1")).thenReturn(mockProduct);
 
         // Esegui il metodo da testare
-        ProductBean result = catalogoService.getProductById("1");
+        ProductBean result = catalogoService.visualizzaDettagli("1");
 
         // Verifica il risultato
         assertNotNull(result);
@@ -105,7 +105,7 @@ class CatalogoServiceTest {
         when(productServiceDAO.getProductsByID("1")).thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare e verifica che l'eccezione venga propagata
-        assertThrows(SQLException.class, () -> catalogoService.getProductById("1"));
+        assertThrows(SQLException.class, () -> catalogoService.visualizzaDettagli("1"));
 
         // Verifica che il metodo del DAO sia stato chiamato
         verify(productServiceDAO, times(1)).getProductsByID("1");
@@ -122,7 +122,7 @@ class CatalogoServiceTest {
                 .thenReturn("Product Added Successfully");
 
         // Esegui il metodo da testare
-        String result = catalogoService.addProduct("Product 1", "Description 1", 10.0f, "image1.jpg", new String[]{"Action"});
+        String result = catalogoService.addFumetto("Product 1", "Description 1", 10.0f, "image1.jpg", new String[]{"Action"});
 
         // Verifica il risultato
         assertEquals("Product Added Successfully", result);
@@ -151,7 +151,7 @@ class CatalogoServiceTest {
         when(productServiceDAO.searchAllProductsGestore("search")).thenReturn(mockProducts);
 
         // Esegui il metodo da testare
-        List<ProductBean> result = catalogoService.searchAllProductsGestore("search");
+        List<ProductBean> result = catalogoService.ricercaID("search");
 
         // Verifica il risultato
         assertNotNull(result);
@@ -169,7 +169,7 @@ class CatalogoServiceTest {
         when(productServiceDAO.searchAllProductsGestore("search")).thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare e verifica che l'eccezione venga propagata
-        assertThrows(SQLException.class, () -> catalogoService.searchAllProductsGestore("search"));
+        assertThrows(SQLException.class, () -> catalogoService.ricercaID("search"));
 
         // Verifica che il metodo del DAO sia stato chiamato
         verify(productServiceDAO, times(1)).searchAllProductsGestore("search");
@@ -194,7 +194,7 @@ class CatalogoServiceTest {
         when(productServiceDAO.getAllProductsByType("Action")).thenReturn(mockProducts);
 
         // Esegui il metodo da testare
-        List<ProductBean> result = catalogoService.getAllProductsByType("Action");
+        List<ProductBean> result = catalogoService.ricercaGenere("Action");
 
         // Verifica il risultato
         assertNotNull(result);
@@ -212,7 +212,7 @@ class CatalogoServiceTest {
         when(productServiceDAO.getAllProductsByType("Action")).thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare e verifica che l'eccezione venga propagata
-        assertThrows(SQLException.class, () -> catalogoService.getAllProductsByType("Action"));
+        assertThrows(SQLException.class, () -> catalogoService.ricercaGenere("Action"));
 
         // Verifica che il metodo del DAO sia stato chiamato
         verify(productServiceDAO, times(1)).getAllProductsByType("Action");
@@ -237,7 +237,7 @@ class CatalogoServiceTest {
         when(productServiceDAO.searchAllProducts("search")).thenReturn(mockProducts);
 
         // Esegui il metodo da testare
-        List<ProductBean> result = catalogoService.searchAllProducts("search");
+        List<ProductBean> result = catalogoService.ricercaTitolo("search");
 
         // Verifica il risultato
         assertNotNull(result);
@@ -255,7 +255,7 @@ class CatalogoServiceTest {
         when(productServiceDAO.searchAllProducts("search")).thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare e verifica che l'eccezione venga propagata
-        assertThrows(SQLException.class, () -> catalogoService.searchAllProducts("search"));
+        assertThrows(SQLException.class, () -> catalogoService.ricercaTitolo("search"));
 
         // Verifica che il metodo del DAO sia stato chiamato
         verify(productServiceDAO, times(1)).searchAllProducts("search");
@@ -271,7 +271,7 @@ class CatalogoServiceTest {
         when(productServiceDAO.removeProduct("1")).thenReturn("Product removed successfully!");
 
         // Esegui il metodo da testare
-        String result = catalogoService.removeProduct("1");
+        String result = catalogoService.rmFumetto("1");
 
         // Verifica il risultato
         assertEquals("Product removed successfully!", result);
@@ -286,7 +286,7 @@ class CatalogoServiceTest {
         when(productServiceDAO.removeProduct("1")).thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare e verifica che l'eccezione venga propagata
-        assertThrows(SQLException.class, () -> catalogoService.removeProduct("1"));
+        assertThrows(SQLException.class, () -> catalogoService.rmFumetto("1"));
 
         // Verifica che il metodo del DAO sia stato chiamato
         verify(productServiceDAO, times(1)).removeProduct("1");

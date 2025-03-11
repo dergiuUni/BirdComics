@@ -60,7 +60,7 @@ class ProductListServletTest {
         product.setId(1);
         product.setName("Comic Book 1");
         products.add(product);
-        when(catalogoService.getAllProductsByType("Comic")).thenReturn(products);
+        when(catalogoService.ricercaGenere("Comic")).thenReturn(products);
 
         // Configura il mock del RequestDispatcher
         when(request.getRequestDispatcher("/index.jsp")).thenReturn(requestDispatcher);
@@ -94,7 +94,7 @@ class ProductListServletTest {
         product.setId(2);
         product.setName("Avengers Comic");
         products.add(product);
-        when(catalogoService.searchAllProductsGestore("Avengers")).thenReturn(products);
+        when(catalogoService.ricercaID("Avengers")).thenReturn(products);
 
         // Configura il mock del RequestDispatcher
         when(request.getRequestDispatcher("/visualizzaCatalogo.jsp")).thenReturn(requestDispatcher);
@@ -125,7 +125,7 @@ class ProductListServletTest {
         product.setId(2);
         product.setName("Avengers Comic");
         products.add(product);
-        when(catalogoService.searchAllProducts("Avengers")).thenReturn(products);
+        when(catalogoService.ricercaTitolo("Avengers")).thenReturn(products);
 
         // Configura il mock del RequestDispatcher
         when(request.getRequestDispatcher("/index.jsp")).thenReturn(requestDispatcher);
@@ -153,7 +153,7 @@ class ProductListServletTest {
         product.setId(3);
         product.setName("Generic Product");
         products.add(product);
-        when(catalogoService.getAllProducts()).thenReturn(products);
+        when(catalogoService.visualizzaCatalogo()).thenReturn(products);
 
         // Configura il mock del RequestDispatcher
         when(request.getRequestDispatcher("/index.jsp")).thenReturn(requestDispatcher);
@@ -176,7 +176,7 @@ class ProductListServletTest {
         when(request.getParameter("type")).thenReturn(null);
 
         // Configura il mock del servizio per lanciare un'eccezione SQLException
-        when(catalogoService.searchAllProducts("Avengers")).thenThrow(new SQLException("Database error"));
+        when(catalogoService.ricercaTitolo("Avengers")).thenThrow(new SQLException("Database error"));
 
         // Configura il mock del RequestDispatcher
         when(request.getRequestDispatcher("/index.jsp")).thenReturn(requestDispatcher);

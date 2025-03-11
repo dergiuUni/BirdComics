@@ -43,7 +43,7 @@ public class RemoveProductSrv extends HttpServlet {
 
         String status = null;
         try {
-            status = catalogoService.removeProduct(prodId);  // Chiamata al servizio per rimuovere il prodotto
+            status = catalogoService.rmFumetto(prodId);  // Chiamata al servizio per rimuovere il prodotto
         } catch (SQLException e) {
             e.printStackTrace();
             status = "Error removing product";

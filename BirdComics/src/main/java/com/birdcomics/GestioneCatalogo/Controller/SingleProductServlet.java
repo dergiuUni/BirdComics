@@ -30,7 +30,7 @@ public class SingleProductServlet extends HttpServlet {
         if (id != null) {
             try {
                 // Usa il CatalogoService per ottenere il prodotto
-                ProductBean product = catalogoService.getProductById(id);
+                ProductBean product = catalogoService.visualizzaDettagli(id);
                 request.setAttribute("product", product);
                 
                 // Forward alla pagina per la visualizzazione

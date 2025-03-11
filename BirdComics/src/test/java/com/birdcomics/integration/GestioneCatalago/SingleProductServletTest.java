@@ -51,7 +51,7 @@ class SingleProductServletTest {
         ProductBean product = new ProductBean();
         product.setId(1);
         product.setName("Prodotto di Test");
-        when(catalogoService.getProductById("123")).thenReturn(product);
+        when(catalogoService.visualizzaDettagli("123")).thenReturn(product);
 
         // Configura il mock del RequestDispatcher
         when(request.getRequestDispatcher("/singleProduct.jsp")).thenReturn(requestDispatcher);
@@ -72,7 +72,7 @@ class SingleProductServletTest {
         when(request.getParameter("pid")).thenReturn("999");
 
         // Configura il mock del servizio per lanciare un'eccezione SQLException
-        when(catalogoService.getProductById("999")).thenThrow(new SQLException("Prodotto non trovato"));
+        when(catalogoService.visualizzaDettagli("999")).thenThrow(new SQLException("Prodotto non trovato"));
 
         // Configura il mock del RequestDispatcher per la pagina di errore
         when(request.getRequestDispatcher("error.jsp")).thenReturn(requestDispatcher);
@@ -96,7 +96,7 @@ class SingleProductServletTest {
         singleProductServlet.doGet(request, response);
 
         // Verifica che non ci siano interazioni con il CatalogoService
-        verify(catalogoService, never()).getProductById(anyString());
+        verify(catalogoService, never()).visualizzaDettagli(anyString());
 
         // Verifica che non ci siano interazioni con il RequestDispatcher
         verify(requestDispatcher, never()).forward(request, response);

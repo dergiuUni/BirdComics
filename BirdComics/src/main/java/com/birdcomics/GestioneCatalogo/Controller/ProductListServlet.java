@@ -46,16 +46,16 @@ public class ProductListServlet extends HttpServlet {
             // Logica per il recupero dei prodotti
             if (type != null && !type.isEmpty()) {
                 // Se è specificato un tipo, recupera i prodotti per tipo
-                products = catalogoService.getAllProductsByType(type); // Usa il servizio
+                products = catalogoService.ricercaGenere(type); // Usa il servizio
                 message = "Products in " + type;
             } else if (search != null && !search.isEmpty()) {
                 // Se è specificata una ricerca, gestisci la ricerca in base al tipo di utente
                 if (userTypes != null && userTypes.contains("GestoreCatalogo")) {
                     // Se l'utente è un GestoreCatalogo, usa searchAllProductsGestore
-                    products = catalogoService.searchAllProductsGestore(search); // Usa il servizio
+                    products = catalogoService.ricercaID(search); // Usa il servizio
                 } else {
                     // Altrimenti, usa searchAllProducts
-                    products = catalogoService.searchAllProducts(search); // Usa il servizio
+                    products = catalogoService.ricercaTitolo(search); // Usa il servizio
                 }
 
                 // Imposta il messaggio in base ai risultati della ricerca
@@ -66,7 +66,7 @@ public class ProductListServlet extends HttpServlet {
                 }
             } else {
                 // Se non è specificato né un tipo né una ricerca, recupera tutti i prodotti
-                products = catalogoService.getAllProducts(); // Usa il servizio
+                products = catalogoService.visualizzaCatalogo(); // Usa il servizio
                 message = "All Products";
             }
 

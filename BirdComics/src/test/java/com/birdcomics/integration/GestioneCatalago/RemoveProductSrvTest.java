@@ -44,7 +44,7 @@ class RemoveProductSrvTest {
         when(request.getParameter("prodid")).thenReturn("123");
 
         // Configura il mock del servizio per restituire uno stato di successo
-        when(catalogoService.removeProduct("123")).thenReturn("Product removed successfully");
+        when(catalogoService.rmFumetto("123")).thenReturn("Product removed successfully");
 
         // Configura il mock del RequestDispatcher
         when(request.getRequestDispatcher("./ProductListServlet?message=Product removed successfully"))
@@ -54,7 +54,7 @@ class RemoveProductSrvTest {
         removeProductSrv.doGet(request, response);
 
         // Verifica che il metodo del servizio sia stato chiamato
-        verify(catalogoService).removeProduct("123");
+        verify(catalogoService).rmFumetto("123");
 
         // Verifica che il RequestDispatcher sia stato chiamato con il messaggio corretto
         verify(requestDispatcher).forward(request, response);
@@ -66,7 +66,7 @@ class RemoveProductSrvTest {
         when(request.getParameter("prodid")).thenReturn("999");
 
         // Configura il mock del servizio per lanciare un'eccezione SQLException
-        when(catalogoService.removeProduct("999")).thenThrow(new SQLException("Database error"));
+        when(catalogoService.rmFumetto("999")).thenThrow(new SQLException("Database error"));
 
         // Configura il mock del RequestDispatcher
         when(request.getRequestDispatcher("./ProductListServlet?message=Error removing product"))
@@ -76,7 +76,7 @@ class RemoveProductSrvTest {
         removeProductSrv.doGet(request, response);
 
         // Verifica che il metodo del servizio sia stato chiamato
-        verify(catalogoService).removeProduct("999");
+        verify(catalogoService).rmFumetto("999");
 
         // Verifica che il RequestDispatcher sia stato chiamato con il messaggio di errore
         verify(requestDispatcher).forward(request, response);
@@ -95,7 +95,7 @@ class RemoveProductSrvTest {
         removeProductSrv.doGet(request, response);
 
         // Verifica che non ci siano interazioni con il CatalogoService
-        verify(catalogoService, never()).removeProduct(anyString());
+        verify(catalogoService, never()).rmFumetto(anyString());
 
         // Verifica che il RequestDispatcher sia stato chiamato con il messaggio di errore corretto
         verify(requestDispatcher).forward(request, response);

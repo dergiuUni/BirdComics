@@ -81,7 +81,7 @@ class AddProductSrvTest {
         when(servletContext.getRealPath("uploads/")).thenReturn("/path/to/uploads/");
 
         // Configura il mock del servizio per restituire uno stato di successo
-        when(catalogoService.addProduct(anyString(), anyString(), anyFloat(), anyString(), any(String[].class)))
+        when(catalogoService.addFumetto(anyString(), anyString(), anyFloat(), anyString(), any(String[].class)))
                 .thenReturn("Product added successfully");
 
         // Configura il mock del RequestDispatcher
@@ -91,7 +91,7 @@ class AddProductSrvTest {
         addProductSrv.doPost(request, response);
 
         // Verifica che il metodo del servizio sia stato chiamato
-        verify(catalogoService).addProduct(anyString(), anyString(), anyFloat(), anyString(), any(String[].class));
+        verify(catalogoService).addFumetto(anyString(), anyString(), anyFloat(), anyString(), any(String[].class));
 
         // Verifica che il RequestDispatcher sia stato chiamato con il messaggio corretto
         verify(request).setAttribute("message", "Product added successfully");
@@ -118,7 +118,7 @@ class AddProductSrvTest {
         addProductSrv.doPost(request, response);
 
         // Verifica che il metodo del servizio non sia stato chiamato
-        verify(catalogoService, never()).addProduct(anyString(), anyString(), anyFloat(), anyString(), any(String[].class));
+        verify(catalogoService, never()).addFumetto(anyString(), anyString(), anyFloat(), anyString(), any(String[].class));
 
         // Verifica che il RequestDispatcher sia stato chiamato con il messaggio di errore
         verify(request).setAttribute("message", "Invalid file type! Only JPG, JPEG, and PNG are allowed.");
@@ -145,7 +145,7 @@ class AddProductSrvTest {
         when(servletContext.getRealPath("uploads/")).thenReturn("/path/to/uploads/");
 
         // Configura il mock del servizio per lanciare un'eccezione SQLException
-        when(catalogoService.addProduct(anyString(), anyString(), anyFloat(), anyString(), any(String[].class)))
+        when(catalogoService.addFumetto(anyString(), anyString(), anyFloat(), anyString(), any(String[].class)))
                 .thenThrow(new SQLException("Database error"));
 
         // Configura il mock del RequestDispatcher
@@ -155,7 +155,7 @@ class AddProductSrvTest {
         addProductSrv.doPost(request, response);
 
         // Verifica che il metodo del servizio sia stato chiamato
-        verify(catalogoService).addProduct(anyString(), anyString(), anyFloat(), anyString(), any(String[].class));
+        verify(catalogoService).addFumetto(anyString(), anyString(), anyFloat(), anyString(), any(String[].class));
 
         // Verifica che il RequestDispatcher sia stato chiamato con il messaggio di errore
         verify(request).setAttribute("message", "Database error occurred while adding the product.");

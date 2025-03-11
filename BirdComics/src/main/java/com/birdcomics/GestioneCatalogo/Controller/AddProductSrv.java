@@ -72,7 +72,7 @@ public class AddProductSrv extends HttpServlet {
 
             try {
                 // Usa il CatalogoService per aggiungere il prodotto
-                status = catalogoService.addProduct(prodName, prodInfo, prodPrice, tempFilePath, selectedGenres);
+                status = catalogoService.addFumetto(prodName, prodInfo, prodPrice, tempFilePath, selectedGenres);
             } catch (SQLException e) {
                 status = "Database error occurred while adding the product.";
                 e.printStackTrace();
