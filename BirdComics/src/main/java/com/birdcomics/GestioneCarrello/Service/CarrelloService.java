@@ -11,12 +11,12 @@ import javax.servlet.http.HttpSession;
 
 
 public interface CarrelloService {
-    List<ProductBean> getProductsFromCart(List<CartItem> cartItems) throws SQLException;
+    List<ProductBean> visualizzaProdottiCarrello(List<CartItem> cartItems) throws SQLException;
     float calculateTotalAmount(List<CartItem> cartItems) throws SQLException;
-	void emptyCart(HttpSession session, String userId) throws SQLException;
-	String updateProductInCart(HttpSession session, String userId, String prodId, int pQty) throws SQLException;
-	List<CartItem> getCartItems(HttpSession session, String userId) throws SQLException;
-	void removeFromCart(HttpSession session, String userId, String prodId) throws SQLException;
-	void addToCart(HttpSession session, String userId, String prodId, int pQty) throws SQLException;
+	void svuotaCarrello(HttpSession session, String userId) throws SQLException;
+	String modificaQuantita(HttpSession session, String userId, String prodId, int pQty) throws SQLException;
+	List<CartItem> visualizzaCarrello(HttpSession session, String userId) throws SQLException;
+	void rimuoviFumetto(HttpSession session, String userId, String prodId) throws SQLException;
+	void aggiungiFumetto(HttpSession session, String userId, String prodId, int pQty) throws SQLException;
 	CartBean loadCartFromDB(HttpSession session, String email);
 }

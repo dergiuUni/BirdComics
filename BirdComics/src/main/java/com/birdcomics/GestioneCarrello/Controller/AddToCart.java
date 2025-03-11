@@ -42,12 +42,12 @@ public class AddToCart extends HttpServlet {
         int pQty = Integer.parseInt(request.getParameter("pqty"));
 
         try {
-        	cartService.addToCart(session, userId, prodId, pQty);
+        	cartService.aggiungiFumetto(session, userId, prodId, pQty);
 
             
             // Aggiorna il carrello in sessione
             CartBean cartBean = new CartBean(userId);
-            cartBean.setCartItems(cartService.getCartItems(session,userId));
+            cartBean.setCartItems(cartService.visualizzaCarrello(session,userId));
             session.setAttribute("cart", cartBean);
             
             response.sendRedirect("CartDetailsServlet");

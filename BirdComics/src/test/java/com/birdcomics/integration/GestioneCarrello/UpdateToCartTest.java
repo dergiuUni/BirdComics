@@ -82,7 +82,7 @@ class UpdateToCartTest {
             MockedConstruction<CarrelloServiceImpl> mockedCart = mockConstruction(CarrelloServiceImpl.class,
                 (mock, context) -> {
                     // Simula il comportamento di updateProductInCart
-                    when(mock.updateProductInCart(any(HttpSession.class), anyString(), anyString(), anyInt())).thenReturn("Success");
+                    when(mock.modificaQuantita(any(HttpSession.class), anyString(), anyString(), anyInt())).thenReturn("Success");
                     // Simula il comportamento di loadCartFromDB
                     when(mock.loadCartFromDB(any(HttpSession.class), anyString())).thenReturn(new CartBean("testuser@example.com"));
                 });
@@ -100,7 +100,7 @@ class UpdateToCartTest {
 
             // Verifica che il carrello sia stato aggiornato
             CarrelloServiceImpl cartService = mockedCart.constructed().get(0);
-            verify(cartService).updateProductInCart(session, "testuser@example.com", "123", 3);
+            verify(cartService).modificaQuantita(session, "testuser@example.com", "123", 3);
 
             // Verifica che la risposta sia stata reindirizzata correttamente
             verify(response).sendRedirect("CartDetailsServlet");
@@ -118,7 +118,7 @@ class UpdateToCartTest {
             MockedConstruction<CarrelloServiceImpl> mockedCart = mockConstruction(CarrelloServiceImpl.class,
                 (mock, context) -> {
                     // Simula il comportamento di updateProductInCart
-                    when(mock.updateProductInCart(any(HttpSession.class), anyString(), anyString(), anyInt())).thenReturn("Adjusted");
+                    when(mock.modificaQuantita(any(HttpSession.class), anyString(), anyString(), anyInt())).thenReturn("Adjusted");
                     // Simula il comportamento di loadCartFromDB
                     when(mock.loadCartFromDB(any(HttpSession.class), anyString())).thenReturn(new CartBean("testuser@example.com"));
                 });
@@ -136,7 +136,7 @@ class UpdateToCartTest {
 
             // Verifica che la quantità sia stata aggiustata
             CarrelloServiceImpl cartService = mockedCart.constructed().get(0);
-            verify(cartService).updateProductInCart(session, "testuser@example.com", "123", 10);
+            verify(cartService).modificaQuantita(session, "testuser@example.com", "123", 10);
 
             // Verifica che il messaggio sia stato impostato nella sessione
             verify(session).setAttribute("message", "Only 10 of Test Product are available in the shop! So we are adding only 10 products to your cart.");
@@ -157,7 +157,7 @@ class UpdateToCartTest {
         try (
             MockedConstruction<CarrelloServiceImpl> mockedCart = mockConstruction(CarrelloServiceImpl.class,
                 (mock, context) -> {
-                    doThrow(new SQLException("Database error")).when(mock).updateProductInCart(any(HttpSession.class), anyString(), anyString(), anyInt());
+                    doThrow(new SQLException("Database error")).when(mock).modificaQuantita(any(HttpSession.class), anyString(), anyString(), anyInt());
                 });
 
             MockedConstruction<ProductServiceDAO> mockedDao = mockConstruction(ProductServiceDAO.class,
@@ -188,7 +188,7 @@ class UpdateToCartTest {
             MockedConstruction<CarrelloServiceImpl> mockedCart = mockConstruction(CarrelloServiceImpl.class,
                 (mock, context) -> {
                     // Simula il comportamento di updateProductInCart
-                    when(mock.updateProductInCart(any(HttpSession.class), anyString(), anyString(), anyInt())).thenReturn("Success");
+                    when(mock.modificaQuantita(any(HttpSession.class), anyString(), anyString(), anyInt())).thenReturn("Success");
                     // Simula il comportamento di loadCartFromDB
                     when(mock.loadCartFromDB(any(HttpSession.class), anyString())).thenReturn(new CartBean("testuser@example.com"));
                 });

@@ -69,7 +69,7 @@ public class CartDetailsServlet extends HttpServlet {
                 if (add == 1) {
                     cartQty += 1;
                     if (cartQty <= avail) {
-                        cartService.addToCart(session, email, pid, 1);
+                        cartService.aggiungiFumetto(session, email, pid, 1);
                     } else {
                         response.sendRedirect("./AddtoCart?pid=" + pid + "&pqty=" + cartQty);
                         return;
@@ -78,7 +78,7 @@ public class CartDetailsServlet extends HttpServlet {
             }
 
             List<CartItem> cartItems = cartBean.getCartItems();
-            List<ProductBean> products = cartService.getProductsFromCart(cartItems);
+            List<ProductBean> products = cartService.visualizzaProdottiCarrello(cartItems);
             float totAmount = cartService.calculateTotalAmount(cartItems);
 
             // Imposta gli attributi per la visualizzazione nella JSP

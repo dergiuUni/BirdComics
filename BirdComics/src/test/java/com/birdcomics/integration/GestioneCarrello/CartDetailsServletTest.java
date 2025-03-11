@@ -85,7 +85,7 @@ class CartDetailsServletTest {
         cartDetailsServlet.processRequest(request, response);
 
         // Verifica che il prodotto sia stato aggiunto al carrello
-        verify(cartService).addToCart(session, "user@example.com", "1", 1);
+        verify(cartService).aggiungiFumetto(session, "user@example.com", "1", 1);
 
         // Verifica che il RequestDispatcher sia stato chiamato
         verify(requestDispatcher).forward(request, response);
@@ -123,7 +123,7 @@ class CartDetailsServletTest {
         when(request.getParameter("qty")).thenReturn("2");
 
         // Simula un'eccezione SQL
-        doThrow(new SQLException("Database error")).when(cartService).addToCart(session, "user@example.com", "1", 1);
+        doThrow(new SQLException("Database error")).when(cartService).aggiungiFumetto(session, "user@example.com", "1", 1);
 
         // Esegui il metodo processRequest
         cartDetailsServlet.processRequest(request, response);

@@ -35,7 +35,7 @@ public class EmptyCartServlet extends HttpServlet {
 
         try {
             // Svuota il carrello nel database
-            cartService.emptyCart(session, email);
+            cartService.svuotaCarrello(session, email);
 
             // Crea un nuovo carrello vuoto e aggiorna la sessione
             CartBean cartBean = new CartBean(email);

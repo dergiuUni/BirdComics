@@ -21,7 +21,7 @@ public class CarrelloServiceImpl implements CarrelloService {
     }
 
     @Override
-    public void addToCart(HttpSession session, String userId, String prodId, int pQty) throws SQLException {
+    public void aggiungiFumetto(HttpSession session, String userId, String prodId, int pQty) throws SQLException {
         ProductBean product = productServiceDAO.getProductsByID(prodId);
         int availableQty = productServiceDAO.getAllQuantityProductsById(product);
         
@@ -31,18 +31,18 @@ public class CarrelloServiceImpl implements CarrelloService {
     }
 
     @Override
-    public void removeFromCart(HttpSession session, String userId, String prodId) throws SQLException {
+    public void rimuoviFumetto(HttpSession session, String userId, String prodId) throws SQLException {
         cartServiceDAO.removeProductFromCart(session, userId, prodId);
     }
 
     @Override
-    public List<CartItem> getCartItems(HttpSession session, String userId) throws SQLException {
+    public List<CartItem> visualizzaCarrello(HttpSession session, String userId) throws SQLException {
         CartBean cart = cartServiceDAO.getCartFromSession(session, userId);
         return cart.getCartItems();
     }
 
     @Override
-    public List<ProductBean> getProductsFromCart(List<CartItem> cartItems) throws SQLException {
+    public List<ProductBean> visualizzaProdottiCarrello(List<CartItem> cartItems) throws SQLException {
         List<ProductBean> products = new ArrayList<>();
         for (CartItem item : cartItems) {
             ProductBean product = productServiceDAO.getProductsByID(item.getProdId());
@@ -62,12 +62,12 @@ public class CarrelloServiceImpl implements CarrelloService {
     }
     
     @Override
-    public void emptyCart(HttpSession session, String userId) throws SQLException {
+    public void svuotaCarrello(HttpSession session, String userId) throws SQLException {
         cartServiceDAO.deleteAllCartItems(session, userId);
     }
     
     @Override
-    public String updateProductInCart(HttpSession session, String userId, String prodId, int pQty) throws SQLException {
+    public String modificaQuantita(HttpSession session, String userId, String prodId, int pQty) throws SQLException {
        return cartServiceDAO.updateProductToCart(userId, prodId, pQty);
     }
 

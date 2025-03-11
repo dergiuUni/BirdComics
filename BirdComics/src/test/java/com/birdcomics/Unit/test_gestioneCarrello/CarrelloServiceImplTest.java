@@ -62,7 +62,7 @@ public class CarrelloServiceImplTest {
         when(productServiceDAO.getProductsByID(prodId)).thenReturn(product); // prodId è una stringa
         when(productServiceDAO.getAllQuantityProductsById(product)).thenReturn(10); // Quantità disponibile
 
-        carrelloService.addToCart(session, userEmail, prodId, 3);
+        carrelloService.aggiungiFumetto(session, userEmail, prodId, 3);
 
         verify(cartServiceDAO).addProductToCart(session, userEmail, prodId, 3);
     }
@@ -72,14 +72,14 @@ public class CarrelloServiceImplTest {
         when(productServiceDAO.getProductsByID(prodId)).thenReturn(product); // prodId è una stringa
         when(productServiceDAO.getAllQuantityProductsById(product)).thenReturn(0); // Quantità esaurita
 
-        carrelloService.addToCart(session, userEmail, prodId, 3);
+        carrelloService.aggiungiFumetto(session, userEmail, prodId, 3);
 
         verify(cartServiceDAO, never()).addProductToCart(any(), any(), any(), anyInt());
     }
 
     @Test
     public void testRemoveFromCart() throws SQLException {
-        carrelloService.removeFromCart(session, userEmail, prodId);
+        carrelloService.rimuoviFumetto(session, userEmail, prodId);
         verify(cartServiceDAO).removeProductFromCart(session, userEmail, prodId);
     }
 
@@ -87,7 +87,7 @@ public class CarrelloServiceImplTest {
     public void testGetCartItems() throws SQLException {
         when(cartServiceDAO.getCartFromSession(session, userEmail)).thenReturn(cartBean);
 
-        List<CartItem> result = carrelloService.getCartItems(session, userEmail);
+        List<CartItem> result = carrelloService.visualizzaCarrello(session, userEmail);
         assertEquals(1, result.size());
         assertEquals(cartItem, result.get(0));
     }
@@ -97,7 +97,7 @@ public class CarrelloServiceImplTest {
         List<CartItem> cartItems = Arrays.asList(cartItem);
         when(productServiceDAO.getProductsByID(prodId)).thenReturn(product); // prodId è una stringa
 
-        List<ProductBean> products = carrelloService.getProductsFromCart(cartItems);
+        List<ProductBean> products = carrelloService.visualizzaProdottiCarrello(cartItems);
         assertEquals(1, products.size());
         assertEquals(product, products.get(0));
     }
@@ -113,7 +113,7 @@ public class CarrelloServiceImplTest {
 
     @Test
     public void testEmptyCart() throws SQLException {
-        carrelloService.emptyCart(session, userEmail);
+        carrelloService.svuotaCarrello(session, userEmail);
         verify(cartServiceDAO).deleteAllCartItems(session, userEmail);
     }
 
@@ -121,7 +121,7 @@ public class CarrelloServiceImplTest {
     public void testUpdateProductInCart() throws SQLException {
         when(cartServiceDAO.updateProductToCart(userEmail, prodId, 5)).thenReturn("success");
 
-        String result = carrelloService.updateProductInCart(session, userEmail, prodId, 5);
+        String result = carrelloService.modificaQuantita(session, userEmail, prodId, 5);
         assertEquals("success", result);
         verify(cartServiceDAO).updateProductToCart(userEmail, prodId, 5);
     }

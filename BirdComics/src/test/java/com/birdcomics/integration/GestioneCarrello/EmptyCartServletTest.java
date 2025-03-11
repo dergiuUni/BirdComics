@@ -44,14 +44,14 @@ class EmptyCartServletTest {
 
         // Simula il comportamento del CarelloServiceImpl
         try (MockedConstruction<CarrelloServiceImpl> mocked = mockConstruction(CarrelloServiceImpl.class, (mock, context) -> {
-            doNothing().when(mock).emptyCart(session, "testuser@example.com"); // Passa sia la sessione che l'email
+            doNothing().when(mock).svuotaCarrello(session, "testuser@example.com"); // Passa sia la sessione che l'email
         })) {
 
             // Esegui il metodo doGet
             emptyCartServlet.doGet(request, response);
 
             // Verifica che il carrello sia stato svuotato
-            verify(mocked.constructed().get(0)).emptyCart(session, "testuser@example.com");
+            verify(mocked.constructed().get(0)).svuotaCarrello(session, "testuser@example.com");
 
             // Verifica che la risposta sia stata reindirizzata correttamente
             verify(response).sendRedirect("CartDetailsServlet");
@@ -79,7 +79,7 @@ class EmptyCartServletTest {
 
         // Simula un'eccezione SQL durante lo svuotamento del carrello
         try (MockedConstruction<CarrelloServiceImpl> mocked = mockConstruction(CarrelloServiceImpl.class, (mock, context) -> {
-            doThrow(new SQLException("Database error")).when(mock).emptyCart(session, "testuser@example.com"); // Passa sia la sessione che l'email
+            doThrow(new SQLException("Database error")).when(mock).svuotaCarrello(session, "testuser@example.com"); // Passa sia la sessione che l'email
         })) {
 
             // Esegui il metodo doGet
@@ -98,14 +98,14 @@ class EmptyCartServletTest {
 
         // Simula il comportamento del CarelloServiceImpl
         try (MockedConstruction<CarrelloServiceImpl> mocked = mockConstruction(CarrelloServiceImpl.class, (mock, context) -> {
-            doNothing().when(mock).emptyCart(session, "testuser@example.com"); // Passa sia la sessione che l'email
+            doNothing().when(mock).svuotaCarrello(session, "testuser@example.com"); // Passa sia la sessione che l'email
         })) {
 
             // Esegui il metodo doPost
             emptyCartServlet.doPost(request, response);
 
             // Verifica che doPost chiami doGet
-            verify(mocked.constructed().get(0)).emptyCart(session, "testuser@example.com");
+            verify(mocked.constructed().get(0)).svuotaCarrello(session, "testuser@example.com");
             verify(response).sendRedirect("CartDetailsServlet");
         }
     }

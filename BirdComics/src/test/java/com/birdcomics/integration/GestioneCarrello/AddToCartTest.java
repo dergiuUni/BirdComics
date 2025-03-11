@@ -57,7 +57,7 @@ class AddToCartTest {
         addToCartServlet.doPost(request, response);
 
         // Verifica che il metodo addToCart sia stato chiamato correttamente
-        verify(cartService).addToCart(session, "testUser", "123", 2);
+        verify(cartService).aggiungiFumetto(session, "testUser", "123", 2);
 
         // Verifica che la risposta sia stata reindirizzata correttamente
         verify(response).sendRedirect("CartDetailsServlet");
@@ -87,7 +87,7 @@ class AddToCartTest {
         when(request.getParameter("pqty")).thenReturn("2");
 
         // Simula un'eccezione SQL
-        doThrow(new SQLException("Database error")).when(cartService).addToCart(session, "testUser", "123", 2);
+        doThrow(new SQLException("Database error")).when(cartService).aggiungiFumetto(session, "testUser", "123", 2);
 
         // Esegui il metodo doPost
         addToCartServlet.doPost(request, response);
@@ -110,7 +110,7 @@ class AddToCartTest {
         addToCartServlet.doGet(request, response);
 
         // Verifica che doGet chiami doPost
-        verify(cartService).addToCart(session, "testUser", "123", 2);
+        verify(cartService).aggiungiFumetto(session, "testUser", "123", 2);
         verify(response).sendRedirect("CartDetailsServlet");
     }
 }

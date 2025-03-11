@@ -55,7 +55,7 @@ public class UpdateToCart extends HttpServlet {
             }
 
             // Aggiorna il carrello nel database
-            cartService.updateProductInCart(session, userId, prodId, pQty);
+            cartService.modificaQuantita(session, userId, prodId, pQty);
 
             // Ricarica il carrello dal database e aggiorna la sessione
             CartBean cartBean = cartService.loadCartFromDB(session, userId);
