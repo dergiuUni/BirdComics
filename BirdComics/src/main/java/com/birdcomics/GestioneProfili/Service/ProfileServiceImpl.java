@@ -37,13 +37,13 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
-	public void removeUser(String userEmail) throws SQLException {
+	public void rimuoviAccount(String userEmail) throws SQLException {
 		// Usa UserServiceDAO per rimuovere l'utente
 		userDao.deleteUser(userEmail);
 	}
 
 	@Override
-	public String validateCredentials(String email, String password) throws SQLException {
+	public String login(String email, String password) throws SQLException {
 		return userDao.isValidCredential(email, password); // Delegato al DAO
 	}
 

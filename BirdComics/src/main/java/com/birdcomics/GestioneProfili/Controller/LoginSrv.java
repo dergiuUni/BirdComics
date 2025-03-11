@@ -39,7 +39,7 @@ public class LoginSrv extends HttpServlet {
         // Usa il ProfileService per validare le credenziali e ottenere i dettagli dell'utente
         String status = "Login Denied! Invalid email or password.";
         try {
-            status = profileService.validateCredentials(email, password);
+            status = profileService.login(email, password);
         } catch (SQLException e) {
             e.printStackTrace();
         }

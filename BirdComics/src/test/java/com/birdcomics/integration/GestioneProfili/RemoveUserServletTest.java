@@ -53,7 +53,7 @@ class RemoveUserServletTest {
         removeUserServlet.doGet(request, response);
 
         // Verifica che il metodo removeUser sia stato chiamato con l'email corretta
-        verify(profileService).removeUser("test@example.com");
+        verify(profileService).rimuoviAccount("test@example.com");
 
         // Verifica che il RequestDispatcher sia stato chiamato
         verify(requestDispatcher).forward(request, response);
@@ -71,7 +71,7 @@ class RemoveUserServletTest {
         removeUserServlet.doGet(request, response);
 
         // Verifica che il metodo removeUser non sia stato chiamato
-        verify(profileService, never()).removeUser(anyString());
+        verify(profileService, never()).rimuoviAccount(anyString());
 
         // Verifica che il RequestDispatcher sia stato chiamato
         verify(requestDispatcher).forward(request, response);
@@ -83,7 +83,7 @@ class RemoveUserServletTest {
         when(request.getParameter("userId")).thenReturn("test@example.com");
 
         // Configura il mock del servizio per lanciare un'eccezione SQLException
-        doThrow(new SQLException("Database error")).when(profileService).removeUser("test@example.com");
+        doThrow(new SQLException("Database error")).when(profileService).rimuoviAccount("test@example.com");
 
         // Configura il mock del RequestDispatcher
         when(request.getRequestDispatcher("/GestioneUtentiServlet")).thenReturn(requestDispatcher);

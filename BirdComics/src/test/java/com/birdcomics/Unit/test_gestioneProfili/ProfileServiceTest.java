@@ -114,7 +114,7 @@ class ProfileServiceTest {
         doNothing().when(userDao).deleteUser(userEmail);
 
         // Esegui il metodo da testare
-        profileService.removeUser(userEmail);
+        profileService.rimuoviAccount(userEmail);
 
         // Verifica che il metodo del DAO sia stato chiamato
         verify(userDao, times(1)).deleteUser(userEmail);
@@ -128,7 +128,7 @@ class ProfileServiceTest {
         doThrow(new SQLException("Database error")).when(userDao).deleteUser(userEmail);
 
         // Esegui il metodo da testare e verifica che sollevi un'eccezione
-        assertThrows(SQLException.class, () -> profileService.removeUser(userEmail));
+        assertThrows(SQLException.class, () -> profileService.rimuoviAccount(userEmail));
 
         // Verifica che il metodo del DAO sia stato chiamato
         verify(userDao, times(1)).deleteUser(userEmail);
@@ -144,7 +144,7 @@ class ProfileServiceTest {
         when(userDao.isValidCredential(email, password)).thenReturn(expectedResult);
 
         // Esegui il metodo da testare
-        String result = profileService.validateCredentials(email, password);
+        String result = profileService.login(email, password);
 
         // Verifica il risultato
         assertEquals(expectedResult, result);
@@ -162,7 +162,7 @@ class ProfileServiceTest {
         when(userDao.isValidCredential(email, password)).thenThrow(new SQLException("Database error"));
 
         // Esegui il metodo da testare e verifica che sollevi un'eccezione
-        assertThrows(SQLException.class, () -> profileService.validateCredentials(email, password));
+        assertThrows(SQLException.class, () -> profileService.login(email, password));
 
         // Verifica che il metodo del DAO sia stato chiamato
         verify(userDao, times(1)).isValidCredential(email, password);

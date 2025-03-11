@@ -32,7 +32,7 @@ public class RemoveUserServlet extends HttpServlet {
         if (userEmail != null && !userEmail.trim().isEmpty()) {
             try {
                 // Usa ProfileService per eliminare l'utente
-                profileService.removeUser(userEmail);
+                profileService.rimuoviAccount(userEmail);
             } catch (SQLException e) {
                 status = "Errore di database: " + e.getMessage();
                 e.printStackTrace();

@@ -56,7 +56,7 @@ class LoginSrvTest {
         when(request.getParameter("password")).thenReturn("password123");
 
         // Configura il mock del servizio per restituire "valid" come stato di login
-        when(profileService.validateCredentials("cliente@example.com", "password123")).thenReturn("valid");
+        when(profileService.login("cliente@example.com", "password123")).thenReturn("valid");
 
         // Configura il mock del servizio per restituire i dettagli dell'utente
         UserBean user = new UserBean();
@@ -93,7 +93,7 @@ class LoginSrvTest {
         when(request.getParameter("password")).thenReturn("password123");
 
         // Configura il mock del servizio per restituire "valid" come stato di login
-        when(profileService.validateCredentials("gestoregenerale@birdcomics.com", "password123")).thenReturn("valid");
+        when(profileService.login("gestoregenerale@birdcomics.com", "password123")).thenReturn("valid");
 
         // Configura il mock del servizio per restituire i dettagli dell'utente
         UserBean user = new UserBean();
@@ -130,7 +130,7 @@ class LoginSrvTest {
         when(request.getParameter("password")).thenReturn("wrongpassword");
 
         // Configura il mock del servizio per restituire "Login Denied! Invalid email or password." come stato di login
-        when(profileService.validateCredentials("cliente@example.com", "wrongpassword")).thenReturn("Login Denied! Invalid email or password.");
+        when(profileService.login("cliente@example.com", "wrongpassword")).thenReturn("Login Denied! Invalid email or password.");
 
         // Configura il mock del RequestDispatcher
         when(request.getRequestDispatcher("login.jsp?message=Login Denied! Invalid email or password.")).thenReturn(requestDispatcher);
@@ -149,7 +149,7 @@ class LoginSrvTest {
         when(request.getParameter("password")).thenReturn("password123");
 
         // Configura il mock del servizio per lanciare un'eccezione SQLException
-        when(profileService.validateCredentials("cliente@example.com", "password123")).thenThrow(new SQLException("Database error"));
+        when(profileService.login("cliente@example.com", "password123")).thenThrow(new SQLException("Database error"));
 
         // Configura il mock del RequestDispatcher
         when(request.getRequestDispatcher("login.jsp?message=Login Denied! Invalid email or password.")).thenReturn(requestDispatcher);
@@ -168,7 +168,7 @@ class LoginSrvTest {
         when(request.getParameter("password")).thenReturn("password123");
 
         // Configura il mock del servizio per restituire "valid" come stato di login
-        when(profileService.validateCredentials("dipendente@birdcomics.com", "password123")).thenReturn("valid");
+        when(profileService.login("dipendente@birdcomics.com", "password123")).thenReturn("valid");
 
         // Configura il mock del servizio per restituire i dettagli dell'utente
         UserBean user = new UserBean();

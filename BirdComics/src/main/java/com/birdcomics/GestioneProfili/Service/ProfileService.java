@@ -13,8 +13,8 @@ public interface ProfileService {
    
     UserBean getUserDetails(String email) throws SQLException;
     List<UserBean> getUsersByRole(List<RuoloBean> roles, String magazzino) throws SQLException;
-    void removeUser(String userEmail) throws SQLException;
-	String validateCredentials(String email, String password) throws SQLException;
+    void rimuoviAccount(String userEmail) throws SQLException;
+	String login(String email, String password) throws SQLException;
 	List<String> getUserTypes(String email) throws SQLException;
 	void logout(HttpServletRequest request);
 	 String registraAccount(String email, String password, String nome, String cognome, String telefono, 
