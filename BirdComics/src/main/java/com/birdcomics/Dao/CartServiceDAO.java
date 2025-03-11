@@ -158,7 +158,6 @@ public class CartServiceDAO {
     }
 
 
-    // 🔹 Metodo per eliminare tutti i prodotti dal carrello dell'utente
     public void deleteAllCartItems(HttpSession session, String userId) throws SQLException {
         Connection con = DBUtil.getConnection();
         PreparedStatement ps = null;
@@ -171,7 +170,8 @@ public class CartServiceDAO {
             // Rimuovi il carrello dalla sessione
             session.removeAttribute("cartBean");
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Stampa l'errore per debug
+            throw e; // Rilancia l'eccezione
         } finally {
             DBUtil.closeConnection(ps);
         }

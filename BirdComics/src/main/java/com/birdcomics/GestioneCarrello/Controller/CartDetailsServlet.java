@@ -21,8 +21,14 @@ import java.util.List;
 public class CartDetailsServlet extends HttpServlet {
     private CarrelloService cartService;
 
+    // Costruttore predefinito
     public CartDetailsServlet() {
-        this.cartService = new CarrelloServiceImpl();
+        this.cartService = new CarrelloServiceImpl(); // Inizializza con l'implementazione predefinita
+    }
+
+    // Costruttore con iniezione di dipendenze
+    public CartDetailsServlet(CarrelloService cartService) {
+        this.cartService = cartService;
     }
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -44,41 +50,50 @@ public class CartDetailsServlet extends HttpServlet {
         if (cartBean == null) {
             // Se il carrello non esiste nella sessione, caricalo dal database
             cartBean = cartService.loadCartFromDB(session, email);
+            if (cartBean == null) {
+                // Se il carrello è ancora null, crea un nuovo carrello
+                cartBean = new CartBean(email);
+            }
             session.setAttribute("cart", cartBean);  // Memorizza il carrello nella sessione
         }
 
-        String addS = request.getParameter("add");
+        try {
+            String addS = request.getParameter("add");
 
-        if (addS != null) {
-            int add = Integer.parseInt(addS);
-            String pid = request.getParameter("pid");
-            int avail = Integer.parseInt(request.getParameter("avail"));
-            int cartQty = Integer.parseInt(request.getParameter("qty"));
+            if (addS != null) {
+                int add = Integer.parseInt(addS);
+                String pid = request.getParameter("pid");
+                int avail = Integer.parseInt(request.getParameter("avail"));
+                int cartQty = Integer.parseInt(request.getParameter("qty"));
 
-            if (add == 1) {
-                cartQty += 1;
-                if (cartQty <= avail) {
-                    cartService.addToCart(session, email, pid, 1);
-                } else {
-                    response.sendRedirect("./AddtoCart?pid=" + pid + "&pqty=" + cartQty);
-                    return;
+                if (add == 1) {
+                    cartQty += 1;
+                    if (cartQty <= avail) {
+                        cartService.addToCart(session, email, pid, 1);
+                    } else {
+                        response.sendRedirect("./AddtoCart?pid=" + pid + "&pqty=" + cartQty);
+                        return;
+                    }
                 }
             }
-        }
-        
-        List<CartItem> cartItems = cartBean.getCartItems();
-        List<ProductBean> products = cartService.getProductsFromCart(cartItems);
-        float totAmount = cartService.calculateTotalAmount(cartItems);
 
-        // Imposta gli attributi per la visualizzazione nella JSP
-        request.setAttribute("cartItems", cartItems);
-        request.setAttribute("productItems", products);
-        request.setAttribute("totAmount", totAmount);
-        request.getRequestDispatcher("/cartDetails.jsp").forward(request, response);
+            List<CartItem> cartItems = cartBean.getCartItems();
+            List<ProductBean> products = cartService.getProductsFromCart(cartItems);
+            float totAmount = cartService.calculateTotalAmount(cartItems);
+
+            // Imposta gli attributi per la visualizzazione nella JSP
+            request.setAttribute("cartItems", cartItems);
+            request.setAttribute("productItems", products);
+            request.setAttribute("totAmount", totAmount);
+            request.getRequestDispatcher("/cartDetails.jsp").forward(request, response);
+        } catch (SQLException e) {
+            // Gestisci l'eccezione SQL
+            response.sendRedirect("error.jsp");
+        }
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processRequest(request, response);
@@ -88,7 +103,7 @@ public class CartDetailsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processRequest(request, response);

@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.birdcomics.Bean.*;
 import com.birdcomics.Dao.*;
 import com.birdcomics.GestioneOrdine.Controller.PaymentServices;
@@ -92,6 +94,7 @@ public class OrdineServiceImplTest {
     @Test
     public void testProcessPaymentAndCreateOrder_Success() throws Exception {
         // Configura mock
+        HttpSession mockSession = mock(HttpSession.class);
         when(userServiceDAO.getUserDetails(testUsername)).thenReturn(testUser);
         when(productServiceDAO.getProductsByID(anyString())).thenReturn(testProduct);
         
@@ -105,31 +108,33 @@ public class OrdineServiceImplTest {
         when(paymentServices.executePayment(paymentId, payerId)).thenReturn(mockPayment);
         
         // Esegui test
-        ordineService.processPaymentAndCreateOrder(paymentId, payerId, testUsername);
+        ordineService.processPaymentAndCreateOrder(paymentId, payerId, testUsername, mockSession);
         
         // Verifiche
-        verify(cartServiceDAO).deleteAllCartItems(testUsername);
+        verify(cartServiceDAO).deleteAllCartItems(mockSession, testUsername);
         verify(orderServiceDAO).addOrder(any(OrderBean.class));
     }
 
     @Test(expected = SQLException.class)
     public void testProcessPaymentAndCreateOrder_UserNotFound() throws Exception {
         // Configura mock
+        HttpSession mockSession = mock(HttpSession.class);
         when(userServiceDAO.getUserDetails(testUsername)).thenReturn(null);
         
         // Esegui test
-        ordineService.processPaymentAndCreateOrder(paymentId, payerId, testUsername);
+        ordineService.processPaymentAndCreateOrder(paymentId, payerId, testUsername, mockSession);
     }
 
     @Test
     public void testProcessPaymentAndCreateOrder_PayPalError() throws Exception {
         // Configura mock
+        HttpSession mockSession = mock(HttpSession.class);
         when(userServiceDAO.getUserDetails(testUsername)).thenReturn(testUser);
         when(paymentServices.executePayment(paymentId, payerId))
             .thenThrow(new PayPalRESTException("Error"));
         
         // Esegui test
-        ordineService.processPaymentAndCreateOrder(paymentId, payerId, testUsername);
+        ordineService.processPaymentAndCreateOrder(paymentId, payerId, testUsername, mockSession);
         
         // Verifiche
         verify(orderServiceDAO, never()).addOrder(any());
@@ -178,5 +183,6 @@ public class OrdineServiceImplTest {
         
         // Verifiche
         assertEquals(paymentId, result.getId());
+        verify(paymentServices).getPaymentDetails(paymentId);
     }
 }

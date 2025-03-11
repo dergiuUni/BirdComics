@@ -22,7 +22,7 @@ import com.birdcomics.GestioneCarrello.Service.*;
 @WebServlet("/LoginSrv")
 public class LoginSrv extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private ProfileService profileService;
+    public ProfileService profileService;
     private CarrelloService cartService; // Dichiara una variabile di istanza per CarrelloService
 
     public LoginSrv() {

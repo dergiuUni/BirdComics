@@ -1,16 +1,13 @@
 package com.birdcomics.integration.GestioneCarrello;
 
+import com.birdcomics.Bean.CartBean;
 import com.birdcomics.Bean.ProductBean;
 import com.birdcomics.Dao.ProductServiceDAO;
 import com.birdcomics.GestioneCarrello.Controller.UpdateToCart;
 import com.birdcomics.GestioneCarrello.Service.CarrelloServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockedConstruction;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,8 +19,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
 
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class UpdateToCartTest {
@@ -57,168 +53,154 @@ class UpdateToCartTest {
 
     @BeforeEach
     void setUp() {
-        // Inizializza manualmente i mock
         MockitoAnnotations.openMocks(this);
-
-        // Associa il mock della sessione alla richiesta
-        when(request.getSession()).thenReturn(session);
+        updateToCartServlet = new UpdateToCart();
+        when(request.getSession()).thenReturn(session); // Configura il mock della sessione
     }
 
     @Test
     void testDoGet_SessionExpired() throws ServletException, IOException {
+        // Configura il mock della sessione (utente non loggato)
         when(session.getAttribute("email")).thenReturn(null);
 
+        // Esegui il metodo doGet
         updateToCartServlet.doGet(request, response);
 
+        // Verifica che l'utente sia stato reindirizzato alla pagina di login
         verify(response).sendRedirect("login.jsp?message=Session Expired, Login Again!!");
     }
 
     @Test
     void testDoGet_SuccessfulUpdate() throws Exception {
-        // Mock session e parametri
-        when(session.getAttribute("email")).thenReturn("testUser");
+        // Configura il mock della sessione
+        when(session.getAttribute("email")).thenReturn("testuser@example.com");
         when(request.getParameter("pid")).thenReturn("123");
         when(request.getParameter("pqty")).thenReturn("3");
 
         // Mock dei servizi
         try (
             MockedConstruction<CarrelloServiceImpl> mockedCart = mockConstruction(CarrelloServiceImpl.class,
-                (mock, context) -> when(mock.updateProductInCart(anyString(), anyString(), anyInt())).thenReturn("Success"));
+                (mock, context) -> {
+                    // Simula il comportamento di updateProductInCart
+                    when(mock.updateProductInCart(any(HttpSession.class), anyString(), anyString(), anyInt())).thenReturn("Success");
+                    // Simula il comportamento di loadCartFromDB
+                    when(mock.loadCartFromDB(any(HttpSession.class), anyString())).thenReturn(new CartBean("testuser@example.com"));
+                });
 
             MockedConstruction<ProductServiceDAO> mockedDao = mockConstruction(ProductServiceDAO.class,
                 (mock, context) -> {
                     ProductBean p = new ProductBean();
                     p.setName("Test Product");
                     when(mock.getProductsByID("123")).thenReturn(p);
-                    when(mock.getAllQuantityProductsById(any())).thenReturn(5);
+                    when(mock.getAllQuantityProductsById(any(ProductBean.class))).thenReturn(10); // Quantità disponibile
                 })
         ) {
-            // Mock del writer della risposta
-            StringWriter stringWriter = new StringWriter();
-            PrintWriter printWriter = new PrintWriter(stringWriter);
-            when(response.getWriter()).thenReturn(printWriter);
-
-            when(request.getRequestDispatcher("CartDetailsServlet")).thenReturn(requestDispatcher);
-
-            // Esegui
+            // Esegui il metodo doGet
             updateToCartServlet.doGet(request, response);
 
-            // Verifica
+            // Verifica che il carrello sia stato aggiornato
             CarrelloServiceImpl cartService = mockedCart.constructed().get(0);
-            verify(cartService).updateProductInCart("testUser", "123", 3);
+            verify(cartService).updateProductInCart(session, "testuser@example.com", "123", 3);
 
-            printWriter.flush();
-            assertTrue(stringWriter.toString().contains("Success"));
+            // Verifica che la risposta sia stata reindirizzata correttamente
+            verify(response).sendRedirect("CartDetailsServlet");
         }
     }
-
     @Test
     void testDoGet_InsufficientQuantity() throws Exception {
-        when(session.getAttribute("email")).thenReturn("testUser");
+        // Configura il mock della sessione
+        when(session.getAttribute("email")).thenReturn("testuser@example.com");
         when(request.getParameter("pid")).thenReturn("123");
-        when(request.getParameter("pqty")).thenReturn("10"); // Quantità > disponibile
+        when(request.getParameter("pqty")).thenReturn("15"); // Quantità richiesta > disponibile
 
+        // Mock dei servizi
         try (
             MockedConstruction<CarrelloServiceImpl> mockedCart = mockConstruction(CarrelloServiceImpl.class,
-                (mock, context) -> when(mock.updateProductInCart(anyString(), anyString(), anyInt())).thenReturn("Adjusted"));
+                (mock, context) -> {
+                    // Simula il comportamento di updateProductInCart
+                    when(mock.updateProductInCart(any(HttpSession.class), anyString(), anyString(), anyInt())).thenReturn("Adjusted");
+                    // Simula il comportamento di loadCartFromDB
+                    when(mock.loadCartFromDB(any(HttpSession.class), anyString())).thenReturn(new CartBean("testuser@example.com"));
+                });
 
             MockedConstruction<ProductServiceDAO> mockedDao = mockConstruction(ProductServiceDAO.class,
                 (mock, context) -> {
                     ProductBean p = new ProductBean();
                     p.setName("Test Product");
                     when(mock.getProductsByID("123")).thenReturn(p);
-                    when(mock.getAllQuantityProductsById(any())).thenReturn(5); // Disponibili solo 5
+                    when(mock.getAllQuantityProductsById(any(ProductBean.class))).thenReturn(10); // Solo 10 disponibili
                 })
         ) {
-            StringWriter stringWriter = new StringWriter();
-            PrintWriter printWriter = new PrintWriter(stringWriter);
-            when(response.getWriter()).thenReturn(printWriter);
-            when(request.getRequestDispatcher("CartDetailsServlet")).thenReturn(requestDispatcher);
-
+            // Esegui il metodo doGet
             updateToCartServlet.doGet(request, response);
 
-            // Verifica la quantità aggiustata
+            // Verifica che la quantità sia stata aggiustata
             CarrelloServiceImpl cartService = mockedCart.constructed().get(0);
-            verify(cartService).updateProductInCart("testUser", "123", 5);
+            verify(cartService).updateProductInCart(session, "testuser@example.com", "123", 10);
 
-            printWriter.flush();
-            String output = stringWriter.toString();
-            assertTrue(output.contains("Only 5 of Test Product"));
+            // Verifica che il messaggio sia stato impostato nella sessione
+            verify(session).setAttribute("message", "Only 10 of Test Product are available in the shop! So we are adding only 10 products to your cart.");
+
+            // Verifica che la risposta sia stata reindirizzata correttamente
+            verify(response).sendRedirect("CartDetailsServlet");
         }
     }
 
     @Test
     void testDoGet_SQLException() throws Exception {
         // Configura il mock della sessione
-        when(session.getAttribute("email")).thenReturn("testUser");
-
-        // Configura i parametri della richiesta
+        when(session.getAttribute("email")).thenReturn("testuser@example.com");
         when(request.getParameter("pid")).thenReturn("123");
         when(request.getParameter("pqty")).thenReturn("2");
 
-        // Mock delle dipendenze
+        // Mock dei servizi con eccezione SQL
         try (
             MockedConstruction<CarrelloServiceImpl> mockedCart = mockConstruction(CarrelloServiceImpl.class,
-                (mock, context) -> when(mock.updateProductInCart(anyString(), anyString(), anyInt())).thenThrow(new SQLException("DB Error")));
+                (mock, context) -> {
+                    doThrow(new SQLException("Database error")).when(mock).updateProductInCart(any(HttpSession.class), anyString(), anyString(), anyInt());
+                });
 
             MockedConstruction<ProductServiceDAO> mockedDao = mockConstruction(ProductServiceDAO.class,
                 (mock, context) -> {
-                    ProductBean product = mock(ProductBean.class); // Mock di ProductBean
-                    when(product.getName()).thenReturn("Test Product"); // Configura il nome
-                    when(mock.getProductsByID("123")).thenReturn(product); // Restituisci il mock
-                    when(mock.getAllQuantityProductsById(product)).thenReturn(5); // Quantità disponibile
+                    ProductBean p = new ProductBean();
+                    p.setName("Test Product");
+                    when(mock.getProductsByID("123")).thenReturn(p);
+                    when(mock.getAllQuantityProductsById(any(ProductBean.class))).thenReturn(10);
                 })
         ) {
-            // Mock del writer della risposta
-            StringWriter stringWriter = new StringWriter();
-            PrintWriter printWriter = new PrintWriter(stringWriter);
-            when(response.getWriter()).thenReturn(printWriter);
-
-            // Configura il RequestDispatcher
-            when(request.getRequestDispatcher("CartDetailsServlet")).thenReturn(requestDispatcher);
-
             // Esegui il metodo doGet
             updateToCartServlet.doGet(request, response);
 
-            // Verifica che il RequestDispatcher sia stato chiamato
-            verify(requestDispatcher).include(request, response);
-
-            // Verifica che il messaggio sia stato scritto correttamente
-            printWriter.flush();
-            assertTrue(stringWriter.toString().contains("null")); // Stato null dall'eccezione
+            // Verifica che l'utente sia stato reindirizzato alla pagina di errore
+            verify(response).sendRedirect("error.jsp?message=Error updating cart.");
         }
     }
 
     @Test
     void testDoPost_CallsDoGet() throws Exception {
         // Configura il mock della sessione
-        when(session.getAttribute("email")).thenReturn("testUser");
-        
-        // Configura i parametri della richiesta
+        when(session.getAttribute("email")).thenReturn("testuser@example.com");
         when(request.getParameter("pid")).thenReturn("123");
         when(request.getParameter("pqty")).thenReturn("2");
 
-        // Mock delle dipendenze
+        // Mock dei servizi
         try (
             MockedConstruction<CarrelloServiceImpl> mockedCart = mockConstruction(CarrelloServiceImpl.class,
-                (mock, context) -> when(mock.updateProductInCart(anyString(), anyString(), anyInt())).thenReturn("Success"));
+                (mock, context) -> {
+                    // Simula il comportamento di updateProductInCart
+                    when(mock.updateProductInCart(any(HttpSession.class), anyString(), anyString(), anyInt())).thenReturn("Success");
+                    // Simula il comportamento di loadCartFromDB
+                    when(mock.loadCartFromDB(any(HttpSession.class), anyString())).thenReturn(new CartBean("testuser@example.com"));
+                });
 
             MockedConstruction<ProductServiceDAO> mockedDao = mockConstruction(ProductServiceDAO.class,
                 (mock, context) -> {
-                    ProductBean product = mock(ProductBean.class); // Mock di ProductBean
-                    when(product.getName()).thenReturn("Test Product"); // Configura il nome
-                    when(mock.getProductsByID("123")).thenReturn(product); // Restituisci il mock
-                    when(mock.getAllQuantityProductsById(product)).thenReturn(5); // Quantità disponibile
+                    ProductBean p = new ProductBean();
+                    p.setName("Test Product");
+                    when(mock.getProductsByID("123")).thenReturn(p);
+                    when(mock.getAllQuantityProductsById(any(ProductBean.class))).thenReturn(10);
                 })
         ) {
-            // Mock del writer della risposta
-            StringWriter stringWriter = new StringWriter();
-            PrintWriter printWriter = new PrintWriter(stringWriter);
-            when(response.getWriter()).thenReturn(printWriter);
-
-            // Mock del RequestDispatcher
-            when(request.getRequestDispatcher("CartDetailsServlet")).thenReturn(requestDispatcher);
-
             // Esegui il metodo doPost
             updateToCartServlet.doPost(request, response);
 
@@ -226,9 +208,8 @@ class UpdateToCartTest {
             verify(request).getParameter("pid");
             verify(request).getParameter("pqty");
 
-            // Verifica che il messaggio sia stato scritto correttamente
-            printWriter.flush();
-            assertTrue(stringWriter.toString().contains("Success"));
+            // Verifica che la risposta sia stata reindirizzata correttamente
+            verify(response).sendRedirect("CartDetailsServlet");
         }
     }
 }

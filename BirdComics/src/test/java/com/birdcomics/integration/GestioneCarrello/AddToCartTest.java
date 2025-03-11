@@ -1,10 +1,13 @@
 package com.birdcomics.integration.GestioneCarrello;
 
+import com.birdcomics.Bean.CartBean;
 import com.birdcomics.GestioneCarrello.Controller.AddToCart;
 import com.birdcomics.GestioneCarrello.Service.CarrelloService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -54,7 +57,7 @@ class AddToCartTest {
         addToCartServlet.doPost(request, response);
 
         // Verifica che il metodo addToCart sia stato chiamato correttamente
-        verify(cartService).addToCart("testUser", "123", 2);
+        verify(cartService).addToCart(session, "testUser", "123", 2);
 
         // Verifica che la risposta sia stata reindirizzata correttamente
         verify(response).sendRedirect("CartDetailsServlet");
@@ -84,13 +87,13 @@ class AddToCartTest {
         when(request.getParameter("pqty")).thenReturn("2");
 
         // Simula un'eccezione SQL
-        doThrow(new SQLException("Database error")).when(cartService).addToCart("testUser", "123", 2);
+        doThrow(new SQLException("Database error")).when(cartService).addToCart(session, "testUser", "123", 2);
 
         // Esegui il metodo doPost
         addToCartServlet.doPost(request, response);
 
         // Verifica che l'eccezione sia stata gestita e l'utente reindirizzato alla pagina di errore
-        verify(response).sendRedirect("error.jsp");
+        verify(response).sendRedirect("error.jsp?message=Error adding product to cart.");
     }
 
     @Test
@@ -107,7 +110,7 @@ class AddToCartTest {
         addToCartServlet.doGet(request, response);
 
         // Verifica che doGet chiami doPost
-        verify(cartService).addToCart("testUser", "123", 2);
+        verify(cartService).addToCart(session, "testUser", "123", 2);
         verify(response).sendRedirect("CartDetailsServlet");
     }
 }
