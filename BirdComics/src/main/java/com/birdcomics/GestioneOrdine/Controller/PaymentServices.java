@@ -24,7 +24,7 @@ public class PaymentServices {
 
 
     public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
-        return ordineService.executePayment(paymentId, payerId);  // Delegazione al servizio
+        return ordineService.processaPagamento(paymentId, payerId);  // Delegazione al servizio
     }
 
     public Payment getPaymentDetails(String paymentId) throws PayPalRESTException {

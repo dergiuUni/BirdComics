@@ -35,7 +35,7 @@ public class ReviewPaymentServlet extends HttpServlet {
         try {
             if (paymentId != null && payerId != null && email != null) {
                 // Pass the session to the service method
-                ordineService.processPaymentAndCreateOrder(paymentId, payerId, email, session);
+                ordineService.creaOrdine(paymentId, payerId, email, session);
                 // Reindirizza alla home page dopo l'elaborazione
                 response.sendRedirect("index.jsp");
             } else {

@@ -86,7 +86,7 @@ public class OrdineServiceImpl implements OrdineService {
 	}
 
 	@Override
-	public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
+	public Payment processaPagamento(String paymentId, String payerId) throws PayPalRESTException {
 		PaymentExecution paymentExecution = new PaymentExecution();
 		paymentExecution.setPayerId(payerId);
 
@@ -116,7 +116,7 @@ public class OrdineServiceImpl implements OrdineService {
 	}
 
 
-	public void processPaymentAndCreateOrder(String paymentId, String payerId, String email, HttpSession session) throws SQLException {
+	public void creaOrdine(String paymentId, String payerId, String email, HttpSession session) throws SQLException {
 		// Ottieni i dettagli dell'utente
 		UserBean u = userServiceDAO.getUserDetails(email);
 		

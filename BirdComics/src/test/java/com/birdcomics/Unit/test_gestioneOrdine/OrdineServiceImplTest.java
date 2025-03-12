@@ -108,7 +108,7 @@ public class OrdineServiceImplTest {
         when(paymentServices.executePayment(paymentId, payerId)).thenReturn(mockPayment);
         
         // Esegui test
-        ordineService.processPaymentAndCreateOrder(paymentId, payerId, testUsername, mockSession);
+        ordineService.creaOrdine(paymentId, payerId, testUsername, mockSession);
         
         // Verifiche
         verify(cartServiceDAO).deleteAllCartItems(mockSession, testUsername);
@@ -122,7 +122,7 @@ public class OrdineServiceImplTest {
         when(userServiceDAO.getUserDetails(testUsername)).thenReturn(null);
         
         // Esegui test
-        ordineService.processPaymentAndCreateOrder(paymentId, payerId, testUsername, mockSession);
+        ordineService.creaOrdine(paymentId, payerId, testUsername, mockSession);
     }
 
     @Test
@@ -134,7 +134,7 @@ public class OrdineServiceImplTest {
             .thenThrow(new PayPalRESTException("Error"));
         
         // Esegui test
-        ordineService.processPaymentAndCreateOrder(paymentId, payerId, testUsername, mockSession);
+        ordineService.creaOrdine(paymentId, payerId, testUsername, mockSession);
         
         // Verifiche
         verify(orderServiceDAO, never()).addOrder(any());
@@ -166,7 +166,7 @@ public class OrdineServiceImplTest {
         when(paymentServices.executePayment(paymentId, payerId)).thenReturn(mockPayment);
         
         // Esegui test
-        Payment result = ordineService.executePayment(paymentId, payerId);
+        Payment result = ordineService.processaPagamento(paymentId, payerId);
         
         // Verifiche
         assertEquals("approved", result.getState());

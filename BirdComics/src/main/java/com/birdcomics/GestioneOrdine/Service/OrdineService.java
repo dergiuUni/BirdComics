@@ -19,7 +19,7 @@ public interface OrdineService {
     String authorizePayment(List<Transaction> product, Payer payer) throws PayPalRESTException;
 
     // Metodo per eseguire il pagamento PayPal
-    Payment executePayment(String paymentId, String payerId) throws PayPalRESTException;
+    Payment processaPagamento(String paymentId, String payerId) throws PayPalRESTException;
 
     // Metodo per ottenere i dettagli di un pagamento PayPal
     Payment getPaymentDetails(String paymentId) throws PayPalRESTException;
@@ -28,5 +28,5 @@ public interface OrdineService {
 
 	List<OrderBean> getOrdiniPerUtente(String email) throws SQLException;
 
-	void processPaymentAndCreateOrder(String paymentId, String payerId, String email, HttpSession session) throws SQLException;
+	void creaOrdine(String paymentId, String payerId, String email, HttpSession session) throws SQLException;
 }
