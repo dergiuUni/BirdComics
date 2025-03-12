@@ -71,9 +71,6 @@ class LoginSrvTest {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
 
-        // Configura il mock del RequestDispatcher
-        when(request.getRequestDispatcher("/UserProfileServlet")).thenReturn(requestDispatcher);
-
         // Esegui il metodo doGet
         loginSrv.doGet(request, response);
 
@@ -82,45 +79,42 @@ class LoginSrvTest {
         verify(session).setAttribute("email", "cliente@example.com");
         verify(session).setAttribute("usertype", userTypes);
 
-        // Verifica che il RequestDispatcher sia stato chiamato
-        verify(requestDispatcher).forward(request, response);
+        // Verifica che il reindirizzamento a index.jsp sia stato effettuato
+        verify(response).sendRedirect(request.getContextPath() + "/index.jsp");
     }
 
     @Test
-    void testDoGet_ValidLogin_Admin() throws ServletException, IOException, SQLException {
-        // Configura i parametri della richiesta per un admin
-        when(request.getParameter("email")).thenReturn("gestoregenerale@birdcomics.com");
+    void testDoGet_ValidLogin_GestoreCatalogo() throws ServletException, IOException, SQLException {
+        // Configura i parametri della richiesta per un gestore del catalogo
+        when(request.getParameter("email")).thenReturn("gestore@example.com");
         when(request.getParameter("password")).thenReturn("password123");
 
         // Configura il mock del servizio per restituire "valid" come stato di login
-        when(profileService.login("gestoregenerale@birdcomics.com", "password123")).thenReturn("valid");
+        when(profileService.login("gestore@example.com", "password123")).thenReturn("valid");
 
         // Configura il mock del servizio per restituire i dettagli dell'utente
         UserBean user = new UserBean();
-        user.setEmail("gestoregenerale@birdcomics.com");
-        when(profileService.getUserDetails("gestoregenerale@birdcomics.com")).thenReturn(user);
+        user.setEmail("gestore@example.com");
+        when(profileService.getUserDetails("gestore@example.com")).thenReturn(user);
 
         // Configura il mock del servizio per restituire i ruoli dell'utente
         List<String> userTypes = new ArrayList<>();
-        userTypes.add(RuoloBean.GestoreGenerale.toString()); // Ruolo GestoreGenerale
-        when(profileService.getUserTypes("gestoregenerale@birdcomics.com")).thenReturn(userTypes);
+        userTypes.add(RuoloBean.GestoreCatalogo.toString()); // Ruolo GestoreCatalogo
+        when(profileService.getUserTypes("gestore@example.com")).thenReturn(userTypes);
 
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-
-        // Configura il mock del RequestDispatcher
-        when(request.getRequestDispatcher("/UserProfileServlet")).thenReturn(requestDispatcher);
 
         // Esegui il metodo doGet
         loginSrv.doGet(request, response);
 
         // Verifica che la sessione sia stata configurata correttamente
         verify(session).setAttribute("userdata", user);
-        verify(session).setAttribute("email", "gestoregenerale@birdcomics.com");
+        verify(session).setAttribute("email", "gestore@example.com");
         verify(session).setAttribute("usertype", userTypes);
 
-        // Verifica che il RequestDispatcher sia stato chiamato
-        verify(requestDispatcher).forward(request, response);
+        // Verifica che il reindirizzamento a UserProfileServlet sia stato effettuato
+        verify(response).sendRedirect(request.getContextPath() + "/UserProfileServlet");
     }
 
     @Test
@@ -151,7 +145,7 @@ class LoginSrvTest {
         // Configura il mock del servizio per lanciare un'eccezione SQLException
         when(profileService.login("cliente@example.com", "password123")).thenThrow(new SQLException("Database error"));
 
-        // Configura il mock del RequestDispatcher
+        // Configura il mock del RequestDispatcher per il percorso di errore
         when(request.getRequestDispatcher("login.jsp?message=Login Denied! Invalid email or password.")).thenReturn(requestDispatcher);
 
         // Esegui il metodo doGet
@@ -160,6 +154,7 @@ class LoginSrvTest {
         // Verifica che il RequestDispatcher sia stato chiamato con il messaggio di errore
         verify(requestDispatcher).include(request, response);
     }
+
 
     @Test
     void testDoGet_MultipleRoles() throws ServletException, IOException, SQLException {
@@ -184,9 +179,6 @@ class LoginSrvTest {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
 
-        // Configura il mock del RequestDispatcher
-        when(request.getRequestDispatcher("/UserProfileServlet")).thenReturn(requestDispatcher);
-
         // Esegui il metodo doGet
         loginSrv.doGet(request, response);
 
@@ -195,7 +187,7 @@ class LoginSrvTest {
         verify(session).setAttribute("email", "dipendente@birdcomics.com");
         verify(session).setAttribute("usertype", userTypes);
 
-        // Verifica che il RequestDispatcher sia stato chiamato
-        verify(requestDispatcher).forward(request, response);
+        // Verifica che il reindirizzamento a UserProfileServlet sia stato effettuato
+        verify(response).sendRedirect(request.getContextPath() + "/UserProfileServlet");
     }
 }
