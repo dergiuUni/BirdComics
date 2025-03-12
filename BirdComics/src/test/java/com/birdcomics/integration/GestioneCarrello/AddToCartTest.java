@@ -47,7 +47,7 @@ class AddToCartTest {
     void testDoPost_SessionValid() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("email")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testuser@example.com@example.com@example.com@example.com");
 
         // Configura i parametri della richiesta
         when(request.getParameter("pid")).thenReturn("123");
@@ -57,7 +57,7 @@ class AddToCartTest {
         addToCartServlet.doPost(request, response);
 
         // Verifica che il metodo addToCart sia stato chiamato correttamente
-        verify(cartService).aggiungiFumetto(session, "testUser", "123", 2);
+        verify(cartService).aggiungiFumetto(session, "testuser@example.com@example.com@example.com@example.com", "123", 2);
 
         // Verifica che la risposta sia stata reindirizzata correttamente
         verify(response).sendRedirect("CartDetailsServlet");
@@ -80,14 +80,14 @@ class AddToCartTest {
     void testDoPost_SQLException() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("email")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testuser@example.com@example.com@example.com@example.com");
 
         // Configura i parametri della richiesta
         when(request.getParameter("pid")).thenReturn("123");
         when(request.getParameter("pqty")).thenReturn("2");
 
         // Simula un'eccezione SQL
-        doThrow(new SQLException("Database error")).when(cartService).aggiungiFumetto(session, "testUser", "123", 2);
+        doThrow(new SQLException("Database error")).when(cartService).aggiungiFumetto(session, "testuser@example.com@example.com@example.com@example.com", "123", 2);
 
         // Esegui il metodo doPost
         addToCartServlet.doPost(request, response);
@@ -100,7 +100,7 @@ class AddToCartTest {
     void testDoGet_CallsDoPost() throws ServletException, IOException, SQLException {
         // Configura il mock della sessione
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("email")).thenReturn("testUser");
+        when(session.getAttribute("email")).thenReturn("testuser@example.com@example.com@example.com@example.com");
 
         // Configura i parametri della richiesta
         when(request.getParameter("pid")).thenReturn("123");
@@ -110,7 +110,7 @@ class AddToCartTest {
         addToCartServlet.doGet(request, response);
 
         // Verifica che doGet chiami doPost
-        verify(cartService).aggiungiFumetto(session, "testUser", "123", 2);
+        verify(cartService).aggiungiFumetto(session, "testuser@example.com@example.com@example.com@example.com", "123", 2);
         verify(response).sendRedirect("CartDetailsServlet");
     }
 }

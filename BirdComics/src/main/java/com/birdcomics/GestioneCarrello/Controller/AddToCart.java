@@ -62,5 +62,3 @@ public class AddToCart extends HttpServlet {
         doPost(request, response);
     }
 }
-
-// Se vuoi, possiamo migliorare la gestione degli errori o aggiungere log per il debug! 🚀
