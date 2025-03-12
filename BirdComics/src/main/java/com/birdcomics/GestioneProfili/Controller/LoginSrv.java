@@ -18,7 +18,6 @@ import com.birdcomics.GestioneProfili.Service.ProfileService;
 import com.birdcomics.GestioneProfili.Service.ProfileServiceImpl;
 import com.birdcomics.GestioneCarrello.Service.*;
 
-
 @WebServlet("/LoginSrv")
 public class LoginSrv extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -56,24 +55,30 @@ public class LoginSrv extends HttpServlet {
                 session.setAttribute("email", email);
                 session.setAttribute("usertype", userType);
 
-                // Verifica se il carrello esiste già nella sessione
-                CartBean cart = (CartBean) session.getAttribute("cartBean");
+                if (userType.contains(RuoloBean.Cliente.toString())) {
+                    // Verifica se il carrello esiste già nella sessione
+                    CartBean cart = (CartBean) session.getAttribute("cartBean");
 
-                if (cart == null) {
-                    // Se il carrello non esiste nella sessione, caricalo dal database
-                    cart = cartService.loadCartFromDB(session, email);  // Carica il carrello dal database
-                    session.setAttribute("cart", cart);  // Memorizza il carrello nella sessione
+                    if (cart == null) {
+                        // Se il carrello non esiste nella sessione, caricalo dal database
+                        cart = cartService.loadCartFromDB(session, email);  // Carica il carrello dal database
+                        session.setAttribute("cart", cart);  // Memorizza il carrello nella sessione
+                    }
+
+                    // Se l'utente è un cliente, reindirizza a index.jsp
+                    response.sendRedirect(request.getContextPath() + "/index.jsp");
+                } else {
+                    // Se l'utente non è un cliente, reindirizza a UserProfileServlet
+                    response.sendRedirect(request.getContextPath() + "/UserProfileServlet");
                 }
-
-                // Redirigi all'UserProfileServlet
-                RequestDispatcher rd = request.getRequestDispatcher("/UserProfileServlet");
-                rd.forward(request, response);
             } catch (SQLException e) {
                 e.printStackTrace();
                 // Gestisci eventuali errori SQL durante il recupero dell'utente
+                RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
+                rd.forward(request, response);
             }
         } else {
-            // Se login non valido, invia un messaggio di errore
+            // Se il login non è valido, invia un messaggio di errore
             RequestDispatcher rd = request.getRequestDispatcher("login.jsp?message=" + status);
             rd.include(request, response);
         }
@@ -84,7 +89,3 @@ public class LoginSrv extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-
-
