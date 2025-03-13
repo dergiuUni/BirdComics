@@ -27,7 +27,6 @@
 		<div class="logo">BirdComics</div>
 		<div class="nav-items">
 			<ul class="nav navbar-nav">
-
 				<% List<String> userTypes = (List<String>) session.getAttribute("usertype"); %>
 
 				<% if (userTypes != null && !userTypes.isEmpty()) { %>
@@ -40,9 +39,9 @@
 					data-toggle="dropdown" href="#">Gestione Magazzini<span
 						class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="">AggiungiMagazzino</a></li>
+						<li><a href="">Aggiungi Magazzino</a></li>
 						<li><a href="./ListaMagazziniServlet">Lista Magazzini</a></li>
-						<li><a href="register.jsp">AggiungiDirettoreMagazzino</a></li>
+						<li><a href="register.jsp">Aggiungi Direttore Magazzino</a></li>
 						<li><a href="./GestioneUtentiServlet">Lista Direttori
 								Magazzino</a></li>
 					</ul></li>
@@ -54,10 +53,10 @@
 					data-toggle="dropdown" href="#">Gestione Magazzino<span
 						class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="">AggiungiScaffale</a></li>
-						<li><a href="">ListaScaffale</a></li>
-						<li><a href="register.jsp">AggiungiHr</a></li>
-						<li><a href="./GestioneUtentiServlet">ListaHr</a></li>
+						<li><a href="">Aggiungi Scaffale</a></li>
+						<li><a href="">Lista Scaffale</a></li>
+						<li><a href="register.jsp">Aggiungi HR</a></li>
+						<li><a href="./GestioneUtentiServlet">Lista HR</a></li>
 					</ul></li>
 				<%  
                     }
@@ -83,48 +82,9 @@
 					</ul></li>
 				<%  
                     }
-                    if (userTypes.contains(RuoloBean.Magazziniere.toString())) {
-                    %>
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Magazziniere <span
-						class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="GestioneMagazziniere">ListaScaffali</a></li>
-					</ul></li>
-				<%  
-                    }
-                    if (userTypes.contains(RuoloBean.Spedizioniere.toString())) {
-                    %>
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Spedizioniere <span
-						class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="GestioneOrdiniNonSpediti">AggiungiTracking</a></li>
-					</ul></li>
-				<%  
-                    }
-                    if (userTypes.contains(RuoloBean.Assistenza.toString())) {
-                    %>
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Assistenza <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="adminStock">Cerca per id ordine</a></li>
-					</ul></li>
-				<%  
-                    }
-                    if (userTypes.contains(RuoloBean.Finanza.toString())) {
-                    %>
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Finanza <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="adminStock">test</a></li>
-					</ul></li>
-				<%  
-                    }
                     if (userTypes.contains(RuoloBean.Cliente.toString())) {
                     %>
 				<li><a href="index.jsp">Home</a></li>
-				
 				<li class="dropdown" id="generi-dropdown"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#">Generi
 						<span class="caret"></span>
@@ -144,17 +104,14 @@
 							class="genre-link">Drammatico</a></li>
 						<li><a href="ProductListServlet?type=fantascienza"
 							class="genre-link">Fantascienza</a></li>
-
 					</ul></li>
 				<li><a href="CartDetailsServlet">Carrello</a></li>
 				<li><a href="OrderDetailsServlet">Ordini</a></li>
-
 				<%  
                     }
                     %>
 
 				<% } else { %>
-
 				<li><a href="index.jsp">Home</a></li>
 				<li class="dropdown" id="generi-dropdown"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#">Generi
@@ -175,28 +132,32 @@
 							class="genre-link">Drammatico</a></li>
 						<li><a href="ProductListServlet?type=fantascienza"
 							class="genre-link">Fantascienza</a></li>
-
 					</ul></li>
 				<li><a href="CartDetailsServlet">Carrello</a></li>
 				<li><a href="login.jsp">Login</a></li>
 				<li><a href="register.jsp">Registrati</a></li>
-				
-				<form class="form-inline" action="ProductListServlet" method="GET">
-					<input type="text" class="search-data form-control" name="search"
-						placeholder="Cerca fumetti..." required>
-					<button type="submit" class="fas fa-search" aria-label="search"></button>
-				</form>
-
-
 				<% } %>
 
-				<%-- Common Links at the end (only show when logged in) --%>
 				<% if (userTypes != null && !userTypes.isEmpty()) { %>
 				<li><a href="UserProfileServlet">Profilo</a></li>
 				<li><a href="./LogoutSrv">Logout</a></li>
 				<% } %>
-
 			</ul>
+
+			<form class="navbar-form navbar-right" action="ProductListServlet"
+				method="GET">
+				<div class="input-group">
+					<input type="text" class="form-control" name="search"
+						placeholder="Cerca fumetti..." required> <span
+						class="input-group-btn">
+						<button type="submit" class="btn btn-outline-secondary">
+							<i class="fas fa-search"></i>
+						</button>
+					</span>
+				</div>
+			</form>
+
+
 		</div>
 	</nav>
 </body>
