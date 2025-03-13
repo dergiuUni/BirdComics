@@ -9,157 +9,179 @@ import com.birdcomics.Dao.OrderServiceDAO;
 import com.birdcomics.Dao.ProductServiceDAO;
 import com.birdcomics.Dao.UserServiceDAO;
 import com.birdcomics.GestioneOrdine.Controller.PaymentServices;
-import com.paypal.api.payments.Amount;
-import com.paypal.api.payments.Details;
-import com.paypal.api.payments.Item;
-import com.paypal.api.payments.ItemList;
-import com.paypal.api.payments.Links;
-import com.paypal.api.payments.Payer;
-import com.paypal.api.payments.PayerInfo;
-import com.paypal.api.payments.Payment;
-import com.paypal.api.payments.PaymentExecution;
-import com.paypal.api.payments.RedirectUrls;
-import com.paypal.api.payments.Transaction;
+import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 public class OrdineServiceImpl implements OrdineService {
 
-	private static final String CLIENT_ID = "ASuCpKOzpG4whs0IxSBo_DH7Kkq-j-o9bNcikgPghWSkPB-jlaftSbtzCnPEmewvQeqscCgjQ74DMK5T";
-	private static final String CLIENT_SECRET = "EJcpDuXi8-B4JvdJc5gTv9p8sioOWWrwpXmFpuSs_ufS293eT6BqHnIEg4HJPPLpMBlulOXCW-01J32S";
-	private static final String MODE = "sandbox";
+    private static final String CLIENT_ID = "ASuCpKOzpG4whs0IxSBo_DH7Kkq-j-o9bNcikgPghWSkPB-jlaftSbtzCnPEmewvQeqscCgjQ74DMK5T";
+    private static final String CLIENT_SECRET = "EJcpDuXi8-B4JvdJc5gTv9p8sioOWWrwpXmFpuSs_ufS293eT6BqHnIEg4HJPPLpMBlulOXCW-01J32S";
+    private static final String MODE = "sandbox";
 
-	private OrderServiceDAO orderServiceDAO;
-	private ProductServiceDAO productServiceDAO;
-	private UserServiceDAO userServiceDAO;
-	private CartServiceDAO cartServiceDAO;
+    private OrderServiceDAO orderServiceDAO;
+    private ProductServiceDAO productServiceDAO;
+    private UserServiceDAO userServiceDAO;
+    private CartServiceDAO cartServiceDAO;
+    private PaymentServices paymentServices;
 
-	public OrdineServiceImpl() {
-		this.orderServiceDAO = new OrderServiceDAO();
-		this.productServiceDAO = new ProductServiceDAO();
-		this.userServiceDAO = new UserServiceDAO();
-		this.cartServiceDAO = new CartServiceDAO();
-	}
+    // Costruttore senza dipendenze (non usato direttamente)
+    public OrdineServiceImpl() {
+    	
+            // Inizializza tutte le dipendenze nel costruttore
+            this.orderServiceDAO = new OrderServiceDAO();
+            this.productServiceDAO = new ProductServiceDAO();
+            this.cartServiceDAO = new CartServiceDAO();
+            this.userServiceDAO = new UserServiceDAO();
+            
+        
+    }
 
-	@Override
-	public String authorizePayment(List<Transaction> product, Payer payer) throws PayPalRESTException {
-		Payer payerObj = payer;
-		RedirectUrls redirectUrls = getRedirectURLs();
-		List<Transaction> listTransaction = product;
+    // Costruttore con dipendenze iniettate
+    public OrdineServiceImpl(OrderServiceDAO orderServiceDAO, ProductServiceDAO productServiceDAO,
+                            CartServiceDAO cartServiceDAO, UserServiceDAO userServiceDAO,
+                            PaymentServices paymentServices) {
+        this.orderServiceDAO = orderServiceDAO;
+        this.productServiceDAO = productServiceDAO;
+        this.cartServiceDAO = cartServiceDAO;
+        this.userServiceDAO = userServiceDAO;
+        this.paymentServices = paymentServices;  // PaymentServices iniettato
+    }
 
-		Payment requestPayment = new Payment();
-		requestPayment.setTransactions(listTransaction);
-		requestPayment.setRedirectUrls(redirectUrls);
-		requestPayment.setPayer(payerObj);
-		requestPayment.setIntent("authorize");
+    // Setter methods for each dependency
+    public void setOrderServiceDAO(OrderServiceDAO orderServiceDAO) {
+        this.orderServiceDAO = orderServiceDAO;
+    }
 
-		APIContext apiContext = new APIContext(CLIENT_ID, CLIENT_SECRET, MODE);
-		Payment approvedPayment = requestPayment.create(apiContext);
+    public void setProductServiceDAO(ProductServiceDAO productServiceDAO) {
+        this.productServiceDAO = productServiceDAO;
+    }
 
-		return getApprovalLink(approvedPayment);
-	}
+    public void setCartServiceDAO(CartServiceDAO cartServiceDAO) {
+        this.cartServiceDAO = cartServiceDAO;
+    }
 
-	private RedirectUrls getRedirectURLs() {
-		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl("http://localhost:8080/BirdComics/cancel.jsp");
-		redirectUrls.setReturnUrl("http://localhost:8080/BirdComics/review_payment");
-		return redirectUrls;
-	}
+    public void setUserServiceDAO(UserServiceDAO userServiceDAO) {
+        this.userServiceDAO = userServiceDAO;
+    }
 
-	private String getApprovalLink(Payment approvedPayment) {
-		List<Links> links = approvedPayment.getLinks();
-		String approvalLink = null;
+    public void setPaymentServices(PaymentServices paymentServices) {
+        this.paymentServices = paymentServices;
+    }
 
-		for (Links link : links) {
-			if (link.getRel().equalsIgnoreCase("approval_url")) {
-				approvalLink = link.getHref();
-				break;
-			}
-		}
+    @Override
+    public String authorizePayment(List<Transaction> product, Payer payer) throws PayPalRESTException {
+        Payer payerObj = payer;
+        RedirectUrls redirectUrls = getRedirectURLs();
+        List<Transaction> listTransaction = product;
 
-		return approvalLink;
-	}
+        Payment requestPayment = new Payment();
+        requestPayment.setTransactions(listTransaction);
+        requestPayment.setRedirectUrls(redirectUrls);
+        requestPayment.setPayer(payerObj);
+        requestPayment.setIntent("authorize");
 
-	@Override
-	public Payment processaPagamento(String paymentId, String payerId) throws PayPalRESTException {
-		PaymentExecution paymentExecution = new PaymentExecution();
-		paymentExecution.setPayerId(payerId);
+        APIContext apiContext = new APIContext(CLIENT_ID, CLIENT_SECRET, MODE);
+        Payment approvedPayment = requestPayment.create(apiContext);
 
-		Payment payment = new Payment().setId(paymentId);
+        return getApprovalLink(approvedPayment);
+    }
 
-		APIContext apiContext = new APIContext(CLIENT_ID, CLIENT_SECRET, MODE);
+    private RedirectUrls getRedirectURLs() {
+        RedirectUrls redirectUrls = new RedirectUrls();
+        redirectUrls.setCancelUrl("http://localhost:8080/BirdComics/cancel.jsp");
+        redirectUrls.setReturnUrl("http://localhost:8080/BirdComics/review_payment");
+        return redirectUrls;
+    }
 
-		return payment.execute(apiContext, paymentExecution);
-	}
+    private String getApprovalLink(Payment approvedPayment) {
+        List<Links> links = approvedPayment.getLinks();
+        String approvalLink = null;
 
-	@Override
-	public Payment getPaymentDetails(String paymentId) throws PayPalRESTException {
-		APIContext apiContext = new APIContext(CLIENT_ID, CLIENT_SECRET, MODE);
-		return Payment.get(apiContext, paymentId);
-	}
+        for (Links link : links) {
+            if (link.getRel().equalsIgnoreCase("approval_url")) {
+                approvalLink = link.getHref();
+                break;
+            }
+        }
 
+        return approvalLink;
+    }
 
-	@Override
-	public List<OrderBean> getOrdiniNonSpediti() throws SQLException {
-		return orderServiceDAO.getAllOrderDetailsNoShipped();  // Chiama il DAO per recuperare gli ordini non spediti
-	}
+    @Override
+    public Payment processaPagamento(String paymentId, String payerId) throws PayPalRESTException {
+        PaymentExecution paymentExecution = new PaymentExecution();
+        paymentExecution.setPayerId(payerId);
 
+        Payment payment = new Payment().setId(paymentId);
 
-	@Override
-	public List<OrderBean> getOrdiniPerUtente(String email) throws SQLException {
-		return orderServiceDAO.getAllOrderDetails(email);  // Chiama il DAO per ottenere gli ordini di un utente
-	}
+        APIContext apiContext = new APIContext(CLIENT_ID, CLIENT_SECRET, MODE);
 
+        return payment.execute(apiContext, paymentExecution);
+    }
 
-	public void creaOrdine(String paymentId, String payerId, String email, HttpSession session) throws SQLException {
-		// Ottieni i dettagli dell'utente
-		UserBean u = userServiceDAO.getUserDetails(email);
-		
-		// Elimina gli articoli dal carrello
-		 cartServiceDAO.deleteAllCartItems(session, email);
+    @Override
+    public Payment getPaymentDetails(String paymentId) throws PayPalRESTException {
+        APIContext apiContext = new APIContext(CLIENT_ID, CLIENT_SECRET, MODE);
+        return Payment.get(apiContext, paymentId);
+    }
 
-		 // Rimuovi il carrello dalla sessione (per assicurarti che non venga visualizzato ancora)
-		 session.removeAttribute("cart"); // Se il carrello è memorizzato nella sessione
+    @Override
+    public List<OrderBean> getOrdiniNonSpediti() throws SQLException {
+        return orderServiceDAO.getAllOrderDetailsNoShipped();  // Chiama il DAO per recuperare gli ordini non spediti
+    }
 
+    @Override
+    public List<OrderBean> getOrdiniPerUtente(String email) throws SQLException {
+        return orderServiceDAO.getAllOrderDetails(email);  // Chiama il DAO per ottenere gli ordini di un utente
+    }
 
-		// Esegui il pagamento tramite PayPal
-		PaymentServices paymentServices = new PaymentServices();
-		Payment payment;
-		try {
-			payment = paymentServices.executePayment(paymentId, payerId);
-			PayerInfo payerInfo = payment.getPayer().getPayerInfo();
-			Transaction transaction = payment.getTransactions().get(0);
-			List<Item> items = transaction.getItemList().getItems();
-			// Crea la fattura
-			FatturaBean fattura = new FatturaBean(22, u.getNome(), u.getCognome(), u.getNumeroTelefono(),
-					u.getIndirizzo().getNomeCitta(), u.getIndirizzo().getVia(), u.getIndirizzo().getNumeroCivico(),
-					u.getIndirizzo().getCap());
+    public void creaOrdine(String paymentId, String payerId, String email, HttpSession session) throws SQLException {
+        // Ottieni i dettagli dell'utente
+        UserBean u = userServiceDAO.getUserDetails(email);
 
-			// Crea l'ordine
-			OrderBean order = new OrderBean(u.getEmail(), paymentId, "Non Spedito", new java.sql.Date(System.currentTimeMillis()));
-			order.setIdFattura(fattura);
+        // Elimina gli articoli dal carrello
+        cartServiceDAO.deleteAllCartItems(session, email);
 
-			// Aggiungi i fumetti all'ordine
-			for (Item item : items) {
-				ProductBean product = productServiceDAO.getProductsByID(item.getSku());
-				order.addFumetti(product, Integer.valueOf(item.getQuantity()));
-			}
+        // Rimuovi il carrello dalla sessione (per assicurarti che non venga visualizzato ancora)
+        session.removeAttribute("cart"); // Se il carrello è memorizzato nella sessione
 
-			// Aggiungi l'ordine al database
-			orderServiceDAO.addOrder(order);
-		} catch (PayPalRESTException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+        // Se paymentServices non è inizializzato, inizializzalo
+        if (this.paymentServices == null) {
+            this.paymentServices = new PaymentServices();
+        }
+
+        // Esegui il pagamento tramite PayPal
+        Payment payment;
+        try {
+            payment = paymentServices.executePayment(paymentId, payerId);
+            PayerInfo payerInfo = payment.getPayer().getPayerInfo();
+            Transaction transaction = payment.getTransactions().get(0);
+            List<Item> items = transaction.getItemList().getItems();
+
+            // Crea la fattura
+            FatturaBean fattura = new FatturaBean(22, u.getNome(), u.getCognome(), u.getNumeroTelefono(),
+                    u.getIndirizzo().getNomeCitta(), u.getIndirizzo().getVia(), u.getIndirizzo().getNumeroCivico(),
+                    u.getIndirizzo().getCap());
+
+            // Crea l'ordine
+            OrderBean order = new OrderBean(u.getEmail(), paymentId, "Non Spedito", new java.sql.Date(System.currentTimeMillis()));
+            order.setIdFattura(fattura);
+
+            // Aggiungi i fumetti all'ordine
+            for (Item item : items) {
+                ProductBean product = productServiceDAO.getProductsByID(item.getSku());
+                order.addFumetti(product, Integer.valueOf(item.getQuantity()));
+            }
+
+            // Aggiungi l'ordine al database
+            orderServiceDAO.addOrder(order);
+        } catch (PayPalRESTException e) {
+            e.printStackTrace();
+        }
+    }
 }
-
-
-
-
-
