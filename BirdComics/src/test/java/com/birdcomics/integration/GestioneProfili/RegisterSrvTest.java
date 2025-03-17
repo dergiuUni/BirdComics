@@ -55,7 +55,7 @@ class RegisterSrvTest {
     }
 
     @Test
-    void testDoGet_RegisterCliente() throws ServletException, IOException, SQLException, ParseException {
+    void testRegisterCliente() throws ServletException, IOException, SQLException, ParseException {
         // Configura i parametri della richiesta per un nuovo cliente
         when(request.getParameter("nome")).thenReturn("Mario");
         when(request.getParameter("cognome")).thenReturn("Rossi");
@@ -98,7 +98,7 @@ class RegisterSrvTest {
         verify(requestDispatcher).forward(request, response);
     }
     @Test
-    void testDoGet_PasswordNotMatching() throws ServletException, IOException {
+    void testRegisterPasswordNotMatching() throws ServletException, IOException {
         // Configura i parametri della richiesta con password non corrispondenti
         when(request.getParameter("nome")).thenReturn("Mario");
         when(request.getParameter("cognome")).thenReturn("Rossi");
@@ -123,7 +123,7 @@ class RegisterSrvTest {
     }
 
     @Test
-    void testDoGet_RegisterWithMagazzino() throws ServletException, IOException, SQLException, ParseException {
+    void testRegisterWithRoles() throws ServletException, IOException, SQLException, ParseException {
         // Configura i parametri della richiesta per un nuovo utente con magazzino
         when(request.getParameter("nome")).thenReturn("Anna");
         when(request.getParameter("cognome")).thenReturn("Bianchi");
@@ -174,6 +174,6 @@ class RegisterSrvTest {
         // Verifica che il RequestDispatcher sia stato chiamato con il messaggio di successo
         verify(requestDispatcher).forward(request, response);
     }
-
+    //registrazione con account gia esistente
 
 }

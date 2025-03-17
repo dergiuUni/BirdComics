@@ -50,7 +50,7 @@ class LoginSrvTest {
     }
 
     @Test
-    void testDoGet_ValidLogin_Cliente() throws ServletException, IOException, SQLException {
+    void testValidLoginCliente() throws ServletException, IOException, SQLException {
         // Configura i parametri della richiesta per un cliente
         when(request.getParameter("email")).thenReturn("cliente@example.com");
         when(request.getParameter("password")).thenReturn("password123");
@@ -84,7 +84,7 @@ class LoginSrvTest {
     }
 
     @Test
-    void testDoGet_ValidLogin_GestoreCatalogo() throws ServletException, IOException, SQLException {
+    void testValidLoginGestoreCatalogo() throws ServletException, IOException, SQLException {
         // Configura i parametri della richiesta per un gestore del catalogo
         when(request.getParameter("email")).thenReturn("gestore@example.com");
         when(request.getParameter("password")).thenReturn("password123");
@@ -118,7 +118,7 @@ class LoginSrvTest {
     }
 
     @Test
-    void testDoGet_InvalidLogin() throws ServletException, IOException, SQLException {
+    void testInvalidLogin() throws ServletException, IOException, SQLException {
         // Configura i parametri della richiesta per un login non valido
         when(request.getParameter("email")).thenReturn("cliente@example.com");
         when(request.getParameter("password")).thenReturn("wrongpassword");
@@ -137,7 +137,7 @@ class LoginSrvTest {
     }
 
     @Test
-    void testDoGet_SQLException() throws ServletException, IOException, SQLException {
+    void testSQLException() throws ServletException, IOException, SQLException {
         // Configura i parametri della richiesta
         when(request.getParameter("email")).thenReturn("cliente@example.com");
         when(request.getParameter("password")).thenReturn("password123");
@@ -157,7 +157,7 @@ class LoginSrvTest {
 
 
     @Test
-    void testDoGet_MultipleRoles() throws ServletException, IOException, SQLException {
+    void testMultipleRoles() throws ServletException, IOException, SQLException {
         // Configura i parametri della richiesta per un utente con più ruoli
         when(request.getParameter("email")).thenReturn("dipendente@birdcomics.com");
         when(request.getParameter("password")).thenReturn("password123");

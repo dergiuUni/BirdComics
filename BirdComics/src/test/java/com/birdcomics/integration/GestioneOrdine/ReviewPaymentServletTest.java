@@ -1,11 +1,10 @@
 package com.birdcomics.integration.GestioneOrdine;
 
-
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
-
-import java.lang.reflect.Field;
-import java.sql.SQLException;
+import com.birdcomics.GestioneOrdine.Controller.ReviewPaymentServlet;
+import com.birdcomics.GestioneOrdine.Service.OrdineService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,144 +12,106 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.birdcomics.GestioneOrdine.Controller.ReviewPaymentServlet;
-import com.birdcomics.GestioneOrdine.Service.OrdineService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import java.io.IOException;
+import java.sql.SQLException;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 public class ReviewPaymentServletTest {
 
     @Mock
+    private OrdineService ordineService;
+
+    @Mock
     private HttpServletRequest request;
-    
+
     @Mock
     private HttpServletResponse response;
-    
+
     @Mock
     private HttpSession session;
-    
-    @Mock
-    private OrdineService ordineService;
-    
+
     @Mock
     private RequestDispatcher requestDispatcher;
-    
-    @InjectMocks
-    private ReviewPaymentServlet servlet;
-    
-    private final String testPaymentId = "PAY-123";
-    private final String testPayerId = "PAYER-456";
-    private final String testUsername = "testUser";
 
-    @Before
-    public void setUp() throws Exception {
-        // Inietta manualmente il mock del servizio
-        Field serviceField = ReviewPaymentServlet.class.getDeclaredField("ordineService");
-        serviceField.setAccessible(true);
-        serviceField.set(servlet, ordineService);
-        
-        // Configura comportamento base
+    private ReviewPaymentServlet reviewPaymentServlet;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+
+        // Inizializza il servlet con il mock di OrdineService
+        reviewPaymentServlet = new ReviewPaymentServlet(ordineService);
+
+        // Configura il comportamento del mock per la sessione
         when(request.getSession()).thenReturn(session);
+    }
+
+    @Test
+    public void testCreateOrderSuccess() throws Exception {
+        // Arrange
+        String paymentId = "PAYMENT123";
+        String payerId = "PAYER123";
+        String email = "user@example.com";
+
+        when(request.getParameter("paymentId")).thenReturn(paymentId);
+        when(request.getParameter("PayerID")).thenReturn(payerId);
+        when(session.getAttribute("email")).thenReturn(email);
+
+        // Act
+        reviewPaymentServlet.doGet(request, response);
+
+        // Assert
+        // Verifica che il metodo creaOrdine sia stato chiamato con i parametri corretti
+        verify(ordineService, times(1)).creaOrdine(paymentId, payerId, email, session);
+
+        // Verifica che il servlet faccia il redirect alla home page
+        verify(response, times(1)).sendRedirect("./OrderDetailsServlet");
+    }
+
+    @Test
+    public void testParametersAreMissing_thenForwardToErrorPage() throws Exception {
+        // Arrange
+        when(request.getParameter("paymentId")).thenReturn(null); // Manca il parametro paymentId
+
         when(request.getRequestDispatcher("error2.jsp")).thenReturn(requestDispatcher);
+
+        // Act
+        reviewPaymentServlet.doGet(request, response);
+
+        // Assert
+        // Verifica che il messaggio di errore sia impostato
+        verify(request, times(1)).setAttribute("errorMessage", "Missing required parameters.");
+
+        // Verifica che il servlet invii alla pagina di errore
+        verify(requestDispatcher, times(1)).forward(request, response);
     }
 
     @Test
-    public void testSuccessfulPaymentProcessing() throws Exception {
-        // Configura parametri
-        when(request.getParameter("paymentId")).thenReturn(testPaymentId);
-        when(request.getParameter("PayerID")).thenReturn(testPayerId);
-        when(session.getAttribute("username")).thenReturn(testUsername);
-        
-        // Esegui servlet
-        servlet.doGet(request, response);
-        
-        // Verifiche
-        verify(ordineService).processPaymentAndCreateOrder(testPaymentId, testPayerId, testUsername);
-        verify(response).sendRedirect("index.jsp");
-    }
+    public void testSQLExceptionOccurs_thenForwardToErrorPage() throws Exception {
+        // Arrange
+        String paymentId = "PAYMENT123";
+        String payerId = "PAYER123";
+        String email = "user@example.com";
 
-    @Test
-    public void testMissingPaymentId() throws Exception {
-        // Configura parametri mancanti
-        when(request.getParameter("paymentId")).thenReturn(null);
-        when(request.getParameter("PayerID")).thenReturn(testPayerId);
-        when(session.getAttribute("username")).thenReturn(testUsername);
-        
-        // Esegui servlet
-        servlet.doGet(request, response);
-        
-        // Verifiche
-        verify(request).setAttribute("errorMessage", "Missing required parameters.");
-        verify(requestDispatcher).forward(request, response);
-        verify(ordineService, never()).processPaymentAndCreateOrder(any(), any(), any());
-    }
+        when(request.getParameter("paymentId")).thenReturn(paymentId);
+        when(request.getParameter("PayerID")).thenReturn(payerId);
+        when(session.getAttribute("email")).thenReturn(email);
 
-    @Test
-    public void testMissingPayerId() throws Exception {
-        // Configura parametri mancanti
-        when(request.getParameter("paymentId")).thenReturn(testPaymentId);
-        when(request.getParameter("PayerID")).thenReturn(null);
-        when(session.getAttribute("username")).thenReturn(testUsername);
-        
-        // Esegui servlet
-        servlet.doGet(request, response);
-        
-        // Verifiche
-        verify(request).setAttribute("errorMessage", "Missing required parameters.");
-        verify(requestDispatcher).forward(request, response);
-    }
+        // Simula un'eccezione SQL
+        doThrow(new SQLException("Database error")).when(ordineService).creaOrdine(paymentId, payerId, email, session);
 
-    @Test
-    public void testUserNotLoggedIn() throws Exception {
-        // Configura utente non loggato
-        when(request.getParameter("paymentId")).thenReturn(testPaymentId);
-        when(request.getParameter("PayerID")).thenReturn(testPayerId);
-        when(session.getAttribute("username")).thenReturn(null);
-        
-        // Esegui servlet
-        servlet.doGet(request, response);
-        
-        // Verifiche
-        verify(request).setAttribute("errorMessage", "Missing required parameters.");
-        verify(requestDispatcher).forward(request, response);
-    }
+        when(request.getRequestDispatcher("error2.jsp")).thenReturn(requestDispatcher);
 
-    @Test
-    public void testSQLExceptionHandling() throws Exception {
-        // Configura parametri validi
-        when(request.getParameter("paymentId")).thenReturn(testPaymentId);
-        when(request.getParameter("PayerID")).thenReturn(testPayerId);
-        when(session.getAttribute("username")).thenReturn(testUsername);
-        
-        // Simula eccezione
-        doThrow(new SQLException("Database error"))
-            .when(ordineService).processPaymentAndCreateOrder(any(), any(), any());
-        
-        // Esegui servlet
-        servlet.doGet(request, response);
-        
-        // Verifiche
-        verify(request).setAttribute("errorMessage", "Database error");
-        verify(requestDispatcher).forward(request, response);
-    }
+        // Act
+        reviewPaymentServlet.doGet(request, response);
 
-    @Test
-    public void testEmptyParameters() throws Exception {
-        // Configura tutti i parametri null
-        when(request.getParameter("paymentId")).thenReturn(null);
-        when(request.getParameter("PayerID")).thenReturn(null);
-        when(session.getAttribute("username")).thenReturn(null);
-        
-        // Esegui servlet
-        servlet.doGet(request, response);
-        
-        // Verifiche
-        verify(request).setAttribute("errorMessage", "Missing required parameters.");
-        verify(requestDispatcher).forward(request, response);
+        // Assert
+        // Verifica che il messaggio di errore sia impostato
+        verify(request, times(1)).setAttribute("errorMessage", "Database error");
+
+        // Verifica che il servlet invii alla pagina di errore
+        verify(requestDispatcher, times(1)).forward(request, response);
     }
 }

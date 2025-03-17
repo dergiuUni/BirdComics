@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 import com.birdcomics.Bean.CartBean;
 import com.birdcomics.GestioneCarrello.Service.CarrelloService;
 import com.birdcomics.GestioneCarrello.Service.CarrelloServiceImpl;
+import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Dao.ProductServiceDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,13 +20,16 @@ import java.sql.SQLException;
 public class AddToCart extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private CarrelloService cartService;
+    private ProductServiceDAO productDao;
 
     public AddToCart(CarrelloService cartService) {
         this.cartService = cartService;
+        this.productDao = new ProductServiceDAO();
     }
 
     public AddToCart() {
         this.cartService = new CarrelloServiceImpl();
+        this.productDao = new ProductServiceDAO();
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -42,14 +47,26 @@ public class AddToCart extends HttpServlet {
         int pQty = Integer.parseInt(request.getParameter("pqty"));
 
         try {
-        	cartService.aggiungiFumetto(session, userId, prodId, pQty);
+            // Ottieni il prodotto e la quantità disponibile
+            ProductBean product = productDao.getProductsByID(prodId);
+            int availableQty = productDao.getAllQuantityProductsById(product);
 
-            
+            if (availableQty < pQty) {
+                // Se la quantità richiesta supera la disponibilità, aggiorna al massimo disponibile
+                pQty = availableQty;
+                String status = "Only " + availableQty + " of " + product.getName()
+                        + " are available in the shop! So we are adding only " + availableQty + " products to your cart.";
+                session.setAttribute("message", status);
+            }
+
+            // Aggiungi il fumetto al carrello
+            cartService.aggiungiFumetto(session, userId, prodId, pQty);
+
             // Aggiorna il carrello in sessione
             CartBean cartBean = new CartBean(userId);
-            cartBean.setCartItems(cartService.visualizzaCarrello(session,userId));
+            cartBean.setCartItems(cartService.visualizzaCarrello(session, userId));
             session.setAttribute("cart", cartBean);
-            
+
             response.sendRedirect("CartDetailsServlet");
         } catch (SQLException e) {
             e.printStackTrace();

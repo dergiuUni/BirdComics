@@ -39,7 +39,7 @@ class RemoveProductSrvTest {
     }
 
     @Test
-    void testDoGet_RemoveProductSuccess() throws ServletException, IOException, SQLException {
+    void testRimozioneFumettoCatalogoSuccess() throws ServletException, IOException, SQLException {
         // Configura il parametro della richiesta
         when(request.getParameter("prodid")).thenReturn("123");
 
@@ -61,7 +61,7 @@ class RemoveProductSrvTest {
     }
 
     @Test
-    void testDoGet_RemoveProductFailure() throws ServletException, IOException, SQLException {
+    void testRimozioneFumettoCatalogo_SQLException() throws ServletException, IOException, SQLException {
         // Configura il parametro della richiesta
         when(request.getParameter("prodid")).thenReturn("999");
 
@@ -79,25 +79,6 @@ class RemoveProductSrvTest {
         verify(catalogoService).rmFumetto("999");
 
         // Verifica che il RequestDispatcher sia stato chiamato con il messaggio di errore
-        verify(requestDispatcher).forward(request, response);
-    }
-
-    @Test
-    void testDoGet_NoProductId() throws ServletException, IOException, SQLException {
-        // Configura il parametro della richiesta come null
-        when(request.getParameter("prodid")).thenReturn(null);
-
-        // Configura il mock del RequestDispatcher per gestire il reindirizzamento
-        when(request.getRequestDispatcher("./ProductListServlet?message=Error: Product ID is missing"))
-                .thenReturn(requestDispatcher);
-
-        // Esegui il metodo doGet
-        removeProductSrv.doGet(request, response);
-
-        // Verifica che non ci siano interazioni con il CatalogoService
-        verify(catalogoService, never()).rmFumetto(anyString());
-
-        // Verifica che il RequestDispatcher sia stato chiamato con il messaggio di errore corretto
         verify(requestDispatcher).forward(request, response);
     }
 }

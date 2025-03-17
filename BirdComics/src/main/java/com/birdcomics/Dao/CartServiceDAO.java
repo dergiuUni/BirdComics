@@ -23,7 +23,8 @@ public class CartServiceDAO {
     }
 
     // 🔹 Metodo per aggiungere un prodotto al carrello
-    public String addProductToCart(HttpSession session, String userId, String prodId, int prodQty) throws SQLException {
+    @SuppressWarnings("resource")
+	public String addProductToCart(HttpSession session, String userId, String prodId, int prodQty) throws SQLException {
         CartBean cart = getCartFromSession(session, userId);
 
         Connection con = DBUtil.getConnection();

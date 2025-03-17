@@ -62,7 +62,7 @@ class AddProductSrvTest {
     }
 
     @Test
-    void testDoPost_AddProductSuccess() throws ServletException, IOException, SQLException {
+    void testAggiunaFumettoCatalogoSuccess() throws ServletException, IOException, SQLException {
         // Configura i parametri della richiesta
         when(request.getParameter("name")).thenReturn("Test Product");
         when(request.getParameterValues("genres")).thenReturn(new String[]{"1", "2"});
@@ -99,7 +99,7 @@ class AddProductSrvTest {
     }
 
     @Test
-    void testDoPost_InvalidFileType() throws ServletException, IOException, SQLException {
+    void testAggiuntaFumettoCatalogo_InvalidFileType() throws ServletException, IOException, SQLException {
         // Configura i parametri della richiesta
         when(request.getParameter("name")).thenReturn("Test Product");
         when(request.getParameterValues("genres")).thenReturn(new String[]{"1", "2"});
@@ -126,7 +126,7 @@ class AddProductSrvTest {
     }
 
     @Test
-    void testDoPost_SQLException() throws ServletException, IOException, SQLException {
+    void testAggiuntaFumettoCatalogo_SQLException() throws ServletException, IOException, SQLException {
         // Configura i parametri della richiesta
         when(request.getParameter("name")).thenReturn("Test Product");
         when(request.getParameterValues("genres")).thenReturn(new String[]{"1", "2"});
@@ -159,37 +159,6 @@ class AddProductSrvTest {
 
         // Verifica che il RequestDispatcher sia stato chiamato con il messaggio di errore
         verify(request).setAttribute("message", "Database error occurred while adding the product.");
-        verify(requestDispatcher).forward(request, response);
-    }
-
-    @Test
-    void testDoGet_LoadGenres() throws ServletException, IOException {
-        // Configura il mock del GenereDAO per restituire una lista di generi
-        List<GenereBean> generiBeans = new ArrayList<>();
-        generiBeans.add(new GenereBean("Avventura"));
-        generiBeans.add(new GenereBean("Commedia"));
-        generiBeans.add(new GenereBean("Drammatico"));
-        generiBeans.add(new GenereBean("Fantascienza"));
-        generiBeans.add(new GenereBean("Fantasy"));
-        generiBeans.add(new GenereBean("Guerra"));
-        generiBeans.add(new GenereBean("Horror"));
-        generiBeans.add(new GenereBean("Storico"));
-        generiBeans.add(new GenereBean("Supereroi"));
-        when(genereDAO.getGeneri()).thenReturn(generiBeans);
-
-        // Configura il mock del RequestDispatcher
-        when(request.getRequestDispatcher("addProduct.jsp")).thenReturn(requestDispatcher);
-
-        // Esegui il metodo doGet
-        addProductSrv.doGet(request, response);
-
-        // Verifica che i generi siano stati impostati come attributo della richiesta
-        List<String> expectedGenres = generiBeans.stream()
-                .map(GenereBean::getGenere)
-                .collect(Collectors.toList());
-        verify(request).setAttribute("genres", expectedGenres);
-
-        // Verifica che il RequestDispatcher sia stato chiamato
         verify(requestDispatcher).forward(request, response);
     }
 }

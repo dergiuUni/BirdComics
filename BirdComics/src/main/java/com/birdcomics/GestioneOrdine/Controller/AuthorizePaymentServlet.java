@@ -21,7 +21,8 @@ import com.birdcomics.Bean.UserBean;
 import com.birdcomics.Dao.CartServiceDAO;
 import com.birdcomics.Dao.ProductServiceDAO;
 import com.birdcomics.Dao.UserServiceDAO;
-import com.birdcomics.GestioneOrdine.Controller.PaymentServices;
+import com.birdcomics.GestioneOrdine.Service.OrdineService;
+import com.birdcomics.GestioneOrdine.Service.OrdineServiceImpl;
 import com.paypal.api.payments.Address;
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Details;
@@ -38,11 +39,14 @@ import com.paypal.base.rest.PayPalRESTException;
 @WebServlet("/authorize_payment")
 public class AuthorizePaymentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private OrdineService ordineService;  // Dichiarazione del servizio
 
 	public AuthorizePaymentServlet() {
+		this.ordineService = new OrdineServiceImpl();  // Instanza il servizio
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		CartServiceDAO cart = new CartServiceDAO();
 		ProductBean p = new ProductBean();
 		ProductServiceDAO ps = new ProductServiceDAO();
@@ -50,7 +54,7 @@ public class AuthorizePaymentServlet extends HttpServlet {
 		List<Item> items = new ArrayList<>();
 		Transaction transaction = new Transaction();
 		ItemList itemList = new ItemList();
-		PaymentServices paymentServices = new PaymentServices();
+		
 		double totalAmount = 0;
 		double totalTax = 0;
 		double totalSubtotal = 0;
@@ -135,8 +139,7 @@ public class AuthorizePaymentServlet extends HttpServlet {
 					 .setBillingAddress(a);
 			
 			payer.setPayerInfo(payerInfo);
-				
-			response.sendRedirect(paymentServices.authorizePayment(listTransaction, payer));
+			 response.sendRedirect(ordineService.authorizePayment(listTransaction, payer));
 			
 		}
 		catch (Exception e) {

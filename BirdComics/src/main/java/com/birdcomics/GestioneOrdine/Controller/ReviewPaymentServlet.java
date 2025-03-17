@@ -19,8 +19,14 @@ public class ReviewPaymentServlet extends HttpServlet {
 
     private OrdineService ordineService;
 
+    // Costruttore predefinito
     public ReviewPaymentServlet() {
         this.ordineService = new OrdineServiceImpl(); // Inizializza il servizio
+    }
+
+    // Costruttore per l'iniezione delle dipendenze
+    public ReviewPaymentServlet(OrdineService ordineService) {
+        this.ordineService = ordineService;
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,15 +35,15 @@ public class ReviewPaymentServlet extends HttpServlet {
         String payerId = request.getParameter("PayerID");
         String email = (String) request.getSession().getAttribute("email");
 
-        // Retrieve HttpSession object from the request
+        // Recupera l'oggetto HttpSession dalla richiesta
         HttpSession session = request.getSession();
 
         try {
             if (paymentId != null && payerId != null && email != null) {
-                // Pass the session to the service method
+                // Passa la sessione al metodo del servizio
                 ordineService.creaOrdine(paymentId, payerId, email, session);
                 // Reindirizza alla home page dopo l'elaborazione
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("./OrderDetailsServlet");
             } else {
                 // Se manca qualche parametro, invia un errore
                 request.setAttribute("errorMessage", "Missing required parameters.");

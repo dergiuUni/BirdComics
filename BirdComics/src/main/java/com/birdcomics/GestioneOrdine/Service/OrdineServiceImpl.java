@@ -8,7 +8,6 @@ import com.birdcomics.Dao.CartServiceDAO;
 import com.birdcomics.Dao.OrderServiceDAO;
 import com.birdcomics.Dao.ProductServiceDAO;
 import com.birdcomics.Dao.UserServiceDAO;
-import com.birdcomics.GestioneOrdine.Controller.PaymentServices;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
@@ -27,7 +26,6 @@ public class OrdineServiceImpl implements OrdineService {
     private ProductServiceDAO productServiceDAO;
     private UserServiceDAO userServiceDAO;
     private CartServiceDAO cartServiceDAO;
-    private PaymentServices paymentServices;
 
     // Costruttore senza dipendenze (non usato direttamente)
     public OrdineServiceImpl() {
@@ -43,13 +41,11 @@ public class OrdineServiceImpl implements OrdineService {
 
     // Costruttore con dipendenze iniettate
     public OrdineServiceImpl(OrderServiceDAO orderServiceDAO, ProductServiceDAO productServiceDAO,
-                            CartServiceDAO cartServiceDAO, UserServiceDAO userServiceDAO,
-                            PaymentServices paymentServices) {
+                            CartServiceDAO cartServiceDAO, UserServiceDAO userServiceDAO) {
         this.orderServiceDAO = orderServiceDAO;
         this.productServiceDAO = productServiceDAO;
         this.cartServiceDAO = cartServiceDAO;
         this.userServiceDAO = userServiceDAO;
-        this.paymentServices = paymentServices;  // PaymentServices iniettato
     }
 
     // Setter methods for each dependency
@@ -67,10 +63,6 @@ public class OrdineServiceImpl implements OrdineService {
 
     public void setUserServiceDAO(UserServiceDAO userServiceDAO) {
         this.userServiceDAO = userServiceDAO;
-    }
-
-    public void setPaymentServices(PaymentServices paymentServices) {
-        this.paymentServices = paymentServices;
     }
 
     @Override
@@ -150,15 +142,10 @@ public class OrdineServiceImpl implements OrdineService {
         // Rimuovi il carrello dalla sessione (per assicurarti che non venga visualizzato ancora)
         session.removeAttribute("cart"); // Se il carrello è memorizzato nella sessione
 
-        // Se paymentServices non è inizializzato, inizializzalo
-        if (this.paymentServices == null) {
-            this.paymentServices = new PaymentServices();
-        }
-
         // Esegui il pagamento tramite PayPal
         Payment payment;
         try {
-            payment = paymentServices.executePayment(paymentId, payerId);
+            payment = this.processaPagamento(paymentId, payerId);
             PayerInfo payerInfo = payment.getPayer().getPayerInfo();
             Transaction transaction = payment.getTransactions().get(0);
             List<Item> items = transaction.getItemList().getItems();
