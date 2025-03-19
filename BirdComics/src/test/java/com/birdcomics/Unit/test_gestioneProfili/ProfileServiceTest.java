@@ -1,8 +1,8 @@
 package com.birdcomics.Unit.test_gestioneProfili;
 
-import com.birdcomics.Bean.RuoloBean;
-import com.birdcomics.Bean.UserBean;
-import com.birdcomics.Dao.UserServiceDAO;
+import com.birdcomics.Model.Bean.RuoloBean;
+import com.birdcomics.Model.Bean.UserBean;
+import com.birdcomics.Model.Dao.UserServiceDAO;
 import com.birdcomics.GestioneProfili.Service.ProfileServiceImpl;
 
 import org.junit.jupiter.api.BeforeEach;

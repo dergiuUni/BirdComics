@@ -1,4 +1,4 @@
-package com.birdcomics.Dao;
+package com.birdcomics.Model.Dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.birdcomics.Bean.GenereBean;
+import com.birdcomics.Model.Bean.GenereBean;
 import com.birdcomics.Utils.DBUtil;
 
 public class GenereDAO {

@@ -9,18 +9,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-
-import com.birdcomics.Bean.CartBean;
-import com.birdcomics.Bean.CartItem;
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Bean.UserBean;
-import com.birdcomics.Dao.CartServiceDAO;
-import com.birdcomics.Dao.ProductServiceDAO;
-import com.birdcomics.Dao.UserServiceDAO;
+import com.birdcomics.Model.Bean.CartBean;
+import com.birdcomics.Model.Bean.CartItem;
+import com.birdcomics.Model.Bean.ProductBean;
+import com.birdcomics.Model.Bean.UserBean;
+import com.birdcomics.Model.Dao.CartServiceDAO;
+import com.birdcomics.Model.Dao.ProductServiceDAO;
+import com.birdcomics.Model.Dao.UserServiceDAO;
 import com.birdcomics.GestioneOrdine.Service.OrdineService;
 import com.birdcomics.GestioneOrdine.Service.OrdineServiceImpl;
 import com.paypal.api.payments.Address;

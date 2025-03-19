@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.birdcomics.Bean.CartBean;
-import com.birdcomics.Bean.CartItem;
-import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Model.Bean.CartBean;
+import com.birdcomics.Model.Bean.CartItem;
+import com.birdcomics.Model.Bean.ProductBean;
 import com.birdcomics.GestioneCarrello.Service.CarrelloService;
 import com.birdcomics.GestioneCarrello.Service.CarrelloServiceImpl;
 

@@ -1,7 +1,7 @@
 package com.birdcomics.integration.GestioneCatalago;
 
-import com.birdcomics.Bean.GenereBean;
-import com.birdcomics.Dao.GenereDAO;
+import com.birdcomics.Model.Bean.GenereBean;
+import com.birdcomics.Model.Dao.GenereDAO;
 import com.birdcomics.GestioneCatalogo.Controller.AddProductSrv;
 import com.birdcomics.GestioneCatalogo.Service.CatalogoService;
 import org.junit.jupiter.api.BeforeEach;

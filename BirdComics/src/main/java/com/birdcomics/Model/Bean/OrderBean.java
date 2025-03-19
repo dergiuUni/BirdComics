@@ -1,8 +1,7 @@
-package com.birdcomics.Bean;
+package com.birdcomics.Model.Bean;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashMap;
-import java.util.List;
 
 
 @SuppressWarnings("serial")

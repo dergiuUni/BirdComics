@@ -11,28 +11,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Bean.ScaffaliBean;
-import com.birdcomics.Bean.UserBean;
-import com.birdcomics.Dao.OrderServiceDAO;
-import com.birdcomics.Dao.ProductServiceDAO;
-import com.birdcomics.Dao.ScaffaleDao;
-import com.birdcomics.Dao.UserServiceDAO;
+import com.birdcomics.Model.Bean.ProductBean;
+import com.birdcomics.Model.Bean.ScaffaliBean;
+import com.birdcomics.Model.Bean.UserBean;
+import com.birdcomics.Model.Dao.OrderServiceDAO;
+import com.birdcomics.Model.Dao.ProductServiceDAO;
+import com.birdcomics.Model.Dao.ScaffaleDao;
+import com.birdcomics.Model.Dao.UserServiceDAO;
 import com.birdcomics.GestioneMagazzino.Service.MagazzinoService;
 import com.birdcomics.GestioneMagazzino.Service.MagazzinoServiceImpl;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.birdcomics.Bean.ScaffaliBean;
-import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Model.Bean.ScaffaliBean;
+import com.birdcomics.Model.Bean.UserBean;
 
 
 @WebServlet("/GestioneMagazziniere")

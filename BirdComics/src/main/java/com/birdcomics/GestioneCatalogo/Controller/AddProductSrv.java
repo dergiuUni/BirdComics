@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import com.birdcomics.Bean.GenereBean;
-import com.birdcomics.Dao.GenereDAO;
+import com.birdcomics.Model.Bean.GenereBean;
+import com.birdcomics.Model.Dao.GenereDAO;
 import com.birdcomics.GestioneCatalogo.Service.CatalogoService;
 import com.birdcomics.GestioneCatalogo.Service.CatalogoServiceImpl;
 

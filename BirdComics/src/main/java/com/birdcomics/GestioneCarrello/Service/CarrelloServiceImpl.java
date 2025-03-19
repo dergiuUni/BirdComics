@@ -1,10 +1,8 @@
 package com.birdcomics.GestioneCarrello.Service;
 
-import com.birdcomics.Bean.CartBean;
-import com.birdcomics.Bean.CartItem;
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Dao.CartServiceDAO;
-import com.birdcomics.Dao.ProductServiceDAO;
+import com.birdcomics.Model.Bean.*;
+import com.birdcomics.Model.Dao.*;
+
 
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;

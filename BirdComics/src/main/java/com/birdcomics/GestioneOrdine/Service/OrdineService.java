@@ -8,8 +8,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.birdcomics.Bean.OrderBean;
-import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Model.Bean.OrderBean;
+import com.birdcomics.Model.Bean.ProductBean;
 import com.paypal.api.payments.Payer;
 import com.paypal.api.payments.Transaction;
 

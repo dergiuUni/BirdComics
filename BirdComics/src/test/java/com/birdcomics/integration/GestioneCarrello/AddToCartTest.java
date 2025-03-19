@@ -1,6 +1,6 @@
 package com.birdcomics.integration.GestioneCarrello;
 
-import com.birdcomics.Bean.CartBean;
+import com.birdcomics.Model.Bean.CartBean;
 import com.birdcomics.GestioneCarrello.Controller.AddToCart;
 import com.birdcomics.GestioneCarrello.Service.CarrelloService;
 import org.junit.jupiter.api.BeforeEach;

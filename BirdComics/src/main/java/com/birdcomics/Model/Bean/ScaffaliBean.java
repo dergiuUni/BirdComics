@@ -1,4 +1,4 @@
-package com.birdcomics.Bean;
+package com.birdcomics.Model.Bean;
 
 public class ScaffaliBean {
 	private int id;

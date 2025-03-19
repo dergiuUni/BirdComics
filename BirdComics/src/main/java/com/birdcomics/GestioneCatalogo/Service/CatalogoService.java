@@ -2,7 +2,7 @@ package com.birdcomics.GestioneCatalogo.Service;
 
 import java.sql.SQLException;
 import java.util.List;
-import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Model.Bean.ProductBean;
 
 public interface CatalogoService {
     List<ProductBean> visualizzaCatalogo() throws SQLException;

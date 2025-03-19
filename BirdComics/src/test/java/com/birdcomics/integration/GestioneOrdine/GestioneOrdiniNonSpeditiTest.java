@@ -15,7 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.birdcomics.Bean.OrderBean;
+import com.birdcomics.Model.Bean.OrderBean;
 import com.birdcomics.GestioneOrdine.Controller.GestioneOrdiniNonSpediti;
 import com.birdcomics.GestioneOrdine.Service.OrdineService;
 import org.junit.Before;

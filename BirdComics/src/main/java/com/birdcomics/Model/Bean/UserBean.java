@@ -1,9 +1,8 @@
-package com.birdcomics.Bean;
+package com.birdcomics.Model.Bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @SuppressWarnings("serial")
 public class UserBean implements Serializable {

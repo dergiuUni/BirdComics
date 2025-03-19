@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.birdcomics.Bean.MagazzinoBean;
-import com.birdcomics.Bean.ScaffaliBean;
-import com.birdcomics.Bean.UserBean;
-import com.birdcomics.Dao.MagazzinoDao;
-import com.birdcomics.Dao.ScaffaleDao;
-import com.birdcomics.Dao.UserServiceDAO;
+import com.birdcomics.Model.Bean.MagazzinoBean;
+import com.birdcomics.Model.Bean.ScaffaliBean;
+import com.birdcomics.Model.Bean.UserBean;
+import com.birdcomics.Model.Dao.MagazzinoDao;
+import com.birdcomics.Model.Dao.ScaffaleDao;
+import com.birdcomics.Model.Dao.UserServiceDAO;
 import com.birdcomics.GestioneMagazzino.Service.MagazzinoServiceImpl;
 
 import org.junit.Before;

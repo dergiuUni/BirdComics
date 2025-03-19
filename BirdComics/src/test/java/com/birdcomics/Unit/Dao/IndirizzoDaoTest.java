@@ -1,7 +1,7 @@
 package com.birdcomics.Unit.Dao;
 
-import com.birdcomics.Bean.IndirizzoBean;
-import com.birdcomics.Dao.IndirizzoDao;
+import com.birdcomics.Model.Bean.IndirizzoBean;
+import com.birdcomics.Model.Dao.IndirizzoDao;
 
 import org.junit.jupiter.api.*;
 import org.mockito.*;

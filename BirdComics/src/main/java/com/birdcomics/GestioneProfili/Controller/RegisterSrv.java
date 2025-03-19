@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.birdcomics.Bean.IndirizzoBean;
-import com.birdcomics.Bean.RuoloBean;
-import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Model.Bean.IndirizzoBean;
+import com.birdcomics.Model.Bean.RuoloBean;
+import com.birdcomics.Model.Bean.UserBean;
 import com.birdcomics.GestioneProfili.Service.ProfileService;
 import com.birdcomics.GestioneProfili.Service.ProfileServiceImpl;
 

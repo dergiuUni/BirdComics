@@ -1,4 +1,4 @@
-package com.birdcomics.Dao;
+package com.birdcomics.Model.Dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.http.HttpSession;
 
-import com.birdcomics.Bean.CartBean;
-import com.birdcomics.Bean.CartItem;
+import com.birdcomics.Model.Bean.CartBean;
+import com.birdcomics.Model.Bean.CartItem;
 import com.birdcomics.Utils.DBUtil;
 
 public class CartServiceDAO {

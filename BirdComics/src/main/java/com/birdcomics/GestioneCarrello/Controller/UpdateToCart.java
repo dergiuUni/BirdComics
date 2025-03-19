@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.birdcomics.Bean.CartBean;
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Dao.ProductServiceDAO;
+import com.birdcomics.Model.Bean.CartBean;
+import com.birdcomics.Model.Bean.ProductBean;
+import com.birdcomics.Model.Dao.ProductServiceDAO;
 import com.birdcomics.GestioneCarrello.Service.CarrelloServiceImpl;
 
 @WebServlet("/UpdateToCart")

@@ -1,13 +1,13 @@
 package com.birdcomics.GestioneOrdine.Service;
 
-import com.birdcomics.Bean.FatturaBean;
-import com.birdcomics.Bean.OrderBean;
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Bean.UserBean;
-import com.birdcomics.Dao.CartServiceDAO;
-import com.birdcomics.Dao.OrderServiceDAO;
-import com.birdcomics.Dao.ProductServiceDAO;
-import com.birdcomics.Dao.UserServiceDAO;
+import com.birdcomics.Model.Bean.FatturaBean;
+import com.birdcomics.Model.Bean.OrderBean;
+import com.birdcomics.Model.Bean.ProductBean;
+import com.birdcomics.Model.Bean.UserBean;
+import com.birdcomics.Model.Dao.CartServiceDAO;
+import com.birdcomics.Model.Dao.OrderServiceDAO;
+import com.birdcomics.Model.Dao.ProductServiceDAO;
+import com.birdcomics.Model.Dao.UserServiceDAO;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;

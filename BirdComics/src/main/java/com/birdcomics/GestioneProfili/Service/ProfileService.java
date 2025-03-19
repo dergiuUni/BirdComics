@@ -1,8 +1,8 @@
 package com.birdcomics.GestioneProfili.Service;
 
-import com.birdcomics.Bean.MagazzinoBean;
-import com.birdcomics.Bean.RuoloBean;
-import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Model.Bean.MagazzinoBean;
+import com.birdcomics.Model.Bean.RuoloBean;
+import com.birdcomics.Model.Bean.UserBean;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

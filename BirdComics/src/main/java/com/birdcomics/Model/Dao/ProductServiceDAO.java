@@ -1,4 +1,4 @@
-package com.birdcomics.Dao;
+package com.birdcomics.Model.Dao;
 
 import java.io.File;
 import java.io.InputStream;
@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Model.Bean.ProductBean;
 import com.birdcomics.Utils.DBUtil;
 
 public class ProductServiceDAO {

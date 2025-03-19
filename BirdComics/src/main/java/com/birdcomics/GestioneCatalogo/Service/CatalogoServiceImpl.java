@@ -2,8 +2,8 @@ package com.birdcomics.GestioneCatalogo.Service;
 
 import java.sql.SQLException;
 import java.util.List;
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Dao.ProductServiceDAO;
+import com.birdcomics.Model.Bean.ProductBean;
+import com.birdcomics.Model.Dao.ProductServiceDAO;
 
 public class CatalogoServiceImpl implements CatalogoService {
 

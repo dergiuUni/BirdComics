@@ -1,6 +1,6 @@
 package com.birdcomics.integration.GestioneOrdine;
 
-import com.birdcomics.Bean.OrderBean;
+import com.birdcomics.Model.Bean.OrderBean;
 import com.birdcomics.GestioneOrdine.Controller.OrderDetailsServlet;
 import com.birdcomics.GestioneOrdine.Service.OrdineService;
 import org.junit.jupiter.api.BeforeEach;

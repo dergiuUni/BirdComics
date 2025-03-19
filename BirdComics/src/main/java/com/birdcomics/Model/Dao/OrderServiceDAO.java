@@ -1,19 +1,15 @@
-package com.birdcomics.Dao;
+package com.birdcomics.Model.Dao;
 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.birdcomics.Bean.FatturaBean;
-import com.birdcomics.Bean.MagazzinoBean;
-import com.birdcomics.Bean.OrderBean;
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Bean.ScaffaliBean;
+import com.birdcomics.Model.Bean.FatturaBean;
+import com.birdcomics.Model.Bean.OrderBean;
+import com.birdcomics.Model.Bean.ScaffaliBean;
 import com.birdcomics.Utils.DBUtil;
 
 

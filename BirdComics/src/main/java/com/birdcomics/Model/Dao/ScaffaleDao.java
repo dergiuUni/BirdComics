@@ -1,4 +1,4 @@
-package com.birdcomics.Dao;
+package com.birdcomics.Model.Dao;
 
 import java.beans.Statement;
 import java.sql.Connection;
@@ -7,11 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.birdcomics.Bean.IndirizzoBean;
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Bean.RuoloBean;
-import com.birdcomics.Bean.ScaffaliBean;
-import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Model.Bean.IndirizzoBean;
+import com.birdcomics.Model.Bean.ProductBean;
+import com.birdcomics.Model.Bean.RuoloBean;
+import com.birdcomics.Model.Bean.ScaffaliBean;
+import com.birdcomics.Model.Bean.UserBean;
 import com.birdcomics.Utils.DBUtil;
 
 public class ScaffaleDao {

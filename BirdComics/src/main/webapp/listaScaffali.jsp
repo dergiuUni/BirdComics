@@ -1,4 +1,4 @@
-<%@page import="com.birdcomics.Bean.ScaffaliBean"%>
+<%@page import="com.birdcomics.Model.Bean.ScaffaliBean"%>
 <%@page import="java.util.*"%>
 <%@page import="com.birdcomics.*"%>
 <!DOCTYPE html>

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Model.Bean.ProductBean;
 import com.birdcomics.GestioneCatalogo.Service.CatalogoService;
 import com.birdcomics.GestioneCatalogo.Service.CatalogoServiceImpl;
 

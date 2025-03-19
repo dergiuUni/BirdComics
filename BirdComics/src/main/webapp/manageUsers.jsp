@@ -1,4 +1,4 @@
-<%@page import="com.birdcomics.Bean.UserBean"%>
+<%@page import="com.birdcomics.Model.Bean.UserBean"%>
 <%@page import="java.util.*"%>
 <%@page import="com.birdcomics.*"%>
 <!DOCTYPE html>

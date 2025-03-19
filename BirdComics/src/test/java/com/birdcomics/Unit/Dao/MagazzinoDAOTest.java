@@ -1,9 +1,9 @@
 package com.birdcomics.Unit.Dao;
 
-import com.birdcomics.Bean.IndirizzoBean;
-import com.birdcomics.Bean.MagazzinoBean;
-import com.birdcomics.Dao.IndirizzoDao;
-import com.birdcomics.Dao.MagazzinoDao;
+import com.birdcomics.Model.Bean.IndirizzoBean;
+import com.birdcomics.Model.Bean.MagazzinoBean;
+import com.birdcomics.Model.Dao.IndirizzoDao;
+import com.birdcomics.Model.Dao.MagazzinoDao;
 import com.birdcomics.Utils.DBUtil;
 import org.junit.jupiter.api.*;
 import org.mockito.*;

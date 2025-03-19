@@ -1,6 +1,6 @@
 package com.birdcomics.integration.GestioneCatalago;
 
-import com.birdcomics.Bean.ProductBean;
+import com.birdcomics.Model.Bean.ProductBean;
 import com.birdcomics.GestioneCatalogo.Controller.ProductListServlet;
 import com.birdcomics.GestioneCatalogo.Service.CatalogoService;
 import org.junit.jupiter.api.BeforeEach;

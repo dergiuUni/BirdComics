@@ -1,6 +1,6 @@
 package com.birdcomics.integration.GestioneProfili;
 
-import com.birdcomics.Bean.UserBean;
+import com.birdcomics.Model.Bean.UserBean;
 import com.birdcomics.GestioneProfili.Controller.UserProfileServlet;
 import com.birdcomics.GestioneProfili.Service.ProfileService;
 import org.junit.jupiter.api.BeforeEach;

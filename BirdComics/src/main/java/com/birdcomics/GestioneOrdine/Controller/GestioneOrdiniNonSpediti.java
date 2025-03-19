@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.birdcomics.Bean.OrderBean;
+import com.birdcomics.Model.Bean.OrderBean;
 import com.birdcomics.GestioneOrdine.Service.OrdineService;
 import com.birdcomics.GestioneOrdine.Service.OrdineServiceImpl;
 

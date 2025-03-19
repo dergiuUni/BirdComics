@@ -10,9 +10,9 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
-import com.birdcomics.Bean.CartBean;
-import com.birdcomics.Bean.CartItem;
-import com.birdcomics.Dao.CartServiceDAO;
+import com.birdcomics.Model.Bean.CartBean;
+import com.birdcomics.Model.Bean.CartItem;
+import com.birdcomics.Model.Dao.CartServiceDAO;
 import com.birdcomics.Utils.DBUtil;
 
 import org.junit.jupiter.api.AfterEach;

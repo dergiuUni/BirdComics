@@ -1,9 +1,9 @@
 package com.birdcomics.Unit.Dao;
 
-import com.birdcomics.Bean.RuoloBean;
-import com.birdcomics.Bean.UserBean;
-import com.birdcomics.Dao.IndirizzoDao;
-import com.birdcomics.Dao.UserServiceDAO;
+import com.birdcomics.Model.Bean.RuoloBean;
+import com.birdcomics.Model.Bean.UserBean;
+import com.birdcomics.Model.Dao.IndirizzoDao;
+import com.birdcomics.Model.Dao.UserServiceDAO;
 import com.birdcomics.Utils.DBUtil;
 import org.junit.jupiter.api.*;
 import org.mockito.*;

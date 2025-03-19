@@ -1,10 +1,10 @@
 package com.birdcomics.Unit.Dao;
 
-import com.birdcomics.Bean.FatturaBean;
-import com.birdcomics.Bean.OrderBean;
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Dao.FatturaServiceDAO;
-import com.birdcomics.Dao.OrderServiceDAO;
+import com.birdcomics.Model.Bean.FatturaBean;
+import com.birdcomics.Model.Bean.OrderBean;
+import com.birdcomics.Model.Bean.ProductBean;
+import com.birdcomics.Model.Dao.FatturaServiceDAO;
+import com.birdcomics.Model.Dao.OrderServiceDAO;
 import com.birdcomics.Utils.DBUtil;
 import org.junit.jupiter.api.*;
 import org.mockito.*;

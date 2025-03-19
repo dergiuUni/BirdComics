@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.birdcomics.Bean.ScaffaliBean;
+import com.birdcomics.Model.Bean.ScaffaliBean;
 import com.birdcomics.GestioneMagazzino.Controller.GestioneMagazziniere;
 import com.birdcomics.GestioneMagazzino.Service.MagazzinoService;
 import org.junit.Before;

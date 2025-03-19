@@ -1,4 +1,4 @@
-<%@page import="com.birdcomics.Bean.MagazzinoBean"%>
+<%@page import="com.birdcomics.Model.Bean.MagazzinoBean"%>
 <%@page import="java.util.*"%>
 <%@page import="com.birdcomics.*"%>
 <!DOCTYPE html>

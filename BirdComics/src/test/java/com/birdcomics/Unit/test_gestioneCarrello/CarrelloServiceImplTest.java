@@ -10,11 +10,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.birdcomics.Bean.CartBean;
-import com.birdcomics.Bean.CartItem;
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Dao.CartServiceDAO;
-import com.birdcomics.Dao.ProductServiceDAO;
+import com.birdcomics.Model.Bean.CartBean;
+import com.birdcomics.Model.Bean.CartItem;
+import com.birdcomics.Model.Bean.ProductBean;
+import com.birdcomics.Model.Dao.CartServiceDAO;
+import com.birdcomics.Model.Dao.ProductServiceDAO;
 import com.birdcomics.GestioneCarrello.Service.CarrelloServiceImpl;
 
 import org.junit.Before;

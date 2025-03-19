@@ -7,11 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.birdcomics.Bean.CartBean;
 import com.birdcomics.GestioneCarrello.Service.CarrelloService;
 import com.birdcomics.GestioneCarrello.Service.CarrelloServiceImpl;
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Dao.ProductServiceDAO;
+import com.birdcomics.Model.Bean.*;
+import com.birdcomics.Model.Dao.*;
 
 import java.io.IOException;
 import java.sql.SQLException;

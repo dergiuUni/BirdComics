@@ -1,7 +1,7 @@
 package com.birdcomics.Unit.test_gestioneOrdine;
 
-import com.birdcomics.Bean.*;
-import com.birdcomics.Dao.*;
+import com.birdcomics.Model.Bean.*;
+import com.birdcomics.Model.Dao.*;
 import com.birdcomics.GestioneOrdine.Service.OrdineServiceImpl;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;

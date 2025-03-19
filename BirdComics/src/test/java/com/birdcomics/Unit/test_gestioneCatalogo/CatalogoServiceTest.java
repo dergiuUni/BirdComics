@@ -1,8 +1,8 @@
 package com.birdcomics.Unit.test_gestioneCatalogo;
 
-import com.birdcomics.Bean.GenereBean;
-import com.birdcomics.Bean.ProductBean;
-import com.birdcomics.Dao.ProductServiceDAO;
+import com.birdcomics.Model.Bean.GenereBean;
+import com.birdcomics.Model.Bean.ProductBean;
+import com.birdcomics.Model.Dao.ProductServiceDAO;
 import com.birdcomics.GestioneCatalogo.Service.CatalogoServiceImpl;
 
 import org.junit.jupiter.api.BeforeEach;
