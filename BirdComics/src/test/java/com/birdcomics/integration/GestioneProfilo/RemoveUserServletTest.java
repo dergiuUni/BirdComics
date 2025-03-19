@@ -1,7 +1,8 @@
-package com.birdcomics.integration.GestioneProfili;
+package com.birdcomics.integration.GestioneProfilo;
 
-import com.birdcomics.GestioneProfili.Controller.RemoveUserServlet;
-import com.birdcomics.GestioneProfili.Service.ProfileService;
+import com.birdcomics.GestioneProfilo.Controller.RemoveUserServlet;
+import com.birdcomics.GestioneProfilo.Service.ProfileService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

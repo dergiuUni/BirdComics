@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneProfili.Controller;
+package com.birdcomics.GestioneProfilo.Controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,9 +14,9 @@ import javax.servlet.http.HttpSession;
 import com.birdcomics.Model.Bean.CartBean;
 import com.birdcomics.Model.Bean.RuoloBean;
 import com.birdcomics.Model.Bean.UserBean;
-import com.birdcomics.GestioneProfili.Service.ProfileService;
-import com.birdcomics.GestioneProfili.Service.ProfileServiceImpl;
 import com.birdcomics.GestioneCarrello.Service.*;
+import com.birdcomics.GestioneProfilo.Service.ProfileService;
+import com.birdcomics.GestioneProfilo.Service.ProfileServiceImpl;
 
 @WebServlet("/LoginSrv")
 public class LoginSrv extends HttpServlet {

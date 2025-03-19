@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneProfili;
+package com.birdcomics.GestioneProfilo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

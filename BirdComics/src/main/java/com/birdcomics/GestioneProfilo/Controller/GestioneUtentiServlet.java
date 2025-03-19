@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneProfili.Controller;
+package com.birdcomics.GestioneProfilo.Controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.birdcomics.Model.Bean.RuoloBean;
 import com.birdcomics.Model.Bean.UserBean;
 import com.birdcomics.Model.Dao.UserServiceDAO;
-import com.birdcomics.GestioneProfili.*;
-import com.birdcomics.GestioneProfili.Service.ProfileService;
-import com.birdcomics.GestioneProfili.Service.ProfileServiceImpl;
+import com.birdcomics.GestioneProfilo.*;
+import com.birdcomics.GestioneProfilo.Service.ProfileService;
+import com.birdcomics.GestioneProfilo.Service.ProfileServiceImpl;
 
 import javax.servlet.http.HttpSession;
 

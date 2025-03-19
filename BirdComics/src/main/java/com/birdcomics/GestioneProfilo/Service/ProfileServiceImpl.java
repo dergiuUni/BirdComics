@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneProfili.Service;
+package com.birdcomics.GestioneProfilo.Service;
 
 import com.birdcomics.Model.Bean.MagazzinoBean;
 import com.birdcomics.Model.Bean.RuoloBean;

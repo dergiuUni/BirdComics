@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneProfili.Controller;
+package com.birdcomics.GestioneProfilo.Controller;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -16,11 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.birdcomics.GestioneProfilo.Service.ProfileService;
+import com.birdcomics.GestioneProfilo.Service.ProfileServiceImpl;
 import com.birdcomics.Model.Bean.IndirizzoBean;
 import com.birdcomics.Model.Bean.RuoloBean;
 import com.birdcomics.Model.Bean.UserBean;
-import com.birdcomics.GestioneProfili.Service.ProfileService;
-import com.birdcomics.GestioneProfili.Service.ProfileServiceImpl;
 
 @WebServlet("/RegisterSrv")
 public class RegisterSrv extends HttpServlet {

@@ -1,12 +1,13 @@
-package com.birdcomics.integration.GestioneProfili;
+package com.birdcomics.integration.GestioneProfilo;
 
 import com.birdcomics.Model.Bean.RuoloBean;
 import com.birdcomics.Model.Bean.UserBean;
 import com.birdcomics.Model.Bean.MagazzinoBean;
 import com.birdcomics.Model.Bean.IndirizzoBean;
 import com.birdcomics.Model.Bean.ScaffaliBean;
-import com.birdcomics.GestioneProfili.Controller.RegisterSrv;
-import com.birdcomics.GestioneProfili.Service.ProfileService;
+import com.birdcomics.GestioneProfilo.Controller.RegisterSrv;
+import com.birdcomics.GestioneProfilo.Service.ProfileService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
