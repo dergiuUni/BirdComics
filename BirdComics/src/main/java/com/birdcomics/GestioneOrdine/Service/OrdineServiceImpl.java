@@ -156,7 +156,7 @@ public class OrdineServiceImpl implements OrdineService {
                     u.getIndirizzo().getCap());
 
             // Crea l'ordine
-            OrderBean order = new OrderBean(u.getEmail(), paymentId, "Non Spedito", new java.sql.Date(System.currentTimeMillis()));
+            OrderBean order = new OrderBean(u.getEmail(), paymentId, "ORDER PLACED", new java.sql.Date(System.currentTimeMillis()));
             order.setIdFattura(fattura);
 
             // Aggiungi i fumetti all'ordine

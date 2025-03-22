@@ -181,7 +181,7 @@ public class OrderServiceDAO {
 
 		try {	
 			ps = con.prepareStatement("SELECT * FROM Ordine WHERE shipped = ? ");
-			ps.setString(1, "Non Spedito");
+			ps.setString(1, "ORDER PLACED");
 			rs = ps.executeQuery();
 
 			while (rs.next()) {

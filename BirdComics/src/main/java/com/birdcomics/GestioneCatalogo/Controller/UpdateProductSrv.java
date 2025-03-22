@@ -1,4 +1,4 @@
-package com.birdcomics.GestioneCatalogo;
+package com.birdcomics.GestioneCatalogo.Controller;
 
 import java.io.File;
 import java.io.IOException;
