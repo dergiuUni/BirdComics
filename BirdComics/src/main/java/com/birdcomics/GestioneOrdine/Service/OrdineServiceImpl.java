@@ -85,7 +85,7 @@ public class OrdineServiceImpl implements OrdineService {
 
     private RedirectUrls getRedirectURLs() {
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:8080/BirdComics/cancel.jsp");
+        redirectUrls.setCancelUrl("http://localhost:8080/BirdComics/CartDetailsServlet");
         redirectUrls.setReturnUrl("http://localhost:8080/BirdComics/review_payment");
         return redirectUrls;
     }
