@@ -12,11 +12,14 @@ import com.birdcomics.Utils.DBUtil;
 
 public class CartServiceDAO {
 
+    // Ottieni l'istanza singleton di DBUtil
+    private DBUtil dbUtil = DBUtil.getInstance();
+
     // 🔹 Metodo per ottenere il carrello dalla sessione
-    public CartBean getCartFromSession(HttpSession session, String userId) {
+    public CartBean getCartFromSession(HttpSession session, String email) {
         CartBean cart = (CartBean) session.getAttribute("cartBean");
         if (cart == null) {
-            cart = new CartBean(userId);
+            cart = new CartBean(email);
             session.setAttribute("cartBean", cart);
         }
         return cart;
@@ -24,53 +27,53 @@ public class CartServiceDAO {
 
     // 🔹 Metodo per aggiungere un prodotto al carrello
     @SuppressWarnings("resource")
-	public String addProductToCart(HttpSession session, String userId, String prodId, int prodQty) throws SQLException {
-        CartBean cart = getCartFromSession(session, userId);
+    public String addProductToCart(HttpSession session, String email, String prodId, int prodQty) throws SQLException {
+        CartBean cart = getCartFromSession(session, email);
 
-        Connection con = DBUtil.getConnection();
+        Connection con = dbUtil.getConnection(); // Usa l'istanza singleton
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
             ps = con.prepareStatement("SELECT quantita FROM CarrelloCliente WHERE id=? AND idFumetto=?");
-            ps.setString(1, userId);
+            ps.setString(1, email);
             ps.setString(2, prodId);
             rs = ps.executeQuery();
 
             if (rs.next()) {
                 int currentQty = rs.getInt("quantita");
                 prodQty += currentQty;
-                updateProductToCart(userId, prodId, prodQty);
+                updateProductToCart(email, prodId, prodQty);
             } else {
                 ps = con.prepareStatement("INSERT INTO CarrelloCliente (id, idFumetto, quantita) VALUES (?, ?, ?)");
-                ps.setString(1, userId);
+                ps.setString(1, email);
                 ps.setString(2, prodId);
                 ps.setInt(3, prodQty);
                 ps.executeUpdate();
             }
 
             // Ricarica il carrello dal database
-            loadCartFromDB(session, userId);  // Aggiungi questa riga per ricaricare il carrello dalla base dati
+            loadCartFromDB(session, email);  // Aggiungi questa riga per ricaricare il carrello dalla base dati
             return "Product added to cart successfully!";
         } catch (SQLException e) {
             e.printStackTrace();
             return "Error adding product to cart: " + e.getMessage();
         } finally {
-            DBUtil.closeConnection(ps);
-            DBUtil.closeConnection(rs);
+            dbUtil.closeConnection(ps); // Usa l'istanza singleton
+            dbUtil.closeConnection(rs); // Usa l'istanza singleton
         }
     }
 
     // 🔹 Metodo per rimuovere un prodotto dal carrello
-    public String removeProductFromCart(HttpSession session, String userId, String prodId) throws SQLException {
-        CartBean cart = getCartFromSession(session, userId);
+    public String removeProductFromCart(HttpSession session, String email, String prodId) throws SQLException {
+        CartBean cart = getCartFromSession(session, email);
 
-        Connection con = DBUtil.getConnection();
+        Connection con = dbUtil.getConnection(); // Usa l'istanza singleton
         PreparedStatement ps = null;
 
         try {
             ps = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=? AND idFumetto=?");
-            ps.setString(1, userId);
+            ps.setString(1, email);
             ps.setString(2, prodId);
             ps.executeUpdate();
 
@@ -79,31 +82,31 @@ public class CartServiceDAO {
             session.setAttribute("cartBean", cart);
 
             // Ricarica il carrello dal database
-            loadCartFromDB(session, userId);  // Aggiungi questa riga per ricaricare il carrello dalla base dati
+            loadCartFromDB(session, email);  // Aggiungi questa riga per ricaricare il carrello dalla base dati
             return "Product removed from cart successfully!";
         } catch (SQLException e) {
             e.printStackTrace();
             return "Error removing product from cart: " + e.getMessage();
         } finally {
-            DBUtil.closeConnection(ps);
+            dbUtil.closeConnection(ps); // Usa l'istanza singleton
         }
     }
 
     // 🔹 Metodo per aggiornare la quantità di un prodotto nel carrello
-    public String updateProductToCart(String userId, String prodId, int prodQty) throws SQLException {
-        Connection con = DBUtil.getConnection();
+    public String updateProductToCart(String email, String prodId, int prodQty) throws SQLException {
+        Connection con = dbUtil.getConnection(); // Usa l'istanza singleton
         PreparedStatement ps = null;
 
         try {
             if (prodQty > 0) {
                 ps = con.prepareStatement("UPDATE CarrelloCliente SET quantita=? WHERE id=? AND idFumetto=?");
                 ps.setInt(1, prodQty);
-                ps.setString(2, userId);
+                ps.setString(2, email);
                 ps.setString(3, prodId);
                 ps.executeUpdate();
             } else {
                 ps = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=? AND idFumetto=?");
-                ps.setString(1, userId);
+                ps.setString(1, email);
                 ps.setString(2, prodId);
                 ps.executeUpdate();
             }
@@ -113,24 +116,24 @@ public class CartServiceDAO {
             e.printStackTrace();
             return "Error updating cart: " + e.getMessage();
         } finally {
-            DBUtil.closeConnection(ps);
+            dbUtil.closeConnection(ps); // Usa l'istanza singleton
         }
     }
 
- // 🔹 Metodo per ottenere tutti gli articoli del carrello dal database
-    public CartBean loadCartFromDB(HttpSession session, String userId) throws SQLException {
+    // 🔹 Metodo per ottenere tutti gli articoli del carrello dal database
+    public CartBean loadCartFromDB(HttpSession session, String email) throws SQLException {
         // Crea un nuovo carrello per l'utente
-        CartBean cart = new CartBean(userId);
-        
+        CartBean cart = new CartBean(email);
+
         // Connessione al database
-        Connection con = DBUtil.getConnection();
+        Connection con = dbUtil.getConnection(); // Usa l'istanza singleton
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
             // Prepara la query per ottenere tutti gli articoli del carrello dell'utente
             ps = con.prepareStatement("SELECT idFumetto, quantita FROM CarrelloCliente WHERE id=?");
-            ps.setString(1, userId);  // Imposta l'ID dell'utente
+            ps.setString(1, email);  // Imposta l'ID dell'utente
 
             rs = ps.executeQuery();
 
@@ -138,7 +141,7 @@ public class CartServiceDAO {
             while (rs.next()) {
                 String prodId = rs.getString("idFumetto");
                 int quantity = rs.getInt("quantita");
-                
+
                 // Aggiungi ogni articolo al carrello
                 CartItem item = new CartItem(prodId, quantity);
                 cart.addItem(item);
@@ -150,31 +153,33 @@ public class CartServiceDAO {
             e.printStackTrace();
         } finally {
             // Chiudi le risorse
-            DBUtil.closeConnection(ps);
-            DBUtil.closeConnection(rs);
+            dbUtil.closeConnection(ps); // Usa l'istanza singleton
+            dbUtil.closeConnection(rs); // Usa l'istanza singleton
         }
 
         // Restituisci il carrello caricato
         return cart;
     }
 
-
-    public void deleteAllCartItems(HttpSession session, String userId) throws SQLException {
-        Connection con = DBUtil.getConnection();
+    public String deleteAllCartItems(HttpSession session, String email) throws SQLException {
+        Connection con = dbUtil.getConnection(); // Usa l'istanza singleton
         PreparedStatement ps = null;
 
         try {
             ps = con.prepareStatement("DELETE FROM CarrelloCliente WHERE id=?");
-            ps.setString(1, userId);
+            ps.setString(1, email);
             ps.executeUpdate();
 
             // Rimuovi il carrello dalla sessione
             session.removeAttribute("cartBean");
+
+            return "All cart items deleted successfully!";
         } catch (SQLException e) {
             e.printStackTrace(); // Stampa l'errore per debug
-            throw e; // Rilancia l'eccezione
+            return "Error deleting all cart items: " + e.getMessage(); // Ritorna un messaggio di errore
         } finally {
-            DBUtil.closeConnection(ps);
+            dbUtil.closeConnection(ps); // Usa l'istanza singleton
         }
     }
+
 }

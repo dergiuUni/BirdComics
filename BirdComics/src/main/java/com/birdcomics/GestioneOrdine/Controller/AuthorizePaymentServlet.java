@@ -66,8 +66,8 @@ public class AuthorizePaymentServlet extends HttpServlet {
 		try {
 			usb = usd.getUserDetails(request.getSession().getAttribute("email").toString());
 				
-			String userId = request.getSession().getAttribute("email").toString();  // Assuming 'email' is used as userId
-		    CartBean cartBean = cart.getCartFromSession(request.getSession(), userId);
+			String email = request.getSession().getAttribute("email").toString();  // Assuming 'email' is used as email
+		    CartBean cartBean = cart.getCartFromSession(request.getSession(), email);
 		    ca = cartBean.getCartItems();  // Get all items from the car
 
 			for (CartItem c : ca) {

@@ -133,6 +133,6 @@ public class OrdineServiceImplTest {
 
         // Assert
         assertEquals(1, orders.size());
-        assertEquals(email, orders.get(0).getEmailUtente());
+        assertEquals(email, orders.get(0).getIdUtente());
     }
 }

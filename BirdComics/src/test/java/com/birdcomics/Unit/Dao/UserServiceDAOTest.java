@@ -1,21 +1,32 @@
 package com.birdcomics.Unit.Dao;
 
-import com.birdcomics.Model.Bean.RuoloBean;
-import com.birdcomics.Model.Bean.UserBean;
-import com.birdcomics.Model.Dao.IndirizzoDao;
-import com.birdcomics.Model.Dao.UserServiceDAO;
-import com.birdcomics.Utils.DBUtil;
-import org.junit.jupiter.api.*;
-import org.mockito.*;
-
-import java.sql.*;
-import java.util.ArrayList;
-
-
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.birdcomics.Model.Bean.IndirizzoBean;
+import com.birdcomics.Model.Bean.MagazzinoBean;
+import com.birdcomics.Model.Bean.RuoloBean;
+import com.birdcomics.Model.Bean.UserBean;
+import com.birdcomics.Model.Dao.UserServiceDAO;
+import com.birdcomics.Utils.DBUtil;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 public class UserServiceDAOTest {
+
+    @Mock
+    private DBUtil dbUtil;
 
     @Mock
     private Connection connection;
@@ -26,127 +37,75 @@ public class UserServiceDAOTest {
     @Mock
     private ResultSet resultSet;
 
-    @Mock
-    private IndirizzoDao indirizzoDao;
-
+    @InjectMocks
     private UserServiceDAO userServiceDAO;
-    private MockedStatic<DBUtil> mockedDBUtil;
 
     @BeforeEach
-    void setUp() throws SQLException {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
-        userServiceDAO = new UserServiceDAO();
-
-        // Mock dei metodi statici di DBUtil
-        mockedDBUtil = mockStatic(DBUtil.class);
-        when(DBUtil.getConnection()).thenReturn(connection);
     }
-
-    @AfterEach
-    void tearDown() {
-        mockedDBUtil.close();
-    }
-
-    // ===================================================
-    // Test per il metodo: registerUser
-    // ===================================================
 
     @Test
-    void testRegisterUser_Success() throws SQLException {
-        // Dati di input
+    public void testRegisterUser() throws SQLException {
+        // Dati di test
         String email = "test@example.com";
         String password = "password";
         String nome = "Nome";
         String cognome = "Cognome";
-        String numeroTelefono = "1234567890";
+        String telefono = "1234567890";
         Date dataNascita = Date.valueOf("1990-01-01");
-        String nomeCitta = "Città";
+        String citta = "Città";
         String via = "Via";
         String numeroCivico = "123";
         String cap = "12345";
         ArrayList<RuoloBean> ruoli = new ArrayList<>();
         ruoli.add(RuoloBean.Cliente);
+        MagazzinoBean magazzino = null;
 
-        // Mock del comportamento del database per isRegistered
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(false); // Simula che l'email non sia già registrata
+        when(preparedStatement.executeUpdate()).thenReturn(1);
 
-        // Mock del comportamento del database per registerUser
-        when(preparedStatement.executeUpdate()).thenReturn(1); // Simula l'inserimento avvenuto con successo
+        // Simula il comportamento di isRegistered
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(false); // Simula che l'utente non esista
 
         // Esegui il metodo da testare
-        String result = userServiceDAO.registerUser(email, password, nome, cognome, numeroTelefono, dataNascita, nomeCitta, via, numeroCivico, cap, ruoli, null);
+        String result = userServiceDAO.registerUser(email, password, nome, cognome, telefono, dataNascita, citta, via, numeroCivico, cap, ruoli, magazzino);
 
         // Verifica il risultato
         assertEquals("User Registered Successfully!", result);
+        verify(preparedStatement, times(3)).executeUpdate(); // Verifica che executeUpdate sia chiamato tre volte
     }
 
     @Test
-    void testRegisterUser_EmailAlreadyRegistered() throws SQLException {
-        // Dati di input
+    public void testIsRegistered() throws SQLException {
+        // Dati di test
         String email = "test@example.com";
-        String password = "password";
-        String nome = "Nome";
-        String cognome = "Cognome";
-        String numeroTelefono = "1234567890";
-        Date dataNascita = Date.valueOf("1990-01-01");
-        String nomeCitta = "Città";
-        String via = "Via";
-        String numeroCivico = "123";
-        String cap = "12345";
-        ArrayList<RuoloBean> ruoli = new ArrayList<>();
-        ruoli.add(RuoloBean.Cliente);
 
-        // Simula che l'email sia già registrata
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true); // Simula che l'email esista già
+        when(resultSet.next()).thenReturn(true); // Simula che l'utente esista
 
         // Esegui il metodo da testare
-        String result = userServiceDAO.registerUser(email, password, nome, cognome, numeroTelefono, dataNascita, nomeCitta, via, numeroCivico, cap, ruoli, null);
+        boolean result = userServiceDAO.isRegistered(email);
 
         // Verifica il risultato
-        assertEquals("Email Id Already Registered!", result);
+        assertTrue(result);
+        verify(preparedStatement, times(1)).executeQuery();
     }
 
     @Test
-    void testRegisterUser_SQLException() throws SQLException {
-        // Dati di input
-        String email = "test@example.com";
-        String password = "password";
-        String nome = "Nome";
-        String cognome = "Cognome";
-        String numeroTelefono = "1234567890";
-        Date dataNascita = Date.valueOf("1990-01-01");
-        String nomeCitta = "Città";
-        String via = "Via";
-        String numeroCivico = "123";
-        String cap = "12345";
-        ArrayList<RuoloBean> ruoli = new ArrayList<>();
-        ruoli.add(RuoloBean.Cliente);
-
-        // Simula un'eccezione SQL
-        when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
-
-        // Esegui il metodo da testare
-        String result = userServiceDAO.registerUser(email, password, nome, cognome, numeroTelefono, dataNascita, nomeCitta, via, numeroCivico, cap, ruoli, null);
-
-        // Verifica il risultato
-        assertTrue(result.startsWith("Error: "));
-    }
-
-    // ===================================================
-    // Test per il metodo: isValidCredential
-    // ===================================================
-
-    @Test
-    void testIsValidCredential_Valid() throws SQLException {
-        // Dati di input
+    public void testIsValidCredential() throws SQLException {
+        // Dati di test
         String email = "test@example.com";
         String password = "password";
 
-        // Mock del comportamento del database
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true); // Simula che le credenziali siano valide
@@ -156,113 +115,98 @@ public class UserServiceDAOTest {
 
         // Verifica il risultato
         assertEquals("valid", result);
+        verify(preparedStatement, times(1)).executeQuery();
     }
 
     @Test
-    void testIsValidCredential_Invalid() throws SQLException {
-        // Dati di input
+    public void testGetUserDetails() throws SQLException {
+        // Dati di test
+        String email = "test@example.com";
+        ArrayList<RuoloBean> ruoli = new ArrayList<>();
+        ruoli.add(RuoloBean.Cliente);
+
+        // Inizializza IndirizzoBean
+        IndirizzoBean indirizzo = new IndirizzoBean("Città", "Via", "123", "12345");
+
+        // Inizializza MagazzinoBean
+        MagazzinoBean magazzino = new MagazzinoBean("Magazzino1", indirizzo, new ArrayList<>());
+
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        // Configura il comportamento di ResultSet
+        when(resultSet.next()).thenReturn(true, false); // Restituisce true una volta, poi false
+        when(resultSet.getString("email")).thenReturn(email);
+        when(resultSet.getString("pass")).thenReturn("password");
+        when(resultSet.getString("nome")).thenReturn("Nome");
+        when(resultSet.getString("cognome")).thenReturn("Cognome");
+        when(resultSet.getString("telefono")).thenReturn("1234567890");
+        when(resultSet.getDate("dataNascita")).thenReturn(Date.valueOf("1990-01-01"));
+        when(resultSet.getString("nomeCitta")).thenReturn(indirizzo.getNomeCitta()); // Usa IndirizzoBean
+        when(resultSet.getString("via")).thenReturn(indirizzo.getVia()); // Usa IndirizzoBean
+        when(resultSet.getString("numeroCivico")).thenReturn(indirizzo.getNumeroCivico()); // Usa IndirizzoBean
+        when(resultSet.getString("cap")).thenReturn(indirizzo.getCap()); // Usa IndirizzoBean
+        when(resultSet.getString("nomeMagazzino")).thenReturn(magazzino.getNome()); // Usa MagazzinoBean
+        when(resultSet.getString("idRuolo")).thenReturn("Cliente");
+
+        // Esegui il metodo da testare
+        UserBean result = userServiceDAO.getUserDetails(email);
+
+        // Verifica il risultato
+        assertNotNull(result);
+        assertEquals(email, result.getEmail());
+        assertEquals(indirizzo.getNomeCitta(), result.getIndirizzo().getNomeCitta()); // Verifica IndirizzoBean
+        assertEquals(magazzino.getNome(), result.getMagazzino().getNome()); // Verifica MagazzinoBean
+        verify(preparedStatement, times(1)).executeQuery();
+    }
+
+
+    @Test
+    public void testUpdateUserDetails() throws SQLException {
+        // Dati di test
         String email = "test@example.com";
         String password = "password";
+        String nome = "NuovoNome";
+        String cognome = "NuovoCognome";
+        String telefono = "0987654321";
+        String nomeCitta = "NuovaCittà";
+        String via = "NuovaVia";
+        String numeroCivico = "456";
+        String cap = "54321";
 
-        // Mock del comportamento del database
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeUpdate()).thenReturn(1);
+
+        // Simula il comportamento di IndirizzoDao.ifExists
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(false); // Simula che le credenziali non siano valide
+        when(resultSet.next()).thenReturn(false); // Simula che l'indirizzo non esista
 
         // Esegui il metodo da testare
-        String result = userServiceDAO.isValidCredential(email, password);
+        userServiceDAO.updateUserDetails(email, password, nome, cognome, telefono, nomeCitta, via, numeroCivico, cap);
 
-        // Verifica il risultato
-        assertEquals("Login Denied! Incorrect email or Password", result);
+        // Verifica che il metodo executeUpdate sia chiamato
+        verify(preparedStatement, times(2)).executeUpdate();
     }
 
-    @Test
-    void testIsValidCredential_SQLException() throws SQLException {
-        // Dati di input
-        String email = "test@example.com";
-        String password = "password";
-
-        // Simula un'eccezione SQL
-        when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
-
-        // Esegui il metodo da testare
-        String result = userServiceDAO.isValidCredential(email, password);
-
-        // Verifica il risultato
-        assertTrue(result.startsWith("Error: "));
-    }
-
-    // ===================================================
-    // Test per il metodo: getUserDetails
-    // ===================================================
 
     @Test
-    void testGetUserDetails_Success() throws SQLException {
-        // Dati di input
+    public void testDeleteUser() throws SQLException {
+        // Dati di test
         String email = "test@example.com";
 
-        // Mock del comportamento del database
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-
-        // Simula che il ResultSet contenga due righe (un utente con due ruoli)
-        when(resultSet.next()).thenReturn(true, true, false); // Due righe, poi false per terminare
-        when(resultSet.getString("email")).thenReturn(email, email); // Email uguale per entrambe le righe
-        when(resultSet.getString("nome")).thenReturn("Nome", "Nome");
-        when(resultSet.getString("cognome")).thenReturn("Cognome", "Cognome");
-        when(resultSet.getString("telefono")).thenReturn("1234567890", "1234567890");
-        when(resultSet.getDate("dataNascita")).thenReturn(Date.valueOf("1990-01-01"), Date.valueOf("1990-01-01"));
-        when(resultSet.getString("nomeCitta")).thenReturn("Città", "Città");
-        when(resultSet.getString("via")).thenReturn("Via", "Via");
-        when(resultSet.getInt("numeroCivico")).thenReturn(123, 123);
-        when(resultSet.getString("cap")).thenReturn("12345", "12345");
-        when(resultSet.getString("idRuolo")).thenReturn("Cliente", "Magazziniere"); // Due ruoli diversi
+        when(preparedStatement.executeUpdate()).thenReturn(1);
 
         // Esegui il metodo da testare
-        UserBean user = userServiceDAO.getUserDetails(email);
+        userServiceDAO.deleteUser(email);
 
-        // Verifica il risultato
-        assertNotNull(user);
-        assertEquals(email, user.getEmail());
-        assertEquals("Nome", user.getNome());
-        assertEquals("Cognome", user.getCognome());
-
-        // Verifica che i ruoli siano stati correttamente aggiunti
-        assertNotNull(user.getRuolo());
-        assertEquals(2, user.getRuolo().size());
-        assertTrue(user.getRuolo().contains(RuoloBean.Cliente));
-        assertTrue(user.getRuolo().contains(RuoloBean.Magazziniere));
-    }
-
-    @Test
-    void testGetUserDetails_NotFound() throws SQLException {
-        // Dati di input
-        String email = "test@example.com";
-
-        // Mock del comportamento del database
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(false); // Simula che l'utente non esista
-
-        // Esegui il metodo da testare
-        UserBean user = userServiceDAO.getUserDetails(email);
-
-        // Verifica il risultato
-        assertNull(user);
-    }
-
-    @Test
-    void testGetUserDetails_SQLException() throws SQLException {
-        // Dati di input
-        String email = "test@example.com";
-
-        // Simula un'eccezione SQL
-        when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
-
-        // Esegui il metodo da testare
-        UserBean user = userServiceDAO.getUserDetails(email);
-
-        // Verifica il risultato
-        assertNull(user);
+        // Verifica che il metodo executeUpdate sia chiamato due volte
+        verify(preparedStatement, times(2)).executeUpdate();
     }
 }

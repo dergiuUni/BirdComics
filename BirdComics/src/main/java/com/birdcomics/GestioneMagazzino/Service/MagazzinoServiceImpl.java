@@ -3,7 +3,7 @@ package com.birdcomics.GestioneMagazzino.Service;
 import com.birdcomics.Model.Bean.MagazzinoBean;
 import com.birdcomics.Model.Bean.ScaffaliBean;
 import com.birdcomics.Model.Bean.UserBean;
-import com.birdcomics.Model.Dao.MagazzinoDao;
+import com.birdcomics.Model.Dao.MagazzinoDAO;
 import com.birdcomics.Model.Dao.ScaffaleDao;
 import com.birdcomics.Model.Dao.UserServiceDAO;
 
@@ -13,13 +13,13 @@ import java.util.List;
 public class MagazzinoServiceImpl implements MagazzinoService {
 
     private ScaffaleDao scaffaleDao;
-	private MagazzinoDao magazzinoDao;
+	private MagazzinoDAO magazzinoDao;
 	private UserServiceDAO userServiceDao;
 	
 
     public MagazzinoServiceImpl() {
         this.scaffaleDao = new ScaffaleDao();
-        this.magazzinoDao = new MagazzinoDao();
+        this.magazzinoDao = new MagazzinoDAO();
         this.userServiceDao = new UserServiceDAO();
     }
 

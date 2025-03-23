@@ -7,7 +7,7 @@ import java.util.HashMap;
 @SuppressWarnings("serial")
 public class OrderBean implements Serializable {
 
-	private String emailUtente;
+	private String idUtente;
 	private int id;
 	private String idPaypal;
 	private String shipped;
@@ -21,7 +21,7 @@ public class OrderBean implements Serializable {
 	
 	public OrderBean(String emailUtente, int id, String idPaypal, String shipped, Date dataEffettuato, FatturaBean idFattura) {
 		super();
-		this.emailUtente = emailUtente;
+		this.idUtente = emailUtente;
 		this.id = id;
 		this.idPaypal = idPaypal;
 		this.shipped = shipped;
@@ -31,7 +31,7 @@ public class OrderBean implements Serializable {
 	
 	public OrderBean(String emailUtente,  String idPaypal, String shipped, Date dataEffettuato) {
 		super();
-		this.emailUtente = emailUtente;
+		this.idUtente = emailUtente;
 		this.idPaypal = idPaypal;
 		this.shipped = shipped;
 		this.dataEffettuato = dataEffettuato;
@@ -43,12 +43,12 @@ public class OrderBean implements Serializable {
 	}
 
 
-	public String getEmailUtente() {
-		return emailUtente;
+	public String getIdUtente() {
+		return idUtente;
 	}
 
-	public void setEmailUtente(String emailUtente) {
-		this.emailUtente = emailUtente;
+	public void setIdUtente(String emailUtente) {
+		this.idUtente = emailUtente;
 	}
 
 	public void setId(int id) {

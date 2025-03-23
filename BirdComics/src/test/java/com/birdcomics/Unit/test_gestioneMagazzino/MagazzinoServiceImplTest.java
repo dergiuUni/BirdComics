@@ -11,7 +11,7 @@ import java.util.List;
 import com.birdcomics.Model.Bean.MagazzinoBean;
 import com.birdcomics.Model.Bean.ScaffaliBean;
 import com.birdcomics.Model.Bean.UserBean;
-import com.birdcomics.Model.Dao.MagazzinoDao;
+import com.birdcomics.Model.Dao.MagazzinoDAO;
 import com.birdcomics.Model.Dao.ScaffaleDao;
 import com.birdcomics.Model.Dao.UserServiceDAO;
 import com.birdcomics.GestioneMagazzino.Service.MagazzinoServiceImpl;
@@ -30,7 +30,7 @@ public class MagazzinoServiceImplTest {
     private ScaffaleDao scaffaleDao;
 
     @Mock
-    private MagazzinoDao magazzinoDao;
+    private MagazzinoDAO magazzinoDao;
 
     @Mock
     private UserServiceDAO userServiceDao;

@@ -7,7 +7,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class CartBean implements Serializable {
 
-    private String userId;
+    private String email;
     private List<CartItem> cartItems;
 
     // 🔧 Costruttore vuoto
@@ -15,19 +15,19 @@ public class CartBean implements Serializable {
         this.cartItems = new ArrayList<>();
     }
 
-    // 🔧 Costruttore con userId
-    public CartBean(String userId) {
-        this.userId = userId;
+    // 🔧 Costruttore con email
+    public CartBean(String email) {
+        this.email = email;
         this.cartItems = new ArrayList<>();
     }
 
     // Getter e Setter
-    public String getUserId() {
-        return userId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<CartItem> getCartItems() {

@@ -1,248 +1,231 @@
 package com.birdcomics.Model.Dao;
 
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.birdcomics.Model.Bean.IndirizzoBean;
 import com.birdcomics.Model.Bean.ProductBean;
-import com.birdcomics.Model.Bean.RuoloBean;
 import com.birdcomics.Model.Bean.ScaffaliBean;
-import com.birdcomics.Model.Bean.UserBean;
 import com.birdcomics.Utils.DBUtil;
 
 public class ScaffaleDao {
-	public ScaffaliBean addScaffale(int quantitaMassima) throws SQLException {
-	    String status = "User Registration Failed!";
-	    Connection con = DBUtil.getConnection();
-	    PreparedStatement ps = null;
-	    
 
-	    if (con != null) {
-	        System.out.println("Connected Successfully!");
-	    }
+    // Ottieni l'istanza singleton di DBUtil
+    private DBUtil dbUtil = DBUtil.getInstance();
 
-	    try {
-	    	
-	        ps = con.prepareStatement("INSERT INTO Scaffali (quantitaMassima) VALUES (?)", java.sql.Statement.RETURN_GENERATED_KEYS);
+    public ScaffaliBean addScaffale(int quantitaMassima) throws SQLException {
+        String status = "Scaffale Registration Failed!";
+        Connection con = dbUtil.getConnection(); // Usa l'istanza singleton
+        PreparedStatement ps = null;
 
-	        ps.setInt(1, quantitaMassima);
+        if (con != null) {
+            System.out.println("Connected Successfully!");
+        }
 
-	        int k = ps.executeUpdate();
+        try {
+            ps = con.prepareStatement("INSERT INTO Scaffali (quantitaMassima) VALUES (?)", java.sql.Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, quantitaMassima);
 
-	        if (k > 0) {
-	            
-	        	ResultSet rs = null;
-	        	rs = ps.getGeneratedKeys();
-	        	if (rs.next()) {
-	        		ScaffaliBean scaffale = new ScaffaliBean();
+            int k = ps.executeUpdate();
+
+            if (k > 0) {
+                ResultSet rs = null;
+                rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    ScaffaliBean scaffale = new ScaffaliBean();
                     scaffale.setId(rs.getInt(1)); // O getInt(1) se l'ID è un int
+                    status = "Scaffale Registered Successfully!";
                     return scaffale;
-                    
                 }
-	        	status = "User Registered Successfully!";
-	        }
+            }
 
-	    } catch (SQLException e) {
-	        status = "Error: " + e.getMessage();
-	        e.printStackTrace();
-	    } finally {
-	        DBUtil.closeConnection(ps);
-	    }
+        } catch (SQLException e) {
+            status = "Error: " + e.getMessage();
+            e.printStackTrace();
+        } finally {
+            dbUtil.closeConnection(ps); // Chiudi il PreparedStatement
+        }
 
-	    return null;
-	}
-	
-	public void removeScaffale(ProductBean fumetto) throws SQLException {
-	    String status = "User Registration Failed!";
-	    Connection con = DBUtil.getConnection();
-	    PreparedStatement ps = null;
-	    
+        return null;
+    }
 
-	    if (con != null) {
-	        System.out.println("Connected Successfully!");
-	    }
+    public String removeScaffale(ProductBean fumetto) throws SQLException {
+        String status = "Scaffale Removal Failed!";
+        Connection con = dbUtil.getConnection(); // Usa l'istanza singleton
+        PreparedStatement ps = null;
 
-	    try {
-	    	
-	        ps = con.prepareStatement("DELETE FROM Scaffali where id = ?");
+        if (con != null) {
+            System.out.println("Connected Successfully!");
+        }
 
-	        ps.setInt(1, fumetto.getId());
+        try {
+            ps = con.prepareStatement("DELETE FROM Scaffali where id = ?");
+            ps.setInt(1, fumetto.getId());
+            int k = ps.executeUpdate();
 
-	        ps.executeUpdate();
+            if (k > 0) {
+                status = "Scaffale Removed Successfully!";
+            }
 
-	    } catch (SQLException e) {
-	        status = "Error: " + e.getMessage();
-	        e.printStackTrace();
-	    } finally {
-	        DBUtil.closeConnection(ps);
-	    }
+        } catch (SQLException e) {
+            status = "Error: " + e.getMessage();
+            e.printStackTrace();
+        } finally {
+            dbUtil.closeConnection(ps); // Chiudi il PreparedStatement
+        }
 
-	}
-	
-	public void addFumetto(ScaffaliBean scaffale) throws SQLException {
-	    String status = "User Registration Failed!";
-	    Connection con = DBUtil.getConnection();
-	    PreparedStatement ps = null;
-	    
+        return status;
+    }
 
-	    if (con != null) {
-	        System.out.println("Connected Successfully!");
-	    }
+    public String addFumetto(ScaffaliBean scaffale) throws SQLException {
+        String status = "Fumetto Addition to Scaffale Failed!";
+        Connection con = dbUtil.getConnection(); // Usa l'istanza singleton
+        PreparedStatement ps = null;
 
-	    try {
-	    	
-	        ps = con.prepareStatement("INSERT INTO Scaffali (quantita, idFumetto) VALUES (?, ?)");
+        if (con != null) {
+            System.out.println("Connected Successfully!");
+        }
 
-	        ps.setInt(1, scaffale.getQuantitaOccupata());
-	        ps.setInt(2, scaffale.getFumetto().getId());
+        try {
+            ps = con.prepareStatement("INSERT INTO Scaffali (quantita, idFumetto) VALUES (?, ?)");
+            ps.setInt(1, scaffale.getQuantitaOccupata());
+            ps.setInt(2, scaffale.getFumetto().getId());
 
-	        int k = ps.executeUpdate();
+            int k = ps.executeUpdate();
 
-	        if (k > 0) {
-	            
-	        	status = "User Registered Successfully!";
-	        }
+            if (k > 0) {
+                status = "Fumetto Added to Scaffale Successfully!";
+            }
 
-	    } catch (SQLException e) {
-	        status = "Error: " + e.getMessage();
-	        e.printStackTrace();
-	    } finally {
-	        DBUtil.closeConnection(ps);
-	    } 
-	}
-	
-	public void modifyQuantityFumetto(ScaffaliBean scaffale) throws SQLException {
-	    String status = "User Registration Failed!";
-	    Connection con = DBUtil.getConnection();
-	    PreparedStatement ps = null;
-	    
+        } catch (SQLException e) {
+            status = "Error: " + e.getMessage();
+            e.printStackTrace();
+        } finally {
+            dbUtil.closeConnection(ps); // Chiudi il PreparedStatement
+        }
 
-	    if (con != null) {
-	        System.out.println("Connected Successfully!");
-	    }
+        return status;
+    }
 
-	    try {
-	    	
-	        ps = con.prepareStatement("UPDATE Scaffali SET quantita = ? where id = ?");
+    public String modifyQuantityFumetto(ScaffaliBean scaffale) throws SQLException {
+        String status = "Fumetto Quantity Modification Failed!";
+        Connection con = dbUtil.getConnection(); // Usa l'istanza singleton
+        PreparedStatement ps = null;
 
-	        ps.setInt(1, scaffale.getQuantitaOccupata());
-	        ps.setInt(2, scaffale.getId());
+        if (con != null) {
+            System.out.println("Connected Successfully!");
+        }
 
-	        int k = ps.executeUpdate();
+        try {
+            ps = con.prepareStatement("UPDATE Scaffali SET quantita = ? where id = ?");
+            ps.setInt(1, scaffale.getQuantitaOccupata());
+            ps.setInt(2, scaffale.getId());
 
-	        if (k > 0) {
-	            
-	        	status = "User Registered Successfully!";
-	        }
+            int k = ps.executeUpdate();
 
-	    } catch (SQLException e) {
-	        status = "Error: " + e.getMessage();
-	        e.printStackTrace();
-	    } finally {
-	        DBUtil.closeConnection(ps);
-	    } 
-	}
-	
-	public void modifyFumetto(ScaffaliBean scaffale) throws SQLException {
-	    String status = "User Registration Failed!";
-	    Connection con = DBUtil.getConnection();
-	    PreparedStatement ps = null;
-	    
+            if (k > 0) {
+                status = "Fumetto Quantity Modified Successfully!";
+            }
 
-	    if (con != null) {
-	        System.out.println("Connected Successfully!");
-	    }
+        } catch (SQLException e) {
+            status = "Error: " + e.getMessage();
+            e.printStackTrace();
+        } finally {
+            dbUtil.closeConnection(ps); // Chiudi il PreparedStatement
+        }
 
-	    try {
-	    	
-	        ps = con.prepareStatement("UPDATE Scaffali SET quantita = ?, idFumetto = ? where id = ?");
+        return status;
+    }
 
-	        ps.setInt(1, scaffale.getQuantitaOccupata());
-	        ps.setInt(2, scaffale.getFumetto().getId());
-	        ps.setInt(3, scaffale.getId());
+    public String modifyFumetto(ScaffaliBean scaffale) throws SQLException {
+        String status = "Fumetto Modification Failed!";
+        Connection con = dbUtil.getConnection(); // Usa l'istanza singleton
+        PreparedStatement ps = null;
 
-	        int k = ps.executeUpdate();
+        if (con != null) {
+            System.out.println("Connected Successfully!");
+        }
 
-	        if (k > 0) {
-	            
-	        	status = "User Registered Successfully!";
-	        }
+        try {
+            ps = con.prepareStatement("UPDATE Scaffali SET quantita = ?, idFumetto = ? where id = ?");
+            ps.setInt(1, scaffale.getQuantitaOccupata());
+            ps.setInt(2, scaffale.getFumetto().getId());
+            ps.setInt(3, scaffale.getId());
 
-	    } catch (SQLException e) {
-	        status = "Error: " + e.getMessage();
-	        e.printStackTrace();
-	    } finally {
-	        DBUtil.closeConnection(ps);
-	    } 
-	}
+            int k = ps.executeUpdate();
 
-	public void deleteFumetto(ScaffaliBean scaffale) throws SQLException {
-	    String status = "User Registration Failed!";
-	    Connection con = DBUtil.getConnection();
-	    PreparedStatement ps = null;
-	    
+            if (k > 0) {
+                status = "Fumetto Modified Successfully!";
+            }
 
-	    if (con != null) {
-	        System.out.println("Connected Successfully!");
-	    }
+        } catch (SQLException e) {
+            status = "Error: " + e.getMessage();
+            e.printStackTrace();
+        } finally {
+            dbUtil.closeConnection(ps); // Chiudi il PreparedStatement
+        }
 
-	    try {
-	    	
-	        ps = con.prepareStatement("UPDATE Scaffali SET quantita = null, idFumetto = null idFumetto = ? where id = ?");
+        return status;
+    }
 
-	        ps.setInt(1, scaffale.getId());
+    public String deleteFumetto(ScaffaliBean scaffale) throws SQLException {
+        String status = "Fumetto Deletion Failed!";
+        Connection con = dbUtil.getConnection(); // Usa l'istanza singleton
+        PreparedStatement ps = null;
 
-	        int k = ps.executeUpdate();
+        if (con != null) {
+            System.out.println("Connected Successfully!");
+        }
 
-	        if (k > 0) {
-	            
-	        	status = "User Registered Successfully!";
-	        }
+        try {
+            ps = con.prepareStatement("UPDATE Scaffali SET quantita = null, idFumetto = null where id = ?");
+            ps.setInt(1, scaffale.getId());
 
-	    } catch (SQLException e) {
-	        status = "Error: " + e.getMessage();
-	        e.printStackTrace();
-	    } finally {
-	        DBUtil.closeConnection(ps);
-	    } 
-	}
-	
-	public ArrayList<ScaffaliBean> getScaffaleMagazzino(String nomeMagazzino) throws SQLException {
-		Connection con = DBUtil.getConnection();
-		ArrayList<ScaffaliBean> scaffali = new ArrayList<ScaffaliBean>();
+            int k = ps.executeUpdate();
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+            if (k > 0) {
+                status = "Fumetto Deleted Successfully!";
+            }
 
-		try {
-			ps = con.prepareStatement("select idScaffale, quantita, quantitaMassima, idFumetto  from MagazzinoScaffali, Scaffali where idMagazzino=? and idScaffale = id");
+        } catch (SQLException e) {
+            status = "Error: " + e.getMessage();
+            e.printStackTrace();
+        } finally {
+            dbUtil.closeConnection(ps); // Chiudi il PreparedStatement
+        }
 
-			ps.setString(1, nomeMagazzino);
+        return status;
+    }
 
-			rs = ps.executeQuery();
+    public ArrayList<ScaffaliBean> getScaffaleMagazzino(String nomeMagazzino) throws SQLException {
+        Connection con = dbUtil.getConnection(); // Usa l'istanza singleton
+        ArrayList<ScaffaliBean> scaffali = new ArrayList<ScaffaliBean>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-			while (rs.next()) {
-				ProductBean fumetto = new ProductBean();
-				ProductServiceDAO ser = new ProductServiceDAO();
-				fumetto = ser.getProductsByID(String.valueOf(rs.getInt("idFumetto")));
-				
-				ScaffaliBean scaffale = new ScaffaliBean(rs.getInt("idScaffale"), fumetto, rs.getInt("quantita"), rs.getInt("quantitaMassima"));
-				scaffali.add(scaffale);
-			}
-				
+        try {
+            ps = con.prepareStatement("select idScaffale, quantita, quantitaMassima, idFumetto from MagazzinoScaffali, Scaffali where idMagazzino=? and idScaffale = id");
+            ps.setString(1, nomeMagazzino);
+            rs = ps.executeQuery();
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            while (rs.next()) {
+                ProductBean fumetto = new ProductBean();
+                ProductServiceDAO ser = new ProductServiceDAO();
+                fumetto = ser.getProductsByID(String.valueOf(rs.getInt("idFumetto")));
 
-		DBUtil.closeConnection(ps);
-		DBUtil.closeConnection(rs);
+                ScaffaliBean scaffale = new ScaffaliBean(rs.getInt("idScaffale"), fumetto, rs.getInt("quantita"), rs.getInt("quantitaMassima"));
+                scaffali.add(scaffale);
+            }
 
-		return scaffali;
-	}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbUtil.closeConnection(ps); // Chiudi il PreparedStatement
+            dbUtil.closeConnection(rs); // Chiudi il ResultSet
+        }
+
+        return scaffali;
+    }
 }

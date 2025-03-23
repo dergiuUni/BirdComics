@@ -10,12 +10,18 @@ import java.util.concurrent.BlockingQueue;
 
 public class DBUtil {
 
-    private static final int MAX_POOL_SIZE = 10;
-    private static BlockingQueue<Connection> freeDbConnections;
+    private static final int MAX_POOL_SIZE = 20;
+    private BlockingQueue<Connection> freeDbConnections;
 
-    static {
+    // Istanza singleton
+    private static DBUtil instance;
+
+    // Costruttore privato
+    private DBUtil() {
         try {
+            // Carica il driver JDBC
             Class.forName("com.mysql.cj.jdbc.Driver");
+            // Inizializza la coda di connessioni
             freeDbConnections = new ArrayBlockingQueue<>(MAX_POOL_SIZE);
             initializeConnections();
         } catch (ClassNotFoundException e) {
@@ -24,15 +30,41 @@ public class DBUtil {
             System.out.println("Error initializing database connections: " + e.getMessage());
         }
     }
+    
+    /*
+    public class DBUtil {
+        private static volatile DBUtil instance; // Volatile per garantire visibilità nei thread
+        private DBUtil() {   }
 
-    private static void initializeConnections() throws SQLException {
+        public static DBUtil getInstance() {
+            if (instance == null) { // Primo check senza lock
+                synchronized (DBUtil.class) {
+                    if (instance == null) { // Secondo check con lock
+                        instance = new DBUtil();
+                    }
+                }
+            }
+            return instance;
+        }
+    }
+    */
+
+    // Metodo pubblico per ottenere l'istanza singleton
+    public static synchronized DBUtil getInstance() {
+        if (instance == null) {
+            instance = new DBUtil();
+        }
+        return instance;
+    }
+
+    private void initializeConnections() throws SQLException {
         for (int i = 0; i < MAX_POOL_SIZE; i++) {
             Connection connection = createDBConnection();
             freeDbConnections.offer(connection);
         }
     }
 
-    public static Connection createDBConnection() throws SQLException {
+    public Connection createDBConnection() throws SQLException {
         String ip = "localhost";
         String port = "3306";
         String db = "BirdComics";
@@ -47,7 +79,7 @@ public class DBUtil {
         );
     }
 
-    public static Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         Connection connection = freeDbConnections.poll();
         if (connection == null || connection.isClosed()) {
             connection = createDBConnection();
@@ -55,11 +87,11 @@ public class DBUtil {
         return connection;
     }
 
-    public static void closeConnection(Connection connection) {
+    public void closeConnection(Connection connection) {
         if (connection != null) {
             try {
                 if (!connection.isClosed() && !freeDbConnections.offer(connection)) {
-                    // Queue full, close the connection
+                    // Se la coda è piena, chiudi la connessione
                     connection.close();
                 }
             } catch (SQLException ex) {
@@ -68,7 +100,7 @@ public class DBUtil {
         }
     }
 
-    public static void closeConnection(PreparedStatement ps) {
+    public void closeConnection(PreparedStatement ps) {
         try {
             if (ps != null && !ps.isClosed()) {
                 ps.close();
@@ -78,7 +110,7 @@ public class DBUtil {
         }
     }
 
-    public static void closeConnection(ResultSet rs) {
+    public void closeConnection(ResultSet rs) {
         try {
             if (rs != null && !rs.isClosed()) {
                 rs.close();

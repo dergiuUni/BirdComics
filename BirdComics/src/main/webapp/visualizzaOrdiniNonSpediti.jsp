@@ -56,7 +56,7 @@
                            <tr>
                                <td><a href="./updateOrder.jsp?prodid=<%= product.getId() %>"><%= product.getId() %></a></td>
                                <%-- Limit name to 25 characters --%>
-                               <td><%= product.getEmailUtente()%></td>
+                               <td><%= product.getIdUtente()%></td>
                                <td><%= product.getShipped() %></td>
                                <td>
                                    <form method="get" action="./UpdateOrderSrv">

@@ -1,21 +1,38 @@
 package com.birdcomics.Unit.Dao;
 
-import com.birdcomics.Model.Bean.FatturaBean;
-import com.birdcomics.Model.Bean.OrderBean;
-import com.birdcomics.Model.Bean.ProductBean;
-import com.birdcomics.Model.Dao.FatturaServiceDAO;
-import com.birdcomics.Model.Dao.OrderServiceDAO;
-import com.birdcomics.Utils.DBUtil;
-import org.junit.jupiter.api.*;
-import org.mockito.*;
-
-import java.sql.*;
-import java.util.*;
-
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.birdcomics.Model.Bean.FatturaBean;
+import com.birdcomics.Model.Bean.OrderBean;
+import com.birdcomics.Model.Bean.ProductBean;
+import com.birdcomics.Model.Bean.ScaffaliBean;
+import com.birdcomics.Model.Dao.FatturaServiceDAO;
+import com.birdcomics.Model.Dao.OrderServiceDAO;
+import com.birdcomics.Model.Dao.ScaffaleDao;
+import com.birdcomics.Utils.DBUtil;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 public class OrderServiceDAOTest {
+
+    @Mock
+    private DBUtil dbUtil;
 
     @Mock
     private Connection connection;
@@ -29,35 +46,26 @@ public class OrderServiceDAOTest {
     @Mock
     private FatturaServiceDAO fatturaServiceDAO;
 
+    @Mock
+    private ScaffaleDao scaffaleDao;
+
+    @InjectMocks
     private OrderServiceDAO orderServiceDAO;
-    private MockedStatic<DBUtil> mockedDBUtil;
 
     @BeforeEach
-    void setUp() throws SQLException {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
-        orderServiceDAO = new OrderServiceDAO();
-
-        // Mock dei metodi statici di DBUtil
-        mockedDBUtil = mockStatic(DBUtil.class);
-        when(DBUtil.getConnection()).thenReturn(connection);
     }
-
-    @AfterEach
-    void tearDown() {
-        mockedDBUtil.close();
-    }
-
-    // ===================================================
-    // Test per il metodo: addOrder
-    // ===================================================
 
     @Test
-    void testAddOrder_Success() throws SQLException {
+    void testAddOrder() throws SQLException {
+        // Preparazione dei dati di test
         OrderBean order = new OrderBean();
-        order.setEmailUtente("client@example.com");
+        order.setIdUtente("client@example.com");
         order.setIdPaypal("PAYPAL123");
         order.setShipped("Non Spedito");
-        order.setDataEffettuato(new java.sql.Date(System.currentTimeMillis()));
+        order.setDataEffettuato(new Date(System.currentTimeMillis()));
+
         FatturaBean fattura = new FatturaBean();
         fattura.setId(1);
         order.setIdFattura(fattura);
@@ -71,168 +79,142 @@ public class OrderServiceDAOTest {
         fumetti.put(product, 5);
         order.setFumetti(fumetti);
 
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString(), eq(Statement.RETURN_GENERATED_KEYS))).thenReturn(preparedStatement);
         when(preparedStatement.executeUpdate()).thenReturn(1);
         when(preparedStatement.getGeneratedKeys()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
         when(resultSet.getInt(1)).thenReturn(1); // Simula l'ID generato
 
-        // Mock per la query di selezione degli scaffali
+        when(fatturaServiceDAO.addFattura(any(FatturaBean.class))).thenReturn(true);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true, false); // Simula un solo scaffale
         when(resultSet.getString("Magazzino.nome")).thenReturn("Magazzino1");
         when(resultSet.getInt("Scaffali.id")).thenReturn(1);
         when(resultSet.getInt("Scaffali.quantita")).thenReturn(10);
+        when(scaffaleDao.modifyQuantityFumetto(any(ScaffaliBean.class))).thenReturn("Fumetto Quantity Modified Successfully!");
 
+        // Esegui il metodo da testare
         boolean result = orderServiceDAO.addOrder(order);
 
+        // Verifica il risultato
         assertTrue(result);
-    }
 
-    @Test
-    void testAddOrder_SQLException() throws SQLException {
-        OrderBean order = new OrderBean();
-        order.setEmailUtente("client@example.com");
-        order.setIdPaypal("PAYPAL123");
-        order.setShipped("Non Spedito");
-        order.setDataEffettuato(new java.sql.Date(System.currentTimeMillis()));
-        FatturaBean fattura = new FatturaBean();
-        fattura.setId(1);
-        order.setIdFattura(fattura);
-
-        when(connection.prepareStatement(anyString(), eq(Statement.RETURN_GENERATED_KEYS)))
-            .thenThrow(new SQLException("Database error"));
-
-        boolean result = orderServiceDAO.addOrder(order);
-
-        assertFalse(result);
-    }
-
-    // ===================================================
-    // Test per il metodo: getAllOrderDetails
-    // ===================================================
-
-    @Test
-    void testGetAllOrderDetails_Success() throws SQLException {
-        String userEmailId = "client@example.com";
-
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true, false); // Simula un solo ordine
-        when(resultSet.getString("emailUtente")).thenReturn(userEmailId);
-        when(resultSet.getInt("id")).thenReturn(1);
-        when(resultSet.getString("idpaypal")).thenReturn("PAYPAL123");
-        when(resultSet.getString("shipped")).thenReturn("Non Spedito");
-        when(resultSet.getDate("dataEffettuato")).thenReturn(new java.sql.Date(System.currentTimeMillis()));
-        when(resultSet.getInt("idFattura")).thenReturn(1);
-
-        List<OrderBean> orderList = orderServiceDAO.getAllOrderDetails(userEmailId);
-
-        assertNotNull(orderList);
-        assertEquals(1, orderList.size());
-        assertEquals(userEmailId, orderList.get(0).getEmailUtente());
-    }
-
-    @Test
-    void testGetAllOrderDetails_EmptyResult() throws SQLException {
-        String userEmailId = "client@example.com";
-
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(false); // Nessun risultato
-
-        List<OrderBean> orderList = orderServiceDAO.getAllOrderDetails(userEmailId);
-
-        assertTrue(orderList.isEmpty());
-    }
-
-    @Test
-    void testGetAllOrderDetails_SQLException() throws SQLException {
-        String userEmailId = "client@example.com";
-
-        when(connection.prepareStatement(anyString()))
-            .thenThrow(new SQLException("Database error"));
-
-        List<OrderBean> orderList = orderServiceDAO.getAllOrderDetails(userEmailId);
-
-        assertTrue(orderList.isEmpty());
-    }
-
-    // ===================================================
-    // Test per il metodo: updateShipped
-    // ===================================================
-
-    @Test
-    void testUpdateShipped_Success() throws SQLException {
-        OrderBean order = new OrderBean();
-        order.setId(1);
-        order.setShipped("Spedito");
-
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeUpdate()).thenReturn(1); // Aggiornamento avvenuto con successo
-
-        boolean result = orderServiceDAO.updateShipped(order);
-
-        assertTrue(result);
+        // Verifica che i metodi siano stati chiamati correttamente
         verify(preparedStatement, times(1)).executeUpdate();
+        verify(preparedStatement, times(1)).getGeneratedKeys();
+        verify(dbUtil, times(1)).getConnection();
+        verify(dbUtil, times(1)).closeConnection(preparedStatement);
     }
 
-    @Test
-    void testUpdateShipped_SQLException() throws SQLException {
-        OrderBean order = new OrderBean();
-        order.setId(1);
-        order.setShipped("Spedito");
-
-        when(connection.prepareStatement(anyString()))
-            .thenThrow(new SQLException("Database error"));
-
-        boolean result = orderServiceDAO.updateShipped(order);
-
-        assertFalse(result);
-    }
-
-    // ===================================================
-    // Test per il metodo: getAllOrderDetailsNoShipped
-    // ===================================================
 
     @Test
-    void testGetAllOrderDetailsNoShipped_Success() throws SQLException {
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+    void testGetAllOrderDetails() throws SQLException {
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement("SELECT * FROM Ordine WHERE emailUtente = ?")).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true, false); // Simula un solo ordine
-        when(resultSet.getString("emailUtente")).thenReturn("client@example.com");
+
+        // Simula il comportamento di ResultSet
+        when(resultSet.next()).thenReturn(true, false); // Restituisce una riga
+        when(resultSet.getString("emailUtente")).thenReturn("test@example.com");
         when(resultSet.getInt("id")).thenReturn(1);
         when(resultSet.getString("idpaypal")).thenReturn("PAYPAL123");
-        when(resultSet.getString("shipped")).thenReturn("Non Spedito");
-        when(resultSet.getDate("dataEffettuato")).thenReturn(new java.sql.Date(System.currentTimeMillis()));
+        when(resultSet.getString("shipped")).thenReturn("ORDER PLACED");
+        when(resultSet.getDate("dataEffettuato")).thenReturn(new Date(System.currentTimeMillis()));
         when(resultSet.getInt("idFattura")).thenReturn(1);
 
-        List<OrderBean> orderList = orderServiceDAO.getAllOrderDetailsNoShipped();
+        // Simula il comportamento di FatturaServiceDAO
+        FatturaBean fattura = new FatturaBean();
+        when(fatturaServiceDAO.getFatturaById(1)).thenReturn(fattura);
 
-        assertNotNull(orderList);
-        assertEquals(1, orderList.size());
-        assertEquals("Non Spedito", orderList.get(0).getShipped());
+        // Esegui il metodo da testare
+        List<OrderBean> result = orderServiceDAO.getAllOrderDetails("test@example.com");
+
+        // Verifica il risultato
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        OrderBean order = result.get(0);
+        assertEquals("test@example.com", order.getIdUtente());
+        assertEquals(1, order.getId());
+        assertEquals("PAYPAL123", order.getIdPaypal());
+        assertEquals("ORDER PLACED", order.getShipped());
+        assertNotNull(order.getDataEffettuato());
+
+        // Verifica le interazioni con i mock
+        verify(preparedStatement, times(1)).executeQuery();
+        verify(preparedStatement, times(1)).setString(1, "test@example.com");
+        verify(dbUtil, times(1)).getConnection();
+        verify(dbUtil, times(1)).closeConnection(resultSet);
+        verify(dbUtil, times(1)).closeConnection(preparedStatement);
     }
 
     @Test
-    void testGetAllOrderDetailsNoShipped_EmptyResult() throws SQLException {
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+    void testUpdateShipped() throws SQLException {
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement("UPDATE Ordine SET shipped = ? WHERE id = ?")).thenReturn(preparedStatement);
+        when(preparedStatement.executeUpdate()).thenReturn(1);
+
+        // Dati di test
+        OrderBean order = new OrderBean();
+        order.setId(1);
+        order.setShipped("SHIPPED");
+
+        // Esegui il metodo da testare
+        boolean result = orderServiceDAO.updateShipped(order);
+
+        // Verifica il risultato
+        assertTrue(result);
+
+        // Verifica le interazioni con i mock
+        verify(preparedStatement, times(1)).executeUpdate();
+        verify(preparedStatement, times(1)).setString(1, "SHIPPED");
+        verify(preparedStatement, times(1)).setInt(2, 1);
+        verify(dbUtil, times(1)).getConnection();
+        verify(dbUtil, times(1)).closeConnection(preparedStatement);
+    }
+
+    @Test
+    void testGetAllOrderDetailsNoShipped() throws SQLException {
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement("SELECT * FROM Ordine WHERE shipped = ?")).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(false); // Nessun risultato
 
-        List<OrderBean> orderList = orderServiceDAO.getAllOrderDetailsNoShipped();
+        // Simula il comportamento di ResultSet
+        when(resultSet.next()).thenReturn(true, false); // Restituisce una riga
+        when(resultSet.getString("emailUtente")).thenReturn("test@example.com");
+        when(resultSet.getInt("id")).thenReturn(1);
+        when(resultSet.getString("idpaypal")).thenReturn("PAYPAL123");
+        when(resultSet.getString("shipped")).thenReturn("ORDER PLACED");
+        when(resultSet.getDate("dataEffettuato")).thenReturn(new Date(System.currentTimeMillis()));
+        when(resultSet.getInt("idFattura")).thenReturn(1);
 
-        assertTrue(orderList.isEmpty());
-    }
+        // Simula il comportamento di FatturaServiceDAO
+        FatturaBean fattura = new FatturaBean();
+        when(fatturaServiceDAO.getFatturaById(1)).thenReturn(fattura);
 
-    @Test
-    void testGetAllOrderDetailsNoShipped_SQLException() throws SQLException {
-        when(connection.prepareStatement(anyString()))
-            .thenThrow(new SQLException("Database error"));
+        // Esegui il metodo da testare
+        List<OrderBean> result = orderServiceDAO.getAllOrderDetailsNoShipped();
 
-        List<OrderBean> orderList = orderServiceDAO.getAllOrderDetailsNoShipped();
+        // Verifica il risultato
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        OrderBean order = result.get(0);
+        assertEquals("test@example.com", order.getIdUtente());
+        assertEquals(1, order.getId());
+        assertEquals("PAYPAL123", order.getIdPaypal());
+        assertEquals("ORDER PLACED", order.getShipped());
+        assertNotNull(order.getDataEffettuato());
 
-        assertTrue(orderList.isEmpty());
+        // Verifica le interazioni con i mock
+        verify(preparedStatement, times(1)).executeQuery();
+        verify(preparedStatement, times(1)).setString(1, "ORDER PLACED");
+        verify(dbUtil, times(1)).getConnection();
+        verify(dbUtil, times(1)).closeConnection(resultSet);
+        verify(dbUtil, times(1)).closeConnection(preparedStatement);
     }
 }

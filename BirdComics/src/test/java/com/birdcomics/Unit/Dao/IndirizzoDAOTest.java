@@ -1,7 +1,7 @@
 package com.birdcomics.Unit.Dao;
 
 import com.birdcomics.Model.Bean.IndirizzoBean;
-import com.birdcomics.Model.Dao.IndirizzoDao;
+import com.birdcomics.Model.Dao.IndirizzoDAO;
 
 import org.junit.jupiter.api.*;
 import org.mockito.*;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class IndirizzoDaoTest {
+public class IndirizzoDAOTest {
 
     @Mock
     private Connection connection;
@@ -25,12 +25,12 @@ public class IndirizzoDaoTest {
     @Mock
     private ResultSet resultSet;
 
-    private IndirizzoDao indirizzoDao;
+    private IndirizzoDAO indirizzoDAO;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        indirizzoDao = new IndirizzoDao(connection);
+        indirizzoDAO = new IndirizzoDAO(connection);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class IndirizzoDaoTest {
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeUpdate()).thenReturn(1);
 
-        indirizzoDao.create(indirizzo);
+        indirizzoDAO.create(indirizzo);
 
         verify(preparedStatement, times(1)).setString(1, "Roma");
         verify(preparedStatement, times(1)).setString(2, "Via Roma");
@@ -62,7 +62,7 @@ public class IndirizzoDaoTest {
 
         when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
 
-        assertThrows(SQLException.class, () -> indirizzoDao.create(indirizzo));
+        assertThrows(SQLException.class, () -> indirizzoDAO.create(indirizzo));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class IndirizzoDaoTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
 
-        boolean exists = indirizzoDao.ifExists("Roma", "Via Roma", "10", "00100");
+        boolean exists = indirizzoDAO.ifExists("Roma", "Via Roma", "10", "00100");
 
         assertTrue(exists);
         verify(preparedStatement, times(1)).setString(1, "Roma");
@@ -86,7 +86,7 @@ public class IndirizzoDaoTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(false);
 
-        boolean exists = indirizzoDao.ifExists("Roma", "Via Roma", "10", "00100");
+        boolean exists = indirizzoDAO.ifExists("Roma", "Via Roma", "10", "00100");
 
         assertFalse(exists);
         verify(preparedStatement, times(1)).setString(1, "Roma");
@@ -99,6 +99,6 @@ public class IndirizzoDaoTest {
     void testIfExists_SQLException() throws SQLException {
         when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
 
-        assertThrows(SQLException.class, () -> indirizzoDao.ifExists("Roma", "Via Roma", "10", "00100"));
+        assertThrows(SQLException.class, () -> indirizzoDAO.ifExists("Roma", "Via Roma", "10", "00100"));
     }
 }

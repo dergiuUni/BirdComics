@@ -26,7 +26,7 @@ public class RemoveUserServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String userEmail = request.getParameter("userId");
+        String userEmail = request.getParameter("email");
         String status = null;
 
         if (userEmail != null && !userEmail.trim().isEmpty()) {

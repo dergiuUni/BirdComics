@@ -40,7 +40,7 @@
 						<th>Nome</th>
 						<th>Cognome</th>
 						<th>Numero di telefono</th>
-						<th>Città</th>
+						<th>Cittï¿½</th>
 						<th>Via</th>
 						<th>NumeroCivico</th>
 						<th>CAP</th>
@@ -64,7 +64,7 @@
 						<td style="text-align: center">
 				
 							<form action="" method="post">
-								<input type="hidden" name="userId"
+								<input type="hidden" name="email"
 									value="<%=user.getEmail()%>">
 								<button type="submit" class="btn btn-primary">Modifica</button>
 							</form>
@@ -72,7 +72,7 @@
 						<td style="text-align: center">
 							
 							<form action="RemoveUserServlet" method="post">
-								<input type="hidden" name="userId"
+								<input type="hidden" name="email"
 									value="<%=user.getEmail()%>">
 								<button type="submit" class="btn btn-danger">Cancella</button>
 							</form>

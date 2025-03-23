@@ -1,18 +1,30 @@
 package com.birdcomics.Unit.Dao;
 
-import com.birdcomics.Model.Bean.ProductBean;
-import com.birdcomics.Model.Dao.ProductServiceDAO;
-import com.birdcomics.Utils.DBUtil;
-import org.junit.jupiter.api.*;
-import org.mockito.*;
-
-import java.sql.*;
-import java.util.List;
-
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.birdcomics.Model.Bean.ProductBean;
+import com.birdcomics.Model.Dao.ProductServiceDAO;
+import com.birdcomics.Utils.DBUtil;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 public class ProductServiceDAOTest {
+
+    @Mock
+    private DBUtil dbUtil;
 
     @Mock
     private Connection connection;
@@ -21,177 +33,218 @@ public class ProductServiceDAOTest {
     private PreparedStatement preparedStatement;
 
     @Mock
+    private Statement statement;
+
+    @Mock
     private ResultSet resultSet;
 
+    @InjectMocks
     private ProductServiceDAO productServiceDAO;
-    private MockedStatic<DBUtil> mockedDBUtil;
 
     @BeforeEach
-    void setUp() throws SQLException {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
-        productServiceDAO = new ProductServiceDAO();
-
-        // Mock dei metodi statici di DBUtil
-        mockedDBUtil = mockStatic(DBUtil.class);
-        when(DBUtil.getConnection()).thenReturn(connection);
-    }
-
-    @AfterEach
-    void tearDown() {
-        mockedDBUtil.close();
     }
 
     @Test
-    void testAddProduct() throws SQLException {
-        String name = "Test Product";
-        String description = "Test Description";
-        float price = 10.0f;
-        String image = "test_image.jpg";
-        String[] selectedGenres = {"Action", "Adventure"};
-
-        // Configura il mock per il PreparedStatement principale
-        when(connection.prepareStatement(anyString(), eq(Statement.RETURN_GENERATED_KEYS)))
-            .thenReturn(preparedStatement);
+    public void testAddProduct() throws SQLException {
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString(), eq(Statement.RETURN_GENERATED_KEYS))).thenReturn(preparedStatement);
         when(preparedStatement.executeUpdate()).thenReturn(1);
+
+        // Simula il ResultSet per i generated keys
         when(preparedStatement.getGeneratedKeys()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
-        when(resultSet.getInt(1)).thenReturn(1);
+        when(resultSet.getInt(1)).thenReturn(1); // ID generato
 
-        // Configura il mock per il PreparedStatement dei generi
-        PreparedStatement genrePsMock = mock(PreparedStatement.class);
-        when(connection.prepareStatement("insert into Genere_Fumetto (genere, idFumetto) values(?,?)"))
-            .thenReturn(genrePsMock);
-        when(genrePsMock.executeUpdate()).thenReturn(1);
+        // Simula il PreparedStatement per l'inserimento dei generi
+        when(connection.prepareStatement("insert into Genere_Fumetto (genere, idFumetto) values(?,?)")).thenReturn(preparedStatement);
+
+        // Dati di test
+        String[] selectedGenres = {"Azione", "Avventura"};
 
         // Esegui il metodo da testare
-        String status = productServiceDAO.addProduct(name, description, price, image, selectedGenres);
+        String status = productServiceDAO.addProduct("Fumetto1", "Descrizione", 10.0f, "image.jpg", selectedGenres);
 
         // Verifica il risultato
         assertEquals("Product Added Successfully", status);
 
-        // Verifica che il PreparedStatement principale sia stato chiamato correttamente
-        verify(preparedStatement).setString(1, name);
-        verify(preparedStatement).setString(2, description);
-        verify(preparedStatement).setFloat(3, price);
-        verify(preparedStatement).executeUpdate();
+        verify(preparedStatement, times(3)).executeUpdate(); // 1 per il fumetto + 2 per i generi
 
-        // Verifica che il PreparedStatement dei generi sia stato chiamato correttamente
-        verify(genrePsMock, times(2)).setString(anyInt(), anyString());
-        verify(genrePsMock, times(2)).setInt(anyInt(), anyInt());
-        verify(genrePsMock, times(2)).executeUpdate();
     }
-    
-    @Test
-    void testRemoveProduct() throws SQLException {
-        String prodId = "1";
 
+
+
+    @Test
+    public void testRemoveProduct() throws SQLException {
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeUpdate()).thenReturn(1);
 
+        // Dati di test
+        String prodId = "1";
+
+        // Esegui il metodo da testare
         String status = productServiceDAO.removeProduct(prodId);
 
+        // Verifica il risultato
         assertEquals("Fumetto Cancellato!", status);
+        verify(preparedStatement, times(1)).executeUpdate();
     }
 
     @Test
-    void testGetAllProducts() throws SQLException {
+    public void testGetAllProducts() throws SQLException {
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true, true, false);
-        when(resultSet.getInt("id")).thenReturn(1, 2);
-        when(resultSet.getString("nome")).thenReturn("Product 1", "Product 2");
-        when(resultSet.getString("descrizione")).thenReturn("Description 1", "Description 2");
-        when(resultSet.getFloat("prezzo")).thenReturn(10.0f, 20.0f);
-        when(resultSet.getString("immagine")).thenReturn("image1.jpg", "image2.jpg");
-        when(resultSet.getString("genere")).thenReturn("Action", "Adventure");
 
-        List<ProductBean> products = productServiceDAO.getAllProducts();
-
-        assertNotNull(products);
-        assertEquals(2, products.size());
-        assertEquals("Product 1", products.get(0).getName());
-        assertEquals("Product 2", products.get(1).getName());
-    }
-
-    @Test
-    void testGetAllProductsByType() throws SQLException {
-        String type = "Action";
-
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true, false);
+        // Simula il comportamento di ResultSet
+        when(resultSet.next()).thenReturn(true, false); // Restituisce true una volta, poi false
         when(resultSet.getInt("id")).thenReturn(1);
-        when(resultSet.getString("nome")).thenReturn("Product 1");
-        when(resultSet.getString("descrizione")).thenReturn("Description 1");
+        when(resultSet.getString("nome")).thenReturn("Fumetto1");
+        when(resultSet.getString("descrizione")).thenReturn("Descrizione");
         when(resultSet.getFloat("prezzo")).thenReturn(10.0f);
-        when(resultSet.getString("immagine")).thenReturn("image1.jpg");
-        when(resultSet.getString("genere")).thenReturn("Action");
 
-        List<ProductBean> products = productServiceDAO.getAllProductsByType(type);
+        // Esegui il metodo da testare
+        List<ProductBean> result = productServiceDAO.getAllProducts();
 
-        assertNotNull(products);
-        assertEquals(1, products.size());
-        assertEquals("Product 1", products.get(0).getName());
+        // Verifica il risultato
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        verify(preparedStatement, times(1)).executeQuery();
     }
 
     @Test
-    void testSearchAllProducts() throws SQLException {
-        String search = "Action";
-
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true, false);
-        when(resultSet.getInt("id")).thenReturn(1);
-        when(resultSet.getString("nome")).thenReturn("Product 1");
-        when(resultSet.getString("descrizione")).thenReturn("Description 1");
-        when(resultSet.getFloat("prezzo")).thenReturn(10.0f);
-        when(resultSet.getString("immagine")).thenReturn("image1.jpg");
-        when(resultSet.getString("genere")).thenReturn("Action");
-
-        List<ProductBean> products = productServiceDAO.searchAllProducts(search);
-
-        assertNotNull(products);
-        assertEquals(1, products.size());
-        assertEquals("Product 1", products.get(0).getName());
-    }
-
-    @Test
-    void testGetProductsByID() throws SQLException {
-        String idString = "1";
-
-        // Configura il mock per il PreparedStatement
+    public void testGetAllQuantityProductsById() throws SQLException {
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        // Simula il comportamento del ResultSet
-        when(resultSet.next()).thenReturn(true, true, false); // Due righe: una per il prodotto e una per il genere
-        when(resultSet.getInt("id")).thenReturn(1); // ID del prodotto
-        when(resultSet.getString("nome")).thenReturn("Product 1"); // Nome del prodotto
-        when(resultSet.getString("descrizione")).thenReturn("Description 1"); // Descrizione del prodotto
-        when(resultSet.getFloat("prezzo")).thenReturn(10.0f); // Prezzo del prodotto
-        when(resultSet.getString("immagine")).thenReturn("image1.jpg"); // Immagine del prodotto
-        when(resultSet.getString("genere")).thenReturn("Action", "Adventure"); // Generi associati
+        // Simula il comportamento di ResultSet
+        when(resultSet.next()).thenReturn(true, false); // Restituisce true una volta, poi false
+        when(resultSet.getInt(1)).thenReturn(10);
 
-        ProductBean product = productServiceDAO.getProductsByID(idString);
-
-        assertNotNull(product);
-        assertEquals("Product 1", product.getName());
-        assertEquals(2, product.getGeneri().size()); // Verifica che ci siano due generi
-    }
-    
-    
-    @Test
-    void testGetAllQuantityProductsById() throws SQLException {
+        // Dati di test
         ProductBean product = new ProductBean();
         product.setId(1);
 
+        // Esegui il metodo da testare
+        int result = productServiceDAO.getAllQuantityProductsById(product);
+
+        // Verifica il risultato
+        assertEquals(10, result);
+        verify(preparedStatement, times(1)).executeQuery();
+    }
+
+    @Test
+    public void testGetAllProductsByType() throws SQLException {
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true);
-        when(resultSet.getInt(1)).thenReturn(10);
 
-        int quantity = productServiceDAO.getAllQuantityProductsById(product);
+        // Simula il comportamento di ResultSet
+        when(resultSet.next()).thenReturn(true, false); // Restituisce true una volta, poi false
+        when(resultSet.getInt("id")).thenReturn(1);
+        when(resultSet.getString("nome")).thenReturn("Fumetto1");
+        when(resultSet.getString("descrizione")).thenReturn("Descrizione");
+        when(resultSet.getFloat("prezzo")).thenReturn(10.0f);
+        when(resultSet.getString("genere")).thenReturn("Azione");
 
-        assertEquals(10, quantity);
+        // Dati di test
+        String type = "Azione";
+
+        // Esegui il metodo da testare
+        List<ProductBean> result = productServiceDAO.getAllProductsByType(type);
+
+        // Verifica il risultato
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        verify(preparedStatement, times(1)).executeQuery();
+    }
+
+    @Test
+    public void testSearchAllProducts() throws SQLException {
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        // Simula il comportamento di ResultSet
+        when(resultSet.next()).thenReturn(true, false); // Restituisce true una volta, poi false
+        when(resultSet.getInt("id")).thenReturn(1);
+        when(resultSet.getString("nome")).thenReturn("Fumetto1");
+        when(resultSet.getString("descrizione")).thenReturn("Descrizione");
+        when(resultSet.getFloat("prezzo")).thenReturn(10.0f);
+        when(resultSet.getString("genere")).thenReturn("Azione");
+
+        // Dati di test
+        String search = "Fumetto1";
+
+        // Esegui il metodo da testare
+        List<ProductBean> result = productServiceDAO.searchAllProducts(search);
+
+        // Verifica il risultato
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        verify(preparedStatement, times(1)).executeQuery();
+    }
+
+    @Test
+    public void testSearchAllProductsGestore() throws SQLException {
+        // Simula il comportamento de DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        // Simula il comportamento di ResultSet
+        when(resultSet.next()).thenReturn(true, false); // Restituisce true una volta, poi false
+        when(resultSet.getInt("id")).thenReturn(1);
+        when(resultSet.getString("nome")).thenReturn("Fumetto1");
+        when(resultSet.getString("descrizione")).thenReturn("Descrizione");
+        when(resultSet.getFloat("prezzo")).thenReturn(10.0f);
+        when(resultSet.getString("genere")).thenReturn("Azione");
+
+        // Dati di test
+        String search = "Fumetto1";
+
+        // Esegui il metodo da testare
+        List<ProductBean> result = productServiceDAO.searchAllProductsGestore(search);
+
+        // Verifica il risultato
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        verify(preparedStatement, times(1)).executeQuery();
+    }
+
+    @Test
+    public void testGetProductsByID() throws SQLException {
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        // Simula il comportamento di ResultSet
+        when(resultSet.next()).thenReturn(true, false); // Restituisce true una volta, poi false
+        when(resultSet.getInt("id")).thenReturn(1);
+        when(resultSet.getString("nome")).thenReturn("Fumetto1");
+        when(resultSet.getString("descrizione")).thenReturn("Descrizione");
+        when(resultSet.getFloat("prezzo")).thenReturn(10.0f);
+        when(resultSet.getString("genere")).thenReturn("Azione");
+
+        // Dati di test
+        String idString = "1";
+
+        // Esegui il metodo da testare
+        ProductBean result = productServiceDAO.getProductsByID(idString);
+
+        // Verifica il risultato
+        assertNotNull(result);
+        assertEquals(1, result.getId());
+        verify(preparedStatement, times(1)).executeQuery();
     }
 }

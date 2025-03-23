@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.birdcomics.Model.Bean.IndirizzoBean;
 
-public class IndirizzoDao {
+public class IndirizzoDAO {
 	 private Connection connection;
 
 	    // Costruttore per ottenere la connessione al DB
-	    public IndirizzoDao(Connection connection) {
+	    public IndirizzoDAO(Connection connection) {
 	        this.connection = connection;
 	    }
 

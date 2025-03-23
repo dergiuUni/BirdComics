@@ -19,23 +19,23 @@ public class CarrelloServiceImpl implements CarrelloService {
     }
 
     @Override
-    public void aggiungiFumetto(HttpSession session, String userId, String prodId, int pQty) throws SQLException {
+    public void aggiungiFumetto(HttpSession session, String email, String prodId, int pQty) throws SQLException {
         ProductBean product = productServiceDAO.getProductsByID(prodId);
         int availableQty = productServiceDAO.getAllQuantityProductsById(product);
         
         if (availableQty > 0) {
-            cartServiceDAO.addProductToCart(session, userId, prodId, pQty);
+            cartServiceDAO.addProductToCart(session, email, prodId, pQty);
         }
     }
 
     @Override
-    public void rimuoviFumetto(HttpSession session, String userId, String prodId) throws SQLException {
-        cartServiceDAO.removeProductFromCart(session, userId, prodId);
+    public void rimuoviFumetto(HttpSession session, String email, String prodId) throws SQLException {
+        cartServiceDAO.removeProductFromCart(session, email, prodId);
     }
 
     @Override
-    public List<CartItem> visualizzaCarrello(HttpSession session, String userId) throws SQLException {
-        CartBean cart = cartServiceDAO.getCartFromSession(session, userId);
+    public List<CartItem> visualizzaCarrello(HttpSession session, String email) throws SQLException {
+        CartBean cart = cartServiceDAO.getCartFromSession(session, email);
         return cart.getCartItems();
     }
 
@@ -60,13 +60,13 @@ public class CarrelloServiceImpl implements CarrelloService {
     }
     
     @Override
-    public void svuotaCarrello(HttpSession session, String userId) throws SQLException {
-        cartServiceDAO.deleteAllCartItems(session, userId);
+    public void svuotaCarrello(HttpSession session, String email) throws SQLException {
+        cartServiceDAO.deleteAllCartItems(session, email);
     }
     
     @Override
-    public String modificaQuantita(HttpSession session, String userId, String prodId, int pQty) throws SQLException {
-       return cartServiceDAO.updateProductToCart(userId, prodId, pQty);
+    public String modificaQuantita(HttpSession session, String email, String prodId, int pQty) throws SQLException {
+       return cartServiceDAO.updateProductToCart(email, prodId, pQty);
     }
 
     @Override

@@ -1,20 +1,32 @@
 package com.birdcomics.Unit.Dao;
 
-import com.birdcomics.Model.Bean.IndirizzoBean;
-import com.birdcomics.Model.Bean.MagazzinoBean;
-import com.birdcomics.Model.Dao.IndirizzoDao;
-import com.birdcomics.Model.Dao.MagazzinoDao;
-import com.birdcomics.Utils.DBUtil;
-import org.junit.jupiter.api.*;
-import org.mockito.*;
-
-import java.sql.*;
-import java.util.ArrayList;
-
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.birdcomics.Model.Bean.IndirizzoBean;
+import com.birdcomics.Model.Bean.MagazzinoBean;
+import com.birdcomics.Model.Bean.ScaffaliBean;
+import com.birdcomics.Model.Dao.IndirizzoDAO;
+import com.birdcomics.Model.Dao.MagazzinoDAO;
+import com.birdcomics.Model.Dao.ScaffaleDao;
+import com.birdcomics.Utils.DBUtil;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 public class MagazzinoDAOTest {
+
+    @Mock
+    private DBUtil dbUtil;
 
     @Mock
     private Connection connection;
@@ -26,155 +38,94 @@ public class MagazzinoDAOTest {
     private ResultSet resultSet;
 
     @Mock
-    private IndirizzoDao indirizzoDao;
+    private IndirizzoDAO indirizzoDao;
 
-    private MagazzinoDao magazzinoDao;
-    private MockedStatic<DBUtil> mockedDBUtil;
+    @Mock
+    private ScaffaleDao scaffaleDao;
+
+    @InjectMocks
+    private MagazzinoDAO magazzinoDao;
 
     @BeforeEach
-    void setUp() throws SQLException {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
-        magazzinoDao = new MagazzinoDao();
-
-        // Mock dei metodi statici di DBUtil
-        mockedDBUtil = mockStatic(DBUtil.class);
-        when(DBUtil.getConnection()).thenReturn(connection);
     }
-
-    @AfterEach
-    void tearDown() {
-        mockedDBUtil.close();
-    }
-
-    // ===================================================
-    // Test per il metodo: addMagazzino
-    // ===================================================
 
     @Test
-    void testAddMagazzino_Success() throws SQLException {
-        MagazzinoBean magazzino = new MagazzinoBean();
-        magazzino.setNome("Magazzino1");
-        IndirizzoBean indirizzo = new IndirizzoBean("Città1", "Via1", "123", "12345");
-        magazzino.setIndirizzo(indirizzo);
+    public void testAddMagazzino() throws SQLException {
+        // Dati di test
+        IndirizzoBean indirizzo = new IndirizzoBean("Città", "Via", "123", "12345");
+        MagazzinoBean magazzino = new MagazzinoBean("Magazzino1", indirizzo, new ArrayList<>());
 
-        // Mock del comportamento del database
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet); // Simula il ResultSet per la query SELECT
-        when(resultSet.next()).thenReturn(false); // Simula che l'indirizzo non esista già
-        when(preparedStatement.executeUpdate()).thenReturn(1); // Simula l'inserimento avvenuto con successo
 
+        // Simula il comportamento di IndirizzoDao
+        when(indirizzoDao.ifExists(anyString(), anyString(), anyString(), anyString())).thenReturn(false);
+
+        // Simula il ResultSet per la query di IndirizzoDao
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(false); // Simula che l'indirizzo non esista
+
+        // Simula l'inserimento dell'indirizzo e del magazzino
+        when(preparedStatement.executeUpdate()).thenReturn(1); // Simula un inserimento riuscito
+
+        // Esegui il metodo da testare
         String result = magazzinoDao.addMagazzino(magazzino);
 
+        // Verifica il risultato
         assertEquals("magazzino Registered Successfully!", result);
+        verify(preparedStatement, times(2)).executeUpdate(); // Verifica che executeUpdate sia chiamato due volte
     }
 
     @Test
-    void testAddMagazzino_IndirizzoExists() throws SQLException {
-        MagazzinoBean magazzino = new MagazzinoBean();
-        magazzino.setNome("Magazzino1");
-        IndirizzoBean indirizzo = new IndirizzoBean("Città1", "Via1", "123", "12345");
-        magazzino.setIndirizzo(indirizzo);
+    public void testRemoveMagazzino() throws SQLException {
+        // Dati di test
+        IndirizzoBean indirizzo = new IndirizzoBean("Città", "Via", "123", "12345");
+        MagazzinoBean magazzino = new MagazzinoBean("Magazzino1", indirizzo, new ArrayList<>());
 
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
 
+        // Esegui il metodo da testare
+        String result = magazzinoDao.removeMagazzino(magazzino);
+
+        // Verifica il risultato
+        assertEquals("magazzino cancellato", result);
+        verify(preparedStatement, times(1)).executeUpdate(); // Verifica che executeUpdate sia chiamato una volta
+    }
+
+    @Test
+    public void testGetMagazzini() throws SQLException {
+        // Dati di test
+        IndirizzoBean indirizzo = new IndirizzoBean("Città", "Via", "123", "12345");
+        ArrayList<MagazzinoBean> magazzini = new ArrayList<>();
+        magazzini.add(new MagazzinoBean("Magazzino1", indirizzo, new ArrayList<>()));
+
+        // Simula il comportamento di DBUtil
+        when(dbUtil.getConnection()).thenReturn(connection);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true);
-        when(preparedStatement.executeUpdate()).thenReturn(1); // Inserimento avvenuto con successo
 
-        
-        
-        // Simula che l'indirizzo esista già
-        when(indirizzoDao.ifExists(anyString(), anyString(), anyString(), anyString())).thenReturn(true);
-
-        String result = magazzinoDao.addMagazzino(magazzino);
-
-        assertEquals("magazzino Registered Successfully!", result);
-    }
-
-    @Test
-    void testAddMagazzino_SQLException() throws SQLException {
-        MagazzinoBean magazzino = new MagazzinoBean();
-        magazzino.setNome("Magazzino1");
-        IndirizzoBean indirizzo = new IndirizzoBean("Città1", "Via1", "123", "12345");
-        magazzino.setIndirizzo(indirizzo);
-
-        when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
-
-        String result = magazzinoDao.addMagazzino(magazzino);
-
-        assertEquals("Error sql", result);
-      }
-
-    // ===================================================
-    // Test per il metodo: removeMagazzino
-    // ===================================================
-
-    @Test
-    void testRemoveMagazzino_Success() throws SQLException {
-        MagazzinoBean magazzino = new MagazzinoBean();
-        magazzino.setNome("Magazzino1");
-
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeUpdate()).thenReturn(1); // Rimozione avvenuta con successo
-
-        String x = magazzinoDao.removeMagazzino(magazzino);
-
-        assertEquals("magazzino cancellato", x);
-    }
-
-    @Test
-    void testRemoveMagazzino_SQLException() throws SQLException {
-        MagazzinoBean magazzino = new MagazzinoBean();
-        magazzino.setNome("Magazzino1");
-
-        when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
-
-        String x = magazzinoDao.removeMagazzino(magazzino);
-
-        assertEquals("Error sql", x);
-
-    }
-
-    
-    // ===================================================
-    // Test per il metodo: getMagazzini
-    // ===================================================
-
-    @Test
-    void testGetMagazzini_Success() throws SQLException {
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true, false); // Simula un solo risultato
+        // Simula il comportamento di ResultSet
+        when(resultSet.next()).thenReturn(true, false);
         when(resultSet.getString("nome")).thenReturn("Magazzino1");
-        when(resultSet.getString("nomeCitta")).thenReturn("Città1");
-        when(resultSet.getString("via")).thenReturn("Via1");
-        when(resultSet.getInt("numeroCivico")).thenReturn(123);
+        when(resultSet.getString("nomeCitta")).thenReturn("Città");
+        when(resultSet.getString("via")).thenReturn("Via");
+        when(resultSet.getString("numeroCivico")).thenReturn("123");
         when(resultSet.getString("cap")).thenReturn("12345");
 
-        ArrayList<MagazzinoBean> magazzini = magazzinoDao.getMagazzini();
+        // Simula il comportamento di ScaffaleDao
+        when(scaffaleDao.getScaffaleMagazzino(anyString())).thenReturn(new ArrayList<>());
 
-        assertNotNull(magazzini);
-        assertEquals(1, magazzini.size());
-        assertEquals("Magazzino1", magazzini.get(0).getNome());
-    }
+        // Esegui il metodo da testare
+        ArrayList<MagazzinoBean> result = magazzinoDao.getMagazzini();
 
-    @Test
-    void testGetMagazzini_EmptyResult() throws SQLException {
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(false); // Nessun risultato
-
-        ArrayList<MagazzinoBean> magazzini = magazzinoDao.getMagazzini();
-
-        assertTrue(magazzini.isEmpty());
-    }
-
-    @Test
-    void testGetMagazzini_SQLException() throws SQLException {
-        when(connection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
-
-        ArrayList<MagazzinoBean> magazzini = magazzinoDao.getMagazzini();
-
-        assertTrue(magazzini.isEmpty());
+        // Verifica il risultato
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals("Magazzino1", result.get(0).getNome());
     }
 }

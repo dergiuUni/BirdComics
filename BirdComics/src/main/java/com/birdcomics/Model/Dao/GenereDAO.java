@@ -11,23 +11,37 @@ import com.birdcomics.Model.Bean.GenereBean;
 import com.birdcomics.Utils.DBUtil;
 
 public class GenereDAO {
-	
-	 public List<GenereBean> getGeneri() {
-	        List<GenereBean> generi = new ArrayList<>();
-	        String query = "SELECT * FROM Genere";
 
-	        try (Connection con = DBUtil.getConnection();
-	             PreparedStatement ps = con.prepareStatement(query);
-	             ResultSet rs = ps.executeQuery()) {
+    // Ottieni l'istanza singleton di DBUtil
+    private DBUtil dbUtil = DBUtil.getInstance();
 
-	            while (rs.next()) {
-	                generi.add(new GenereBean(rs.getString("genere")));
-	            }
+    public List<GenereBean> getGeneri() {
+        List<GenereBean> generi = new ArrayList<>();
+        String query = "SELECT * FROM Genere";
 
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-	        return generi;
-	    }
+        try {
+            // Ottieni una connessione dal singleton DBUtil
+            con = dbUtil.getConnection();
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                generi.add(new GenereBean(rs.getString("genere")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Chiudi le risorse utilizzando il singleton DBUtil
+            dbUtil.closeConnection(rs);
+            dbUtil.closeConnection(ps);
+            dbUtil.closeConnection(con);
+        }
+
+        return generi;
+    }
 }

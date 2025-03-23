@@ -59,11 +59,11 @@ public class AddToCart extends HttpServlet {
             }
 
             // Aggiungi il fumetto al carrello
-            cartService.aggiungiFumetto(session, userId, prodId, pQty);
+            cartService.aggiungiFumetto(session, email, prodId, pQty);
 
             // Aggiorna il carrello in sessione
             CartBean cartBean = new CartBean(userId);
-            cartBean.setCartItems(cartService.visualizzaCarrello(session, userId));
+            cartBean.setCartItems(cartService.visualizzaCarrello(session, email));
             session.setAttribute("cart", cartBean);
 
             response.sendRedirect("CartDetailsServlet");
